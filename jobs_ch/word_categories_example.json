@@ -1,0 +1,30 @@
+{
+  "backend": [
+    "backend",
+    "back-end",
+    "api",
+    "microservice",
+    "python"
+  ],
+  "software_engineer": [
+    "software engineer",
+    "software developer",
+    "softwareentwickler"
+  ],
+  "frontend": [
+    "frontend",
+    "front-end",
+    "react",
+    "angular",
+    "vue"
+  ],
+  "full_stack": [
+    "full stack",
+    "fullstack"
+  ],
+  "data_analyst": [
+    "data analyst",
+    "data analytics",
+    "datenanalyst"
+  ]
+}
