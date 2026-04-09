@@ -1,0 +1,1450 @@
+city,skill,vacancy_count,rank,share_within_group
+1020 Renens,python,1,1,1.0
+1209 Geneve,ansible,1,1,1.0
+1209 Geneve,docker,1,1,1.0
+1209 Geneve,kubernetes,1,1,1.0
+1209 Geneve,python,1,1,1.0
+1209 Geneve,terraform,1,1,1.0
+1870 Monthey,ansible,1,1,1.0
+1870 Monthey,azure,1,1,1.0
+1870 Monthey,ci_cd,1,1,1.0
+1870 Monthey,devops,1,1,1.0
+1870 Monthey,docker,1,1,1.0
+1870 Monthey,gcp,1,1,1.0
+1870 Monthey,git,1,1,1.0
+1870 Monthey,kubernetes,1,1,1.0
+1870 Monthey,linux,1,1,1.0
+1870 Monthey,terraform,1,1,1.0
+2112 Môtiers NE,csharp,1,1,1.0
+2112 Môtiers NE,python,1,1,1.0
+3173 / Köniz,c++,1,1,1.0
+3173 / Köniz,csharp,1,1,1.0
+3173 / Köniz,java,1,1,1.0
+3173 / Köniz,python,1,1,1.0
+AG,azure,1,1,1.0
+Aadorf,git,2,1,0.6667
+Aadorf,c++,1,2,0.3333
+Aadorf,ci_cd,1,2,0.3333
+Aadorf,kafka,1,2,0.3333
+Aadorf,linux,1,2,0.3333
+Aadorf,sql,1,2,0.3333
+Aarau,azure,8,1,0.5
+Aarau,agile,4,2,0.25
+Aarau,ci_cd,2,3,0.125
+Aarau,git,2,3,0.125
+Aarau,java,2,3,0.125
+Aarau,sql,2,3,0.125
+Aarau,terraform,2,3,0.125
+Aarau,angular,1,4,0.0625
+Aarau,aws,1,4,0.0625
+Aarau,csharp,1,4,0.0625
+Aarau,devops,1,4,0.0625
+Aarau,dotnet,1,4,0.0625
+Aarau,javascript,1,4,0.0625
+Aarau,kubernetes,1,4,0.0625
+Aarau,linux,1,4,0.0625
+Aarau,nodejs,1,4,0.0625
+Aarau,rest_api,1,4,0.0625
+Aarau,spring,1,4,0.0625
+Aarau,typescript,1,4,0.0625
+Aarburg,c++,1,1,0.5
+Aarburg,git,1,1,0.5
+Aargau,ci_cd,1,1,0.5
+Aargau,kubernetes,1,1,0.5
+Allschwil,linux,4,1,0.5
+Allschwil,agile,3,2,0.375
+Allschwil,azure,3,2,0.375
+Allschwil,sql,2,3,0.25
+Allschwil,airflow,1,4,0.125
+Allschwil,aws,1,4,0.125
+Allschwil,ci_cd,1,4,0.125
+Allschwil,dbt,1,4,0.125
+Allschwil,devops,1,4,0.125
+Allschwil,docker,1,4,0.125
+Allschwil,etl,1,4,0.125
+Allschwil,git,1,4,0.125
+Allschwil,hadoop,1,4,0.125
+Allschwil,java,1,4,0.125
+Allschwil,python,1,4,0.125
+Allschwil,scala,1,4,0.125
+Allschwil,spark,1,4,0.125
+Allschwil,terraform,1,4,0.125
+Altishofen,azure,2,1,0.4
+Altishofen,sql,2,1,0.4
+Altishofen,ci_cd,1,2,0.2
+Altishofen,csharp,1,2,0.2
+Altishofen,databricks,1,2,0.2
+Altishofen,devops,1,2,0.2
+Altishofen,docker,1,2,0.2
+Altishofen,git,1,2,0.2
+Altishofen,kubernetes,1,2,0.2
+Altishofen,openshift,1,2,0.2
+Altishofen,python,1,2,0.2
+Altishofen,react,1,2,0.2
+Altishofen,rest_api,1,2,0.2
+BAD IR,c++,1,1,1.0
+BAD IR,git,1,1,1.0
+Baar,azure,2,1,0.3333
+Baar,agile,1,2,0.1667
+Baar,ansible,1,2,0.1667
+Baar,devops,1,2,0.1667
+Baar,linux,1,2,0.1667
+Baar,python,1,2,0.1667
+Backoffice Zürich,azure,1,1,1.0
+Bad Ragaz,linux,1,1,1.0
+Baden,azure,1,1,0.2
+Baden,javascript,1,1,0.2
+Baden,php,1,1,0.2
+Baden-Dättwil,ci_cd,1,1,1.0
+Baden-Dättwil,git,1,1,1.0
+Baden-Dättwil,java,1,1,1.0
+Baden-Dättwil,javascript,1,1,1.0
+Baden-Dättwil,linux,1,1,1.0
+Baden-Dättwil,mongodb,1,1,1.0
+Baden-Dättwil,mysql,1,1,1.0
+Baden-Dättwil,php,1,1,1.0
+Baden-Dättwil,spring,1,1,1.0
+Baden-Dättwil,sql,1,1,1.0
+Balzers,azure,2,1,0.5
+Balzers,docker,2,1,0.5
+Balzers,git,2,1,0.5
+Balzers,java,2,1,0.5
+Balzers,kubernetes,2,1,0.5
+Balzers,linux,2,1,0.5
+Balzers,rest_api,2,1,0.5
+Balzers,sql,2,1,0.5
+Balzers,terraform,2,1,0.5
+Balzers,agile,1,2,0.25
+Balzers,ci_cd,1,2,0.25
+Balzers,devops,1,2,0.25
+Balzers,junit,1,2,0.25
+Balzers,kotlin,1,2,0.25
+Balzers,playwright,1,2,0.25
+Balzers,react,1,2,0.25
+Balzers,spring,1,2,0.25
+Balzers,typescript,1,2,0.25
+Basel,azure,24,1,0.3871
+Basel,terraform,22,2,0.3548
+Basel,ci_cd,21,3,0.3387
+Basel,devops,21,3,0.3387
+Basel,kubernetes,21,3,0.3387
+Basel,docker,17,4,0.2742
+Basel,git,15,5,0.2419
+Basel,aws,14,6,0.2258
+Basel,agile,11,7,0.1774
+Basel,linux,10,8,0.1613
+Basel,python,10,8,0.1613
+Basel,java,8,9,0.129
+Basel,angular,7,10,0.1129
+Basel,ansible,7,10,0.1129
+Basel,dotnet,6,11,0.0968
+Basel,react,6,11,0.0968
+Basel,sql,6,11,0.0968
+Basel,csharp,5,12,0.0806
+Basel,spring,5,12,0.0806
+Basel,javascript,4,13,0.0645
+Basel,typescript,4,13,0.0645
+Basel,dbt,3,14,0.0484
+Basel,etl,3,14,0.0484
+Basel,gcp,3,14,0.0484
+Basel,mssql,3,14,0.0484
+Basel,spark,3,14,0.0484
+Basel,databricks,2,15,0.0323
+Basel,oracle,2,15,0.0323
+Basel,scala,2,15,0.0323
+Basel,snowflake,2,15,0.0323
+Basel,airflow,1,16,0.0161
+Basel,clean_code,1,16,0.0161
+Basel,devsecops,1,16,0.0161
+Basel,hadoop,1,16,0.0161
+Basel,kafka,1,16,0.0161
+Basel,mongodb,1,16,0.0161
+Basel,openshift,1,16,0.0161
+Basel,postgresql,1,16,0.0161
+Basel,swift,1,16,0.0161
+Basel Zürich Bern Winterthur Luzern St.Gallen,csharp,1,1,1.0
+Basel Zürich Bern Winterthur Luzern St.Gallen,dotnet,1,1,1.0
+Basel Zürich Bern Winterthur Luzern St.Gallen,mssql,1,1,1.0
+Basel Zürich Bern Winterthur Luzern St.Gallen,sql,1,1,1.0
+"Basel-Land, Basel",javascript,1,1,1.0
+"Basel-Land, Basel",linux,1,1,1.0
+"Basel-Land, Basel",python,1,1,1.0
+"Basel-Land, Basel",test_automation,1,1,1.0
+Belp,git,1,1,1.0
+Belp,go,1,1,1.0
+Belp,typescript,1,1,1.0
+Bendern (LI),azure,1,1,1.0
+Bendern (LI),go,1,1,1.0
+Bendern (LI),python,1,1,1.0
+Benken SG,azure,1,1,1.0
+Bern,azure,24,1,0.2963
+Bern,agile,23,2,0.284
+Bern,docker,22,3,0.2716
+Bern,kubernetes,21,4,0.2593
+Bern,ci_cd,20,5,0.2469
+Bern,java,19,6,0.2346
+Bern,ansible,14,7,0.1728
+Bern,python,14,7,0.1728
+Bern,git,13,8,0.1605
+Bern,devops,12,9,0.1481
+Bern,linux,12,9,0.1481
+Bern,spring,12,9,0.1481
+Bern,sql,11,10,0.1358
+Bern,angular,10,11,0.1235
+Bern,aws,10,11,0.1235
+Bern,microservices,9,12,0.1111
+Bern,mongodb,9,12,0.1111
+Bern,openshift,9,12,0.1111
+Bern,postgresql,9,12,0.1111
+Bern,terraform,9,12,0.1111
+Bern,react,8,13,0.0988
+Bern,dotnet,7,14,0.0864
+Bern,gcp,7,14,0.0864
+Bern,rest_api,6,15,0.0741
+Bern,snowflake,6,15,0.0741
+Bern,kafka,5,16,0.0617
+Bern,csharp,4,17,0.0494
+Bern,javascript,4,17,0.0494
+Bern,databricks,3,18,0.037
+Bern,dbt,3,18,0.037
+Bern,etl,3,18,0.037
+Bern,oracle,3,18,0.037
+Bern,spark,3,18,0.037
+Bern,airflow,2,19,0.0247
+Bern,clean_code,2,19,0.0247
+Bern,devsecops,2,19,0.0247
+Bern,mssql,2,19,0.0247
+Bern,pytorch,2,19,0.0247
+Bern,test_automation,2,19,0.0247
+Bern,typescript,2,19,0.0247
+Bern,vue,2,19,0.0247
+Bern,c++,1,20,0.0123
+Bern,dart,1,20,0.0123
+Bern,fastapi,1,20,0.0123
+Bern,junit,1,20,0.0123
+Bern,kotlin,1,20,0.0123
+Bern,mysql,1,20,0.0123
+Bern,nextjs,1,20,0.0123
+Bern,redis,1,20,0.0123
+Bern,rust,1,20,0.0123
+Bern,scala,1,20,0.0123
+Bern,scikit_learn,1,20,0.0123
+Bern,selenium,1,20,0.0123
+Bern,swift,1,20,0.0123
+"Bern (bis Ende 2026), anschliessend Zimmerwald",ansible,1,1,1.0
+"Bern (bis Ende 2026), anschliessend Zimmerwald",ci_cd,1,1,1.0
+"Bern (bis Ende 2026), anschliessend Zimmerwald",devops,1,1,1.0
+"Bern (bis Ende 2026), anschliessend Zimmerwald",kubernetes,1,1,1.0
+"Bern (bis Ende 2026), anschliessend Zimmerwald",linux,1,1,1.0
+Bern und Homeoffice,agile,2,1,0.6667
+Bern und Homeoffice,aws,1,2,0.3333
+Bern und Homeoffice,azure,1,2,0.3333
+Bern und Homeoffice,linux,1,2,0.3333
+Bern&lt;,aws,1,1,1.0
+Bern&lt;,azure,1,1,1.0
+Bern&lt;,devsecops,1,1,1.0
+"Bern, CH",ci_cd,1,1,1.0
+"Bern, CH",databricks,1,1,1.0
+"Bern, CH",devops,1,1,1.0
+"Bern, CH",docker,1,1,1.0
+"Bern, CH",etl,1,1,1.0
+"Bern, CH",git,1,1,1.0
+"Bern, CH",python,1,1,1.0
+"Bern, Engehaldenstrasse",php,2,1,1.0
+"Bern, Engehaldenstrasse",ansible,1,2,0.5
+"Bern, Engehaldenstrasse",azure,1,2,0.5
+"Bern, Engehaldenstrasse",git,1,2,0.5
+"Bern, Engehaldenstrasse",python,1,2,0.5
+"Bern, Engehaldenstrasse",terraform,1,2,0.5
+Biel,azure,2,1,0.4
+Biel,ci_cd,2,1,0.4
+Biel,sql,2,1,0.4
+Biel,agile,1,2,0.2
+Biel,angular,1,2,0.2
+Biel,aws,1,2,0.2
+Biel,databricks,1,2,0.2
+Biel,dbt,1,2,0.2
+Biel,devops,1,2,0.2
+Biel,dotnet,1,2,0.2
+Biel,etl,1,2,0.2
+Biel,gcp,1,2,0.2
+Biel,linux,1,2,0.2
+Biel,microservices,1,2,0.2
+Biel,python,1,2,0.2
+Biel,react,1,2,0.2
+Biel,snowflake,1,2,0.2
+Biel,test_automation,1,2,0.2
+Biel,vue,1,2,0.2
+Biel/Bienne,python,1,1,0.3333
+Biel/Bienne,scala,1,1,0.3333
+Bioggio,agile,1,1,1.0
+Birsfelden,sql,1,1,1.0
+Bonaduz,c++,1,1,0.3333
+Bonaduz,java,1,1,0.3333
+Bonaduz,python,1,1,0.3333
+Bonaduz,rust,1,1,0.3333
+Bottighofen,kotlin,1,1,1.0
+Bottighofen,rest_api,1,1,1.0
+Boudry,agile,1,1,1.0
+Boudry,csharp,1,1,1.0
+Bremgarten,aws,1,1,1.0
+Bremgarten,azure,1,1,1.0
+Bremgarten,gcp,1,1,1.0
+"Brugg, AG",mssql,1,1,1.0
+"Brugg, AG",mysql,1,1,1.0
+"Brugg, AG",postgresql,1,1,1.0
+Bubendorf,agile,1,1,1.0
+Bubendorf,azure,1,1,1.0
+Bubendorf,ci_cd,1,1,1.0
+Bubendorf,devops,1,1,1.0
+Bubendorf,docker,1,1,1.0
+Bubendorf,git,1,1,1.0
+Bubendorf,python,1,1,1.0
+Bubendorf,terraform,1,1,1.0
+Bubikon,aws,1,1,1.0
+Bubikon,azure,1,1,1.0
+Bubikon,ci_cd,1,1,1.0
+Bubikon,devops,1,1,1.0
+Bubikon,docker,1,1,1.0
+Bubikon,gcp,1,1,1.0
+Bubikon,git,1,1,1.0
+Bubikon,kubernetes,1,1,1.0
+Bubikon,linux,1,1,1.0
+Bubikon,python,1,1,1.0
+Buchs AG,agile,2,1,1.0
+Buchs AG,java,2,1,1.0
+Buchs AG,sql,2,1,1.0
+Buchs SG,python,1,1,1.0
+Burgdorf,azure,2,1,0.5
+Burgdorf,agile,1,2,0.25
+Burgdorf,ci_cd,1,2,0.25
+Burgdorf,devops,1,2,0.25
+Burgdorf,express,1,2,0.25
+Burgdorf,git,1,2,0.25
+Burgdorf,java,1,2,0.25
+Burgdorf,scala,1,2,0.25
+Burgdorf,spark,1,2,0.25
+Burgdorf,sql,1,2,0.25
+Burgdorf,terraform,1,2,0.25
+Burgdorf,test_automation,1,2,0.25
+Bussnang,agile,1,1,0.1667
+Bussnang,azure,1,1,0.1667
+CH - Zürich,devops,2,1,1.0
+CH - Zürich,agile,1,2,0.5
+CH - Zürich,angular,1,2,0.5
+CH - Zürich,azure,1,2,0.5
+CH - Zürich,java,1,2,0.5
+Cham,azure,1,1,1.0
+Chiasso,agile,1,1,0.3333
+Chiasso,ci_cd,1,1,0.3333
+Chiasso,cypress,1,1,0.3333
+Chiasso,docker,1,1,0.3333
+Chiasso,git,1,1,0.3333
+Chiasso,java,1,1,0.3333
+Chiasso,javascript,1,1,0.3333
+Chiasso,jest,1,1,0.3333
+Chiasso,microservices,1,1,0.3333
+Chiasso,nextjs,1,1,0.3333
+Chiasso,nodejs,1,1,0.3333
+Chiasso,playwright,1,1,0.3333
+Chiasso,python,1,1,0.3333
+Chiasso,react,1,1,0.3333
+Chiasso,rest_api,1,1,0.3333
+Chiasso,spring,1,1,0.3333
+Chiasso,sql,1,1,0.3333
+Chiasso,typescript,1,1,0.3333
+Chur,sql,1,1,0.2
+DWL T,express,1,1,1.0
+Dietikon,agile,1,1,0.25
+Dietikon,angular,1,1,0.25
+Dietikon,azure,1,1,0.25
+Dietikon,csharp,1,1,0.25
+Dietikon,devops,1,1,0.25
+Dietikon,dotnet,1,1,0.25
+Dietikon,java,1,1,0.25
+Dietikon,javascript,1,1,0.25
+Dietikon,microservices,1,1,0.25
+Dietikon,react,1,1,0.25
+Dietikon,sql,1,1,0.25
+Dietikon,typescript,1,1,0.25
+Dietikon,vue,1,1,0.25
+Domat/Ems,python,2,1,1.0
+Duggingen,azure,1,1,1.0
+Dällikon,agile,3,1,0.75
+Dällikon,devops,1,2,0.25
+Dällikon,nextjs,1,2,0.25
+Dällikon,php,1,2,0.25
+Dällikon,react,1,2,0.25
+Dällikon,symfony,1,2,0.25
+Dättwil AG,ci_cd,2,1,0.6667
+Dättwil AG,docker,2,1,0.6667
+Dättwil AG,kubernetes,2,1,0.6667
+Dättwil AG,linux,2,1,0.6667
+Dättwil AG,microservices,2,1,0.6667
+Dättwil AG,angular,1,2,0.3333
+Dättwil AG,ansible,1,2,0.3333
+Dättwil AG,devops,1,2,0.3333
+Dättwil AG,git,1,2,0.3333
+Dättwil AG,java,1,2,0.3333
+Dättwil AG,react,1,2,0.3333
+Dättwil AG,spring,1,2,0.3333
+Dättwil AG,typescript,1,2,0.3333
+Ebikon,azure,1,1,0.5
+Ecublens VD,c++,2,1,1.0
+Ecublens VD,csharp,2,1,1.0
+Ecublens VD,dotnet,2,1,1.0
+Ecublens VD,git,2,1,1.0
+Emmen,azure,2,1,0.2857
+Emmen,dotnet,1,2,0.1429
+Emmen,git,1,2,0.1429
+Emmen,java,1,2,0.1429
+Emmen,mssql,1,2,0.1429
+Emmen,python,1,2,0.1429
+Emmen,rest_api,1,2,0.1429
+Eschen,ansible,2,1,0.6667
+Eschen,docker,1,2,0.3333
+Eschen,git,1,2,0.3333
+Eschen,linux,1,2,0.3333
+Eschen,oracle,1,2,0.3333
+Eschen,postgresql,1,2,0.3333
+Eschen,sql,1,2,0.3333
+Eschlikon TG,c++,1,1,1.0
+Eschlikon TG,python,1,1,1.0
+Fehraltorf,azure,1,1,0.3333
+Fehraltorf,c++,1,1,0.3333
+Fehraltorf,csharp,1,1,0.3333
+Fehraltorf,linux,1,1,0.3333
+Fehraltorf,oracle,1,1,0.3333
+Fehraltorf,python,1,1,0.3333
+Fehraltorf,sql,1,1,0.3333
+"Fehraltorf (Zurich), Switzerland",azure,1,1,1.0
+"Fehraltorf (Zurich), Switzerland",oracle,1,1,1.0
+"Fehraltorf (Zurich), Switzerland",sql,1,1,1.0
+Frauenfeld,agile,1,1,0.125
+Frauenfeld,devops,1,1,0.125
+Frauenfeld,linux,1,1,0.125
+Freienbach,agile,1,1,1.0
+Freienbach,git,1,1,1.0
+Freienbach,linux,1,1,1.0
+Freienbach,rest_api,1,1,1.0
+Freienbach,rust,1,1,1.0
+Freienbach,test_automation,1,1,1.0
+Freienbach,typescript,1,1,1.0
+Fribourg,javascript,1,1,0.5
+Frick,azure,1,1,1.0
+Frick,javascript,1,1,1.0
+Frick,linux,1,1,1.0
+Frick,php,1,1,1.0
+Frick,sql,1,1,1.0
+Friesencham,azure,1,1,1.0
+Friesencham,docker,1,1,1.0
+Geneva,python,23,1,0.5
+Geneva,docker,17,2,0.3696
+Geneva,java,16,3,0.3478
+Geneva,rest_api,14,4,0.3043
+Geneva,ci_cd,13,5,0.2826
+Geneva,aws,12,6,0.2609
+Geneva,azure,11,7,0.2391
+Geneva,sql,11,7,0.2391
+Geneva,kubernetes,10,8,0.2174
+Geneva,agile,9,9,0.1957
+Geneva,php,9,9,0.1957
+Geneva,devops,8,10,0.1739
+Geneva,git,8,10,0.1739
+Geneva,linux,6,11,0.1304
+Geneva,react,6,11,0.1304
+Geneva,etl,5,12,0.1087
+Geneva,postgresql,5,12,0.1087
+Geneva,typescript,5,12,0.1087
+Geneva,spark,4,13,0.087
+Geneva,spring,4,13,0.087
+Geneva,c++,3,14,0.0652
+Geneva,csharp,3,14,0.0652
+Geneva,gcp,3,14,0.0652
+Geneva,kafka,3,14,0.0652
+Geneva,nodejs,3,14,0.0652
+Geneva,openshift,3,14,0.0652
+Geneva,oracle,3,14,0.0652
+Geneva,snowflake,3,14,0.0652
+Geneva,test_automation,3,14,0.0652
+Geneva,dotnet,2,15,0.0435
+Geneva,fastapi,2,15,0.0435
+Geneva,flask,2,15,0.0435
+Geneva,javascript,2,15,0.0435
+Geneva,microservices,2,15,0.0435
+Geneva,pytorch,2,15,0.0435
+Geneva,tensorflow,2,15,0.0435
+Geneva,terraform,2,15,0.0435
+Geneva,angular,1,16,0.0217
+Geneva,bigquery,1,16,0.0217
+Geneva,databricks,1,16,0.0217
+Geneva,dbt,1,16,0.0217
+Geneva,devsecops,1,16,0.0217
+Geneva,django,1,16,0.0217
+Geneva,elasticsearch,1,16,0.0217
+Geneva,hadoop,1,16,0.0217
+Geneva,redshift,1,16,0.0217
+Geneva,scala,1,16,0.0217
+Geneva,scikit_learn,1,16,0.0217
+Geneva - 20 Quai Ernest - Ansermet,agile,1,1,1.0
+"Geneva, Zurich",spark,3,1,1.0
+"Geneva, Zurich",aws,2,2,0.6667
+"Geneva, Zurich",azure,2,2,0.6667
+"Geneva, Zurich",ci_cd,2,2,0.6667
+"Geneva, Zurich",gcp,2,2,0.6667
+"Geneva, Zurich",databricks,1,3,0.3333
+"Geneva, Zurich",dbt,1,3,0.3333
+"Geneva, Zurich",devops,1,3,0.3333
+"Geneva, Zurich",etl,1,3,0.3333
+"Geneva, Zurich",python,1,3,0.3333
+"Geneva, Zurich",snowflake,1,3,0.3333
+"Geneva, Zurich",sql,1,3,0.3333
+"Geneva, Zurich",terraform,1,3,0.3333
+Genève,ansible,2,1,0.4
+Genève,linux,2,1,0.4
+Genève,mssql,2,1,0.4
+Genève,oracle,2,1,0.4
+Genève,postgresql,2,1,0.4
+Genève,sql,2,1,0.4
+Genève,agile,1,2,0.2
+Genève,ci_cd,1,2,0.2
+Genève,gcp,1,2,0.2
+Gerlafingen,linux,1,1,1.0
+Glattbrugg,agile,2,1,0.4
+Glattbrugg,azure,2,1,0.4
+Glattbrugg,ci_cd,2,1,0.4
+Glattbrugg,sql,2,1,0.4
+Glattbrugg,angular,1,2,0.2
+Glattbrugg,clean_code,1,2,0.2
+Glattbrugg,csharp,1,2,0.2
+Glattbrugg,dbt,1,2,0.2
+Glattbrugg,devops,1,2,0.2
+Glattbrugg,dotnet,1,2,0.2
+Glattbrugg,git,1,2,0.2
+Glattbrugg,kafka,1,2,0.2
+Glattbrugg,python,1,2,0.2
+Glattbrugg,rest_api,1,2,0.2
+Glattbrugg,snowflake,1,2,0.2
+Glattpark,ansible,1,1,0.3333
+Glattpark,kubernetes,1,1,0.3333
+Glattpark,linux,1,1,0.3333
+Glattpark,python,1,1,0.3333
+Grand-Lancy,devsecops,1,1,1.0
+Graubünden,c++,1,1,1.0
+Grüsch,ci_cd,1,1,0.5
+Grüsch,csharp,1,1,0.5
+Grüsch,docker,1,1,0.5
+Grüsch,dotnet,1,1,0.5
+Grüsch,git,1,1,0.5
+Grüsch,kubernetes,1,1,0.5
+Grüsch,postgresql,1,1,0.5
+Grüsch,python,1,1,0.5
+Grüsch,react,1,1,0.5
+Grüsch,rest_api,1,1,0.5
+Grüsch,sql,1,1,0.5
+Gümligen,python,2,1,0.6667
+Gümligen,ansible,1,2,0.3333
+Gümligen,azure,1,2,0.3333
+Gümligen,devops,1,2,0.3333
+Gümligen,kubernetes,1,2,0.3333
+Gümligen,linux,1,2,0.3333
+Gümligen,postgresql,1,2,0.3333
+Hard,agile,1,1,1.0
+Hard,javascript,1,1,1.0
+Heerbrugg,aws,1,1,0.5
+Heerbrugg,azure,1,1,0.5
+Heerbrugg,ci_cd,1,1,0.5
+Heerbrugg,devops,1,1,0.5
+Heerbrugg,docker,1,1,0.5
+Heerbrugg,gcp,1,1,0.5
+Heerbrugg,git,1,1,0.5
+Heerbrugg,kubernetes,1,1,0.5
+Heerbrugg,python,1,1,0.5
+Heerbrugg,rest_api,1,1,0.5
+Heerbrugg,typescript,1,1,0.5
+Herisau,agile,5,1,0.4545
+Herisau,clean_code,2,2,0.1818
+Herisau,csharp,2,2,0.1818
+Herisau,dotnet,2,2,0.1818
+Herisau,java,2,2,0.1818
+Herisau,linux,2,2,0.1818
+Herisau,ansible,1,3,0.0909
+Herisau,c++,1,3,0.0909
+Herisau,ci_cd,1,3,0.0909
+Herisau,devops,1,3,0.0909
+Herisau,elasticsearch,1,3,0.0909
+Herisau,express,1,3,0.0909
+Herisau,graphql,1,3,0.0909
+Herisau,kubernetes,1,3,0.0909
+Herisau,microservices,1,3,0.0909
+Herisau,mysql,1,3,0.0909
+Herisau,nextjs,1,3,0.0909
+Herisau,react,1,3,0.0909
+Herisau,rest_api,1,3,0.0909
+Herisau,typescript,1,3,0.0909
+Hinwil,ci_cd,3,1,1.0
+Hinwil,csharp,1,2,0.3333
+Hinwil,devops,1,2,0.3333
+Hinwil,dotnet,1,2,0.3333
+Horgen,azure,1,1,0.25
+Horgen,express,1,1,0.25
+Horgen,sql,1,1,0.25
+Härkingen,azure,1,1,1.0
+Härkingen,mssql,1,1,1.0
+Härkingen,sql,1,1,1.0
+Jegenstorf,agile,2,1,1.0
+Jegenstorf,ci_cd,2,1,1.0
+Jegenstorf,git,2,1,1.0
+Jegenstorf,java,2,1,1.0
+Jegenstorf,spring,2,1,1.0
+Jegenstorf,sql,2,1,1.0
+Jona,angular,1,1,1.0
+Jona,java,1,1,1.0
+Jona,mssql,1,1,1.0
+Jona,oracle,1,1,1.0
+Jona,spring,1,1,1.0
+Jona,sql,1,1,1.0
+Julia,c++,1,1,1.0
+Julia,git,1,1,1.0
+Julia,python,1,1,1.0
+Kemptthal,python,1,1,0.3333
+Kemptthal,sql,1,1,0.3333
+Kirchberg,azure,1,1,1.0
+Kirchberg,rest_api,1,1,1.0
+Kreuzlingen,agile,1,1,1.0
+Kreuzlingen,ansible,1,1,1.0
+Kreuzlingen,azure,1,1,1.0
+Kreuzlingen,devops,1,1,1.0
+Kreuzlingen,docker,1,1,1.0
+Kreuzlingen,java,1,1,1.0
+Kreuzlingen,kubernetes,1,1,1.0
+Kreuzlingen,linux,1,1,1.0
+Kreuzlingen,python,1,1,1.0
+Kreuzlingen,sql,1,1,1.0
+Kreuzlingen,terraform,1,1,1.0
+Kriens,sql,3,1,0.5
+Kriens,python,2,2,0.3333
+Kriens,agile,1,3,0.1667
+Kriens,azure,1,3,0.1667
+Kriens,devops,1,3,0.1667
+Kriens,git,1,3,0.1667
+Kriens,nodejs,1,3,0.1667
+Langenthal,oracle,1,1,0.5
+Laufen,azure,1,1,1.0
+Laufenburg,azure,2,1,1.0
+Lausanne,agile,9,1,0.5625
+Lausanne,ci_cd,8,2,0.5
+Lausanne,docker,8,2,0.5
+Lausanne,rest_api,8,2,0.5
+Lausanne,aws,6,3,0.375
+Lausanne,java,6,3,0.375
+Lausanne,kubernetes,6,3,0.375
+Lausanne,python,6,3,0.375
+Lausanne,kafka,5,4,0.3125
+Lausanne,spring,4,5,0.25
+Lausanne,azure,2,6,0.125
+Lausanne,git,2,6,0.125
+Lausanne,microservices,2,6,0.125
+Lausanne,mongodb,2,6,0.125
+Lausanne,nodejs,2,6,0.125
+Lausanne,php,2,6,0.125
+Lausanne,pytorch,2,6,0.125
+Lausanne,redis,2,6,0.125
+Lausanne,sql,2,6,0.125
+Lausanne,terraform,2,6,0.125
+Lausanne,databricks,1,7,0.0625
+Lausanne,etl,1,7,0.0625
+Lausanne,gcp,1,7,0.0625
+Lausanne,graphql,1,7,0.0625
+Lausanne,mssql,1,7,0.0625
+Lausanne,mysql,1,7,0.0625
+Lausanne,playwright,1,7,0.0625
+Lausanne,spark,1,7,0.0625
+Lausanne,tensorflow,1,7,0.0625
+Lausanne,test_automation,1,7,0.0625
+Lausanne,typescript,1,7,0.0625
+Lenzburg,sql,7,1,0.5385
+Lenzburg,agile,5,2,0.3846
+Lenzburg,linux,4,3,0.3077
+Lenzburg,oracle,4,3,0.3077
+Lenzburg,ci_cd,2,4,0.1538
+Lenzburg,git,2,4,0.1538
+Lenzburg,aws,1,5,0.0769
+Lenzburg,azure,1,5,0.0769
+Lenzburg,csharp,1,5,0.0769
+Lenzburg,devops,1,5,0.0769
+Lenzburg,docker,1,5,0.0769
+Lenzburg,dotnet,1,5,0.0769
+Lenzburg,java,1,5,0.0769
+Lenzburg,mysql,1,5,0.0769
+Lenzburg,openshift,1,5,0.0769
+Lenzburg,postgresql,1,5,0.0769
+Lenzburg,python,1,5,0.0769
+Lenzburg,swift,1,5,0.0769
+Liebefeld,java,1,1,1.0
+Lindau,angular,1,1,1.0
+Lindau,ci_cd,1,1,1.0
+Lindau,devops,1,1,1.0
+Lindau,docker,1,1,1.0
+Lindau,dotnet,1,1,1.0
+Lindau,kubernetes,1,1,1.0
+Losone,agile,1,1,1.0
+Losone,csharp,1,1,1.0
+Losone,dotnet,1,1,1.0
+Lugano,docker,1,1,0.5
+Lugano,java,1,1,0.5
+Lugano,python,1,1,0.5
+Luzern,azure,7,1,0.2917
+Luzern,agile,5,2,0.2083
+Luzern,docker,5,2,0.2083
+Luzern,ci_cd,3,3,0.125
+Luzern,kubernetes,3,3,0.125
+Luzern,linux,3,3,0.125
+Luzern,mssql,3,3,0.125
+Luzern,postgresql,3,3,0.125
+Luzern,rest_api,3,3,0.125
+Luzern,devops,2,4,0.0833
+Luzern,dotnet,2,4,0.0833
+Luzern,java,2,4,0.0833
+Luzern,python,2,4,0.0833
+Luzern,react,2,4,0.0833
+Luzern,angular,1,5,0.0417
+Luzern,ansible,1,5,0.0417
+Luzern,clean_code,1,5,0.0417
+Luzern,csharp,1,5,0.0417
+Luzern,git,1,5,0.0417
+Luzern,kotlin,1,5,0.0417
+Luzern,openshift,1,5,0.0417
+Luzern,php,1,5,0.0417
+Luzern,spring,1,5,0.0417
+Luzern,sql,1,5,0.0417
+Luzern,terraform,1,5,0.0417
+Luzern,typescript,1,5,0.0417
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,angular,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,ci_cd,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,csharp,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,dotnet,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,mssql,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,postgresql,1,1,1.0
+Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,sql,1,1,1.0
+Luzern / hybrid,agile,2,1,1.0
+Luzern / hybrid,angular,1,2,0.5
+Luzern / hybrid,clean_code,1,2,0.5
+Luzern / hybrid,devops,1,2,0.5
+Luzern / hybrid,docker,1,2,0.5
+Luzern / hybrid,java,1,2,0.5
+Luzern / hybrid,kubernetes,1,2,0.5
+Luzern oder Zürich,python,1,1,1.0
+Martigny,sql,1,1,1.0
+Meiringen,sql,1,1,1.0
+Meisterschwanden,azure,2,1,1.0
+Meisterschwanden,agile,1,2,0.5
+Meyrin,agile,1,1,0.5
+Meyrin,dbt,1,1,0.5
+Meyrin,sql,1,1,0.5
+Moosseedorf,git,9,1,1.0
+Moosseedorf,ansible,7,2,0.7778
+Moosseedorf,azure,6,3,0.6667
+Moosseedorf,ci_cd,5,4,0.5556
+Moosseedorf,python,4,5,0.4444
+Moosseedorf,sql,4,5,0.4444
+Moosseedorf,agile,3,6,0.3333
+Moosseedorf,docker,3,6,0.3333
+Moosseedorf,openshift,3,6,0.3333
+Moosseedorf,rest_api,3,6,0.3333
+Moosseedorf,csharp,2,7,0.2222
+Moosseedorf,cypress,2,7,0.2222
+Moosseedorf,java,2,7,0.2222
+Moosseedorf,javascript,2,7,0.2222
+Moosseedorf,linux,2,7,0.2222
+Moosseedorf,oracle,2,7,0.2222
+Moosseedorf,playwright,2,7,0.2222
+Moosseedorf,selenium,2,7,0.2222
+Moosseedorf,test_automation,2,7,0.2222
+Moosseedorf,devops,1,8,0.1111
+Moosseedorf,terraform,1,8,0.1111
+Muhen,angular,2,1,1.0
+Muhen,c++,2,1,1.0
+Muhen,csharp,2,1,1.0
+Muhen,java,2,1,1.0
+Muhen,linux,2,1,1.0
+Muhen,oracle,2,1,1.0
+Muhen,typescript,2,1,1.0
+Muhen,agile,1,2,0.5
+Mägenwil,bigquery,2,1,0.6667
+Mägenwil,ci_cd,2,1,0.6667
+Mägenwil,databricks,2,1,0.6667
+Mägenwil,dbt,2,1,0.6667
+Mägenwil,etl,2,1,0.6667
+Mägenwil,python,2,1,0.6667
+Mägenwil,snowflake,2,1,0.6667
+Mägenwil,sql,2,1,0.6667
+Mägenwil,azure,1,2,0.3333
+Mägenwil,devops,1,2,0.3333
+Mägenwil,docker,1,2,0.3333
+Mägenwil,terraform,1,2,0.3333
+Neuchatel,agile,1,1,1.0
+Neuchatel,oracle,1,1,1.0
+Neuchâtel,python,1,1,0.5
+Nice,agile,1,1,1.0
+Nice,azure,1,1,1.0
+Nice,c++,1,1,1.0
+Nice,ci_cd,1,1,1.0
+Nice,csharp,1,1,1.0
+Nice,devops,1,1,1.0
+Nice,docker,1,1,1.0
+Nice,git,1,1,1.0
+Nice,postgresql,1,1,1.0
+Niederwangen,agile,1,1,1.0
+Niederweningen,c++,1,1,1.0
+Niederweningen,git,1,1,1.0
+Niederweningen,linux,1,1,1.0
+Nottwil,azure,1,1,1.0
+Oberbuchsiten,csharp,1,1,1.0
+Oberbuchsiten,postgresql,1,1,1.0
+Oberbuchsiten,python,1,1,1.0
+Oberbüren,agile,2,1,1.0
+Oberbüren,java,2,1,1.0
+Oberbüren,mysql,2,1,1.0
+Oberbüren,rest_api,2,1,1.0
+Oberbüren,spring,2,1,1.0
+Oberrohrdorf,agile,1,1,1.0
+Oberrohrdorf,graphql,1,1,1.0
+Oberrohrdorf,nextjs,1,1,1.0
+Oberrohrdorf,nodejs,1,1,1.0
+Oberrohrdorf,rest_api,1,1,1.0
+Oberrüti,azure,2,1,1.0
+Oetwil am See,agile,1,1,1.0
+Oetwil am See,ci_cd,1,1,1.0
+Oetwil am See,kotlin,1,1,1.0
+Oetwil am See,python,1,1,1.0
+Oetwil am See,pytorch,1,1,1.0
+Oftringen,agile,1,1,1.0
+Oftringen,ansible,1,1,1.0
+Oftringen,linux,1,1,1.0
+Oftringen,test_automation,1,1,1.0
+Olten,azure,2,1,0.2222
+Olten,agile,1,2,0.1111
+Olten,angular,1,2,0.1111
+Olten,c++,1,2,0.1111
+Olten,csharp,1,2,0.1111
+Olten,devops,1,2,0.1111
+Olten,dotnet,1,2,0.1111
+Olten,linux,1,2,0.1111
+Olten,postgresql,1,2,0.1111
+Olten,rest_api,1,2,0.1111
+Olten,typescript,1,2,0.1111
+Opfikon,agile,2,1,0.6667
+Paderborn/Büren,c++,2,1,1.0
+Paderborn/Büren,csharp,2,1,1.0
+Paderborn/Büren,devops,2,1,1.0
+Paderborn/Büren,docker,2,1,1.0
+Paderborn/Büren,javascript,2,1,1.0
+Paderborn/Büren,kubernetes,2,1,1.0
+Paderborn/Büren,microservices,2,1,1.0
+Paderborn/Büren,python,2,1,1.0
+Paudex,ci_cd,1,1,1.0
+Paudex,devops,1,1,1.0
+Paudex,git,1,1,1.0
+Paudex,kubernetes,1,1,1.0
+Porto,ci_cd,1,1,1.0
+Porto,etl,1,1,1.0
+Porto,python,1,1,1.0
+Porto,sql,1,1,1.0
+Praz Buchilly,docker,1,1,1.0
+Praz Buchilly,java,1,1,1.0
+Pully,agile,2,1,0.4
+Pully,aws,2,1,0.4
+Pully,azure,2,1,0.4
+Pully,ci_cd,2,1,0.4
+Pully,react,2,1,0.4
+Pully,terraform,2,1,0.4
+Pully,angular,1,2,0.2
+Pully,databricks,1,2,0.2
+Pully,devops,1,2,0.2
+Pully,dotnet,1,2,0.2
+Pully,gcp,1,2,0.2
+Pully,javascript,1,2,0.2
+Pully,linux,1,2,0.2
+Pully,php,1,2,0.2
+Pully,snowflake,1,2,0.2
+Pully,spark,1,2,0.2
+Pully,sql,1,2,0.2
+Pully,test_automation,1,2,0.2
+Pully,vue,1,2,0.2
+Rapperswi-Jona,azure,1,1,1.0
+Rapperswi-Jona,devops,1,1,1.0
+Rapperswi-Jona,terraform,1,1,1.0
+Rapperswil,azure,1,1,1.0
+Rapperswil,ci_cd,1,1,1.0
+Rapperswil,csharp,1,1,1.0
+Rapperswil,devops,1,1,1.0
+Rapperswil,docker,1,1,1.0
+Rapperswil,dotnet,1,1,1.0
+Rapperswil,kubernetes,1,1,1.0
+Rapperswil,react,1,1,1.0
+Raum Zürich / Zug / Solothurn,azure,1,1,1.0
+Regensdorf,angular,1,1,0.5
+Regensdorf,ci_cd,1,1,0.5
+Regensdorf,dotnet,1,1,0.5
+Regensdorf,git,1,1,0.5
+Regensdorf,react,1,1,0.5
+Regensdorf,sql,1,1,0.5
+Regensdorf,vue,1,1,0.5
+Region Ostschweiz.,azure,1,1,1.0
+Region Ostschweiz.,php,1,1,1.0
+Region Zentralschweiz,agile,1,1,1.0
+Region Zentralschweiz,angular,1,1,1.0
+Region Zentralschweiz,ci_cd,1,1,1.0
+Region Zentralschweiz,clean_code,1,1,1.0
+Region Zentralschweiz,docker,1,1,1.0
+Region Zentralschweiz,java,1,1,1.0
+Region Zentralschweiz,junit,1,1,1.0
+Region Zentralschweiz,kubernetes,1,1,1.0
+Region Zentralschweiz,microservices,1,1,1.0
+Region Zentralschweiz,openshift,1,1,1.0
+Region Zentralschweiz,react,1,1,1.0
+Reichenburg,etl,1,1,1.0
+Reichenburg,mssql,1,1,1.0
+Reichenburg,sql,1,1,1.0
+Reinach,azure,1,1,1.0
+Reinach BL,c++,2,1,0.4
+Reinach BL,azure,1,2,0.2
+Reinach BL,laravel,1,2,0.2
+Reinach BL,linux,1,2,0.2
+Rheinfelden,csharp,1,1,1.0
+Rheinfelden,react,1,1,1.0
+Rheinfelden,sql,1,1,1.0
+Rothenburg,azure,1,1,0.2
+Rothenburg,docker,1,1,0.2
+Rothenburg,kubernetes,1,1,0.2
+Rothenburg,python,1,1,0.2
+Rothenburg,rest_api,1,1,0.2
+Rotkreuz,linux,3,1,0.25
+Rotkreuz,devops,2,2,0.1667
+Rotkreuz,python,2,2,0.1667
+Rotkreuz,azure,1,3,0.0833
+Rotkreuz,devsecops,1,3,0.0833
+Rotkreuz,kubernetes,1,3,0.0833
+Rotkreuz,rust,1,3,0.0833
+Rotkreuz,sql,1,3,0.0833
+Ruggell,agile,1,1,1.0
+Ruswil,agile,1,1,1.0
+Sankt Gallen,azure,1,1,1.0
+Satigny,agile,1,1,1.0
+Satigny,linux,1,1,1.0
+Satigny,python,1,1,1.0
+Schaan,azure,1,1,0.25
+Schaan,c++,1,1,0.25
+Schachen,docker,1,1,1.0
+Schachen,javascript,1,1,1.0
+Schachen,kubernetes,1,1,1.0
+Schachen,php,1,1,1.0
+Schachen,rest_api,1,1,1.0
+Schachen,symfony,1,1,1.0
+Schachen,typescript,1,1,1.0
+Schaffhausen,linux,2,1,0.2
+Schaffhausen,azure,1,2,0.1
+Schaffhausen,ci_cd,1,2,0.1
+Schaffhausen,csharp,1,2,0.1
+Schaffhausen,dart,1,2,0.1
+Schaffhausen,devops,1,2,0.1
+Schaffhausen,php,1,2,0.1
+Schlieren,agile,2,1,0.5
+Schlieren,ci_cd,2,1,0.5
+Schlieren,devops,2,1,0.5
+Schlieren,python,2,1,0.5
+Schlieren,sql,2,1,0.5
+Schlieren,airflow,1,2,0.25
+Schlieren,aws,1,2,0.25
+Schlieren,azure,1,2,0.25
+Schlieren,c++,1,2,0.25
+Schlieren,databricks,1,2,0.25
+Schlieren,dotnet,1,2,0.25
+Schlieren,fastapi,1,2,0.25
+Schlieren,gcp,1,2,0.25
+Schlieren,java,1,2,0.25
+Schlieren,kafka,1,2,0.25
+Schlieren,kubernetes,1,2,0.25
+Schlieren,linux,1,2,0.25
+Schlieren,pytorch,1,2,0.25
+Schlieren,rust,1,2,0.25
+Schlieren,scala,1,2,0.25
+Schlieren,scikit_learn,1,2,0.25
+Schlieren,snowflake,1,2,0.25
+Schlieren,spark,1,2,0.25
+Schlieren,terraform,1,2,0.25
+Schlieren,typescript,1,2,0.25
+Schweiz,agile,1,1,1.0
+Schweiz,clean_code,1,1,1.0
+Schweiz,devops,1,1,1.0
+Schweiz,docker,1,1,1.0
+Schweiz,git,1,1,1.0
+Schweiz,java,1,1,1.0
+Schweiz,junit,1,1,1.0
+Schweiz,kubernetes,1,1,1.0
+Schweiz,react,1,1,1.0
+Schweiz,spring,1,1,1.0
+Schweiz,sql,1,1,1.0
+Schwyz,ci_cd,2,1,0.5
+Schwyz,sql,2,1,0.5
+Schwyz,aws,1,2,0.25
+Schwyz,devops,1,2,0.25
+Schwyz,express,1,2,0.25
+Schwyz,git,1,2,0.25
+Schwyz,go,1,2,0.25
+Schwyz,kafka,1,2,0.25
+Schwyz,kubernetes,1,2,0.25
+Schwyz,linux,1,2,0.25
+Schwyz,mssql,1,2,0.25
+Schwyz,oracle,1,2,0.25
+Seewen SZ,sql,2,1,0.6667
+Seewen SZ,devops,1,2,0.3333
+Sempach,azure,1,1,0.3333
+Seuzach,azure,1,1,0.5
+Solothurn,sql,3,1,0.4286
+Solothurn,ansible,2,2,0.2857
+Solothurn,ci_cd,2,2,0.2857
+Solothurn,docker,2,2,0.2857
+Solothurn,linux,2,2,0.2857
+Solothurn,agile,1,3,0.1429
+Solothurn,devops,1,3,0.1429
+Solothurn,git,1,3,0.1429
+Solothurn,kubernetes,1,3,0.1429
+Solothurn,openshift,1,3,0.1429
+Solothurn,oracle,1,3,0.1429
+Solothurn,terraform,1,3,0.1429
+Spreitenbach,azure,1,1,0.1429
+St. Gallen,ci_cd,5,1,0.4545
+St. Gallen,python,4,2,0.3636
+St. Gallen,agile,3,3,0.2727
+St. Gallen,aws,3,3,0.2727
+St. Gallen,azure,3,3,0.2727
+St. Gallen,devops,3,3,0.2727
+St. Gallen,docker,3,3,0.2727
+St. Gallen,gcp,3,3,0.2727
+St. Gallen,git,3,3,0.2727
+St. Gallen,kubernetes,3,3,0.2727
+St. Gallen,microservices,3,3,0.2727
+St. Gallen,rest_api,3,3,0.2727
+St. Gallen,sql,3,3,0.2727
+St. Gallen,react,2,4,0.1818
+St. Gallen,angular,1,5,0.0909
+St. Gallen,c++,1,5,0.0909
+St. Gallen,csharp,1,5,0.0909
+St. Gallen,django,1,5,0.0909
+St. Gallen,fastapi,1,5,0.0909
+St. Gallen,java,1,5,0.0909
+St. Gallen,kotlin,1,5,0.0909
+St. Gallen,linux,1,5,0.0909
+St. Gallen,mssql,1,5,0.0909
+St. Gallen,nodejs,1,5,0.0909
+St. Gallen,postgresql,1,5,0.0909
+St. Gallen,scala,1,5,0.0909
+St. Gallen,test_automation,1,5,0.0909
+St. Gallen,vue,1,5,0.0909
+St. Margrethen,agile,1,1,0.3333
+St. Margrethen,linux,1,1,0.3333
+Steinhausen,agile,3,1,0.6
+Steinhausen,ci_cd,3,1,0.6
+Steinhausen,csharp,3,1,0.6
+Steinhausen,git,3,1,0.6
+Steinhausen,python,3,1,0.6
+Steinhausen,c++,2,2,0.4
+Steinhausen,pytorch,2,2,0.4
+Steinhausen,tensorflow,2,2,0.4
+Steinhausen,dotnet,1,3,0.2
+Steinhausen,linux,1,3,0.2
+Stäfa,c++,1,1,1.0
+Stäfa,java,1,1,1.0
+Stäfa,javascript,1,1,1.0
+Stäfa,linux,1,1,1.0
+Stäfa,mssql,1,1,1.0
+Stäfa,mysql,1,1,1.0
+Stäfa,php,1,1,1.0
+Sursee,azure,3,1,0.3
+Sursee,linux,2,2,0.2
+Sursee,agile,1,3,0.1
+Sursee,ansible,1,3,0.1
+Sursee,gcp,1,3,0.1
+Sursee,git,1,3,0.1
+Sursee,kubernetes,1,3,0.1
+Sursee,terraform,1,3,0.1
+Switzerland,azure,2,1,0.6667
+Switzerland,ci_cd,2,1,0.6667
+Switzerland,aws,1,2,0.3333
+Switzerland,c++,1,2,0.3333
+Switzerland,gcp,1,2,0.3333
+Switzerland,git,1,2,0.3333
+Switzerland,kubernetes,1,2,0.3333
+Switzerland,python,1,2,0.3333
+Switzerland,scikit_learn,1,2,0.3333
+Switzerland,sql,1,2,0.3333
+Switzerland,terraform,1,2,0.3333
+Switzerland &gt; Allschwil : H-127,agile,1,1,1.0
+Switzerland &gt; Basel : H-127 A2,aws,2,1,1.0
+Switzerland &gt; Basel : H-127 A2,ci_cd,2,1,1.0
+Switzerland &gt; Basel : H-127 A2,devops,2,1,1.0
+Switzerland &gt; Basel : H-127 A2,docker,2,1,1.0
+Switzerland &gt; Basel : H-127 A2,terraform,2,1,1.0
+Switzerland &gt; Basel : H-127 A2,airflow,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,dbt,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,etl,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,git,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,hadoop,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,java,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,kubernetes,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,python,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,scala,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,spark,1,2,0.5
+Switzerland &gt; Basel : H-127 A2,sql,1,2,0.5
+Tagelswangen,azure,1,1,1.0
+Tagelswangen,sql,1,1,1.0
+Thun,devsecops,5,1,0.4167
+Thun,ansible,4,2,0.3333
+Thun,ci_cd,4,2,0.3333
+Thun,terraform,4,2,0.3333
+Thun,azure,2,3,0.1667
+Thun,devops,2,3,0.1667
+Thun,docker,2,3,0.1667
+Thun,git,2,3,0.1667
+Thun,kubernetes,2,3,0.1667
+Thun,agile,1,4,0.0833
+Thun,angular,1,4,0.0833
+Thun,java,1,4,0.0833
+Thun,react,1,4,0.0833
+Thun (Gwatt),azure,1,1,0.5
+Thun (Gwatt),cypress,1,1,0.5
+Thun (Gwatt),devops,1,1,0.5
+Thun (Gwatt),playwright,1,1,0.5
+Thun (Gwatt),rest_api,1,1,0.5
+Thun (Gwatt),selenium,1,1,0.5
+Thunersee,azure,1,1,1.0
+Thunersee,linux,1,1,1.0
+Thurgau,agile,1,1,1.0
+Thurgau,c++,1,1,1.0
+Thurgau,ci_cd,1,1,1.0
+Thurgau,linux,1,1,1.0
+Thurgau,python,1,1,1.0
+Thurgau,rust,1,1,1.0
+Ticino,agile,1,1,1.0
+Ticino,ansible,1,1,1.0
+Ticino,aws,1,1,1.0
+Ticino,azure,1,1,1.0
+Ticino,ci_cd,1,1,1.0
+Ticino,devops,1,1,1.0
+Ticino,docker,1,1,1.0
+Ticino,gcp,1,1,1.0
+Ticino,git,1,1,1.0
+Ticino,kubernetes,1,1,1.0
+Ticino,openshift,1,1,1.0
+Ticino,terraform,1,1,1.0
+Unknown,agile,1,1,0.3333
+Unknown,c++,1,1,0.3333
+Unknown,ci_cd,1,1,0.3333
+Unknown,clean_code,1,1,0.3333
+Unknown,csharp,1,1,0.3333
+Unterentfelden,azure,1,1,1.0
+Unterentfelden,linux,1,1,1.0
+Unterentfelden,sql,1,1,1.0
+Unterkulm,azure,1,1,1.0
+Unterkulm,docker,1,1,1.0
+Unterkulm,kubernetes,1,1,1.0
+Unterkulm,linux,1,1,1.0
+Urdorf,agile,1,1,1.0
+Urdorf,angular,1,1,1.0
+Urdorf,ci_cd,1,1,1.0
+Urdorf,cypress,1,1,1.0
+Urdorf,git,1,1,1.0
+Urdorf,javascript,1,1,1.0
+Urdorf,jest,1,1,1.0
+Urdorf,playwright,1,1,1.0
+Urdorf,rest_api,1,1,1.0
+Urdorf,typescript,1,1,1.0
+Vaduz,angular,1,1,1.0
+Vaduz,devops,1,1,1.0
+Vaduz,docker,1,1,1.0
+Vaduz,git,1,1,1.0
+Vaduz,kubernetes,1,1,1.0
+Vaduz,laravel,1,1,1.0
+Vaduz,mysql,1,1,1.0
+Vaduz,php,1,1,1.0
+Vaduz,postgresql,1,1,1.0
+Vaduz,symfony,1,1,1.0
+Vitznau,linux,1,1,1.0
+Volketswil,azure,2,1,0.3333
+Volketswil,aws,1,2,0.1667
+Volketswil,devops,1,2,0.1667
+Volketswil,gcp,1,2,0.1667
+Volketswil,linux,1,2,0.1667
+Volketswil,mssql,1,2,0.1667
+Volketswil,python,1,2,0.1667
+Volketswil,sql,1,2,0.1667
+Volketswil,terraform,1,2,0.1667
+Wallisellen,linux,7,1,0.3333
+Wallisellen,docker,5,2,0.2381
+Wallisellen,kubernetes,5,2,0.2381
+Wallisellen,ci_cd,4,3,0.1905
+Wallisellen,azure,3,4,0.1429
+Wallisellen,devops,3,4,0.1429
+Wallisellen,rest_api,3,4,0.1429
+Wallisellen,c++,2,5,0.0952
+Wallisellen,git,2,5,0.0952
+Wallisellen,openshift,2,5,0.0952
+Wallisellen,agile,1,6,0.0476
+Wallisellen,ansible,1,6,0.0476
+Wallisellen,csharp,1,6,0.0476
+Wallisellen,databricks,1,6,0.0476
+Wallisellen,etl,1,6,0.0476
+Wallisellen,java,1,6,0.0476
+Wallisellen,oracle,1,6,0.0476
+Wallisellen,python,1,6,0.0476
+Wallisellen,terraform,1,6,0.0476
+Wallisellen,test_automation,1,6,0.0476
+Weggis,agile,1,1,1.0
+Weggis,azure,1,1,1.0
+Weggis,ci_cd,1,1,1.0
+Weggis,csharp,1,1,1.0
+Weggis,cypress,1,1,1.0
+Weggis,devops,1,1,1.0
+Weggis,dotnet,1,1,1.0
+Weggis,playwright,1,1,1.0
+Weggis,react,1,1,1.0
+Weggis,rest_api,1,1,1.0
+Weggis,sql,1,1,1.0
+Weggis,terraform,1,1,1.0
+Weggis,typescript,1,1,1.0
+Wetzikon,azure,1,1,1.0
+Wetzikon ZH,azure,4,1,0.8
+Wetzikon ZH,devops,2,2,0.4
+Wetzikon ZH,rest_api,2,2,0.4
+Wetzikon ZH,sql,2,2,0.4
+Wetzikon ZH,agile,1,3,0.2
+Wetzikon ZH,angular,1,3,0.2
+Wetzikon ZH,ci_cd,1,3,0.2
+Wetzikon ZH,csharp,1,3,0.2
+Wetzikon ZH,cypress,1,3,0.2
+Wetzikon ZH,dotnet,1,3,0.2
+Wetzikon ZH,git,1,3,0.2
+Wetzikon ZH,mssql,1,3,0.2
+Wetzikon ZH,react,1,3,0.2
+Wetzikon ZH,typescript,1,3,0.2
+Wilderswil,linux,2,1,1.0
+Wilderswil,oracle,2,1,1.0
+Willisau,azure,1,1,1.0
+Willisau,mssql,1,1,1.0
+Winterthur,linux,5,1,0.2273
+Winterthur,agile,4,2,0.1818
+Winterthur,ansible,4,2,0.1818
+Winterthur,azure,4,2,0.1818
+Winterthur,python,3,3,0.1364
+Winterthur,ci_cd,2,4,0.0909
+Winterthur,devops,2,4,0.0909
+Winterthur,java,2,4,0.0909
+Winterthur,kubernetes,2,4,0.0909
+Winterthur,sql,2,4,0.0909
+Winterthur,angular,1,5,0.0455
+Winterthur,aws,1,5,0.0455
+Winterthur,c++,1,5,0.0455
+Winterthur,databricks,1,5,0.0455
+Winterthur,docker,1,5,0.0455
+Winterthur,dotnet,1,5,0.0455
+Winterthur,nodejs,1,5,0.0455
+Winterthur,rest_api,1,5,0.0455
+Winterthur,terraform,1,5,0.0455
+Wohlen AG,ansible,1,1,0.5
+Wohlen AG,azure,1,1,0.5
+Wohlen AG,terraform,1,1,0.5
+Yverdon-les-Bains,agile,1,1,0.5
+Yverdon-les-Bains,ci_cd,1,1,0.5
+Yverdon-les-Bains,docker,1,1,0.5
+Yverdon-les-Bains,java,1,1,0.5
+Yverdon-les-Bains,javascript,1,1,0.5
+Yverdon-les-Bains,python,1,1,0.5
+Yverdon-les-Bains,pytorch,1,1,0.5
+Yverdon-les-Bains,react,1,1,0.5
+Yverdon-les-Bains,sql,1,1,0.5
+Yverdon-les-Bains,tensorflow,1,1,0.5
+Yverdon-les-Bains,typescript,1,1,0.5
+Zuchwil,angular,1,1,1.0
+Zuchwil,ci_cd,1,1,1.0
+Zuchwil,docker,1,1,1.0
+Zuchwil,git,1,1,1.0
+Zuchwil,java,1,1,1.0
+Zuchwil,kafka,1,1,1.0
+Zuchwil,mongodb,1,1,1.0
+Zuchwil,oracle,1,1,1.0
+Zuchwil,postgresql,1,1,1.0
+Zuchwil,react,1,1,1.0
+Zuchwil,spring,1,1,1.0
+Zug,ci_cd,4,1,0.3636
+Zug,python,4,1,0.3636
+Zug,aws,3,2,0.2727
+Zug,git,3,2,0.2727
+Zug,agile,2,3,0.1818
+Zug,azure,2,3,0.1818
+Zug,c++,2,3,0.1818
+Zug,linux,2,3,0.1818
+Zug,ansible,1,4,0.0909
+Zug,devops,1,4,0.0909
+Zug,javascript,1,4,0.0909
+Zug,oracle,1,4,0.0909
+Zug,rest_api,1,4,0.0909
+Zug,snowflake,1,4,0.0909
+Zug,sql,1,4,0.0909
+Zurich,aws,12,1,0.2264
+Zurich,azure,12,1,0.2264
+Zurich,agile,11,2,0.2075
+Zurich,python,11,2,0.2075
+Zurich,devops,10,3,0.1887
+Zurich,java,10,3,0.1887
+Zurich,sql,10,3,0.1887
+Zurich,angular,9,4,0.1698
+Zurich,ci_cd,9,4,0.1698
+Zurich,gcp,8,5,0.1509
+Zurich,docker,7,6,0.1321
+Zurich,spark,7,6,0.1321
+Zurich,c++,6,7,0.1132
+Zurich,git,6,7,0.1132
+Zurich,react,6,7,0.1132
+Zurich,kubernetes,5,8,0.0943
+Zurich,spring,5,8,0.0943
+Zurich,typescript,5,8,0.0943
+Zurich,postgresql,4,9,0.0755
+Zurich,terraform,4,9,0.0755
+Zurich,clean_code,3,10,0.0566
+Zurich,databricks,3,10,0.0566
+Zurich,dbt,3,10,0.0566
+Zurich,dotnet,3,10,0.0566
+Zurich,javascript,3,10,0.0566
+Zurich,kotlin,3,10,0.0566
+Zurich,rest_api,3,10,0.0566
+Zurich,csharp,2,11,0.0377
+Zurich,kafka,2,11,0.0377
+Zurich,openshift,2,11,0.0377
+Zurich,pytorch,2,11,0.0377
+Zurich,scala,2,11,0.0377
+Zurich,scikit_learn,2,11,0.0377
+Zurich,snowflake,2,11,0.0377
+Zurich,tensorflow,2,11,0.0377
+Zurich,ansible,1,12,0.0189
+Zurich,devsecops,1,12,0.0189
+Zurich,etl,1,12,0.0189
+Zurich,go,1,12,0.0189
+Zurich,linux,1,12,0.0189
+Zurich,microservices,1,12,0.0189
+Zurich,mongodb,1,12,0.0189
+Zurich,mysql,1,12,0.0189
+Zurich,nodejs,1,12,0.0189
+Zurich,php,1,12,0.0189
+Zurich,playwright,1,12,0.0189
+Zurich,rust,1,12,0.0189
+Zurich,symfony,1,12,0.0189
+Zurich,test_automation,1,12,0.0189
+Zurich,vue,1,12,0.0189
+Zurich (ZNLZ) (CH),agile,1,1,1.0
+Zurich (ZNLZ) (CH),azure,1,1,1.0
+Zurich (ZNLZ) (CH),ci_cd,1,1,1.0
+Zurich (ZNLZ) (CH),docker,1,1,1.0
+Zurich (ZNLZ) (CH),git,1,1,1.0
+Zurich (ZNLZ) (CH),kubernetes,1,1,1.0
+Zurich (ZNLZ) (CH),microservices,1,1,1.0
+"Zurich, CH",agile,1,1,0.5
+"Zurich, CH",angular,1,1,0.5
+"Zurich, CH",ci_cd,1,1,0.5
+"Zurich, CH",devops,1,1,0.5
+"Zurich, CH",devsecops,1,1,0.5
+"Zurich, CH",java,1,1,0.5
+"Zurich, CH",openshift,1,1,0.5
+"Zurich, CH +1 weitere …",agile,1,1,1.0
+Zweigbüro Mels,agile,1,1,1.0
+Zwingen,aws,1,1,0.5
+Zwingen,azure,1,1,0.5
+Zwingen,gcp,1,1,0.5
+Zürich,agile,43,1,0.2622
+Zürich,azure,41,2,0.25
+Zürich,ci_cd,41,2,0.25
+Zürich,devops,35,3,0.2134
+Zürich,kubernetes,32,4,0.1951
+Zürich,docker,31,5,0.189
+Zürich,python,31,5,0.189
+Zürich,git,30,6,0.1829
+Zürich,sql,28,7,0.1707
+Zürich,java,26,8,0.1585
+Zürich,linux,22,9,0.1341
+Zürich,dotnet,18,10,0.1098
+Zürich,react,16,11,0.0976
+Zürich,csharp,14,12,0.0854
+Zürich,terraform,13,13,0.0793
+Zürich,angular,12,14,0.0732
+Zürich,aws,12,14,0.0732
+Zürich,spring,12,14,0.0732
+Zürich,typescript,11,15,0.0671
+Zürich,gcp,9,16,0.0549
+Zürich,microservices,9,16,0.0549
+Zürich,openshift,9,16,0.0549
+Zürich,oracle,9,16,0.0549
+Zürich,rest_api,9,16,0.0549
+Zürich,ansible,7,17,0.0427
+Zürich,javascript,7,17,0.0427
+Zürich,postgresql,7,17,0.0427
+Zürich,bigquery,6,18,0.0366
+Zürich,etl,6,18,0.0366
+Zürich,go,6,18,0.0366
+Zürich,airflow,5,19,0.0305
+Zürich,graphql,5,19,0.0305
+Zürich,kotlin,5,19,0.0305
+Zürich,mssql,5,19,0.0305
+Zürich,redis,5,19,0.0305
+Zürich,c++,4,20,0.0244
+Zürich,elasticsearch,4,20,0.0244
+Zürich,mongodb,4,20,0.0244
+Zürich (CH),agile,1,1,1.0
+Zürich (CH),azure,1,1,1.0
+Zürich (CH),ci_cd,1,1,1.0
+Zürich (CH),docker,1,1,1.0
+Zürich (CH),git,1,1,1.0
+Zürich (CH),kubernetes,1,1,1.0
+Zürich (CH),microservices,1,1,1.0
+Zürich Flughafen,c++,1,1,0.5
+Zürich Flughafen,rust,1,1,0.5
+Zürich Seebach,agile,4,1,0.8
+Zürich Seebach,linux,3,2,0.6
+Zürich Seebach,ansible,1,3,0.2
+Zürich Seebach,c++,1,3,0.2
+Zürich Seebach,ci_cd,1,3,0.2
+Zürich Seebach,csharp,1,3,0.2
+Zürich Seebach,git,1,3,0.2
+Zürich Seebach,python,1,3,0.2
+Zürich aber,aws,1,1,1.0
+Zürich aber,azure,1,1,1.0
+Zürich aber,ci_cd,1,1,1.0
+Zürich aber,dbt,1,1,1.0
+Zürich aber,etl,1,1,1.0
+Zürich aber,gcp,1,1,1.0
+Zürich aber,python,1,1,1.0
+Zürich aber,scala,1,1,1.0
+Zürich aber,sql,1,1,1.0
+Zürich oder,csharp,1,1,1.0
+Zürich oder,javascript,1,1,1.0
+Zürich oder,react,1,1,1.0
+Zürich oder,sql,1,1,1.0
+Zürich und,linux,1,1,1.0
+Zürich und/oder Mägenwil und Homeoffice,agile,1,1,1.0
+Zürich und/oder Mägenwil und Homeoffice,ci_cd,1,1,1.0
+"Zürich-Flughafen, Schweiz",airflow,1,1,1.0
+"Zürich-Flughafen, Schweiz",aws,1,1,1.0
+"Zürich-Flughafen, Schweiz",ci_cd,1,1,1.0
+"Zürich-Flughafen, Schweiz",etl,1,1,1.0
+"Zürich-Flughafen, Schweiz",java,1,1,1.0
+"Zürich-Flughafen, Schweiz",kafka,1,1,1.0
+"Zürich-Flughafen, Schweiz",linux,1,1,1.0
+"Zürich-Flughafen, Schweiz",oracle,1,1,1.0
+"Zürich-Flughafen, Schweiz",postgresql,1,1,1.0
+"Zürich-Flughafen, Schweiz",python,1,1,1.0
+"Zürich-Flughafen, Schweiz",rest_api,1,1,1.0
+"Zürich-Flughafen, Schweiz",sql,1,1,1.0
+Zürich-Oerlikon,azure,1,1,1.0
+Zürich-Oerlikon,php,1,1,1.0
+Zürich-Schlieren,azure,1,1,1.0
+Zürich-Schlieren,php,1,1,1.0
