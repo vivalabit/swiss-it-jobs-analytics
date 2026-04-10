@@ -5,7 +5,7 @@ import json
 import re
 from typing import Any
 
-from .models import VacancyFull
+from swiss_jobs.core.models import VacancyFull
 
 
 class ParseError(RuntimeError):
@@ -119,4 +119,3 @@ def html_to_text(value: str) -> str:
     text = re.sub(r"\n[ \t]+", "\n", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
-

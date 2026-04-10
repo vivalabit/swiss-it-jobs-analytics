@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from typing import Any, Mapping, Sequence
 
-from .models import VacancyFull
+from swiss_jobs.core.models import VacancyFull
 
 ROLE_FAMILY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "software_engineering": (

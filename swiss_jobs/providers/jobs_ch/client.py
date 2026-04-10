@@ -6,9 +6,10 @@ from typing import Any, Sequence
 
 import requests
 
+from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
+
 from .detail import apply_detail_payload, extract_detail_payload
 from .extractors import ParseError, extract_js_object, get_results_bucket, parse_jobs_from_bucket
-from .models import ClientConfig, QuerySpec, VacancyFull
 
 BASE_URL = "https://www.jobs.ch"
 HEADERS = {
@@ -213,4 +214,3 @@ def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:
         seen.add(vacancy.id)
         result.append(vacancy)
     return result
-

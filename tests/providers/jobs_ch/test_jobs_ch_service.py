@@ -6,9 +6,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from jobs_ch.formatter import build_brief
-from jobs_ch.models import ClientConfig, VacancyFull
-from jobs_ch.service import JobsChParserService
+from swiss_jobs.core.formatter import build_brief
+from swiss_jobs.core.models import ClientConfig, VacancyFull
+from swiss_jobs.providers.jobs_ch.service import JobsChParserService
 
 
 class FakeJobsChClient:

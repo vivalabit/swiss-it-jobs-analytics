@@ -17,5 +17,5 @@ dashboard = [
   "streamlit>=1.34.0",
 ]
 
-[tool.setuptools]
-packages = ["jobs_ch", "market_analytics"]
+[tool.setuptools.packages.find]
+include = ["market_analytics*", "swiss_jobs*"]

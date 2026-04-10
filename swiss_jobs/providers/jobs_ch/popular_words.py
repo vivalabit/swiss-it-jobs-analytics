@@ -8,7 +8,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-DEFAULT_INPUT_PATH = "jobs_ch/runtime/config-info/jobs_ch.sqlite"
+DEFAULT_INPUT_PATH = "runtime/jobs_ch/config-info/jobs_ch.sqlite"
 DEFAULT_TOP_N = 20
 FALLBACK_STOPWORDS = {
     "a",

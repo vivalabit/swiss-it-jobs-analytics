@@ -34,7 +34,7 @@ dist/
 *.log
 
 # Parser runtime and generated datasets
-jobs_ch/runtime/
+runtime/
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal

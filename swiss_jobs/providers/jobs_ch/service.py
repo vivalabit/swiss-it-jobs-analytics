@@ -4,14 +4,19 @@ import re
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from swiss_jobs.core.archive import make_run_id, utc_now_iso
+from swiss_jobs.core.database import JobsDatabase
+from swiss_jobs.core.filters import (
+    evaluate_role_seniority_filters,
+    normalize_tokens,
+    passes_text_filters,
+)
+from swiss_jobs.core.formatter import format_vacancies
+from swiss_jobs.core.models import ClientConfig, ClientRunResult, ParserStats, VacancyFull
+from swiss_jobs.core.state import compute_new_ids
+
 from .analytics import build_job_analytics
-from .archive import make_run_id, utc_now_iso
 from .client import JobsChHttpClient
-from .database import JobsDatabase
-from .filters import evaluate_role_seniority_filters, normalize_tokens, passes_text_filters
-from .formatter import format_vacancies
-from .models import ClientConfig, ClientRunResult, ParserStats, VacancyFull
-from .state import compute_new_ids
 
 CANTON_TO_LOCATIONS = {
     "ag": ["aargau"],
@@ -59,7 +64,7 @@ class JobsChParserService:
         self.runtime_root = (
             Path(runtime_root)
             if runtime_root
-            else Path(__file__).resolve().parent / "runtime"
+            else Path(__file__).resolve().parents[3] / "runtime" / "jobs_ch"
         )
 
     def run(self, run_config: ClientConfig | Mapping[str, Any]) -> ClientRunResult:

@@ -7,16 +7,11 @@ import time
 from pathlib import Path
 from typing import Any
 
-BASE_DIR = Path(__file__).resolve().parent
-PARENT_DIR = BASE_DIR.parent
-if str(PARENT_DIR) not in sys.path:
-    sys.path.append(str(PARENT_DIR))
+from swiss_jobs.core.models import ClientConfig, ClientRunResult, ConfigValidationError
+from swiss_jobs.providers.jobs_ch.service import JobsChParserService, slugify_runtime_name
 
-from jobs_ch.models import ClientConfig, ClientRunResult, ConfigValidationError
-from jobs_ch.service import JobsChParserService
-from jobs_ch.service import slugify_runtime_name
-
-DEFAULT_RUNTIME_DIR = str(BASE_DIR / "runtime")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_RUNTIME_DIR = str(PROJECT_ROOT / "runtime" / "jobs_ch")
 
 
 def load_json_config(path: str) -> dict[str, Any]:

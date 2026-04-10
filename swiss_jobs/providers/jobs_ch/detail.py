@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
+from swiss_jobs.core.models import VacancyFull
+
 from .extractors import extract_job_posting_schema, html_to_text
-from .models import VacancyFull
 
 
 def extract_detail_payload(page_html: str) -> dict[str, Any]:
@@ -34,4 +35,3 @@ def apply_detail_payload(
         return
 
     vacancy.detail_schema_error = error or "unknown detail fetch error"
-

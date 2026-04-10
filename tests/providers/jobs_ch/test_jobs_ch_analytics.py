@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import unittest
 
-from jobs_ch.analytics import build_job_analytics
-from jobs_ch.models import VacancyFull
+from swiss_jobs.core.models import VacancyFull
+from swiss_jobs.providers.jobs_ch.analytics import build_job_analytics
 
 
 class JobsChAnalyticsTests(unittest.TestCase):
