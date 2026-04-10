@@ -1,55 +1,7 @@
 # Swiss IT Job Market Analytics
 
-Multi-source vacancy parsing and analytics for the Swiss IT job market.
+Dataset analytics for a processed `jobs.ch` vacancy dataset.
 
-## Suggested file tree
-
-```text
-.
-├── runtime/
-│   └── jobs_ch/
-├── swiss_jobs/
-│   ├── cli/
-│   │   └── parse.py
-│   ├── core/
-│   │   ├── archive.py
-│   │   ├── database.py
-│   │   ├── filters.py
-│   │   ├── formatter.py
-│   │   ├── models.py
-│   │   └── state.py
-│   └── providers/
-│       └── jobs_ch/
-│           ├── analytics.py
-│           ├── cli.py
-│           ├── client.py
-│           ├── detail.py
-│           ├── extractors.py
-│           └── service.py
-├── market_analytics/
-│   ├── __init__.py
-│   ├── analytics.py
-│   ├── constants.py
-│   ├── io.py
-│   ├── reporting.py
-│   └── skills.py
-├── scripts/
-│   └── export_analytics.py
-├── tests/
-│   └── test_market_analytics.py
-├── streamlit_app.py
-└── pyproject.toml
-```
-
-## Architecture
-
-- `swiss_jobs/core`: source-agnostic parser runtime pieces shared by all providers
-- `swiss_jobs/providers/jobs_ch`: jobs.ch-specific HTTP, extraction, enrichment, and provider assets
-- `runtime/jobs_ch`: generated provider runtime files and SQLite databases
-- `market_analytics`: dataset-level analytics and Streamlit dashboard code
-
-No SQLite migration was required for this restructuring. The existing schema already stores
-`source`, shared vacancy fields, and per-run state, so it remains valid for future providers.
 
 ## Expected dataset columns
 
@@ -82,31 +34,31 @@ python3 scripts/export_analytics.py /path/to/processed_dataset.csv --output-dir 
 ```
 
 If you do not already have a processed dataset file, first run the built-in `jobs.ch`
-parser through the generic provider CLI:
+parser. It writes vacancies into a local SQLite database:
 
 ```bash
-python3 -m swiss_jobs.cli.parse --source jobs_ch --config swiss_jobs/providers/jobs_ch/configs/config_info.json
+python3 jobs_ch/main.py --config jobs_ch/configs/config_info.json
 ```
 
 This creates a database at:
 
 ```text
-runtime/jobs_ch/config-info/jobs_ch.sqlite
+jobs_ch/runtime/config-info/jobs_ch.sqlite
 ```
 
 The analytics script can read that SQLite database directly:
 
 ```bash
-python3 scripts/export_analytics.py runtime/jobs_ch/config-info/jobs_ch.sqlite --output-dir analytics_output
+python3 scripts/export_analytics.py jobs_ch/runtime/config-info/jobs_ch.sqlite --output-dir analytics_output
 ```
 
-Run tests:
+Tests:
 
 ```bash
-python3 -m unittest tests/providers/jobs_ch/test_jobs_ch_analytics.py tests/providers/jobs_ch/test_jobs_ch_service.py tests/test_market_analytics.py tests/test_swiss_jobs_structure.py
+python3 -m unittest tests/test_market_analytics.py
 ```
 
-Run the optional dashboard:
+Dashboard:
 
 ```bash
 streamlit run streamlit_app.py
