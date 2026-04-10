@@ -21,6 +21,19 @@ CANONICAL_COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
         "keywords_matched",
         "tech_skills",
     ),
+    "programming_languages": (
+        "programming_languages",
+        "programming_language",
+        "languages",
+        "language_skills",
+    ),
+    "frameworks_libraries": (
+        "frameworks_libraries",
+        "frameworks",
+        "framework_libraries",
+        "libraries",
+        "framework_library",
+    ),
 }
 
 REQUIRED_COLUMNS: tuple[str, ...] = (
@@ -60,3 +73,7 @@ MISSING_TEXT_VALUES: frozenset[str] = frozenset(
 UNKNOWN_LABEL = "Unknown"
 DEFAULT_TOP_SKILLS = 20
 DEFAULT_TOP_SKILL_PAIRS = 50
+OPTIONAL_LIST_COLUMNS: tuple[str, ...] = (
+    "programming_languages",
+    "frameworks_libraries",
+)

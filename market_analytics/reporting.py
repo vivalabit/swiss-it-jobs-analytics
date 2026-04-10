@@ -11,7 +11,9 @@ from .analytics import (
     calculate_overview_metrics,
 )
 from .skills import (
+    calculate_list_summary,
     calculate_skill_cooccurrence_pairs,
+    calculate_top_list_items,
     calculate_top_skills_by_dimension,
     calculate_top_skills_overall,
 )
@@ -34,10 +36,30 @@ def build_analytics_outputs(
             dimension="role_category",
             top_n=top_skills_limit,
         ),
-        "top_skills_by_city": calculate_top_skills_by_dimension(
+        "top_skills_by_canton": calculate_top_skills_by_dimension(
             dataset,
-            dimension="city",
+            dimension="canton",
             top_n=top_skills_limit,
+        ),
+        "top_programming_languages": calculate_top_list_items(
+            dataset,
+            list_column="programming_languages_list",
+            item_label="programming_language",
+            top_n=top_skills_limit,
+        ),
+        "programming_languages_summary": calculate_list_summary(
+            dataset,
+            list_column="programming_languages_list",
+        ),
+        "top_frameworks_libraries": calculate_top_list_items(
+            dataset,
+            list_column="frameworks_libraries_list",
+            item_label="framework_library",
+            top_n=top_skills_limit,
+        ),
+        "frameworks_libraries_summary": calculate_list_summary(
+            dataset,
+            list_column="frameworks_libraries_list",
         ),
         "skill_cooccurrence_pairs": calculate_skill_cooccurrence_pairs(
             dataset,

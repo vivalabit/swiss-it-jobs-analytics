@@ -1,9 +1,8 @@
 city,vacancy_count,share
-Zürich,164,0.1466
+Zürich,217,0.1939
 Bern,81,0.0724
 Basel,62,0.0554
-Zurich,53,0.0474
-Geneva,46,0.0411
+Genève,53,0.0474
 Luzern,24,0.0214
 Winterthur,22,0.0197
 Wallisellen,21,0.0188
@@ -27,20 +26,19 @@ Spreitenbach,7,0.0063
 Baar,6,0.0054
 Bussnang,6,0.0054
 Kriens,6,0.0054
+Reinach,6,0.0054
 Volketswil,6,0.0054
+Wetzikon,6,0.0054
 Altishofen,5,0.0045
 Baden,5,0.0045
 Biel,5,0.0045
 Bülach,5,0.0045
 Chur,5,0.0045
-Genève,5,0.0045
 Glattbrugg,5,0.0045
 Pully,5,0.0045
 Raum Bern,5,0.0045
-Reinach BL,5,0.0045
 Rothenburg,5,0.0045
 Steinhausen,5,0.0045
-Wetzikon ZH,5,0.0045
 Zürich Seebach,5,0.0045
 Balzers,4,0.0036
 Burgdorf,4,0.0036
@@ -50,13 +48,16 @@ Horgen,4,0.0036
 Schaan,4,0.0036
 Schlieren,4,0.0036
 Schwyz,4,0.0036
+Unknown,4,0.0036
 Aadorf,3,0.0027
 Bern und Homeoffice,3,0.0027
 Biel/Bienne,3,0.0027
 Bonaduz,3,0.0027
+Buchs,3,0.0027
 Chiasso,3,0.0027
-Dättwil AG,3,0.0027
+Dättwil,3,0.0027
 Dübendorf,3,0.0027
+Ecublens,3,0.0027
 Eschen,3,0.0027
 Fehraltorf,3,0.0027
 "Geneva, Zurich",3,0.0027
@@ -65,24 +66,22 @@ Gümligen,3,0.0027
 Hinwil,3,0.0027
 Kemptthal,3,0.0027
 Mägenwil,3,0.0027
+Neuchâtel,3,0.0027
 Opfikon,3,0.0027
 Raum Zürich,3,0.0027
 Region Bern Mittelland (BE/SO/AG),3,0.0027
-Seewen SZ,3,0.0027
+Seewen,3,0.0027
 Sempach,3,0.0027
 St. Margrethen,3,0.0027
 Sulgen,3,0.0027
 Switzerland,3,0.0027
-Unknown,3,0.0027
 Aarburg,2,0.0018
 Aargau,2,0.0018
 "Bern, Engehaldenstrasse",2,0.0018
-Buchs AG,2,0.0018
 CH - Zürich,2,0.0018
 Davos Platz,2,0.0018
 Domat/Ems,2,0.0018
 Ebikon,2,0.0018
-Ecublens VD,2,0.0018
 Feldbach,2,0.0018
 Fribourg,2,0.0018
 Grüsch,2,0.0018
@@ -100,7 +99,6 @@ Meyrin,2,0.0018
 Muhen,2,0.0018
 Muttenz,2,0.0018
 Münchenstein,2,0.0018
-Neuchâtel,2,0.0018
 Oberbüren,2,0.0018
 Oberrüti,2,0.0018
 Ostermundigen,2,0.0018
@@ -109,6 +107,7 @@ Paderborn/Büren,2,0.0018
 Port,2,0.0018
 Raum Aargau,2,0.0018
 Regensdorf,2,0.0018
+Renens,2,0.0018
 Schwerzenbach,2,0.0018
 Seengen,2,0.0018
 Seuzach,2,0.0018
@@ -118,25 +117,17 @@ Thun (Gwatt),2,0.0018
 Turgi,2,0.0018
 Urtenen-Schönbühl,2,0.0018
 Wilderswil,2,0.0018
-Wohlen AG,2,0.0018
+Wohlen,2,0.0018
 Würenlingen,2,0.0018
 Yverdon-les-Bains,2,0.0018
 Zizers,2,0.0018
 "Zurich, CH",2,0.0018
 Zwingen,2,0.0018
 Zürich Flughafen,2,0.0018
-1020 Renens,1,0.0009
-1205 Genève,1,0.0009
-1209 Geneve,1,0.0009
-1870 Monthey,1,0.0009
-2074 Marin-Epagnier,1,0.0009
-2112 Môtiers NE,1,0.0009
-3173 / Köniz,1,0.0009
-4416,1,0.0009
 AG,1,0.0009
 Agno,1,0.0009
 Altstadt,1,0.0009
-Altstätten SG,1,0.0009
+Altstätten,1,0.0009
 Appenzell,1,0.0009
 Arlesheim,1,0.0009
 BAD IR,1,0.0009
@@ -151,7 +142,7 @@ Bellach,1,0.0009
 Belp,1,0.0009
 Bendern,1,0.0009
 Bendern (LI),1,0.0009
-Benken SG,1,0.0009
+Benken,1,0.0009
 "Bern (bis Ende 2026), anschliessend Zimmerwald",1,0.0009
 Bern / Zürich,1,0.0009
 Bern oder Frauenfeld,1,0.0009
@@ -164,21 +155,19 @@ Bottighofen,1,0.0009
 Boudry,1,0.0009
 Bremgarten,1,0.0009
 Brugg AG oder Spreitenbach,1,0.0009
-"Brugg, AG",1,0.0009
-Brügg BE,1,0.0009
+"Brugg,",1,0.0009
+Brügg,1,0.0009
 Bubendorf,1,0.0009
 Bubikon,1,0.0009
-Buchs SG,1,0.0009
 Bussigny,1,0.0009
 Cham,1,0.0009
 DWL T,1,0.0009
 Dierikon,1,0.0009
 Dietfurt,1,0.0009
 Duggingen,1,0.0009
-Ecublens,1,0.0009
 Effretikon,1,0.0009
 Einsiedeln,1,0.0009
-Eschlikon TG,1,0.0009
+Eschlikon,1,0.0009
 Fahrweid,1,0.0009
 Farnern,1,0.0009
 "Fehraltorf (Zurich), Switzerland",1,0.0009
@@ -204,6 +193,7 @@ Kehrsatz,1,0.0009
 Kirchberg,1,0.0009
 Kreuzlingen,1,0.0009
 Kägiswil,1,0.0009
+Köniz,1,0.0009
 Küssnacht,1,0.0009
 Laufen,1,0.0009
 Liebefeld,1,0.0009
@@ -215,10 +205,12 @@ Luzern (HomeOffice (max. 1-2 Tage) nach Einarbeitu,1,0.0009
 Luzern oder Zürich,1,0.0009
 Lyss,1,0.0009
 Lützelflüh-Goldbach,1,0.0009
+Marin-Epagnier,1,0.0009
 Martigny,1,0.0009
 Meiringen,1,0.0009
+Monthey,1,0.0009
 Muri b. Bern,1,0.0009
-Neuchatel,1,0.0009
+Môtiers,1,0.0009
 Nice,1,0.0009
 Niederwangen,1,0.0009
 Niederweningen,1,0.0009
@@ -238,12 +230,10 @@ Region Ostschweiz,1,0.0009
 Region Ostschweiz.,1,0.0009
 Region Zentralschweiz,1,0.0009
 Reichenburg,1,0.0009
-Reinach,1,0.0009
 Remote / Office Baar oder Bern,1,0.0009
-Renens,1,0.0009
 Rheinfelden,1,0.0009
 Richterswil,1,0.0009
-Roggwil BE,1,0.0009
+Roggwil,1,0.0009
 Root,1,0.0009
 Ruggell,1,0.0009
 Ruswil,1,0.0009
@@ -274,8 +264,7 @@ Villmergen,1,0.0009
 Vitznau,1,0.0009
 Weggis,1,0.0009
 "Weinfelden, Landquart, St. Gallen",1,0.0009
-Wetzikon,1,0.0009
-Wil SG,1,0.0009
+Wil,1,0.0009
 Willisau,1,0.0009
 Wolhusen,1,0.0009
 Zentralschweiz,1,0.0009

@@ -38,3 +38,4 @@ jobs_ch/runtime/
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+analytics_output/
