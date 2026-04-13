@@ -1,0 +1,232 @@
+from __future__ import annotations
+
+import re
+from pathlib import Path
+from typing import Any, Mapping, Sequence
+
+from swiss_jobs.core.archive import make_run_id, utc_now_iso
+from swiss_jobs.core.database import JobsDatabase
+from swiss_jobs.core.filters import (
+    evaluate_role_seniority_filters,
+    normalize_tokens,
+    passes_text_filters,
+)
+from swiss_jobs.core.formatter import format_vacancies
+from swiss_jobs.core.models import ClientConfig, ClientRunResult, ParserStats, VacancyFull
+from swiss_jobs.core.state import compute_new_ids
+
+from ..jobs_ch.analytics import build_job_analytics
+from .client import JobScout24ChHttpClient
+
+CANTON_TO_LOCATIONS = {
+    "ag": ["aargau"],
+    "ai": ["appenzell innerrhoden"],
+    "ar": ["appenzell ausserrhoden"],
+    "be": ["bern"],
+    "bl": ["basel-landschaft"],
+    "bs": ["basel"],
+    "fr": ["fribourg"],
+    "ge": ["geneva"],
+    "gl": ["glarus"],
+    "gr": ["graubunden"],
+    "ju": ["jura"],
+    "lu": ["lucerne"],
+    "ne": ["neuchatel"],
+    "nw": ["nidwalden"],
+    "ow": ["obwalden"],
+    "sg": ["st gallen"],
+    "sh": ["schaffhausen"],
+    "so": ["solothurn"],
+    "sz": ["schwyz"],
+    "tg": ["thurgau"],
+    "ti": ["ticino"],
+    "ur": ["uri"],
+    "vd": ["vaud"],
+    "vs": ["valais"],
+    "zg": ["zug"],
+    "zh": ["zurich"],
+}
+
+
+def slugify_runtime_name(value: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug or "default"
+
+
+class JobScout24ChParserService:
+    def __init__(
+        self,
+        *,
+        http_client: Any | None = None,
+        runtime_root: str | Path | None = None,
+    ) -> None:
+        self.http_client = http_client or JobScout24ChHttpClient()
+        self.runtime_root = (
+            Path(runtime_root)
+            if runtime_root
+            else Path(__file__).resolve().parents[3] / "runtime" / "jobscout24_ch"
+        )
+
+    def run(self, run_config: ClientConfig | Mapping[str, Any]) -> ClientRunResult:
+        config = self._coerce_config(run_config)
+        return self._run_config(config)
+
+    def _coerce_config(self, run_config: ClientConfig | Mapping[str, Any]) -> ClientConfig:
+        if isinstance(run_config, ClientConfig):
+            payload = run_config.to_dict()
+        else:
+            payload = dict(run_config)
+        payload.setdefault(
+            "database_path",
+            str(
+                self.runtime_root
+                / slugify_runtime_name(payload.get("client_id") or "main-config")
+                / "jobscout24_ch.sqlite"
+            ),
+        )
+        return ClientConfig.from_dict(
+            payload,
+            source=payload.get("client_config_path") or "<runtime>",
+            default_client_id=payload.get("client_id") or "main-config",
+        )
+
+    def _run_config(self, config: ClientConfig) -> ClientRunResult:
+        timestamp = utc_now_iso()
+        run_id = make_run_id(timestamp)
+        stats = ParserStats()
+        result = ClientRunResult(
+            run_id=run_id,
+            client_id=config.client_id,
+            timestamp=timestamp,
+            effective_config=config,
+            stats=stats,
+        )
+        try:
+            queries = config.build_queries(CANTON_TO_LOCATIONS)
+            stats.total_queries = len(queries)
+
+            vacancies, warnings, successful_queries = self.http_client.search(config, queries)
+            result.warnings.extend(warnings)
+            stats.successful_queries = successful_queries
+            if not vacancies and successful_queries == 0:
+                raise RuntimeError(
+                    "JobScout24 Switzerland is unreachable for all queries (network/DNS or temporary blocking)."
+                )
+
+            stats.total_fetched = len(vacancies)
+            filtered = self._apply_filters(vacancies, config)
+            stats.after_text_filters = len(
+                [
+                    vacancy
+                    for vacancy in vacancies
+                    if passes_text_filters(
+                        vacancy,
+                        normalize_tokens(config.include),
+                        normalize_tokens(config.exclude),
+                    )
+                ]
+            )
+            stats.after_role_filters = len(filtered)
+            stats.filtered_out = stats.total_fetched - stats.after_role_filters
+
+            new_ids, seen_ids = self._compute_state(config, filtered)
+            if not config.skip_detail_schema and filtered:
+                stats.detail_requested = True
+                attempted, enriched = self.http_client.enrich_vacancies(
+                    filtered,
+                    detail_limit=config.detail_limit,
+                    detail_workers=config.detail_workers,
+                    show_progress=config.show_progress,
+                )
+                stats.detail_attempted = attempted
+                stats.detail_enriched = enriched
+
+            for vacancy in filtered:
+                analytics = build_job_analytics(vacancy)
+                if analytics:
+                    vacancy.extra["analytics"] = analytics
+                else:
+                    vacancy.extra.pop("analytics", None)
+
+            result.all_jobs_full = filtered
+            result.new_jobs_full = [
+                vacancy for vacancy in filtered if vacancy.id in new_ids
+            ]
+            stats.new_jobs = len(result.new_jobs_full)
+
+            result.output_jobs = format_vacancies(result.new_jobs_full, config.output_format)
+            self._persist(config, result, seen_ids=seen_ids)
+        except Exception as exc:
+            result.errors.append(str(exc))
+            result.output_jobs = []
+            self._persist(config, result, seen_ids=[])
+        return result
+
+    def _apply_filters(
+        self,
+        vacancies: Sequence[VacancyFull],
+        config: ClientConfig,
+    ) -> list[VacancyFull]:
+        include = normalize_tokens(config.include)
+        exclude = normalize_tokens(config.exclude)
+        role_keywords = normalize_tokens(config.role_keywords)
+        seniority_keywords = normalize_tokens(config.seniority_keywords)
+
+        text_filtered = [
+            vacancy
+            for vacancy in vacancies
+            if passes_text_filters(vacancy, include, exclude)
+        ]
+
+        result: list[VacancyFull] = []
+        for vacancy in text_filtered:
+            decision = evaluate_role_seniority_filters(
+                vacancy,
+                role_keywords=role_keywords,
+                seniority_keywords=seniority_keywords,
+                require_both=config.require_role_and_seniority,
+            )
+            vacancy.role_match = decision.role_match
+            vacancy.seniority_match = decision.seniority_match
+            vacancy.keywords_matched = list(decision.matched_keywords)
+            if decision.passes:
+                result.append(vacancy)
+        return result
+
+    def _compute_state(
+        self,
+        config: ClientConfig,
+        vacancies: Sequence[VacancyFull],
+    ) -> tuple[set[str], list[str]]:
+        if not config.use_state:
+            ids = [vacancy.id for vacancy in vacancies if vacancy.id]
+            return set(ids), ids
+
+        database = JobsDatabase(self._resolve_database_path(config))
+        seen_ids = database.load_seen_ids(config.client_id)
+        new_ids, updated_seen = compute_new_ids(
+            vacancies,
+            seen_ids,
+            bootstrap=config.bootstrap,
+        )
+        return new_ids, updated_seen
+
+    def _persist(self, config: ClientConfig, result: ClientRunResult, *, seen_ids: Sequence[str]) -> None:
+        database_path = self._resolve_database_path(config)
+        database = JobsDatabase(database_path)
+        result.database_path = str(database_path)
+        database.persist_result(config, result)
+        if not result.errors and config.use_state:
+            database.mark_seen(config.client_id, seen_ids, result.timestamp)
+
+    def _resolve_database_path(self, config: ClientConfig) -> Path:
+        if config.database_path:
+            return Path(config.database_path)
+        if config.client_config_path:
+            stem = Path(config.client_config_path).stem or config.client_id
+            return self.runtime_root / slugify_runtime_name(stem) / "jobscout24_ch.sqlite"
+        return self.runtime_root / slugify_runtime_name(config.client_id) / "jobscout24_ch.sqlite"
+
+
+def run_jobscout24_ch_parser(run_config: ClientConfig | Mapping[str, Any]) -> ClientRunResult:
+    return JobScout24ChParserService().run(run_config)

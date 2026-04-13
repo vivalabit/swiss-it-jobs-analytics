@@ -40,10 +40,18 @@ parser. It writes vacancies into a local SQLite database:
 python3 jobs_ch/main.py --config jobs_ch/configs/config_info.json
 ```
 
+To build a dataset from `JobScout24`, run:
+
+```bash
+python3 -m swiss_jobs.cli.parse \
+  --source jobscout24_ch \
+  --config swiss_jobs/providers/jobscout24_ch/configs/config_info.json
+```
+
 This creates a database at:
 
 ```text
-jobs_ch/runtime/config-info/jobs_ch.sqlite
+runtime/jobscout24_ch/config-info/jobscout24_ch.sqlite
 ```
 
 The analytics script can read that SQLite database directly:

@@ -4,17 +4,25 @@ from collections.abc import Callable
 
 from .providers.jobs_ch.cli import main as jobs_ch_cli_main
 from .providers.jobs_ch.service import JobsChParserService, run_jobs_ch_parser
+from .providers.jobscout24_ch.cli import main as jobscout24_ch_cli_main
+from .providers.jobscout24_ch.service import (
+    JobScout24ChParserService,
+    run_jobscout24_ch_parser,
+)
 
 CLI_ENTRYPOINTS: dict[str, Callable[[list[str] | None], int]] = {
     "jobs_ch": jobs_ch_cli_main,
+    "jobscout24_ch": jobscout24_ch_cli_main,
 }
 
 RUNNERS: dict[str, Callable[..., object]] = {
     "jobs_ch": run_jobs_ch_parser,
+    "jobscout24_ch": run_jobscout24_ch_parser,
 }
 
 SERVICES: dict[str, type[object]] = {
     "jobs_ch": JobsChParserService,
+    "jobscout24_ch": JobScout24ChParserService,
 }
 
 
