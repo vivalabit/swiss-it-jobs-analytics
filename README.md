@@ -5,6 +5,7 @@ Current sources:
 
 - `jobs.ch`
 - `jobscout24.ch`
+- `jobup.ch`
 
 The project is still in progress, so commands and structure may change.
 
@@ -33,6 +34,14 @@ python3 -m swiss_jobs.cli.parse \
   --config swiss_jobs/providers/jobscout24_ch/configs/config_info.json
 ```
 
+`jobup.ch`
+
+```bash
+python3 -m swiss_jobs.cli.parse \
+  --source jobup_ch \
+  --config swiss_jobs/providers/jobup_ch/configs/config_info.json
+```
+
 ## View combined statistics
 
 Start Streamlit:
@@ -41,17 +50,18 @@ Start Streamlit:
 streamlit run streamlit_app.py
 ```
 
-In `Dataset path(s)` paste both databases:
+In `Dataset path(s)` paste all databases:
 
 ```text
 runtime/jobs_ch/main-config/jobs_ch.sqlite
 runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite
+runtime/jobup_ch/main-config/jobup_ch.sqlite
 ```
 
 You can also use one line:
 
 ```text
-runtime/jobs_ch/main-config/jobs_ch.sqlite, runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite
+runtime/jobs_ch/main-config/jobs_ch.sqlite, runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite, runtime/jobup_ch/main-config/jobup_ch.sqlite
 ```
 
 ## Export combined CSV analytics
@@ -60,6 +70,7 @@ runtime/jobs_ch/main-config/jobs_ch.sqlite, runtime/jobscout24_ch/main-config/jo
 python3 scripts/export_analytics.py \
   runtime/jobs_ch/main-config/jobs_ch.sqlite \
   runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite \
+  runtime/jobup_ch/main-config/jobup_ch.sqlite \
   --output-dir analytics_output
 ```
 
@@ -79,6 +90,14 @@ python3 -m swiss_jobs.cli.parse \
 python3 -m swiss_jobs.cli.parse \
   --source jobs_ch \
   --config swiss_jobs/providers/jobs_ch/configs/config_info.json \
+  --skip-detail-schema \
+  --max-pages 1
+```
+
+```bash
+python3 -m swiss_jobs.cli.parse \
+  --source jobup_ch \
+  --config swiss_jobs/providers/jobup_ch/configs/config_info.json \
   --skip-detail-schema \
   --max-pages 1
 ```
