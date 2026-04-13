@@ -5,7 +5,14 @@ from .analytics import (
     calculate_distributions,
     calculate_overview_metrics,
 )
-from .io import load_and_validate_dataset, load_dataset, parse_skills, validate_and_standardize_dataset
+from .io import (
+    load_and_validate_dataset,
+    load_and_validate_datasets,
+    load_dataset,
+    load_datasets,
+    parse_skills,
+    validate_and_standardize_dataset,
+)
 from .reporting import build_analytics_outputs, save_analytics_outputs
 from .skills import (
     calculate_list_summary,
@@ -28,7 +35,9 @@ __all__ = [
     "calculate_top_skills_by_dimension",
     "calculate_top_skills_overall",
     "load_and_validate_dataset",
+    "load_and_validate_datasets",
     "load_dataset",
+    "load_datasets",
     "parse_skills",
     "save_analytics_outputs",
     "validate_and_standardize_dataset",

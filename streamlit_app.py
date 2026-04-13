@@ -4,7 +4,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from market_analytics.io import load_and_validate_dataset
+from market_analytics.io import load_and_validate_datasets
 from market_analytics.reporting import build_analytics_outputs
 
 
@@ -19,12 +19,12 @@ def render_summary_metrics(summary_frame, *, labels: tuple[str, str, str, str]) 
 
 st.set_page_config(page_title="Swiss IT Job Analytics", layout="wide")
 st.title("Swiss IT Job Market Analytics")
-st.caption("Load a processed jobs.ch dataset and inspect high-level market distributions.")
+st.caption("Load one or more processed datasets and inspect combined Swiss IT market distributions.")
 
 dataset_path = st.sidebar.text_input(
-    "Dataset path",
+    "Dataset path(s)",
     value="",
-    help="Absolute or project-relative path to a CSV, Parquet, SQLite, JSON, or JSONL dataset.",
+    help="Absolute or project-relative paths separated by commas or new lines.",
 )
 top_skills_limit = st.sidebar.slider("Top skills limit", min_value=5, max_value=50, value=20)
 top_pairs_limit = st.sidebar.slider(
@@ -40,7 +40,13 @@ if not dataset_path.strip():
     st.stop()
 
 try:
-    dataset = load_and_validate_dataset(Path(dataset_path))
+    dataset_paths = [
+        Path(part.strip())
+        for chunk in dataset_path.splitlines()
+        for part in chunk.split(",")
+        if part.strip()
+    ]
+    dataset = load_and_validate_datasets(dataset_paths)
     outputs = build_analytics_outputs(
         dataset=dataset,
         top_skills_limit=top_skills_limit,

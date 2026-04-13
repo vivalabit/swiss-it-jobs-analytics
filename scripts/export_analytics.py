@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from market_analytics.io import load_and_validate_dataset
+from market_analytics.io import load_and_validate_datasets
 from market_analytics.reporting import build_analytics_outputs, save_analytics_outputs
 
 
@@ -11,7 +11,12 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Generate Swiss IT job market analytics CSV outputs from a processed dataset.",
     )
-    parser.add_argument("dataset_path", type=Path, help="Path to the processed dataset.")
+    parser.add_argument(
+        "dataset_paths",
+        nargs="+",
+        type=Path,
+        help="One or more dataset paths (CSV, Parquet, SQLite, JSON, JSONL).",
+    )
     parser.add_argument(
         "--output-dir",
         type=Path,
@@ -37,7 +42,7 @@ def main() -> int:
     parser = build_argument_parser()
     args = parser.parse_args()
 
-    dataset = load_and_validate_dataset(args.dataset_path)
+    dataset = load_and_validate_datasets(args.dataset_paths)
     outputs = build_analytics_outputs(
         dataset=dataset,
         top_skills_limit=args.top_skills,
@@ -45,7 +50,7 @@ def main() -> int:
     )
     saved_paths = save_analytics_outputs(outputs, args.output_dir)
 
-    print(f"Processed {len(dataset)} vacancies.")
+    print(f"Processed {len(dataset)} vacancies from {len(args.dataset_paths)} dataset(s).")
     print(f"Saved {len(saved_paths)} analytics files to {args.output_dir.resolve()}")
     for path in saved_paths:
         print(path.resolve())

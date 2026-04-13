@@ -7,7 +7,11 @@ from pathlib import Path
 import pandas as pd
 import sqlite3
 
-from market_analytics.io import load_and_validate_dataset, validate_and_standardize_dataset
+from market_analytics.io import (
+    load_and_validate_dataset,
+    load_and_validate_datasets,
+    validate_and_standardize_dataset,
+)
 from market_analytics.reporting import build_analytics_outputs, save_analytics_outputs
 
 
@@ -195,6 +199,65 @@ class MarketAnalyticsTests(unittest.TestCase):
             self.assertEqual(["python", "sql"], loaded.loc[0, "programming_languages_list"])
             self.assertEqual(["airflow"], loaded.loc[0, "frameworks_libraries_list"])
             self.assertEqual(["python", "sql", "airflow", "aws"], loaded.loc[0, "skills_list"])
+
+    def test_load_and_validate_datasets_combines_multiple_sqlite_inputs(self) -> None:
+        analytics_json_a = """
+        {
+          "role_family_primary": "data_ai",
+          "seniority_labels": ["senior"],
+          "remote_mode": "hybrid",
+          "job_location": {"locality": "Zurich", "region": "ZH"},
+          "programming_languages": ["python"]
+        }
+        """.strip()
+        analytics_json_b = """
+        {
+          "role_family_primary": "software_engineering",
+          "seniority_labels": ["mid"],
+          "remote_mode": "onsite",
+          "job_location": {"locality": "Bern", "region": "BE"},
+          "programming_languages": ["java"]
+        }
+        """.strip()
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            database_a = temp_path / "jobs_ch.sqlite"
+            database_b = temp_path / "jobscout24_ch.sqlite"
+
+            for database_path, source, vacancy_id, company, place, analytics_json in (
+                (database_a, "jobs.ch", "vacancy-1", "Acme", "Zurich", analytics_json_a),
+                (database_b, "jobscout24.ch", "vacancy-2", "Beta", "Bern", analytics_json_b),
+            ):
+                connection = sqlite3.connect(database_path)
+                try:
+                    connection.execute(
+                        """
+                        CREATE TABLE vacancies (
+                            vacancy_id TEXT PRIMARY KEY,
+                            source TEXT,
+                            company TEXT,
+                            place TEXT,
+                            analytics_json TEXT
+                        )
+                        """
+                    )
+                    connection.execute(
+                        """
+                        INSERT INTO vacancies (vacancy_id, source, company, place, analytics_json)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                        (vacancy_id, source, company, place, analytics_json),
+                    )
+                    connection.commit()
+                finally:
+                    connection.close()
+
+            loaded = load_and_validate_datasets([database_a, database_b])
+
+            self.assertEqual(2, len(loaded))
+            self.assertEqual({"Acme", "Beta"}, set(loaded["company"]))
+            self.assertEqual({"ZH", "BE"}, set(loaded["canton"]))
 
 
 if __name__ == "__main__":

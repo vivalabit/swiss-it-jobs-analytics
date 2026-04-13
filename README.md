@@ -1,46 +1,31 @@
-# Swiss IT Job Market Analytics
-
-Dataset analytics for a processed `jobs.ch` vacancy dataset.
+# Swiss IT Jobs Analytics
 
 
-## Expected dataset columns
+Current sources:
 
-The analytics code standardizes common aliases into these canonical columns:
+- `jobs.ch`
+- `jobscout24.ch`
 
-- `company`
-- `role_category`
-- `city`
-- `canton`
-- `seniority`
-- `work_mode`
-- `skills`
+The project is still in progress, so commands and structure may change.
 
-Supported aliases include fields such as `company_name`, `role_family_primary`, `place`,
-`state`, `seniority_level`, `remote_mode`, `detected_skills`, and `keywords_matched`.
-
-## Run
-
-Install dependencies:
+## Install
 
 ```bash
+python3 -m pip install -r requirements.txt
 python3 -m pip install -e .
-python3 -m pip install -e '.[dashboard]'
 ```
 
-Export analytics as CSV:
+## Collect vacancies
+
+`jobs.ch`
 
 ```bash
-python3 scripts/export_analytics.py /path/to/processed_dataset.csv --output-dir analytics_output
+python3 -m swiss_jobs.cli.parse \
+  --source jobs_ch \
+  --config swiss_jobs/providers/jobs_ch/configs/config_info.json
 ```
 
-If you do not already have a processed dataset file, first run the built-in `jobs.ch`
-parser. It writes vacancies into a local SQLite database:
-
-```bash
-python3 jobs_ch/main.py --config jobs_ch/configs/config_info.json
-```
-
-To build a dataset from `JobScout24`, run:
+`jobscout24.ch`
 
 ```bash
 python3 -m swiss_jobs.cli.parse \
@@ -48,26 +33,52 @@ python3 -m swiss_jobs.cli.parse \
   --config swiss_jobs/providers/jobscout24_ch/configs/config_info.json
 ```
 
-This creates a database at:
+## View combined statistics
 
-```text
-runtime/jobscout24_ch/config-info/jobscout24_ch.sqlite
-```
-
-The analytics script can read that SQLite database directly:
-
-```bash
-python3 scripts/export_analytics.py jobs_ch/runtime/config-info/jobs_ch.sqlite --output-dir analytics_output
-```
-
-Tests:
-
-```bash
-python3 -m unittest tests/test_market_analytics.py
-```
-
-Dashboard:
+Start Streamlit:
 
 ```bash
 streamlit run streamlit_app.py
+```
+
+In `Dataset path(s)` paste both databases:
+
+```text
+runtime/jobs_ch/main-config/jobs_ch.sqlite
+runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite
+```
+
+You can also use one line:
+
+```text
+runtime/jobs_ch/main-config/jobs_ch.sqlite, runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite
+```
+
+## Export combined CSV analytics
+
+```bash
+python3 scripts/export_analytics.py \
+  runtime/jobs_ch/main-config/jobs_ch.sqlite \
+  runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite \
+  --output-dir analytics_output
+```
+
+## Quick first run
+
+If you want a faster test run without detail pages:
+
+```bash
+python3 -m swiss_jobs.cli.parse \
+  --source jobscout24_ch \
+  --config swiss_jobs/providers/jobscout24_ch/configs/config_info.json \
+  --skip-detail-schema \
+  --max-pages 1
+```
+
+```bash
+python3 -m swiss_jobs.cli.parse \
+  --source jobs_ch \
+  --config swiss_jobs/providers/jobs_ch/configs/config_info.json \
+  --skip-detail-schema \
+  --max-pages 1
 ```

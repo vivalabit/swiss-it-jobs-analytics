@@ -6,7 +6,7 @@ import re
 import sqlite3
 import unicodedata
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import pandas as pd
 
@@ -199,8 +199,30 @@ def load_dataset(dataset_path: str | Path) -> pd.DataFrame:
     raise ValueError(f"Unsupported dataset format '{suffix}'. Supported formats: {supported}")
 
 
+def load_datasets(dataset_paths: Iterable[str | Path]) -> pd.DataFrame:
+    frames: list[pd.DataFrame] = []
+    for dataset_path in dataset_paths:
+        frames.append(load_dataset(dataset_path))
+
+    if not frames:
+        raise ValueError("At least one dataset path is required.")
+    if len(frames) == 1:
+        return frames[0]
+
+    combined = pd.concat(frames, ignore_index=True, sort=False)
+    dedupe_columns = [column for column in ("source", "vacancy_id") if column in combined.columns]
+    if dedupe_columns:
+        combined = combined.drop_duplicates(subset=dedupe_columns, keep="first").reset_index(drop=True)
+    return combined
+
+
 def load_and_validate_dataset(dataset_path: str | Path) -> pd.DataFrame:
     dataset = load_dataset(dataset_path)
+    return validate_and_standardize_dataset(dataset)
+
+
+def load_and_validate_datasets(dataset_paths: Iterable[str | Path]) -> pd.DataFrame:
+    dataset = load_datasets(dataset_paths)
     return validate_and_standardize_dataset(dataset)
 
 
@@ -375,14 +397,20 @@ def _empty_list_series(index: pd.Index) -> pd.Series:
 def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
     connection = sqlite3.connect(path)
     try:
+        columns = {
+            str(row[1])
+            for row in connection.execute("PRAGMA table_info(vacancies)").fetchall()
+        }
+        source_select = "source" if "source" in columns else "NULL AS source"
         query = """
         SELECT
             vacancy_id,
+            {source_select},
             company,
             place,
             analytics_json
         FROM vacancies
-        """
+        """.format(source_select=source_select)
         dataset = pd.read_sql_query(query, connection)
     finally:
         connection.close()
@@ -421,6 +449,7 @@ def _build_record_from_sqlite_row(
 
     return {
         "vacancy_id": row.get("vacancy_id"),
+        "source": row.get("source"),
         "company": row.get("company") or _nested_value(company_info, "name"),
         "role_category": analytics.get("role_family_primary"),
         "city": _normalize_city_value(locality),
