@@ -121,7 +121,7 @@ class JobupChExtractorsTests(unittest.TestCase):
         self.assertEqual("Zurich", jobs[0].place)
         self.assertEqual("jobup.ch", jobs[0].source)
         self.assertEqual("80% - 100%", jobs[0].raw["workload"])
-        self.assertEqual(["quickApply"], jobs[0].raw["listingTags"])
+        self.assertEqual([{"name": "quickApply"}], jobs[0].raw["listingTags"])
         self.assertTrue(jobs[0].is_new)
 
     def test_parse_new_page_uses_new_vacancies_bucket(self) -> None:

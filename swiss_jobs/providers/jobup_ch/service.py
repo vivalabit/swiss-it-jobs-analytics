@@ -114,32 +114,32 @@ class JobupChParserService:
                 )
 
             stats.total_fetched = len(vacancies)
-            filtered = self._apply_filters(vacancies, config)
-            stats.after_text_filters = len(
-                [
-                    vacancy
-                    for vacancy in vacancies
-                    if passes_text_filters(
-                        vacancy,
-                        normalize_tokens(config.include),
-                        normalize_tokens(config.exclude),
-                    )
-                ]
-            )
-            stats.after_role_filters = len(filtered)
-            stats.filtered_out = stats.total_fetched - stats.after_role_filters
-
-            new_ids, seen_ids = self._compute_state(config, filtered)
-            if not config.skip_detail_schema and filtered:
+            text_filtered = [
+                vacancy
+                for vacancy in vacancies
+                if passes_text_filters(
+                    vacancy,
+                    normalize_tokens(config.include),
+                    normalize_tokens(config.exclude),
+                )
+            ]
+            stats.after_text_filters = len(text_filtered)
+            if not config.skip_detail_schema and text_filtered:
                 stats.detail_requested = True
                 attempted, enriched = self.http_client.enrich_vacancies(
-                    filtered,
+                    text_filtered,
                     detail_limit=config.detail_limit,
                     detail_workers=config.detail_workers,
                     show_progress=config.show_progress,
                 )
                 stats.detail_attempted = attempted
                 stats.detail_enriched = enriched
+
+            filtered = self._apply_role_filters(text_filtered, config)
+            stats.after_role_filters = len(filtered)
+            stats.filtered_out = stats.total_fetched - stats.after_role_filters
+
+            new_ids, seen_ids = self._compute_state(config, filtered)
 
             for vacancy in filtered:
                 analytics = build_job_analytics(vacancy)
@@ -162,24 +162,16 @@ class JobupChParserService:
             self._persist(config, result, seen_ids=[])
         return result
 
-    def _apply_filters(
+    def _apply_role_filters(
         self,
         vacancies: Sequence[VacancyFull],
         config: ClientConfig,
     ) -> list[VacancyFull]:
-        include = normalize_tokens(config.include)
-        exclude = normalize_tokens(config.exclude)
         role_keywords = normalize_tokens(config.role_keywords)
         seniority_keywords = normalize_tokens(config.seniority_keywords)
 
-        text_filtered = [
-            vacancy
-            for vacancy in vacancies
-            if passes_text_filters(vacancy, include, exclude)
-        ]
-
         result: list[VacancyFull] = []
-        for vacancy in text_filtered:
+        for vacancy in vacancies:
             decision = evaluate_role_seniority_filters(
                 vacancy,
                 role_keywords=role_keywords,

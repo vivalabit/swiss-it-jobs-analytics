@@ -33,6 +33,20 @@ def _extract_salary(vacancy: VacancyFull) -> str | None:
             return f"{currency} {value}".strip()
 
     raw = vacancy.raw or {}
+    raw_salary = raw.get("salary")
+    if isinstance(raw_salary, dict):
+        currency = str(raw_salary.get("currency") or "").strip()
+        unit = str(raw_salary.get("unit") or "").strip()
+        salary_range = raw_salary.get("range")
+        if isinstance(salary_range, dict):
+            minimum = salary_range.get("minValue")
+            maximum = salary_range.get("maxValue")
+            unit_suffix = f" / {unit.lower()}" if unit else ""
+            currency_prefix = f"{currency} " if currency else ""
+            if minimum is not None and maximum is not None:
+                if minimum == maximum:
+                    return f"{currency_prefix}{int(minimum)}{unit_suffix}".strip()
+                return f"{currency_prefix}{int(minimum)}-{int(maximum)}{unit_suffix}".strip()
     for key in ("salary", "salaryText", "salary_text"):
         value = raw.get(key)
         if isinstance(value, str) and value.strip():
@@ -79,4 +93,3 @@ def format_vacancies(
     output_format: OutputFormat,
 ) -> list[dict[str, Any]]:
     return [format_vacancy(vacancy, output_format) for vacancy in vacancies]
-

@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+import html
+import json
 import re
 from typing import Any
 from urllib.parse import urljoin
 
+from scrapling.parser import Selector
+
 from swiss_jobs.core.models import VacancyFull
 
-from ..jobs_ch.extractors import extract_job_posting_schema, html_to_text
+from ..jobs_ch.extractors import html_to_text
 
 
 class ParseError(RuntimeError):
@@ -14,17 +18,23 @@ class ParseError(RuntimeError):
 
 
 def parse_jobs_from_search_page(page_html: str, *, base_url: str) -> tuple[list[VacancyFull], int | None]:
+    document = Selector(page_html, url=base_url)
     jobs: list[VacancyFull] = []
-    segments = _extract_job_segments(page_html)
-    for segment in segments:
+    for segment in document.css("li.job-list-item"):
         vacancy = _parse_job_segment(segment, base_url=base_url)
         if vacancy is not None:
             jobs.append(vacancy)
-    return jobs, extract_total_pages(page_html)
+    return jobs, extract_total_pages(page_html, document=document)
 
 
-def extract_total_pages(page_html: str) -> int | None:
-    match = re.search(r"Page\s+\d+\s*/\s*(\d+)", page_html, flags=re.IGNORECASE)
+def extract_total_pages(page_html: str, *, document: Selector | None = None) -> int | None:
+    selector = document or Selector(page_html)
+    pagination = selector.css(".pagination .pages li::text").getall()
+    match = re.search(
+        r"Page\s+\d+\s*/\s*(\d+)",
+        " ".join(_clean_html_text(text) for text in pagination),
+        flags=re.IGNORECASE,
+    )
     if not match:
         return None
     try:
@@ -35,7 +45,8 @@ def extract_total_pages(page_html: str) -> int | None:
 
 
 def extract_detail_payload(page_html: str) -> dict[str, Any]:
-    schema = extract_job_posting_schema(page_html)
+    document = Selector(page_html)
+    schema = _extract_job_posting_schema(document)
     description_html = ""
     if isinstance(schema, dict):
         raw_description = schema.get("description")
@@ -43,9 +54,9 @@ def extract_detail_payload(page_html: str) -> dict[str, Any]:
             description_html = raw_description.strip()
 
     if not description_html:
-        description_html = _extract_job_description_html(page_html)
+        description_html = _extract_job_description_html(document)
 
-    detail_attributes = _extract_detail_attributes(page_html)
+    detail_attributes = _extract_detail_attributes(document)
     return {
         "job_posting_schema": schema,
         "description_html": description_html,
@@ -54,77 +65,40 @@ def extract_detail_payload(page_html: str) -> dict[str, Any]:
     }
 
 
-def _extract_job_segments(page_html: str) -> list[str]:
-    markers = list(re.finditer(r'<li class="job-list-item\b', page_html))
-    if not markers:
-        return []
-
-    end_boundary = page_html.find('<div class="pagination">')
-    if end_boundary == -1:
-        end_boundary = len(page_html)
-
-    segments: list[str] = []
-    for index, marker in enumerate(markers):
-        start = marker.start()
-        next_start = markers[index + 1].start() if index + 1 < len(markers) else end_boundary
-        segments.append(page_html[start:next_start])
-    return segments
-
-
-def _parse_job_segment(segment: str, *, base_url: str) -> VacancyFull | None:
-    job_id = _search(segment, r'data-job-id="([^"]+)"')
-    detail_url = _search(segment, r'data-job-detail-url="([^"]+)"')
+def _parse_job_segment(segment: Selector, *, base_url: str) -> VacancyFull | None:
+    job_id = _clean_html_text(segment.attrib.get("data-job-id", ""))
+    detail_url = _clean_html_text(segment.attrib.get("data-job-detail-url", ""))
     if not job_id or not detail_url:
         return None
 
-    title = _clean_html_text(
-        _search(
-            segment,
-            r'<a[^>]+class="[^"]*\bjob-title\b[^"]*"[^>]*title="([^"]+)"',
-        )
-        or _search(
-            segment,
-            r'<a[^>]+class="[^"]*\bjob-title\b[^"]*"[^>]*>(.*?)</a>',
-            flags=re.DOTALL,
-        )
-        or ""
-    )
+    job_title = segment.css("a.job-title").first
+    if job_title is None:
+        return None
+
+    title = _clean_html_text(job_title.attrib.get("title") or job_title.get_all_text())
     if not title:
         return None
 
-    attributes_html = _search(
-        segment,
-        r'<p class="job-attributes">(.*?)</p>',
-        flags=re.DOTALL,
-    ) or ""
     attributes = [
-        _clean_html_text(match.group(1))
-        for match in re.finditer(r"<span>(.*?)</span>", attributes_html, flags=re.DOTALL)
-        if _clean_html_text(match.group(1))
+        cleaned
+        for text in segment.css("p.job-attributes span::text").getall()
+        if (cleaned := _clean_html_text(text))
     ]
 
     tags = [
-        _clean_html_text(match.group(1))
-        for match in re.finditer(
-            r'<span class="tag tag-readonly(?: orange)?">(.*?)</span>',
-            segment,
-            flags=re.DOTALL,
-        )
-        if _clean_html_text(match.group(1))
+        cleaned
+        for text in segment.css(".job-tags .tag::text").getall()
+        if (cleaned := _clean_html_text(text))
     ]
 
-    publication_date = _clean_html_text(
-        _search(
-            segment,
-            r'<p class="job-date">\s*(.*?)\s*</p>',
-            flags=re.DOTALL,
-        )
-        or ""
-    )
+    job_date = segment.css("p.job-date").first
+    publication_date = _clean_html_text(job_date.get_all_text() if job_date is not None else "")
 
     raw: dict[str, Any] = {
         "tags": tags,
     }
+    if publication_date:
+        raw["publicationDateText"] = publication_date
     workload = next((tag for tag in tags if "%" in tag), "")
     job_type = next((tag for tag in tags if "position" in tag.casefold()), "")
     if workload:
@@ -144,27 +118,45 @@ def _parse_job_segment(segment: str, *, base_url: str) -> VacancyFull | None:
     )
 
 
-def _extract_job_description_html(page_html: str) -> str:
-    match = re.search(
-        r'<div class="job-description">\s*(?:<style.*?</style>)?(.*?)</div>\s*</div>',
-        page_html,
-        flags=re.DOTALL | re.IGNORECASE,
-    )
-    if not match:
+def _extract_job_posting_schema(document: Selector) -> dict[str, Any] | None:
+    for raw_script in document.css('script[type="application/ld+json"]::text').getall():
+        raw = raw_script.strip()
+        if not raw:
+            continue
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+
+        items = parsed if isinstance(parsed, list) else [parsed]
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            item_type = item.get("@type")
+            if item_type == "JobPosting":
+                return item
+            if isinstance(item_type, list) and "JobPosting" in item_type:
+                return item
+    return None
+
+
+def _extract_job_description_html(document: Selector) -> str:
+    description = document.css(".job-description").first
+    if description is None:
         return ""
-    return match.group(1).strip()
+
+    content_blocks = [block.get() for block in description.css(":scope > :not(style)") if block.get().strip()]
+    if content_blocks:
+        return "".join(content_blocks).strip()
+
+    return description.html_content.strip()
 
 
-def _extract_detail_attributes(page_html: str) -> dict[str, str]:
-    article_match = re.search(
-        r'<article class="job-details"([^>]+)>',
-        page_html,
-        flags=re.DOTALL,
-    )
-    if not article_match:
+def _extract_detail_attributes(document: Selector) -> dict[str, str]:
+    details = document.css("article.job-details").first
+    if details is None:
         return {}
 
-    attrs_block = article_match.group(1)
     result: dict[str, str] = {}
     for html_name, output_name in (
         ("data-pub-date", "publicationDate"),
@@ -173,29 +165,14 @@ def _extract_detail_attributes(page_html: str) -> dict[str, str]:
         ("data-job-position", "jobPosition"),
         ("data-job-location", "jobLocationSlug"),
     ):
-        value = _search(attrs_block, rf'{re.escape(html_name)}="([^"]*)"')
+        value = _clean_html_text(details.attrib.get(html_name, ""))
         if value:
             result[output_name] = value
     return result
 
 
-def _search(text: str, pattern: str, *, flags: int = 0) -> str | None:
-    match = re.search(pattern, text, flags=flags)
-    if not match:
-        return None
-    return match.group(1)
-
-
 def _clean_html_text(value: str) -> str:
     text = re.sub(r"<[^>]+>", "", value)
-    text = (
-        text.replace("&nbsp;", " ")
-        .replace("&#246;", "ö")
-        .replace("&#252;", "ü")
-        .replace("&#228;", "ä")
-        .replace("&#233;", "é")
-        .replace("&#39;", "'")
-        .replace("&amp;", "&")
-    )
+    text = html.unescape(text.replace("&nbsp;", " "))
     text = re.sub(r"\s+", " ", text)
     return text.strip(" ,\n\t")

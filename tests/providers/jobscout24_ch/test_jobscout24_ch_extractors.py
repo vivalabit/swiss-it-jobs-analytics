@@ -45,7 +45,7 @@ SEARCH_HTML = """
 DETAIL_HTML = """
 <html>
   <head>
-    <script type="application/ld+json">
+    <script type="application/ld+json" nonce="abc123">
       [
         {
           "@context": "https://schema.org",

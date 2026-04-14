@@ -9,6 +9,9 @@ ROLE_FAMILY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "software_engineering": (
         "software engineer",
         "software developer",
+        "software architect",
+        "solution architect",
+        "enterprise architect",
         "softwareentwickler",
         "applikationsentwickler",
         "application engineer",
@@ -27,12 +30,16 @@ ROLE_FAMILY_KEYWORDS: dict[str, tuple[str, ...]] = {
         "mobile developer",
         "ios developer",
         "android developer",
+        "embedded software engineer",
+        "embedded engineer",
+        "research software engineer",
         "java developer",
         "python developer",
         ".net developer",
     ),
     "data_ai": (
         "data engineer",
+        "data architect",
         "analytics engineer",
         "data scientist",
         "data analyst",
@@ -240,7 +247,7 @@ SPOKEN_LANGUAGE_KEYWORDS: dict[str, tuple[str, ...]] = {
 SENIORITY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "intern": ("intern", "internship", "praktikum", "praktikant", "praktikantin", "stage"),
     "junior": ("junior", "entry level", "graduate", "trainee"),
-    "mid": ("professional",),
+    "mid": ("mid", "mid-level", "mid level", "intermediate"),
     "senior": ("senior", "sr.", "sr ", "lead", "principal", "staff"),
     "manager": ("manager", "head of", "leiter", "director"),
 }
@@ -250,6 +257,14 @@ REMOTE_MODE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "remote": ("remote", "fully remote", "telecommute"),
     "onsite": ("on-site", "onsite", "vor ort"),
 }
+
+EXPERIENCE_REQUIREMENT_PATTERN = re.compile(
+    r"(?P<min>\d{1,2})\s*(?:\+|plus)?\s*(?:-|to|–|—)?\s*(?P<max>\d{1,2})?\s*"
+    r"(?:years?|yrs?|jahre|ans?)"
+    r"(?=[^a-z0-9]{0,20}(?:of\s+)?(?:professional|relevant|practical|hands[- ]on)?"
+    r"[^a-z0-9]{0,20}(?:experience|erfahrung|expérience))",
+    re.IGNORECASE,
+)
 
 
 def _normalize_spaces(value: str) -> str:
@@ -302,102 +317,175 @@ def _extract_employment_types(vacancy: VacancyFull, schema: Mapping[str, Any]) -
     employment_types = _coerce_strings(schema.get("employmentType"))
     if employment_types:
         return employment_types
-    for key in ("employmentType", "employment_type", "workload", "jobType"):
+    for key in ("employmentType", "employment_type", "jobType", "employmentTypeText"):
         employment_types.extend(_coerce_strings(vacancy.raw.get(key)))
-    deduped: list[str] = []
-    seen: set[str] = set()
-    for item in employment_types:
-        lowered = item.lower()
-        if lowered in seen:
-            continue
-        seen.add(lowered)
-        deduped.append(item)
-    return deduped
+    return _dedupe_strings(employment_types)
 
 
 def _extract_workload(vacancy: VacancyFull) -> dict[str, int] | None:
     raw_grades = vacancy.raw.get("employmentGrades")
-    if not isinstance(raw_grades, Sequence) or isinstance(raw_grades, (str, bytes, bytearray)):
-        return None
+    values: list[int] = []
+    if isinstance(raw_grades, Sequence) and not isinstance(raw_grades, (str, bytes, bytearray)):
+        values.extend(int(item) for item in raw_grades if isinstance(item, int))
+    if values:
+        return {
+            "min": min(values),
+            "max": max(values),
+        }
 
-    values = [int(item) for item in raw_grades if isinstance(item, int)]
-    if not values:
+    for key in ("employmentGrade", "workload"):
+        parsed = _parse_percentages_from_text(str(vacancy.raw.get(key) or ""))
+        if parsed:
+            return parsed
+    return None
+
+
+def _extract_workload_text(vacancy: VacancyFull) -> str | None:
+    raw_grades = vacancy.raw.get("employmentGrades")
+    if isinstance(raw_grades, Sequence) and not isinstance(raw_grades, (str, bytes, bytearray)):
+        values = [int(item) for item in raw_grades if isinstance(item, int)]
+        if values:
+            low = min(values)
+            high = max(values)
+            if low == high:
+                return f"{low}%"
+            return f"{low}% - {high}%"
+
+    for key in ("employmentGrade", "workload"):
+        value = str(vacancy.raw.get(key) or "").strip()
+        if value:
+            return value
+    return None
+
+
+def _parse_percentages_from_text(value: str) -> dict[str, int] | None:
+    matches = [int(item) for item in re.findall(r"(\d{1,3})\s*%", value)]
+    if not matches:
         return None
     return {
-        "min": min(values),
-        "max": max(values),
+        "min": min(matches),
+        "max": max(matches),
     }
 
 
-def _extract_address(schema: Mapping[str, Any]) -> dict[str, str] | None:
+def _extract_address(vacancy: VacancyFull, schema: Mapping[str, Any]) -> dict[str, str] | None:
     job_location = schema.get("jobLocation")
     if isinstance(job_location, list):
         job_location = job_location[0] if job_location else None
-    if not isinstance(job_location, Mapping):
-        return None
+    if isinstance(job_location, Mapping):
+        address = job_location.get("address")
+        if isinstance(address, Mapping):
+            payload = {
+                "street_address": str(address.get("streetAddress") or "").strip(),
+                "locality": str(address.get("addressLocality") or "").strip(),
+                "postal_code": str(address.get("postalCode") or "").strip(),
+                "region": str(address.get("addressRegion") or "").strip(),
+                "country": str(address.get("addressCountry") or "").strip(),
+            }
+            pruned = _prune(payload)
+            if pruned:
+                return pruned
 
-    address = job_location.get("address")
-    if not isinstance(address, Mapping):
-        return None
-
-    payload = {
-        "street_address": str(address.get("streetAddress") or "").strip(),
-        "locality": str(address.get("addressLocality") or "").strip(),
-        "postal_code": str(address.get("postalCode") or "").strip(),
-        "region": str(address.get("addressRegion") or "").strip(),
-        "country": str(address.get("addressCountry") or "").strip(),
+    fallback = {
+        "locality": vacancy.place,
     }
-    return _prune(payload)
+    raw_location_slug = str(vacancy.raw.get("jobLocationSlug") or "").strip()
+    if raw_location_slug:
+        fallback["job_location_slug"] = raw_location_slug
+    return _prune(fallback)
 
 
-def _extract_salary(schema: Mapping[str, Any]) -> dict[str, Any] | None:
+def _extract_salary(vacancy: VacancyFull, schema: Mapping[str, Any]) -> dict[str, Any] | None:
     base_salary = schema.get("baseSalary")
-    if not isinstance(base_salary, Mapping):
-        return None
+    if isinstance(base_salary, Mapping):
+        payload: dict[str, Any] = {
+            "currency": str(base_salary.get("currency") or "").strip(),
+        }
+        value = base_salary.get("value")
+        if isinstance(value, Mapping):
+            if value.get("minValue") is not None:
+                payload["min"] = value.get("minValue")
+            if value.get("maxValue") is not None:
+                payload["max"] = value.get("maxValue")
+            if value.get("value") is not None:
+                payload["value"] = value.get("value")
+            if value.get("unitText") is not None:
+                payload["unit"] = str(value.get("unitText") or "").strip()
+        elif value is not None:
+            payload["value"] = value
 
-    payload: dict[str, Any] = {
-        "currency": str(base_salary.get("currency") or "").strip(),
-    }
-    value = base_salary.get("value")
-    if isinstance(value, Mapping):
-        if value.get("minValue") is not None:
-            payload["min"] = value.get("minValue")
-        if value.get("maxValue") is not None:
-            payload["max"] = value.get("maxValue")
-        if value.get("value") is not None:
-            payload["value"] = value.get("value")
-        if value.get("unitText") is not None:
-            payload["unit"] = str(value.get("unitText") or "").strip()
-    elif value is not None:
-        payload["value"] = value
+        pruned = _prune(payload)
+        if pruned:
+            return pruned
 
-    return _prune(payload)
+    raw_salary = vacancy.raw.get("salary")
+    if isinstance(raw_salary, Mapping):
+        salary_range = raw_salary.get("range")
+        payload = {
+            "currency": str(raw_salary.get("currency") or "").strip(),
+            "unit": str(raw_salary.get("unit") or "").strip(),
+        }
+        if isinstance(salary_range, Mapping):
+            if salary_range.get("minValue") is not None:
+                payload["min"] = salary_range.get("minValue")
+            if salary_range.get("maxValue") is not None:
+                payload["max"] = salary_range.get("maxValue")
+        pruned = _prune(payload)
+        if pruned:
+            return pruned
+
+    for key in ("salaryText", "salary_text", "salaryFormatted", "salary"):
+        value = vacancy.raw.get(key)
+        if isinstance(value, str) and value.strip():
+            return {"text": value.strip()}
+    return None
 
 
-def _extract_company(schema: Mapping[str, Any]) -> dict[str, str] | None:
+def _extract_company(vacancy: VacancyFull, schema: Mapping[str, Any]) -> dict[str, str] | None:
     organization = schema.get("hiringOrganization")
-    if not isinstance(organization, Mapping):
-        return None
-    payload = {
-        "name": str(organization.get("name") or "").strip(),
-        "website": str(organization.get("sameAs") or "").strip(),
-        "logo": str(organization.get("logo") or "").strip(),
-    }
-    return _prune(payload)
+    if isinstance(organization, Mapping):
+        payload = {
+            "name": str(organization.get("name") or "").strip(),
+            "website": str(organization.get("sameAs") or "").strip(),
+            "logo": str(organization.get("logo") or "").strip(),
+        }
+        pruned = _prune(payload)
+        if pruned:
+            return pruned
+
+    raw_company = vacancy.raw.get("company")
+    if isinstance(raw_company, Mapping):
+        payload = {
+            "name": str(raw_company.get("name") or vacancy.company).strip(),
+            "website": str(raw_company.get("sameAs") or raw_company.get("website") or "").strip(),
+            "logo": str(
+                raw_company.get("logo")
+                or (raw_company.get("logoImage") or {}).get("src")
+                or vacancy.raw.get("logo")
+                or ""
+            ).strip(),
+        }
+        pruned = _prune(payload)
+        if pruned:
+            return pruned
+
+    return _prune({"name": vacancy.company})
 
 
 def _extract_listing_tags(vacancy: VacancyFull) -> list[str]:
-    raw_tags = vacancy.raw.get("listingTags")
-    if not isinstance(raw_tags, Sequence) or isinstance(raw_tags, (str, bytes, bytearray)):
-        return []
-
     tags: list[str] = []
-    for item in raw_tags:
-        if isinstance(item, Mapping):
-            tag_name = str(item.get("name") or "").strip()
+    for key in ("listingTags", "tags"):
+        raw_tags = vacancy.raw.get(key)
+        if not isinstance(raw_tags, Sequence) or isinstance(raw_tags, (str, bytes, bytearray)):
+            continue
+        for item in raw_tags:
+            if isinstance(item, Mapping):
+                tag_name = str(item.get("name") or item.get("label") or "").strip()
+            else:
+                tag_name = str(item).strip()
             if tag_name:
                 tags.append(tag_name)
-    return tags
+    return _dedupe_strings(tags)
 
 
 def _extract_remote_mode(text: str, schema: Mapping[str, Any]) -> str | None:
@@ -431,6 +519,60 @@ def _extract_raw_language_skills(vacancy: VacancyFull) -> list[str]:
     return _collect_matches(normalized, SPOKEN_LANGUAGE_KEYWORDS)
 
 
+def _extract_experience_years(text: str) -> dict[str, int] | None:
+    matches: list[tuple[int, int | None]] = []
+    for match in EXPERIENCE_REQUIREMENT_PATTERN.finditer(text):
+        minimum = int(match.group("min"))
+        maximum = match.group("max")
+        matches.append((minimum, int(maximum) if maximum else None))
+
+    if not matches:
+        return None
+
+    minimum, maximum = max(matches, key=lambda item: item[0])
+    payload: dict[str, int] = {"min": minimum}
+    if maximum is not None:
+        payload["max"] = maximum
+    return payload
+
+
+def _infer_seniority_labels(
+    explicit_labels: Sequence[str],
+    experience_years: Mapping[str, int] | None,
+) -> list[str]:
+    labels = list(explicit_labels)
+    if any(label in {"intern", "junior", "senior", "manager"} for label in labels):
+        return _dedupe_strings(labels)
+    if not experience_years:
+        return _dedupe_strings(labels)
+
+    minimum_years = int(experience_years.get("min") or 0)
+    inferred: str | None = None
+    if minimum_years >= 5:
+        inferred = "senior"
+    elif minimum_years >= 3:
+        inferred = "mid"
+    elif minimum_years >= 1:
+        inferred = "junior"
+
+    if inferred and inferred not in labels:
+        labels.append(inferred)
+    return _dedupe_strings(labels)
+
+
+def _dedupe_strings(values: Sequence[str]) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for item in values:
+        clean = _normalize_spaces(str(item))
+        lowered = clean.casefold()
+        if not clean or lowered in seen:
+            continue
+        seen.add(lowered)
+        result.append(clean)
+    return result
+
+
 def _prune(value: Any) -> Any:
     if isinstance(value, dict):
         result: dict[str, Any] = {}
@@ -449,6 +591,8 @@ def _prune(value: Any) -> Any:
 def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
     schema = vacancy.job_posting_schema or {}
     occupational_categories = _extract_occupational_categories(schema)
+    listing_tags = _extract_listing_tags(vacancy)
+    employment_types = _extract_employment_types(vacancy, schema)
     text = _normalize_text(
         [
             vacancy.title,
@@ -456,6 +600,8 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
             vacancy.description_text,
             vacancy.description_html,
             " ".join(occupational_categories),
+            " ".join(listing_tags),
+            " ".join(employment_types),
             str(schema.get("industry") or ""),
         ]
     )
@@ -470,11 +616,18 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
         if language not in spoken_languages:
             spoken_languages.append(language)
 
+    experience_years = _extract_experience_years(text)
+    seniority_labels = _infer_seniority_labels(
+        _collect_matches(text, SENIORITY_KEYWORDS),
+        experience_years,
+    )
+
     analytics = {
         "normalized_title": _normalize_spaces(vacancy.title),
         "role_family_primary": role_family_matches[0] if role_family_matches else None,
         "role_family_matches": role_family_matches,
-        "seniority_labels": _collect_matches(text, SENIORITY_KEYWORDS),
+        "seniority_labels": seniority_labels,
+        "experience_years": experience_years,
         "programming_languages": _collect_matches(text, PROGRAMMING_LANGUAGE_KEYWORDS),
         "frameworks_libraries": _collect_matches(text, FRAMEWORK_KEYWORDS),
         "cloud_platforms": _collect_matches(text, CLOUD_PLATFORM_KEYWORDS),
@@ -483,14 +636,15 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
         "tools_platforms": _collect_matches(text, TOOL_KEYWORDS),
         "methodologies": _collect_matches(text, METHODOLOGY_KEYWORDS),
         "spoken_languages": spoken_languages,
-        "employment_types": _extract_employment_types(vacancy, schema),
+        "employment_types": employment_types,
         "occupational_categories": occupational_categories,
         "industry": str(schema.get("industry") or "").strip() or None,
         "remote_mode": _extract_remote_mode(text, schema),
         "workload_percent": _extract_workload(vacancy),
-        "salary": _extract_salary(schema),
-        "company": _extract_company(schema),
-        "job_location": _extract_address(schema),
-        "listing_tags": _extract_listing_tags(vacancy),
+        "workload_text": _extract_workload_text(vacancy),
+        "salary": _extract_salary(vacancy, schema),
+        "company": _extract_company(vacancy, schema),
+        "job_location": _extract_address(vacancy, schema),
+        "listing_tags": listing_tags,
     }
     return _prune(analytics)

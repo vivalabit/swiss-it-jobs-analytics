@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Sequence
 
@@ -32,6 +33,7 @@ class JobsChHttpClient:
         self.base_url = base_url.rstrip("/")
         self.headers = dict(headers or HEADERS)
         self.timeout = timeout
+        self._search_cookies: requests.cookies.RequestsCookieJar | None = None
 
     def search(
         self,
@@ -42,8 +44,7 @@ class JobsChHttpClient:
         all_jobs: list[VacancyFull] = []
         successful_queries = 0
 
-        with requests.Session() as session:
-            session.headers.update(self.headers)
+        with self._new_session() as session:
             for query in queries:
                 if config.show_progress:
                     print(f"[progress] start {query.label}", file=sys.stderr)
@@ -62,6 +63,7 @@ class JobsChHttpClient:
                     successful_queries += 1
                 except (requests.RequestException, ParseError) as exc:
                     warnings.append(f"{query.label} failed: {exc}")
+            self._search_cookies = session.cookies.copy()
 
         return _dedupe_vacancies(all_jobs), warnings, successful_queries
 
@@ -89,9 +91,20 @@ class JobsChHttpClient:
                 file=sys.stderr,
             )
 
-        def fetch_payload(url: str) -> tuple[dict[str, Any] | None, str | None]:
+        session_local = threading.local()
+
+        def get_session() -> requests.Session:
+            session = getattr(session_local, "session", None)
+            if session is None:
+                session = self._new_session()
+                session_local.session = session
+            return session
+
+        def fetch_payload(vacancy: VacancyFull) -> tuple[dict[str, Any] | None, str | None]:
             try:
-                response = requests.get(url, headers=self.headers, timeout=self.timeout)
+                session = get_session()
+                headers = self._detail_headers(vacancy)
+                response = session.get(vacancy.url, headers=headers, timeout=self.timeout)
                 response.raise_for_status()
                 return extract_detail_payload(response.text), None
             except Exception as exc:  # pragma: no cover
@@ -100,7 +113,7 @@ class JobsChHttpClient:
         enriched = 0
         if detail_workers <= 1:
             for done, idx in enumerate(range(limit), start=1):
-                payload, error = fetch_payload(vacancies[idx].url)
+                payload, error = fetch_payload(vacancies[idx])
                 apply_detail_payload(vacancies[idx], payload, error)
                 if payload:
                     enriched += 1
@@ -110,7 +123,7 @@ class JobsChHttpClient:
 
         with ThreadPoolExecutor(max_workers=detail_workers) as executor:
             future_to_idx = {
-                executor.submit(fetch_payload, vacancies[idx].url): idx
+                executor.submit(fetch_payload, vacancies[idx]): idx
                 for idx in range(limit)
             }
             done = 0
@@ -155,7 +168,7 @@ class JobsChHttpClient:
                 params["page"] = page
 
             try:
-                init_state = self._get_init_state(
+                init_state, response_url = self._get_init_state(
                     session,
                     f"{self.base_url}{endpoint}",
                     params,
@@ -174,6 +187,10 @@ class JobsChHttpClient:
             jobs = parse_jobs_from_bucket(bucket, base_url=self.base_url)
             if not jobs:
                 break
+            for job in jobs:
+                job.raw.setdefault("search_url", response_url)
+                if params:
+                    job.raw.setdefault("search_params", dict(params))
 
             all_jobs.extend(jobs)
             if planned_pages is None:
@@ -199,10 +216,23 @@ class JobsChHttpClient:
         session: requests.Session,
         url: str,
         params: dict[str, Any],
-    ) -> dict[str, Any]:
+    ) -> tuple[dict[str, Any], str]:
         response = session.get(url, params=params, timeout=self.timeout)
         response.raise_for_status()
-        return extract_js_object(response.text, "__INIT__ =")
+        return extract_js_object(response.text, "__INIT__ ="), response.url
+
+    def _new_session(self) -> requests.Session:
+        session = requests.Session()
+        session.headers.update(self.headers)
+        if self._search_cookies is not None:
+            session.cookies.update(self._search_cookies)
+        return session
+
+    def _detail_headers(self, vacancy: VacancyFull) -> dict[str, str] | None:
+        search_url = vacancy.raw.get("search_url")
+        if isinstance(search_url, str) and search_url.strip():
+            return {"Referer": search_url.strip()}
+        return None
 
 
 def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:

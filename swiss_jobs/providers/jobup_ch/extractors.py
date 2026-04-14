@@ -84,22 +84,14 @@ def _parse_jobs_from_bucket(bucket: dict[str, Any], *, base_url: str) -> list[Va
         if isinstance(company, dict):
             company_name = str(company.get("name") or "").strip()
 
-        listing_tags = []
-        for item in row.get("listingTags") or []:
-            if isinstance(item, dict):
-                name = str(item.get("name") or "").strip()
-                if name:
-                    listing_tags.append(name)
-
         raw = dict(row)
-        raw["listingTags"] = listing_tags
         workload = _format_workload(row.get("employmentGrades"))
         if workload:
             raw["workload"] = workload
 
         salary = _format_salary(row.get("salary"))
         if salary:
-            raw["salary"] = salary
+            raw["salaryText"] = salary
 
         jobs.append(
             VacancyFull(

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
+import re
 from typing import Any, Literal, Mapping, Sequence
 
 ParserMode = Literal["new", "search"]
@@ -47,6 +48,12 @@ def _unique(values: Sequence[str]) -> list[str]:
             seen.add(value)
             result.append(value)
     return result
+
+
+def _looks_absolute_datetime(value: str | None) -> bool:
+    if not value:
+        return False
+    return bool(re.search(r"\d{4}-\d{2}-\d{2}", value))
 
 
 @dataclass(slots=True)
@@ -96,6 +103,10 @@ class VacancyFull:
 
     @property
     def posted_at(self) -> str | None:
+        if _looks_absolute_datetime(self.publication_date):
+            return self.publication_date
+        if _looks_absolute_datetime(self.initial_publication_date):
+            return self.initial_publication_date
         return self.publication_date or self.initial_publication_date
 
     @property
@@ -106,7 +117,7 @@ class VacancyFull:
             return raw_value.strip()
 
         raw = self.raw or {}
-        for key in ("employmentType", "employment_type", "workload", "jobType"):
+        for key in ("employmentType", "employment_type", "jobType"):
             value = raw.get(key)
             if isinstance(value, str) and value.strip():
                 return value.strip()

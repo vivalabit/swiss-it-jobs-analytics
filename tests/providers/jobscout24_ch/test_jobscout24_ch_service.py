@@ -3,9 +3,13 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+import requests
 
 from swiss_jobs.core.models import ClientConfig, VacancyFull
 from swiss_jobs.providers.jobscout24_ch.client import JobScout24ChHttpClient
+from swiss_jobs.providers.jobscout24_ch.detail import apply_detail_payload
 from swiss_jobs.providers.jobscout24_ch.service import JobScout24ChParserService
 
 
@@ -104,6 +108,122 @@ class JobScout24ChServiceTests(unittest.TestCase):
             self.assertEqual(0, fake_client.enrich_calls)
             self.assertEqual("brief", result.effective_config.output_format)
             self.assertEqual(1, len(result.output_jobs))
+
+    def test_role_filter_is_applied_after_detail_enrichment(self) -> None:
+        vacancy = VacancyFull(
+            id="vac-4",
+            title="Engineer",
+            company="Acme",
+            place="Zurich",
+            url="https://www.jobscout24.ch/en/job/test4/",
+            source="jobscout24.ch",
+        )
+
+        class EnrichingClient(FakeJobScout24ChClient):
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+                self.enrich_calls += 1
+                for item in vacancies:
+                    item.description_text = "Platform engineer role focused on automation."
+                return len(vacancies), len(vacancies)
+
+        fake_client = EnrichingClient([vacancy])
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config = make_config(
+                {
+                    "client_id": "client_a",
+                    "database_path": str(Path(tmpdir) / "client-a.sqlite"),
+                    "mode": "search",
+                    "terms": ["engineer"],
+                    "locations": ["zurich"],
+                    "role_keywords": ["platform engineer"],
+                    "output_format": "brief",
+                },
+            )
+
+            service = JobScout24ChParserService(http_client=fake_client, runtime_root=Path(tmpdir))
+            result = service.run(config)
+
+            self.assertEqual(1, fake_client.enrich_calls)
+            self.assertEqual(1, len(result.output_jobs))
+            self.assertEqual(["platform engineer"], result.output_jobs[0]["keywords_matched"])
+
+    def test_detail_fetch_retries_after_forbidden(self) -> None:
+        client = JobScout24ChHttpClient()
+        vacancy = VacancyFull(
+            id="vac-5",
+            title="Platform Engineer",
+            company="Acme",
+            place="Zurich",
+            url="https://www.jobscout24.ch/en/job/test5/",
+            raw={"search_url": "https://www.jobscout24.ch/en/jobs/platform%20engineer/"},
+            source="jobscout24.ch",
+        )
+
+        detail_html = """
+        <html>
+          <head>
+            <script type="application/ld+json">
+              {"@type":"JobPosting","description":"<p>Platform engineering in Python.</p>"}
+            </script>
+          </head>
+          <body></body>
+        </html>
+        """
+
+        class FakeResponse:
+            def __init__(self, *, status_code: int, text: str = "") -> None:
+                self.status_code = status_code
+                self.text = text
+
+            def raise_for_status(self) -> None:
+                if self.status_code >= 400:
+                    raise requests.HTTPError(
+                        f"{self.status_code} Client Error",
+                        response=self,
+                    )
+
+        class FakeSession:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def get(self, url, headers=None, timeout=None):  # noqa: ANN001
+                self.calls += 1
+                if self.calls == 1:
+                    return FakeResponse(status_code=403)
+                return FakeResponse(status_code=200, text=detail_html)
+
+        fake_session = FakeSession()
+        with patch("swiss_jobs.providers.jobscout24_ch.client.time.sleep", return_value=None):
+            payload = client._fetch_detail_payload(fake_session, vacancy)  # noqa: SLF001
+
+        self.assertIn("Platform engineering in Python", payload["description_text"])
+
+    def test_apply_detail_payload_normalizes_absolute_publication_date(self) -> None:
+        vacancy = VacancyFull(
+            id="vac-6",
+            title="Data Analyst",
+            company="Acme",
+            place="Zurich",
+            publication_date="5 d",
+            source="jobscout24.ch",
+        )
+
+        apply_detail_payload(
+            vacancy,
+            {
+                "description_html": "<p>Details</p>",
+                "description_text": "Details",
+                "detail_attributes": {
+                    "publicationDate": "2026-04-07T11:05:03+02:00",
+                    "employmentTypeText": "permanent position",
+                },
+            },
+        )
+
+        self.assertEqual("2026-04-07T11:05:03+02:00", vacancy.publication_date)
+        self.assertEqual("5 d", vacancy.raw["publicationDateText"])
+        self.assertEqual("permanent position", vacancy.raw["employmentType"])
 
 
 if __name__ == "__main__":

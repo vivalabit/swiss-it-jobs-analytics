@@ -12,6 +12,7 @@ from swiss_jobs.providers.jobup_ch.service import JobupChParserService, slugify_
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_RUNTIME_DIR = str(PROJECT_ROOT / "runtime" / "jobup_ch")
+SUMMARY_MARKER = "__SWISS_JOBS_RUN_SUMMARY__"
 
 
 def load_json_config(path: str) -> dict[str, Any]:
@@ -242,10 +243,23 @@ def _report_result_issues(result: ClientRunResult) -> None:
         print(f"[error] {error}", file=sys.stderr)
 
 
+def _emit_summary_marker(result: ClientRunResult) -> None:
+    payload = {
+        "client_id": result.client_id,
+        "success": result.success,
+        "stats": result.stats.to_dict(),
+        "warnings_count": len(result.warnings),
+        "errors_count": len(result.errors),
+        "database_path": result.database_path,
+    }
+    print(f"{SUMMARY_MARKER} {json.dumps(payload, ensure_ascii=False, sort_keys=True)}", file=sys.stderr)
+
+
 def _run_with_watch(service: JobupChParserService, config: ClientConfig) -> int:
     while True:
         result = service.run(config)
         _report_result_issues(result)
+        _emit_summary_marker(result)
         if result.output_jobs:
             _print_single_result(result, as_json=config.json_output)
             print("")
@@ -267,6 +281,7 @@ def main(argv: list[str] | None = None) -> int:
     if config.watch == 0:
         result = service.run(config)
         _report_result_issues(result)
+        _emit_summary_marker(result)
         _print_single_result(result, as_json=config.json_output)
         return 0 if result.success else 1
 

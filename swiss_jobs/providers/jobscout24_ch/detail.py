@@ -21,10 +21,14 @@ def apply_detail_payload(
             vacancy.raw.update(detail_attributes)
             publication_date = detail_attributes.get("publicationDate")
             if isinstance(publication_date, str) and publication_date.strip():
+                if vacancy.publication_date and vacancy.publication_date != publication_date.strip():
+                    vacancy.raw.setdefault("publicationDateText", vacancy.publication_date)
+                vacancy.publication_date = publication_date.strip()
                 vacancy.initial_publication_date = publication_date.strip()
             employment_text = detail_attributes.get("employmentTypeText")
             if isinstance(employment_text, str) and employment_text.strip():
                 vacancy.raw["employmentType"] = employment_text.strip()
+                vacancy.raw.setdefault("jobType", employment_text.strip())
         vacancy.detail_schema_error = None
         return
 

@@ -67,6 +67,31 @@ class JobsChAnalyticsTests(unittest.TestCase):
         self.assertEqual(120000, analytics["salary"]["min"])
         self.assertEqual(["quickApply"], analytics["listing_tags"])
 
+    def test_build_job_analytics_infers_seniority_and_keeps_workload_separate(self) -> None:
+        vacancy = VacancyFull(
+            id="analytics-2",
+            title="Software Engineer",
+            company="Acme",
+            place="Zurich",
+            description_text=(
+                "You bring 5+ years of professional experience with Java and Spring Boot. "
+                "Hybrid work and fluent English required."
+            ),
+            raw={
+                "workload": "80% - 100%",
+                "listingTags": ["quickApply"],
+            },
+        )
+
+        analytics = build_job_analytics(vacancy)
+
+        self.assertIn("senior", analytics["seniority_labels"])
+        self.assertEqual({"min": 5}, analytics["experience_years"])
+        self.assertEqual({"min": 80, "max": 100}, analytics["workload_percent"])
+        self.assertEqual("80% - 100%", analytics["workload_text"])
+        self.assertNotIn("employment_types", analytics)
+        self.assertEqual(["quickApply"], analytics["listing_tags"])
+
 
 if __name__ == "__main__":
     unittest.main()

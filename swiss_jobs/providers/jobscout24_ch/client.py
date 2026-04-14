@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import sys
+import threading
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Sequence
 from urllib.parse import quote
@@ -34,6 +36,7 @@ class JobScout24ChHttpClient:
         self.base_url = base_url.rstrip("/")
         self.headers = dict(headers or HEADERS)
         self.timeout = timeout
+        self._search_cookies: requests.cookies.RequestsCookieJar | None = None
 
     def search(
         self,
@@ -44,8 +47,7 @@ class JobScout24ChHttpClient:
         all_jobs: list[VacancyFull] = []
         successful_queries = 0
 
-        with requests.Session() as session:
-            session.headers.update(self.headers)
+        with self._new_session() as session:
             for query in queries:
                 if config.show_progress:
                     print(f"[progress] start {query.label}", file=sys.stderr)
@@ -64,6 +66,7 @@ class JobScout24ChHttpClient:
                     successful_queries += 1
                 except (requests.RequestException, ParseError) as exc:
                     warnings.append(f"{query.label} failed: {exc}")
+            self._search_cookies = session.cookies.copy()
 
         return _dedupe_vacancies(all_jobs), warnings, successful_queries
 
@@ -91,18 +94,26 @@ class JobScout24ChHttpClient:
                 file=sys.stderr,
             )
 
-        def fetch_payload(url: str) -> tuple[dict[str, Any] | None, str | None]:
+        session_local = threading.local()
+
+        def get_session() -> requests.Session:
+            session = getattr(session_local, "session", None)
+            if session is None:
+                session = self._new_session()
+                session_local.session = session
+            return session
+
+        def fetch_payload(vacancy: VacancyFull) -> tuple[dict[str, Any] | None, str | None]:
             try:
-                response = requests.get(url, headers=self.headers, timeout=self.timeout)
-                response.raise_for_status()
-                return extract_detail_payload(response.text), None
+                session = get_session()
+                return self._fetch_detail_payload(session, vacancy), None
             except Exception as exc:  # pragma: no cover
                 return None, str(exc)
 
         enriched = 0
         if detail_workers <= 1:
             for done, idx in enumerate(range(limit), start=1):
-                payload, error = fetch_payload(vacancies[idx].url)
+                payload, error = fetch_payload(vacancies[idx])
                 apply_detail_payload(vacancies[idx], payload, error)
                 if payload:
                     enriched += 1
@@ -112,7 +123,7 @@ class JobScout24ChHttpClient:
 
         with ThreadPoolExecutor(max_workers=detail_workers) as executor:
             future_to_idx = {
-                executor.submit(fetch_payload, vacancies[idx].url): idx
+                executor.submit(fetch_payload, vacancies[idx]): idx
                 for idx in range(limit)
             }
             done = 0
@@ -163,6 +174,10 @@ class JobScout24ChHttpClient:
                 raise
 
             jobs, discovered_pages = parse_jobs_from_search_page(response.text, base_url=self.base_url)
+            for job in jobs:
+                job.raw.setdefault("search_url", response.url)
+                if params:
+                    job.raw.setdefault("search_params", dict(params))
             if location:
                 jobs = [job for job in jobs if _matches_location(job.place, location)]
             if not jobs:
@@ -193,6 +208,50 @@ class JobScout24ChHttpClient:
         if term:
             parts.append(quote(term.strip(), safe=""))
         return "/".join(parts) + "/"
+
+    def _fetch_detail_payload(
+        self,
+        session: requests.Session,
+        vacancy: VacancyFull,
+    ) -> dict[str, Any]:
+        last_error: Exception | None = None
+        headers = self._detail_headers(vacancy)
+        for attempt in range(3):
+            try:
+                response = session.get(vacancy.url, headers=headers, timeout=self.timeout)
+                response.raise_for_status()
+                payload = extract_detail_payload(response.text)
+                if attempt > 0 and vacancy.detail_schema_error:
+                    vacancy.detail_schema_error = None
+                return payload
+            except requests.HTTPError as exc:
+                last_error = exc
+                status_code = exc.response.status_code if exc.response is not None else None
+                if status_code not in {403, 429, 500, 502, 503, 504} or attempt == 2:
+                    break
+                time.sleep(0.75 * (attempt + 1))
+            except requests.RequestException as exc:
+                last_error = exc
+                if attempt == 2:
+                    break
+                time.sleep(0.5 * (attempt + 1))
+
+        if last_error is None:  # pragma: no cover
+            raise RuntimeError(f"Unknown detail fetch error for {vacancy.url}")
+        raise last_error
+
+    def _new_session(self) -> requests.Session:
+        session = requests.Session()
+        session.headers.update(self.headers)
+        if self._search_cookies is not None:
+            session.cookies.update(self._search_cookies)
+        return session
+
+    def _detail_headers(self, vacancy: VacancyFull) -> dict[str, str] | None:
+        search_url = vacancy.raw.get("search_url")
+        if isinstance(search_url, str) and search_url.strip():
+            return {"Referer": search_url.strip()}
+        return None
 
 
 def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:

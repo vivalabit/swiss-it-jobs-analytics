@@ -220,6 +220,44 @@ class JobsChServiceTests(unittest.TestCase):
             self.assertIn("python", analytics["programming_languages"])
             self.assertTrue(result.database_path)
 
+    def test_role_filter_is_applied_after_detail_enrichment(self) -> None:
+        vacancy = VacancyFull(
+            id="vac-5",
+            title="Engineer",
+            company="Acme",
+            place="Zurich",
+            url="https://example.test/jobs/7",
+        )
+
+        class EnrichingClient(FakeJobsChClient):
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+                self.enrich_calls += 1
+                for item in vacancies:
+                    item.description_text = "This role is for a platform engineer working on cloud systems."
+                return len(vacancies), len(vacancies)
+
+        fake_client = EnrichingClient([vacancy])
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config = make_config(
+                {
+                    "client_id": "client_a",
+                    "database_path": str(Path(tmpdir) / "client-a.sqlite"),
+                    "mode": "search",
+                    "terms": ["engineer"],
+                    "locations": ["zurich"],
+                    "role_keywords": ["platform engineer"],
+                    "output_format": "brief",
+                },
+            )
+
+            service = JobsChParserService(http_client=fake_client, runtime_root=Path(tmpdir))
+            result = service.run(config)
+
+            self.assertEqual(1, fake_client.enrich_calls)
+            self.assertEqual(1, len(result.output_jobs))
+            self.assertEqual(["platform engineer"], result.output_jobs[0]["keywords_matched"])
+
 
 if __name__ == "__main__":
     unittest.main()
