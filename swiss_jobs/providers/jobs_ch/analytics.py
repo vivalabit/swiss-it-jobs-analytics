@@ -141,6 +141,7 @@ ROLE_FAMILY_KEYWORDS: dict[str, tuple[str, ...]] = {
 }
 
 PROGRAMMING_LANGUAGE_KEYWORDS: dict[str, tuple[str, ...]] = {
+    "c": ("ansi c", "embedded c", "c/c++", "c/c++20", "c / c++"),
     "python": ("python",),
     "java": ("java",),
     "javascript": ("javascript",),
@@ -181,15 +182,24 @@ FRAMEWORK_KEYWORDS: dict[str, tuple[str, ...]] = {
     "spark": ("apache spark", "spark"),
     "airflow": ("apache airflow", "airflow"),
     "dbt": ("dbt",),
+    "numpy": ("numpy",),
+    "pandas": ("pandas",),
+    "or_tools": ("or-tools", "or tools", "google or-tools", "google or tools"),
+    "cp_sat": ("cp-sat", "cp sat", "cpsat"),
+    "boost": ("boost", "boost c++"),
 }
 
 CLOUD_PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "aws": ("aws", "amazon web services"),
-    "azure": ("azure", "microsoft azure"),
+    "azure": (
+        "microsoft azure",
+        "azure cloud",
+        "azure services",
+        "azure infrastructure",
+        "azure kubernetes service",
+        "azure functions",
+    ),
     "gcp": ("gcp", "google cloud", "google cloud platform"),
-    "openshift": ("openshift",),
-    "kubernetes": ("kubernetes", "k8s"),
-    "docker": ("docker", "container", "containers", "containerized"),
     "terraform": ("terraform",),
     "ansible": ("ansible",),
 }
@@ -214,22 +224,46 @@ DATABASE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "elasticsearch": ("elasticsearch",),
 }
 
+PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
+    "openshift": ("openshift",),
+    "kubernetes": ("kubernetes", "k8s"),
+    "docker": ("docker", "dockerfile", "docker compose", "docker-compose"),
+    "plc": ("plc", "programmable logic controller"),
+    "vmware_esxi": ("vmware esxi", "esxi"),
+}
+
 TOOL_KEYWORDS: dict[str, tuple[str, ...]] = {
     "git": (" git ", "github", "gitlab"),
-    "ci_cd": ("ci/cd", "ci cd", "pipeline", "pipelines"),
+    "azure_devops": ("azure devops",),
+    "visual_studio": ("visual studio",),
+    "camunda": ("camunda",),
+    "flowable": ("flowable",),
+    "powershell": ("powershell", "power shell"),
+    "batch": ("batch scripting", "batch script", "batch files", ".bat"),
     "linux": ("linux",),
-    "rest_api": ("rest api", "restful api", "restful apis", "api"),
-    "graphql": ("graphql",),
     "junit": ("junit",),
     "jest": ("jest",),
     "cypress": ("cypress",),
     "playwright": ("playwright",),
     "selenium": ("selenium",),
-    "agile": ("agile", "scrum", "kanban"),
+}
+
+PROTOCOL_STANDARD_KEYWORDS: dict[str, tuple[str, ...]] = {
+    "rest": ("rest api", "restful api", "restful apis", "rest"),
+    "graphql": ("graphql",),
+    "opc_ua": ("opc-ua", "opc ua"),
+    "tcp_ip": ("tcp/ip", "tcp ip"),
+}
+
+VENDOR_KEYWORDS: dict[str, tuple[str, ...]] = {
+    "beckhoff": ("beckhoff",),
+    "siemens": ("siemens",),
+    "vmware": ("vmware",),
 }
 
 METHODOLOGY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "agile": ("agile", "scrum", "kanban"),
+    "ci_cd": ("ci/cd", "ci cd", "continuous integration", "continuous delivery"),
     "devops": ("devops",),
     "devsecops": ("devsecops",),
     "microservices": ("microservices", "microservice"),
@@ -271,13 +305,17 @@ def _normalize_spaces(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
 
 
+def _normalize_separators(value: str) -> str:
+    return re.sub(r"[\u2010-\u2015/_?:]+", " ", value)
+
+
 def _normalize_text(parts: Sequence[str]) -> str:
     text = " ".join(part for part in parts if part)
-    return f" {_normalize_spaces(text).lower()} "
+    return f" {_normalize_spaces(_normalize_separators(text)).lower()} "
 
 
 def _contains_alias(text: str, alias: str) -> bool:
-    normalized_alias = alias.lower().strip()
+    normalized_alias = _normalize_spaces(_normalize_separators(alias)).lower().strip()
     if not normalized_alias:
         return False
     pattern = re.compile(
@@ -621,8 +659,15 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
         _collect_matches(text, SENIORITY_KEYWORDS),
         experience_years,
     )
+    confidence = "high"
+    confidence_reasons: list[str] = []
+    if not vacancy.description_text.strip():
+        confidence = "low"
+        confidence_reasons.append("missing_description_text")
 
     analytics = {
+        "confidence": confidence,
+        "confidence_reasons": confidence_reasons,
         "normalized_title": _normalize_spaces(vacancy.title),
         "role_family_primary": role_family_matches[0] if role_family_matches else None,
         "role_family_matches": role_family_matches,
@@ -633,7 +678,10 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
         "cloud_platforms": _collect_matches(text, CLOUD_PLATFORM_KEYWORDS),
         "data_platforms": _collect_matches(text, DATA_PLATFORM_KEYWORDS),
         "databases": _collect_matches(text, DATABASE_KEYWORDS),
-        "tools_platforms": _collect_matches(text, TOOL_KEYWORDS),
+        "platforms": _collect_matches(text, PLATFORM_KEYWORDS),
+        "tools": _collect_matches(text, TOOL_KEYWORDS),
+        "vendors": _collect_matches(text, VENDOR_KEYWORDS),
+        "protocols_standards": _collect_matches(text, PROTOCOL_STANDARD_KEYWORDS),
         "methodologies": _collect_matches(text, METHODOLOGY_KEYWORDS),
         "spoken_languages": spoken_languages,
         "employment_types": employment_types,
