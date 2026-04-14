@@ -18,7 +18,7 @@ python3 -m pip install -e .
 
 ## Collect vacancies
 
-`Run all providers on 'software engineer'`
+`Run all providers`
 ```bash
 python3 -m swiss_jobs.cli.parse --all-sources --mode new 
 ```
