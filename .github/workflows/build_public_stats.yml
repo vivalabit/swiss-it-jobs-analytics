@@ -1,0 +1,116 @@
+name: Build Public Stats
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_paths:
+        description: "Optional repo-relative dataset paths, one per line. If empty, files from data/private_snapshots/ are used."
+        required: false
+        default: ""
+        type: string
+      top_skills:
+        description: "Top skills limit for analytics export."
+        required: false
+        default: "20"
+        type: string
+      top_pairs:
+        description: "Top skill pair limit for analytics export."
+        required: false
+        default: "50"
+        type: string
+
+jobs:
+  build-public-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Resolve dataset inputs
+        id: datasets
+        env:
+          DATASET_PATHS_INPUT: ${{ inputs.dataset_paths }}
+        run: |
+          if [ -n "$DATASET_PATHS_INPUT" ]; then
+            mapfile -t dataset_paths < <(printf '%s\n' "$DATASET_PATHS_INPUT" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed '/^$/d')
+          else
+            mapfile -t dataset_paths < <(find data/private_snapshots -type f \( -name '*.csv' -o -name '*.parquet' -o -name '*.json' -o -name '*.jsonl' -o -name '*.sqlite' -o -name '*.db' \) | sort)
+          fi
+
+          if [ "${#dataset_paths[@]}" -eq 0 ]; then
+            echo "No dataset snapshot files found. Provide workflow_dispatch input dataset_paths or add files under data/private_snapshots/." >&2
+            exit 1
+          fi
+
+          {
+            echo "dataset_count=${#dataset_paths[@]}"
+            echo "dataset_paths<<EOF"
+            printf '%s\n' "${dataset_paths[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Export analytics CSV
+        env:
+          DATASET_PATHS: ${{ steps.datasets.outputs.dataset_paths }}
+          TOP_SKILLS: ${{ inputs.top_skills }}
+          TOP_PAIRS: ${{ inputs.top_pairs }}
+        run: |
+          mapfile -t dataset_paths < <(printf '%s\n' "$DATASET_PATHS")
+          python scripts/export_analytics.py "${dataset_paths[@]}" \
+            --output-dir analytics_output \
+            --top-skills "$TOP_SKILLS" \
+            --top-pairs "$TOP_PAIRS"
+
+      - name: Build public JSON snapshots
+        run: |
+          python scripts/build_public_stats.py \
+            --csv-dir analytics_output \
+            --output-dir public_stats/data \
+            --copy-csv-dir public_stats/csv
+
+      - name: Detect frontend build
+        id: frontend
+        run: |
+          if [ -f site/package.json ]; then
+            echo "has_frontend=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_frontend=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node.js
+        if: steps.frontend.outputs.has_frontend == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build static site
+        if: steps.frontend.outputs.has_frontend == 'true'
+        working-directory: site
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+          npm run build
+
+      - name: Upload public stats artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-stats
+          path: |
+            analytics_output/
+            public_stats/
+            site/dist/
+          if-no-files-found: warn

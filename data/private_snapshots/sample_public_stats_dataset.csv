@@ -1,0 +1,5 @@
+vacancy_id,company,role_category,city,canton,seniority,work_mode,skills,programming_languages,frameworks_libraries
+sample-001,Alpine Data,data_ai,Zürich,ZH,senior,hybrid,"python|sql|airflow","python|sql","airflow|pandas"
+sample-002,Helvetic Cloud,devops_platform,Bern,BE,mid,remote,"aws|terraform|kubernetes","python|bash","terraform"
+sample-003,Lake Software,software_engineering,Lausanne,VD,junior,onsite,"java|spring|sql","java|sql","spring"
+sample-004,Rhine Product,product_management,Basel,BS,mid,hybrid,"agile|sql|analytics","sql",""

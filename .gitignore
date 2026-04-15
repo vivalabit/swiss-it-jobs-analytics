@@ -39,3 +39,10 @@ runtime/
 *.sqlite-shm
 *.sqlite-wal
 analytics_output/
+public_stats/data/*.json
+public_stats/csv/*.csv
+site/dist/
+data/private_snapshots/*
+!data/private_snapshots/.gitkeep
+!data/private_snapshots/README.md
+!data/private_snapshots/sample_public_stats_dataset.csv
