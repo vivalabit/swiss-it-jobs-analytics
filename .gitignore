@@ -40,8 +40,6 @@ runtime/
 *.sqlite-shm
 *.sqlite-wal
 analytics_output/
-public_stats/data/*.json
-public_stats/csv/*.csv
 site/dist/
 site/public/data/*.json
 !site/public/data/.gitkeep
