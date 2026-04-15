@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-04-15T06:59:32Z",
+  "available": true,
+  "dimension": "role_category",
+  "items": [
+    {
+      "key": "devops_cloud_platform",
+      "label": "devops_cloud_platform",
+      "vacancy_count": 1741,
+      "share": 0.2665
+    },
+    {
+      "key": "software_engineering",
+      "label": "software_engineering",
+      "vacancy_count": 1695,
+      "share": 0.2595
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "vacancy_count": 770,
+      "share": 0.1179
+    },
+    {
+      "key": "support_operations",
+      "label": "support_operations",
+      "vacancy_count": 629,
+      "share": 0.0963
+    },
+    {
+      "key": "product_project_analysis",
+      "label": "product_project_analysis",
+      "vacancy_count": 575,
+      "share": 0.088
+    },
+    {
+      "key": "security",
+      "label": "security",
+      "vacancy_count": 527,
+      "share": 0.0807
+    },
+    {
+      "key": "data_ai",
+      "label": "data_ai",
+      "vacancy_count": 384,
+      "share": 0.0588
+    },
+    {
+      "key": "qa_testing",
+      "label": "qa_testing",
+      "vacancy_count": 99,
+      "share": 0.0152
+    },
+    {
+      "key": "erp_business_systems",
+      "label": "erp_business_systems",
+      "vacancy_count": 95,
+      "share": 0.0145
+    },
+    {
+      "key": "ux_ui_design",
+      "label": "ux_ui_design",
+      "vacancy_count": 18,
+      "share": 0.0028
+    }
+  ]
+}

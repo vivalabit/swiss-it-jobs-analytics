@@ -46,32 +46,41 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
 
-      - name: Resolve dataset inputs
-        id: datasets
+      - name: Resolve snapshot source
+        id: snapshot_source
         env:
           DATASET_PATHS_INPUT: ${{ inputs.dataset_paths }}
         run: |
           if [ -n "$DATASET_PATHS_INPUT" ]; then
             mapfile -t dataset_paths < <(printf '%s\n' "$DATASET_PATHS_INPUT" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed '/^$/d')
+            mode="rebuild"
+          elif [ -f public_stats/data/metadata.json ]; then
+            mode="committed"
           else
             mapfile -t dataset_paths < <(find data/private_snapshots -type f \( -name '*.csv' -o -name '*.parquet' -o -name '*.json' -o -name '*.jsonl' -o -name '*.sqlite' -o -name '*.db' \) | sort)
+            mode="rebuild"
           fi
 
-          if [ "${#dataset_paths[@]}" -eq 0 ]; then
-            echo "No dataset snapshot files found. Provide workflow_dispatch input dataset_paths or add files under data/private_snapshots/." >&2
-            exit 1
-          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
 
-          {
-            echo "dataset_count=${#dataset_paths[@]}"
-            echo "dataset_paths<<EOF"
-            printf '%s\n' "${dataset_paths[@]}"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          if [ "$mode" = "rebuild" ]; then
+            if [ "${#dataset_paths[@]}" -eq 0 ]; then
+              echo "No dataset snapshot files found. Provide workflow_dispatch input dataset_paths or add files under data/private_snapshots/." >&2
+              exit 1
+            fi
+
+            {
+              echo "dataset_count=${#dataset_paths[@]}"
+              echo "dataset_paths<<EOF"
+              printf '%s\n' "${dataset_paths[@]}"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Export analytics CSV
+        if: steps.snapshot_source.outputs.mode == 'rebuild'
         env:
-          DATASET_PATHS: ${{ steps.datasets.outputs.dataset_paths }}
+          DATASET_PATHS: ${{ steps.snapshot_source.outputs.dataset_paths }}
           TOP_SKILLS: ${{ inputs.top_skills }}
           TOP_PAIRS: ${{ inputs.top_pairs }}
         run: |
@@ -82,6 +91,7 @@ jobs:
             --top-pairs "$TOP_PAIRS"
 
       - name: Build public JSON snapshots
+        if: steps.snapshot_source.outputs.mode == 'rebuild'
         run: |
           python scripts/build_public_stats.py \
             --csv-dir analytics_output \

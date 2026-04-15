@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-04-15T06:59:32Z",
+  "schema_version": 1,
+  "source_csv_dir": "analytics_output",
+  "public_data_dir": "public_stats/data",
+  "available_csv_files": [
+    "overview_metrics.csv",
+    "top_skills_overall.csv",
+    "top_skills_by_role_category.csv",
+    "top_skills_by_canton.csv",
+    "top_programming_languages.csv",
+    "programming_languages_summary.csv",
+    "top_frameworks_libraries.csv",
+    "frameworks_libraries_summary.csv",
+    "distribution_role_category.csv",
+    "distribution_city.csv",
+    "distribution_canton.csv",
+    "distribution_seniority.csv",
+    "distribution_work_mode.csv",
+    "skill_cooccurrence_pairs.csv"
+  ],
+  "missing_csv_files": [],
+  "generated_snapshots": [
+    "metadata.json",
+    "overview.json",
+    "top_skills.json",
+    "skill_pairs.json",
+    "distributions_role_category.json",
+    "distributions_city.json",
+    "distributions_canton.json",
+    "distributions_seniority.json",
+    "distributions_work_mode.json"
+  ]
+}
