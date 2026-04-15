@@ -1,9 +1,9 @@
-# Future Static Site
+# Public Stats Frontend
 
-This directory is reserved for the future GitHub Pages frontend.
+This directory contains the GitHub Pages frontend for public Swiss IT job statistics.
 
-- put the frontend source here when it is ready
-- keep the build output in `site/dist/`
-- consume public snapshots from `public_stats/data/`
+- source code lives in `src/`
+- snapshot JSON files are copied from `../public_stats/data/` into `public/data/` during `npm run build`
+- Vite emits the static site to `site/dist/`
 
-The current workflow does not deploy Pages yet. It only builds public data artifacts.
+The frontend reads only aggregated JSON snapshots. It does not use SQLite or raw vacancy descriptions.

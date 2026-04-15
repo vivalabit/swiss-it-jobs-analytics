@@ -54,7 +54,6 @@ python3 scripts/export_analytics.py \
 
 
 
-
 ## Quick first run
 
 If you want a faster test run without detail pages:

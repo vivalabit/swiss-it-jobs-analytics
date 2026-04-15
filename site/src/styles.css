@@ -1,0 +1,359 @@
+:root {
+  color-scheme: light;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --bg: #f5f1e8;
+  --bg-strong: #e8dcc8;
+  --surface: rgba(255, 252, 247, 0.82);
+  --surface-strong: #fffaf2;
+  --text: #1d2b2a;
+  --muted: #586765;
+  --line: rgba(29, 43, 42, 0.12);
+  --accent: #0f766e;
+  --accent-soft: rgba(15, 118, 110, 0.14);
+  --accent-strong: #1d4d4a;
+  --shadow: 0 24px 60px rgba(24, 38, 37, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 28%),
+    radial-gradient(circle at right 15%, rgba(212, 162, 77, 0.16), transparent 24%),
+    linear-gradient(180deg, #f9f6f0 0%, var(--bg) 100%);
+}
+
+button,
+input,
+table {
+  font: inherit;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(29, 43, 42, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 43, 42, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 85%);
+  pointer-events: none;
+}
+
+.layout {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.9fr);
+  gap: 20px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
+.hero-status {
+  grid-template-columns: 1fr;
+  min-height: 60vh;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  margin: 8px 0 16px;
+  max-width: 14ch;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.hero-text,
+.panel-header p,
+.stat-note,
+.metadata-list dt,
+.segment-item p {
+  color: var(--muted);
+}
+
+.hero-text {
+  max-width: 56ch;
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.card {
+  backdrop-filter: blur(12px);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.hero-meta {
+  padding: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.stat-card {
+  padding: 20px;
+}
+
+.stat-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.stat-value {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1;
+}
+
+.stat-note {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.content-grid-wide .panel:first-child {
+  min-width: 0;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.panel-header {
+  margin-bottom: 18px;
+}
+
+.panel-header h2,
+.role-card h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  letter-spacing: -0.03em;
+}
+
+.panel-header h2 {
+  font-size: 1.7rem;
+}
+
+.panel-header p {
+  margin: 6px 0 0;
+}
+
+.bar-list {
+  display: grid;
+  gap: 14px;
+}
+
+.bar-row {
+  display: grid;
+  gap: 7px;
+}
+
+.bar-label-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.96rem;
+}
+
+.bar-track {
+  overflow: hidden;
+  height: 12px;
+  background: rgba(29, 43, 42, 0.08);
+  border-radius: 999px;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d69a31 0%, var(--accent) 100%);
+}
+
+.segment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.segment-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-strong);
+}
+
+.segment-item p {
+  margin: 4px 0 0;
+  font-size: 0.92rem;
+}
+
+.table-shell {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 0 0 10px;
+  text-align: left;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+tbody td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.role-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.role-card {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.88));
+  border: 1px solid var(--line);
+}
+
+.role-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.role-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.role-card li,
+.metadata-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.metadata-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.metadata-list dt {
+  font-weight: 600;
+}
+
+.metadata-list dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+  .hero,
+  .stats-grid,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .layout {
+    padding: 24px 14px 48px;
+  }
+
+  .card,
+  .panel,
+  .hero-meta,
+  .stat-card {
+    border-radius: 20px;
+  }
+
+  .hero-copy h1 {
+    max-width: none;
+  }
+
+  .bar-label-row,
+  .segment-item,
+  .role-card li,
+  .metadata-list div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metadata-list dd {
+    text-align: left;
+  }
+}

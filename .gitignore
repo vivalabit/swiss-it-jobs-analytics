@@ -25,6 +25,7 @@ ENV/
 build/
 dist/
 *.egg-info/
+node_modules/
 
 # IDEs
 .idea/
@@ -42,6 +43,8 @@ analytics_output/
 public_stats/data/*.json
 public_stats/csv/*.csv
 site/dist/
+site/public/data/*.json
+!site/public/data/.gitkeep
 data/private_snapshots/*
 !data/private_snapshots/.gitkeep
 !data/private_snapshots/README.md
