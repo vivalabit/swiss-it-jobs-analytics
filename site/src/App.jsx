@@ -507,7 +507,7 @@ function SegmentChart({ items }) {
 }
 
 async function fetchSnapshot(fileName) {
-  const response = await fetch(`/data/${fileName}`);
+  const response = await fetch(`${import.meta.env.BASE_URL}data/${fileName}`);
   if (!response.ok) {
     throw new Error(`Failed to load ${fileName}: ${response.status}`);
   }
