@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const dotUrl =
-  "https://cdn.prod.website-files.com/6961d185cb919d4c701e9c24/6961e7122c85268c7646f329_Group%202.svg";
+import dotUrl from "./assets/images/arrow-badge-right.svg";
 const heroDotsUrl =
   "https://cdn.prod.website-files.com/6961d185cb919d4c701e9c24/6961f78138e472cb2803976f_Group%201.png";
 const heroCornerTopLeft =
@@ -108,8 +107,19 @@ function App() {
   const overviewMetrics = overview.metrics ?? {};
   const lastUpdated = metadata.generated_at ?? overview.generated_at ?? null;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 8);
+  const programmingLanguages = topSkills.programming_languages ?? {};
+  const programmingLanguageSummary = programmingLanguages.summary ?? {};
+  const topProgrammingLanguages = selectTopItems(
+    (programmingLanguages.items ?? []).filter(
+      (item) => item.programming_language !== "dotnet",
+    ),
+    8,
+  );
+  const frameworksLibraries = topSkills.frameworks_libraries ?? {};
+  const frameworksSummary = frameworksLibraries.summary ?? {};
+  const topFrameworksLibraries = selectTopItems(frameworksLibraries.items ?? [], 8);
   const topPairs = selectTopItems(skillPairs.items ?? [], 4);
-  const cityItems = selectTopItems(filterUnknown(cityDistribution.items ?? []), 4);
+  const cityItems = selectTopItems(filterUnknown(cityDistribution.items ?? []), 6);
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
@@ -201,19 +211,13 @@ function App() {
       <section className="cy-section" id="charts">
         <div className="cy-container">
           <div className="cy-section-intro cy-section-intro-compact">
-            <SectionEyebrow label="Charts" />
-            <h2 className="cy-heading cy-section-title">Compact analysis dashboard</h2>
-            <p className="cy-copy cy-section-copy">
-              The highest-signal breakdowns from the snapshot, without the extra
-              long-form landing page sections.
-            </p>
+            <h2 className="cy-heading cy-section-title">Analysis dashboard</h2>
           </div>
 
           <div className="cy-dashboard-grid">
             <article className="cy-card cy-dashboard-panel">
               <div className="cy-data-panel-head">
                 <h3>Role category share</h3>
-                <p className="cy-copy">Largest vacancy segments by role group.</p>
               </div>
               <HorizontalBarChart
                 items={roleItems}
@@ -226,7 +230,6 @@ function App() {
             <article className="cy-card cy-dashboard-panel">
               <div className="cy-data-panel-head">
                 <h3>Leading cantons</h3>
-                <p className="cy-copy">Top cantons by vacancy concentration.</p>
               </div>
               <HorizontalBarChart
                 items={cantonItems}
@@ -239,7 +242,6 @@ function App() {
             <article className="cy-card cy-dashboard-panel">
               <div className="cy-data-panel-head">
                 <h3>Work mode distribution</h3>
-                <p className="cy-copy">Remote, hybrid, and onsite split.</p>
               </div>
               <SegmentChart items={workModeItems} />
             </article>
@@ -247,9 +249,20 @@ function App() {
             <article className="cy-card cy-dashboard-panel">
               <div className="cy-data-panel-head">
                 <h3>Seniority mix</h3>
-                <p className="cy-copy">Experience-level distribution in vacancies.</p>
               </div>
               <SegmentChart items={seniorityItems} />
+            </article>
+
+            <article className="cy-card cy-dashboard-panel">
+              <div className="cy-data-panel-head">
+                <h3>Top cities</h3>
+              </div>
+              <HorizontalBarChart
+                items={cityItems}
+                labelKey="label"
+                valueKey="vacancy_count"
+                shareKey="share"
+              />
             </article>
           </div>
         </div>
@@ -260,12 +273,7 @@ function App() {
       <section className="cy-section" id="skills">
         <div className="cy-container">
           <div className="cy-section-intro cy-section-intro-compact">
-            <SectionEyebrow label="Skills" />
             <h2 className="cy-heading cy-section-title">Top skills and pairings</h2>
-            <p className="cy-copy cy-section-copy">
-              Overall skill demand, strongest co-occurrences, and the leading skills
-              inside the largest role categories.
-            </p>
           </div>
 
           <div className="cy-data-grid">
@@ -343,6 +351,86 @@ function App() {
               </div>
             </article>
           </div>
+
+          <article className="cy-card cy-data-panel cy-programming-language-panel">
+            <div className="cy-data-panel-head">
+              <h3>Top programming languages</h3>
+              <p className="cy-copy">Language mentions extracted from the current vacancy snapshot.</p>
+            </div>
+
+            <div className="cy-summary-chip-row">
+              <span className="cy-chip">
+                Coverage · {formatPercent(programmingLanguageSummary.vacancy_coverage)}
+              </span>
+              <span className="cy-chip">
+                Vacancies · {formatInteger(programmingLanguageSummary.vacancies_with_items)}
+              </span>
+              <span className="cy-chip">
+                Distinct languages · {formatInteger(programmingLanguageSummary.distinct_items)}
+              </span>
+            </div>
+
+            <div className="cy-table-shell">
+              <table className="cy-data-table">
+                <thead>
+                  <tr>
+                    <th>Language</th>
+                    <th>Vacancies</th>
+                    <th>Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topProgrammingLanguages.map((item) => (
+                    <tr key={item.programming_language}>
+                      <td>{prettifyLabel(item.programming_language)}</td>
+                      <td>{formatInteger(item.vacancy_count)}</td>
+                      <td>{formatPercent(item.share)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article className="cy-card cy-data-panel cy-programming-language-panel">
+            <div className="cy-data-panel-head">
+              <h3>Top frameworks & libraries</h3>
+              <p className="cy-copy">Framework and library mentions extracted from the current vacancy snapshot.</p>
+            </div>
+
+            <div className="cy-summary-chip-row">
+              <span className="cy-chip">
+                Coverage · {formatPercent(frameworksSummary.vacancy_coverage)}
+              </span>
+              <span className="cy-chip">
+                Vacancies · {formatInteger(frameworksSummary.vacancies_with_items)}
+              </span>
+              <span className="cy-chip">
+                Distinct items · {formatInteger(frameworksSummary.distinct_items)}
+              </span>
+            </div>
+
+            <div className="cy-table-shell">
+              <table className="cy-data-table">
+                <thead>
+                  <tr>
+                    <th>Framework / Library</th>
+                    <th>Vacancies</th>
+                    <th>Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topFrameworksLibraries.map((item) => (
+                    <tr key={item.framework_library}>
+                      <td>{prettifyLabel(item.framework_library)}</td>
+                      <td>{formatInteger(item.vacancy_count)}</td>
+                      <td>{formatPercent(item.share)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -350,30 +438,6 @@ function App() {
 
       <section className="cy-section" id="metadata">
         <div className="cy-container">
-          <div className="cy-meta-strip cy-card">
-            <div>
-              <p className="cy-kicker">Metadata</p>
-              <h3>Publication details</h3>
-            </div>
-            <div className="cy-meta-strip-grid">
-              <div className="cy-metadata-row">
-                <span>Generated</span>
-                <strong>{formatDateTime(lastUpdated)}</strong>
-              </div>
-              <div className="cy-metadata-row">
-                <span>Schema</span>
-                <strong>v{metadata.schema_version ?? "n/a"}</strong>
-              </div>
-              <div className="cy-metadata-row">
-                <span>Snapshots</span>
-                <strong>{metadata.generated_snapshots?.length ?? 0}</strong>
-              </div>
-              <div className="cy-metadata-row">
-                <span>CSV exports</span>
-                <strong>{metadata.available_csv_files?.length ?? 0}</strong>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -382,11 +446,9 @@ function App() {
           <div className="cy-container cy-footer-shell cy-footer-shell-compact">
             <img src={footerShapeUrl} alt="" className="cy-footer-shape" />
             <div className="cy-footer-bottom cy-footer-bottom-compact">
-              <p>© 2026 Swiss IT Jobs Analytics.</p>
+              <p>2026</p>
               <p>
-                Source: `{metadata.source_csv_dir ?? "n/a"}` to `{
-                  metadata.public_data_dir ?? "n/a"
-                }`.
+                vivalabit
               </p>
             </div>
           </div>
@@ -586,6 +648,8 @@ function prettifyLabel(value) {
     return "n/a";
   }
 
+  const normalizedValue = String(value).normalize("NFC");
+  const normalizedKey = normalizedValue.toLocaleLowerCase("en-US");
   const dictionary = {
     ci_cd: "CI/CD",
     qa_testing: "QA Testing",
@@ -598,15 +662,32 @@ function prettifyLabel(value) {
     erp_business_systems: "ERP / Business Systems",
     rest_api: "REST API",
     dotnet: ".NET",
+    csharp: "C#",
+    sql: "SQL",
+    javascript: "JavaScript",
+    typescript: "TypeScript",
+    nodejs: "Node.js",
+    pytorch: "PyTorch",
+    zürich: "Zürich",
+    genève: "Genève",
   };
 
-  if (dictionary[value]) {
-    return dictionary[value];
+  if (dictionary[normalizedKey]) {
+    return dictionary[normalizedKey];
   }
 
-  return String(value)
+  return normalizedValue
     .replace(/_/g, " ")
-    .replace(/\b\w/g, (match) => match.toUpperCase());
+    .split(/(\s+|-|\/)/)
+    .map((part) => {
+      if (/^\s+$|^-$|^\/$/.test(part) || part.length === 0) {
+        return part;
+      }
+
+      const lowerPart = part.toLocaleLowerCase("en-US");
+      return lowerPart.charAt(0).toLocaleUpperCase("en-US") + lowerPart.slice(1);
+    })
+    .join("");
 }
 
 export default App;

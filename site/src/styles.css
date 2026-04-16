@@ -612,6 +612,17 @@ img {
   margin-top: 28px;
 }
 
+.cy-programming-language-panel {
+  margin-top: 24px;
+}
+
+.cy-summary-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
 .cy-role-highlight-card {
   border: 1px solid var(--border);
   border-radius: 16px;
