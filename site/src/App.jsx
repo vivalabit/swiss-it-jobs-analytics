@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import dotUrl from "./assets/images/arrow-badge-right.svg";
+import flagUrl from "./assets/images/flag.png";
 const heroDotsUrl =
   "https://cdn.prod.website-files.com/6961d185cb919d4c701e9c24/6961f78138e472cb2803976f_Group%201.png";
 const heroCornerTopLeft =
@@ -138,7 +139,10 @@ function App() {
             <div className="cy-hero-grid">
               <div className="cy-hero-copy">
                 <SectionEyebrow label="vivalabit" />
-                <h1 className="cy-heading cy-hero-title">Swiss IT jobs analytics</h1>
+                <img src={flagUrl} alt="" className="cy-hero-copy-flag" />
+                <h1 className="cy-heading cy-hero-title">
+                  <span className="cy-hero-title-accent">Swiss</span> IT jobs analytics
+                </h1>
                 <div className="cy-button-row">
                 </div>
               </div>
@@ -211,7 +215,9 @@ function App() {
       <section className="cy-section" id="charts">
         <div className="cy-container">
           <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">Analysis dashboard</h2>
+            <h2 className="cy-heading cy-section-title">
+              Analysis <span className="cy-hero-title-accent">dashboard</span>
+            </h2>
           </div>
 
           <div className="cy-dashboard-grid">
@@ -273,7 +279,10 @@ function App() {
       <section className="cy-section" id="skills">
         <div className="cy-container">
           <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">Top skills and pairings</h2>
+            <h2 className="cy-heading cy-section-title">
+              Top <span className="cy-hero-title-accent">skills</span> and{" "}
+              <span className="cy-hero-title-accent">pairings</span>
+            </h2>
           </div>
 
           <div className="cy-data-grid">

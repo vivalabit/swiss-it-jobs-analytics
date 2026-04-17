@@ -243,12 +243,18 @@ img {
   z-index: 1;
 }
 
+.cy-hero-copy {
+  isolation: isolate;
+}
+
 .cy-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   border-block: 1px solid var(--border);
   padding-block: 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .cy-eyebrow p,
@@ -266,8 +272,28 @@ img {
 }
 
 .cy-hero-title {
+  position: relative;
+  z-index: 1;
   margin-top: 28px;
   font-size: clamp(3rem, 8vw, 5.2rem);
+}
+
+.cy-hero-title-accent {
+  color: var(--primary);
+}
+
+.cy-hero-copy-flag {
+  position: absolute;
+  top: 50%;
+  right: -25%;
+  height: 200%;
+  width: auto;
+  max-width: none;
+  transform: translateY(-50%) scaleX(-1) rotate(-10deg);
+  transform-origin: center right;
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .cy-section-title {
@@ -291,8 +317,9 @@ img {
 .cy-hero-frame {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: 0;
   background: #fff;
   padding: 16px;
 }
@@ -310,13 +337,14 @@ img {
   height: 100%;
   object-fit: cover;
   opacity: 0.35;
+  z-index: 0;
 }
 
 .cy-corner {
   position: absolute;
   width: 76px;
   height: 76px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .cy-corner-top-left {
@@ -340,8 +368,10 @@ img {
 }
 
 .cy-hero-dashboard {
+  position: relative;
   display: grid;
   gap: 16px;
+  z-index: 2;
 }
 
 .cy-hero-stat-grid {
@@ -355,6 +385,10 @@ img {
 .cy-data-panel,
 .cy-meta-strip {
   padding: 22px;
+}
+
+.cy-hero-stat-card {
+  border-radius: 0;
 }
 
 .cy-hero-stat-label,
@@ -714,6 +748,11 @@ img {
     margin-top: 40px;
   }
 
+  .cy-hero-copy-flag {
+    right: -30%;
+    height: 126%;
+  }
+
   .cy-metrics-grid,
   .cy-dashboard-grid,
   .cy-data-grid,
@@ -732,6 +771,11 @@ img {
   .cy-nav,
   .cy-header-primary {
     display: flex;
+  }
+
+  .cy-hero-copy-flag {
+    right: -36%;
+    height: 148%;
   }
 
   .cy-hero-grid {
@@ -753,6 +797,12 @@ img {
 }
 
 @media (max-width: 767px) {
+  .cy-hero-copy-flag {
+    right: -42%;
+    height: 108%;
+    opacity: 0.14;
+  }
+
   .cy-hero-stat-grid {
     grid-template-columns: 1fr;
   }
