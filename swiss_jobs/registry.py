@@ -11,6 +11,11 @@ from .providers.jobscout24_ch.service import (
     JobScout24ChParserService,
     run_jobscout24_ch_parser,
 )
+from .providers.swissdevjobs_ch.cli import main as swissdevjobs_ch_cli_main
+from .providers.swissdevjobs_ch.service import (
+    SwissDevJobsChParserService,
+    run_swissdevjobs_ch_parser,
+)
 from .providers.jobup_ch.cli import main as jobup_ch_cli_main
 from .providers.jobup_ch.service import JobupChParserService, run_jobup_ch_parser
 
@@ -27,18 +32,21 @@ CLI_ENTRYPOINTS: dict[str, Callable[[list[str] | None], int]] = {
     "jobs_ch": jobs_ch_cli_main,
     "jobscout24_ch": jobscout24_ch_cli_main,
     "jobup_ch": jobup_ch_cli_main,
+    "swissdevjobs_ch": swissdevjobs_ch_cli_main,
 }
 
 RUNNERS: dict[str, Callable[..., object]] = {
     "jobs_ch": run_jobs_ch_parser,
     "jobscout24_ch": run_jobscout24_ch_parser,
     "jobup_ch": run_jobup_ch_parser,
+    "swissdevjobs_ch": run_swissdevjobs_ch_parser,
 }
 
 SERVICES: dict[str, type[object]] = {
     "jobs_ch": JobsChParserService,
     "jobscout24_ch": JobScout24ChParserService,
     "jobup_ch": JobupChParserService,
+    "swissdevjobs_ch": SwissDevJobsChParserService,
 }
 
 SOURCE_INFO: dict[str, SourceInfo] = {
@@ -67,6 +75,15 @@ SOURCE_INFO: dict[str, SourceInfo] = {
         description="Swiss Jobup portal",
         default_config_path=str(
             Path(__file__).resolve().parent / "providers" / "jobup_ch" / "configs" / "config_info.json"
+        ),
+    ),
+    "swissdevjobs_ch": SourceInfo(
+        key="swissdevjobs_ch",
+        display_name="swissdevjobs.ch",
+        domain="swissdevjobs.ch",
+        description="Swiss developer jobs board",
+        default_config_path=str(
+            Path(__file__).resolve().parent / "providers" / "swissdevjobs_ch" / "configs" / "config_info.json"
         ),
     ),
 }

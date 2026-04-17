@@ -7,43 +7,19 @@ Current sources:
 - `jobs.ch`
 - `jobscout24.ch`
 - `jobup.ch`
+- `swissdevjobs.ch`
 
-The project is still in progress, so commands and structure may change.
+The project is still in progress, so statistics and structure may change.
 
 The public site publishes aggregated snapshots of the Swiss IT job market built from processed vacancy datasets across multiple job boards. It highlights broad signals such as vacancy volume, employer activity, skill demand, geographic concentration, seniority mix, and work mode distribution.
 
 
-## Install
+## What This Project Covers
 
-```bash
-python3 -m pip install -r requirements.txt
-python3 -m pip install -e .
-```
+This project is designed to answer practical, data-driven questions about the job market:
 
-## Collect vacancies
-
-Run all providers:
-
-```bash
-python3 -m swiss_jobs.cli.parse --all-sources --mode new
-```
-
-Provider-specific examples:
-
-```bash
-python3 -m swiss_jobs.cli.parse \
-  --source jobs_ch \
-  --config swiss_jobs/providers/jobs_ch/configs/config_info.json
-```
-
-```bash
-python3 -m swiss_jobs.cli.parse \
-  --source jobscout24_ch \
-  --config swiss_jobs/providers/jobscout24_ch/configs/config_info.json
-```
-
-```bash
-python3 -m swiss_jobs.cli.parse \
-  --source jobup_ch \
-  --config swiss_jobs/providers/jobup_ch/configs/config_info.json
-```
+- Which roles are currently the most in demand
+- Which skills and technologies appear most frequently
+- Which cantons and cities have the highest concentration of job postings
+- How demand is distributed across seniority levels
+- Which skills the market is actually valued by employers

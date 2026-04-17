@@ -33,6 +33,7 @@ node_modules/
 
 # Logs
 *.log
+INST.md
 
 # Parser runtime and generated datasets
 runtime/

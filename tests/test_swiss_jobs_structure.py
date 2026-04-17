@@ -8,6 +8,7 @@ from swiss_jobs.registry import get_cli_entrypoint, get_source_info, list_suppor
 from swiss_jobs.providers.jobs_ch.service import JobsChParserService
 from swiss_jobs.providers.jobscout24_ch.service import JobScout24ChParserService
 from swiss_jobs.providers.jobup_ch.service import JobupChParserService
+from swiss_jobs.providers.swissdevjobs_ch.service import SwissDevJobsChParserService
 
 
 class SwissJobsStructureTests(unittest.TestCase):
@@ -15,6 +16,7 @@ class SwissJobsStructureTests(unittest.TestCase):
         self.assertIn("jobs_ch", list_supported_sources())
         self.assertIn("jobscout24_ch", list_supported_sources())
         self.assertIn("jobup_ch", list_supported_sources())
+        self.assertIn("swissdevjobs_ch", list_supported_sources())
 
     def test_generic_parse_cli_accepts_source_flag(self) -> None:
         parser = build_parser()
@@ -25,6 +27,8 @@ class SwissJobsStructureTests(unittest.TestCase):
         self.assertEqual("jobscout24_ch", parsed.source)
         parsed = parser.parse_args(["--source", "jobup_ch"])
         self.assertEqual("jobup_ch", parsed.source)
+        parsed = parser.parse_args(["--source", "swissdevjobs_ch"])
+        self.assertEqual("swissdevjobs_ch", parsed.source)
         parsed = parser.parse_args(["--all-sources"])
         self.assertTrue(parsed.all_sources)
         self.assertIsNone(parsed.source)
@@ -78,6 +82,7 @@ class SwissJobsStructureTests(unittest.TestCase):
         self.assertTrue(JobsChParserService)
         self.assertTrue(JobScout24ChParserService)
         self.assertTrue(JobupChParserService)
+        self.assertTrue(SwissDevJobsChParserService)
 
 
 if __name__ == "__main__":
