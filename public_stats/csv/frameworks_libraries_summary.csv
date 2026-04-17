@@ -1,5 +1,5 @@
 metric,value
-distinct_items,20.0
-total_mentions,1731.0
-vacancies_with_items,1019.0
-vacancy_coverage,0.156
+distinct_items,25.0
+total_mentions,2090.0
+vacancies_with_items,1227.0
+vacancy_coverage,0.1643
