@@ -109,6 +109,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="SQLite database path for run storage",
     )
     parser.add_argument(
+        "--cookies-file",
+        default="",
+        help="Optional Netscape cookies.txt file for authenticated jobs.ch scraping",
+    )
+    parser.add_argument(
         "--bootstrap",
         action="store_true",
         help="Save current results into state and print nothing",
@@ -183,6 +188,7 @@ def _runtime_defaults(defaults: argparse.Namespace) -> dict[str, Any]:
         "include": list(defaults.include),
         "exclude": list(defaults.exclude),
         "json": defaults.json,
+        "cookies_file": defaults.cookies_file,
         "database_path": defaults.database_path,
         "bootstrap": defaults.bootstrap,
         "watch": defaults.watch,

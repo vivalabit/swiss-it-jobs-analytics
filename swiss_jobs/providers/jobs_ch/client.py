@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from http.cookiejar import MozillaCookieJar
 from typing import Any, Sequence
 
 import requests
@@ -33,6 +34,8 @@ class JobsChHttpClient:
         self.base_url = base_url.rstrip("/")
         self.headers = dict(headers or HEADERS)
         self.timeout = timeout
+        self._base_cookies: requests.cookies.RequestsCookieJar | None = None
+        self._base_cookies_file: str | None = None
         self._search_cookies: requests.cookies.RequestsCookieJar | None = None
 
     def search(
@@ -43,6 +46,11 @@ class JobsChHttpClient:
         warnings: list[str] = []
         all_jobs: list[VacancyFull] = []
         successful_queries = 0
+
+        self.configure_cookies(
+            cookies_file=config.cookies_file,
+            show_progress=config.show_progress,
+        )
 
         with self._new_session() as session:
             for query in queries:
@@ -224,9 +232,43 @@ class JobsChHttpClient:
     def _new_session(self) -> requests.Session:
         session = requests.Session()
         session.headers.update(self.headers)
+        if self._base_cookies is not None:
+            session.cookies.update(self._base_cookies)
         if self._search_cookies is not None:
             session.cookies.update(self._search_cookies)
         return session
+
+    def configure_cookies(
+        self,
+        *,
+        cookies_file: str | None,
+        show_progress: bool,
+    ) -> None:
+        normalized = cookies_file.strip() if isinstance(cookies_file, str) else ""
+        if not normalized:
+            self._base_cookies = None
+            self._base_cookies_file = None
+            return
+        if normalized == self._base_cookies_file and self._base_cookies is not None:
+            return
+
+        cookie_jar = MozillaCookieJar(normalized)
+        cookie_jar.load(ignore_discard=True, ignore_expires=True)
+
+        cookies = requests.cookies.RequestsCookieJar()
+        loaded = 0
+        for cookie in cookie_jar:
+            cookies.set_cookie(cookie)
+            loaded += 1
+
+        self._base_cookies = cookies
+        self._base_cookies_file = normalized
+
+        if show_progress:
+            print(
+                f"[progress] loaded {loaded} auth cookies from {normalized}",
+                file=sys.stderr,
+            )
 
     def _detail_headers(self, vacancy: VacancyFull) -> dict[str, str] | None:
         search_url = vacancy.raw.get("search_url")

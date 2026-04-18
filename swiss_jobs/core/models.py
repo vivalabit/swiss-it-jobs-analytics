@@ -5,6 +5,8 @@ from pathlib import Path
 import re
 from typing import Any, Literal, Mapping, Sequence
 
+from .salary import extract_salary_info
+
 ParserMode = Literal["new", "search"]
 OutputFormat = Literal["full", "brief"]
 
@@ -123,6 +125,30 @@ class VacancyFull:
                 return value.strip()
         return None
 
+    @property
+    def salary_min(self) -> int | None:
+        return extract_salary_info(self).minimum
+
+    @property
+    def salary_max(self) -> int | None:
+        return extract_salary_info(self).maximum
+
+    @property
+    def salary_currency(self) -> str | None:
+        return extract_salary_info(self).currency
+
+    @property
+    def salary_unit(self) -> str | None:
+        return extract_salary_info(self).unit
+
+    @property
+    def salary_text(self) -> str | None:
+        return extract_salary_info(self).text
+
+    @property
+    def salary_display(self) -> str | None:
+        return extract_salary_info(self).display_text
+
     def to_dict(self) -> dict[str, Any]:
         data = {
             "id": self.id,
@@ -141,6 +167,11 @@ class VacancyFull:
             "detail_schema_skipped": self.detail_schema_skipped,
             "role_match": self.role_match,
             "seniority_match": self.seniority_match,
+            "salary_min": self.salary_min,
+            "salary_max": self.salary_max,
+            "salary_currency": self.salary_currency,
+            "salary_unit": self.salary_unit,
+            "salary_text": self.salary_text,
             "keywords_matched": list(self.keywords_matched),
             "source": self.source,
         }
@@ -166,6 +197,11 @@ class VacancyFull:
             "detail_schema_skipped",
             "role_match",
             "seniority_match",
+            "salary_min",
+            "salary_max",
+            "salary_currency",
+            "salary_unit",
+            "salary_text",
             "keywords_matched",
             "source",
         }
@@ -207,6 +243,11 @@ class VacancyBrief:
     url: str
     summary: str | None
     salary: str | None
+    salary_min: int | None = None
+    salary_max: int | None = None
+    salary_currency: str | None = None
+    salary_unit: str | None = None
+    salary_text: str | None = None
     keywords_matched: list[str] = field(default_factory=list)
     source: str = "jobs.ch"
 
@@ -223,6 +264,11 @@ class VacancyBrief:
             "url": self.url,
             "summary": self.summary,
             "salary": self.salary,
+            "salary_min": self.salary_min,
+            "salary_max": self.salary_max,
+            "salary_currency": self.salary_currency,
+            "salary_unit": self.salary_unit,
+            "salary_text": self.salary_text,
             "keywords_matched": list(self.keywords_matched),
             "source": self.source,
         }
@@ -283,6 +329,7 @@ class ClientConfig:
     bootstrap: bool = False
     show_progress: bool = True
     json_output: bool = False
+    cookies_file: str | None = None
     database_path: str | None = None
     client_config_path: str | None = None
 
@@ -341,6 +388,7 @@ class ClientConfig:
             "bootstrap",
             "show_progress",
             "json_output",
+            "cookies_file",
             "database_path",
             "client_config_path",
         }
@@ -406,6 +454,11 @@ class ClientConfig:
                 payload.get("show_progress", True), "show_progress"
             ),
             json_output=_coerce_bool(payload.get("json_output", False), "json_output"),
+            cookies_file=(
+                str(Path(payload["cookies_file"]))
+                if payload.get("cookies_file") not in (None, "")
+                else None
+            ),
             database_path=(
                 str(Path(payload["database_path"]))
                 if payload.get("database_path") not in (None, "")
@@ -432,6 +485,10 @@ class ClientConfig:
         if self.detail_workers < 1:
             raise ConfigValidationError(
                 f"Field 'detail_workers' in '{source}' must be >= 1"
+            )
+        if self.cookies_file and not Path(self.cookies_file).is_file():
+            raise ConfigValidationError(
+                f"Field 'cookies_file' in '{source}' must point to an existing file"
             )
 
         if self.mode == "search" and not self.effective_terms():
@@ -520,6 +577,7 @@ class ClientConfig:
             "bootstrap": self.bootstrap,
             "show_progress": self.show_progress,
             "json_output": self.json_output,
+            "cookies_file": self.cookies_file,
             "database_path": self.database_path,
             "client_config_path": self.client_config_path,
         }

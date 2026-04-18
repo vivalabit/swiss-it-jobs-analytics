@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 from .models import ClientConfig, ClientRunResult, VacancyFull
+from .salary import extract_salary_info
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS clients (
@@ -105,6 +106,7 @@ ON client_seen_vacancies (client_id);
 
 CREATE INDEX IF NOT EXISTS idx_vacancy_terms_type_value
 ON vacancy_terms (term_type, term_value);
+
 """
 
 TERM_FIELDS = {
@@ -275,8 +277,7 @@ class JobsDatabase:
         connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys = ON")
         connection.execute("PRAGMA journal_mode = WAL")
-        connection.executescript(SCHEMA)
-        _ensure_vacancy_columns(connection)
+        ensure_database_schema(connection)
         return connection
 
     @contextmanager
@@ -441,11 +442,17 @@ def _serialize_bool(value: bool | None) -> int | None:
     return 1 if value else 0
 
 
+def ensure_database_schema(connection: sqlite3.Connection) -> None:
+    connection.executescript(SCHEMA)
+    _ensure_vacancy_columns(connection)
+    _ensure_vacancy_indexes(connection)
+
+
 def _ensure_vacancy_columns(connection: sqlite3.Connection) -> None:
     existing = {
-        str(row["name"])
+        str(row["name"] if isinstance(row, sqlite3.Row) else row[1])
         for row in connection.execute("PRAGMA table_info(vacancies)").fetchall()
-        if row["name"]
+        if (row["name"] if isinstance(row, sqlite3.Row) else row[1])
     }
     for column_name, column_type in (
         ("salary_min", "INTEGER"),
@@ -458,78 +465,23 @@ def _ensure_vacancy_columns(connection: sqlite3.Connection) -> None:
             connection.execute(f"ALTER TABLE vacancies ADD COLUMN {column_name} {column_type}")
 
 
+def _ensure_vacancy_indexes(connection: sqlite3.Connection) -> None:
+    connection.execute(
+        """
+        CREATE INDEX IF NOT EXISTS idx_vacancies_salary_filters
+        ON vacancies (salary_currency, salary_unit, salary_min, salary_max)
+        """
+    )
+
+
 def _extract_salary_columns(
     vacancy: VacancyFull,
 ) -> tuple[int | None, int | None, str | None, str | None, str | None]:
-    raw = vacancy.raw or {}
-    raw_salary = raw.get("salary")
-    if isinstance(raw_salary, dict):
-        minimum, maximum = _extract_salary_range(raw_salary.get("range"))
-        return (
-            minimum,
-            maximum,
-            _clean_text(raw_salary.get("currency")),
-            _clean_text(raw_salary.get("unit")),
-            _extract_salary_text(raw),
-        )
-
-    schema = vacancy.job_posting_schema or {}
-    base_salary = schema.get("baseSalary")
-    if isinstance(base_salary, dict):
-        value = base_salary.get("value")
-        minimum = None
-        maximum = None
-        unit = None
-        if isinstance(value, dict):
-            minimum = _coerce_optional_int(value.get("minValue"))
-            maximum = _coerce_optional_int(value.get("maxValue"))
-            single_value = _coerce_optional_int(value.get("value"))
-            if single_value is not None:
-                minimum = minimum if minimum is not None else single_value
-                maximum = maximum if maximum is not None else single_value
-            unit = _clean_text(value.get("unitText"))
-        else:
-            single_value = _coerce_optional_int(value)
-            if single_value is not None:
-                minimum = single_value
-                maximum = single_value
-        return (
-            minimum,
-            maximum,
-            _clean_text(base_salary.get("currency")),
-            unit,
-            _extract_salary_text(raw),
-        )
-
-    return (None, None, None, None, _extract_salary_text(raw))
-
-
-def _extract_salary_range(value: Any) -> tuple[int | None, int | None]:
-    if not isinstance(value, dict):
-        return (None, None)
-    return (_coerce_optional_int(value.get("minValue")), _coerce_optional_int(value.get("maxValue")))
-
-
-def _extract_salary_text(raw: dict[str, Any]) -> str | None:
-    for key in ("salaryText", "salary_text", "salary"):
-        value = raw.get(key)
-        if isinstance(value, str):
-            clean = value.strip()
-            if clean:
-                return clean
-    return None
-
-
-def _coerce_optional_int(value: Any) -> int | None:
-    if isinstance(value, bool):
-        return None
-    if isinstance(value, (int, float)):
-        return int(value)
-    return None
-
-
-def _clean_text(value: Any) -> str | None:
-    if not isinstance(value, str):
-        return None
-    clean = value.strip()
-    return clean or None
+    salary = extract_salary_info(vacancy)
+    return (
+        salary.minimum,
+        salary.maximum,
+        salary.currency,
+        salary.unit,
+        salary.text,
+    )

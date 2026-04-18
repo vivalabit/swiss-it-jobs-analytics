@@ -110,6 +110,15 @@ def extract_job_posting_schema(page_html: str) -> dict[str, Any] | None:
     return None
 
 
+def extract_salary_payload(page_html: str) -> dict[str, Any] | None:
+    candidates = _find_salary_candidates(page_html)
+    for candidate in candidates:
+        payload = _parse_salary_text(candidate)
+        if payload:
+            return payload
+    return None
+
+
 def html_to_text(value: str) -> str:
     text = re.sub(r"(?i)<br\s*/?>", "\n", value)
     text = re.sub(r"(?i)</(p|div|h1|h2|h3|h4|h5|h6|li|ul|ol)>", "\n", text)
@@ -119,3 +128,89 @@ def html_to_text(value: str) -> str:
     text = re.sub(r"\n[ \t]+", "\n", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
+
+
+def _find_salary_candidates(page_html: str) -> list[str]:
+    patterns = [
+        re.compile(
+            r'<li[^>]*data-cy=["\'][^"\']*salary[^"\']*["\'][^>]*>(.*?)</li>',
+            re.IGNORECASE | re.DOTALL,
+        ),
+        re.compile(
+            r'<div[^>]*data-cy=["\'][^"\']*salary[^"\']*["\'][^>]*>(.*?)</div>',
+            re.IGNORECASE | re.DOTALL,
+        ),
+    ]
+    result: list[str] = []
+    seen: set[str] = set()
+    for pattern in patterns:
+        for match in pattern.finditer(page_html):
+            text = html_to_text(match.group(1))
+            if not text:
+                continue
+            normalized = " ".join(text.split())
+            if normalized in seen:
+                continue
+            seen.add(normalized)
+            result.append(normalized)
+    return result
+
+
+def _parse_salary_text(value: str) -> dict[str, Any] | None:
+    compact = " ".join(value.split())
+    match = re.search(
+        r"(?P<currency>CHF|EUR|USD|GBP)\s*"
+        r"(?P<minimum>\d[\d\s'.,]*)\s*(?:-|–|—)\s*"
+        r"(?P<maximum>\d[\d\s'.,]*)"
+        r"(?:\s*/\s*(?P<unit>year|month|hour))?",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+
+    currency = str(match.group("currency") or "").upper()
+    minimum = _parse_salary_number(match.group("minimum"))
+    maximum = _parse_salary_number(match.group("maximum"))
+    if minimum is None or maximum is None:
+        return None
+
+    unit_text = str(match.group("unit") or "").strip().lower()
+    unit = _normalize_salary_unit(unit_text)
+    salary_text = _format_salary_text(currency, minimum, maximum, unit)
+    payload: dict[str, Any] = {
+        "salary": {
+            "currency": currency,
+            "range": {
+                "minValue": minimum,
+                "maxValue": maximum,
+            },
+        },
+        "salary_text": salary_text,
+    }
+    if unit:
+        payload["salary"]["unit"] = unit
+    return payload
+
+
+def _parse_salary_number(value: str | None) -> int | None:
+    if not value:
+        return None
+    digits = re.sub(r"[^\d]", "", value)
+    if not digits:
+        return None
+    return int(digits)
+
+
+def _normalize_salary_unit(value: str) -> str | None:
+    mapping = {
+        "year": "YEAR",
+        "month": "MONTH",
+        "hour": "HOUR",
+    }
+    return mapping.get(value) if value else None
+
+
+def _format_salary_text(currency: str, minimum: int, maximum: int, unit: str | None) -> str:
+    unit_suffix = f" / {unit.lower()}" if unit else ""
+    return f"{currency} {minimum}-{maximum}{unit_suffix}".strip()

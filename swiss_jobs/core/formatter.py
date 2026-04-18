@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Sequence
 
 from .models import OutputFormat, VacancyBrief, VacancyFull
+from .salary import extract_salary_info
 
 
 def _shorten(text: str, *, limit: int = 280) -> str | None:
@@ -15,43 +16,7 @@ def _shorten(text: str, *, limit: int = 280) -> str | None:
 
 
 def _extract_salary(vacancy: VacancyFull) -> str | None:
-    schema = vacancy.job_posting_schema or {}
-    base_salary = schema.get("baseSalary")
-    if isinstance(base_salary, dict):
-        currency = str(base_salary.get("currency") or "").strip()
-        value = base_salary.get("value")
-        if isinstance(value, dict):
-            min_value = value.get("minValue")
-            max_value = value.get("maxValue")
-            single_value = value.get("value")
-            unit = str(value.get("unitText") or "").strip()
-            if min_value is not None and max_value is not None:
-                return f"{currency} {min_value}-{max_value} {unit}".strip()
-            if single_value is not None:
-                return f"{currency} {single_value} {unit}".strip()
-        if value is not None:
-            return f"{currency} {value}".strip()
-
-    raw = vacancy.raw or {}
-    raw_salary = raw.get("salary")
-    if isinstance(raw_salary, dict):
-        currency = str(raw_salary.get("currency") or "").strip()
-        unit = str(raw_salary.get("unit") or "").strip()
-        salary_range = raw_salary.get("range")
-        if isinstance(salary_range, dict):
-            minimum = salary_range.get("minValue")
-            maximum = salary_range.get("maxValue")
-            unit_suffix = f" / {unit.lower()}" if unit else ""
-            currency_prefix = f"{currency} " if currency else ""
-            if minimum is not None and maximum is not None:
-                if minimum == maximum:
-                    return f"{currency_prefix}{int(minimum)}{unit_suffix}".strip()
-                return f"{currency_prefix}{int(minimum)}-{int(maximum)}{unit_suffix}".strip()
-    for key in ("salary", "salaryText", "salary_text"):
-        value = raw.get(key)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    return None
+    return extract_salary_info(vacancy).display_text
 
 
 def _extract_summary(vacancy: VacancyFull) -> str | None:
@@ -65,6 +30,7 @@ def _extract_summary(vacancy: VacancyFull) -> str | None:
 
 
 def build_brief(vacancy: VacancyFull) -> VacancyBrief:
+    salary = extract_salary_info(vacancy)
     return VacancyBrief(
         id=vacancy.id,
         title=vacancy.title,
@@ -76,7 +42,12 @@ def build_brief(vacancy: VacancyFull) -> VacancyBrief:
         role_match=vacancy.role_match,
         url=vacancy.url,
         summary=_extract_summary(vacancy),
-        salary=_extract_salary(vacancy),
+        salary=salary.display_text,
+        salary_min=salary.minimum,
+        salary_max=salary.maximum,
+        salary_currency=salary.currency,
+        salary_unit=salary.unit,
+        salary_text=salary.text,
         keywords_matched=list(vacancy.keywords_matched),
         source=vacancy.source,
     )
