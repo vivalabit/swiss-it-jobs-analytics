@@ -342,8 +342,8 @@ img {
 
 .cy-corner {
   position: absolute;
-  width: 76px;
-  height: 76px;
+  width: 56px;
+  height: 56px;
   z-index: 3;
 }
 
