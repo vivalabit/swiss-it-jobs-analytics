@@ -101,6 +101,12 @@ DETAIL_HTML = """
       ]
     </script>
   </head>
+  <body>
+    <span class="d_inline-block mr_s8 textStyle_caption1">
+      CHF 43'750 - 70'000/an
+    </span>
+    <div>Estimation salariale de jobup.ch</div>
+  </body>
 </html>
 """
 
@@ -141,6 +147,11 @@ class JobupChExtractorsTests(unittest.TestCase):
 
         self.assertEqual(["FULL_TIME"], payload["job_posting_schema"]["employmentType"])
         self.assertIn("Build APIs in Python", payload["description_text"])
+        self.assertEqual("CHF", payload["salary"]["currency"])
+        self.assertEqual(43750, payload["salary"]["range"]["minValue"])
+        self.assertEqual(70000, payload["salary"]["range"]["maxValue"])
+        self.assertEqual("YEAR", payload["salary"]["unit"])
+        self.assertEqual("CHF 43750-70000 / year", payload["salary_text"])
 
 
 if __name__ == "__main__":

@@ -14,6 +14,12 @@ def apply_detail_payload(
         vacancy.job_posting_schema = payload.get("job_posting_schema")
         vacancy.description_html = str(payload.get("description_html") or "")
         vacancy.description_text = str(payload.get("description_text") or "")
+        salary = payload.get("salary")
+        if isinstance(salary, dict):
+            vacancy.raw["salary"] = salary
+        salary_text = payload.get("salary_text")
+        if isinstance(salary_text, str) and salary_text.strip():
+            vacancy.raw["salaryText"] = salary_text.strip()
         schema = vacancy.job_posting_schema or {}
         date_posted = schema.get("datePosted")
         if isinstance(date_posted, str) and date_posted.strip():

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from math import ceil
 from typing import Any
 
@@ -29,11 +30,30 @@ def parse_jobs_from_search_page(
 
 def extract_detail_payload(page_html: str) -> dict[str, Any]:
     schema = extract_job_posting_schema(page_html)
+    salary_payload = _extract_salary_payload(page_html)
     description_html = ""
     if isinstance(schema, dict):
         raw_description = schema.get("description")
         if isinstance(raw_description, str):
             description_html = raw_description.strip()
+        if salary_payload and "baseSalary" not in schema:
+            salary = salary_payload.get("salary")
+            if isinstance(salary, dict):
+                base_salary: dict[str, Any] = {
+                    "currency": str(salary.get("currency") or "").strip(),
+                }
+                salary_range = salary.get("range")
+                value: dict[str, Any] = {}
+                if isinstance(salary_range, dict):
+                    if salary_range.get("minValue") is not None:
+                        value["minValue"] = salary_range.get("minValue")
+                    if salary_range.get("maxValue") is not None:
+                        value["maxValue"] = salary_range.get("maxValue")
+                if salary.get("unit"):
+                    value["unitText"] = str(salary.get("unit")).strip()
+                if base_salary.get("currency") and value:
+                    base_salary["value"] = value
+                    schema["baseSalary"] = base_salary
 
     if not description_html:
         raise ParseError("JobPosting schema not found on jobup detail page")
@@ -42,6 +62,8 @@ def extract_detail_payload(page_html: str) -> dict[str, Any]:
         "job_posting_schema": schema,
         "description_html": description_html,
         "description_text": html_to_text(description_html),
+        "salary": salary_payload.get("salary") if salary_payload else None,
+        "salary_text": salary_payload.get("salary_text") if salary_payload else None,
     }
 
 
@@ -192,3 +214,67 @@ def _string_or_none(value: Any) -> str | None:
     if isinstance(value, str) and value.strip():
         return value.strip()
     return None
+
+
+def _extract_salary_payload(page_html: str) -> dict[str, Any] | None:
+    match = re.search(
+        r"(?P<currency>CHF|EUR|USD|GBP)\s*"
+        r"(?P<minimum>\d[\d\s'.,]*)\s*(?:-|–|—)\s*"
+        r"(?P<maximum>\d[\d\s'.,]*)\s*/\s*"
+        r"(?P<unit>an|year|jahr|mois|month|monat|heure|hour|stunde)",
+        page_html,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+
+    currency = str(match.group("currency") or "").upper()
+    minimum = _parse_salary_number(match.group("minimum"))
+    maximum = _parse_salary_number(match.group("maximum"))
+    if minimum is None or maximum is None:
+        return None
+
+    unit = _normalize_salary_unit(str(match.group("unit") or "").strip().lower())
+    salary: dict[str, Any] = {
+        "currency": currency,
+        "range": {
+            "minValue": minimum,
+            "maxValue": maximum,
+        },
+    }
+    if unit:
+        salary["unit"] = unit
+
+    return {
+        "salary": salary,
+        "salary_text": _format_salary_text(currency, minimum, maximum, unit),
+    }
+
+
+def _parse_salary_number(value: str | None) -> int | None:
+    if not value:
+        return None
+    digits = re.sub(r"[^\d]", "", value)
+    if not digits:
+        return None
+    return int(digits)
+
+
+def _normalize_salary_unit(value: str) -> str | None:
+    mapping = {
+        "an": "YEAR",
+        "year": "YEAR",
+        "jahr": "YEAR",
+        "mois": "MONTH",
+        "month": "MONTH",
+        "monat": "MONTH",
+        "heure": "HOUR",
+        "hour": "HOUR",
+        "stunde": "HOUR",
+    }
+    return mapping.get(value) if value else None
+
+
+def _format_salary_text(currency: str, minimum: int, maximum: int, unit: str | None) -> str:
+    unit_suffix = f" / {unit.lower()}" if unit else ""
+    return f"{currency} {minimum}-{maximum}{unit_suffix}".strip()
