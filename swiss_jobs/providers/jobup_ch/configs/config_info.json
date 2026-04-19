@@ -141,6 +141,7 @@
   "max_pages": 0,
   "detail_limit": 0,
   "detail_workers": 8,
+  "cookies_file": "swiss_jobs/providers/jobup_ch/cookies/www.jobup.ch_cookies.txt",
   "watch": 0,
   "no_progress": false,
   "json": false,
