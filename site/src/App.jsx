@@ -256,6 +256,47 @@ const CITY_ALIAS_PATTERNS = [...CITY_ALIAS_LOOKUP.entries()]
   .filter(([alias]) => alias.length >= 3)
   .sort((a, b) => b[0].length - a[0].length);
 
+const STAFFING_AGENCY_COMPANY_NAMES = new Set(
+  [
+    "Adecco",
+    "albedis",
+    "Art of Work Personalberatung AG",
+    "bruederlinpartner GmbH",
+    "Careerplus AG",
+    "Consult & Pepper AG",
+    "Experis",
+    "Experis AG",
+    "Freestar-Informatik AG",
+    "Hays",
+    "Impact Recruitment GmbH",
+    "ITech Consult AG",
+    "ictjobs (Stellenmarkt)",
+    "IQ Plus AG",
+    "Job Impuls AG",
+    "Manpower",
+    "Michael Page",
+    "mühlemann IT-personal",
+    "myitjob GmbH",
+    "myScience",
+    "Nemensis AG",
+    "Nexus Personal- & Unternehmensberatung AG",
+    "ONE Agency GmbH",
+    "Page Personnel",
+    "persona service GmbH",
+    "Prime21",
+    "Prime21 AG",
+    "Progress Personal AG",
+    "Randstad",
+    "Randstad (Schweiz) AG",
+    "Rocken®",
+    "Rockstar Recruiting AG",
+    "Summit Recruitment AG",
+    "Universal-Job AG",
+    "Work Selection",
+    "yellowshark",
+  ].map(normalizeCompanyName),
+);
+
 function App() {
   const [state, setState] = useState({
     status: "loading",
@@ -352,7 +393,10 @@ function App() {
   const frameworksSummary = frameworksLibraries.summary ?? {};
   const topFrameworksLibraries = selectTopItems(frameworksLibraries.items ?? [], 8);
   const topPairs = selectTopItems(skillPairs.items ?? [], 4);
-  const companyItems = selectTopItems(filterUnknown(companyDistribution.items ?? []), 8);
+  const companyItems = selectTopItems(
+    filterStaffingAgencies(filterUnknown(companyDistribution.items ?? [])),
+    8,
+  );
   const cityItems = selectTopItems(filterUnknown(cityDistribution.items ?? []), 6);
   const cityMapItems = buildSwissCityVacancyPoints(cityDistribution.items ?? []);
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
@@ -547,7 +591,8 @@ function App() {
 
             <article className="cy-card cy-dashboard-panel cy-company-panel">
               <div className="cy-data-panel-head">
-                <h3>Top hiring companies</h3>
+                <h3>Top direct employers</h3>
+                <p className="cy-copy">Recruiting agencies and job boards are excluded.</p>
               </div>
               <HorizontalBarChart
                 items={companyItems}
@@ -1258,6 +1303,26 @@ async function fetchSnapshot(fileName) {
 
 function filterUnknown(items) {
   return items.filter((item) => item?.label !== "Unknown" && item?.key !== "Unknown");
+}
+
+function filterStaffingAgencies(items) {
+  return items.filter((item) => !STAFFING_AGENCY_COMPANY_NAMES.has(normalizeCompanyName(item.label)));
+}
+
+function normalizeCompanyName(value) {
+  if (!value) {
+    return "";
+  }
+
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[®™]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLocaleLowerCase("en-US");
 }
 
 function selectTopItems(items, limit) {
