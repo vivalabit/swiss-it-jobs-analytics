@@ -117,7 +117,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(18, len(outputs))
+        self.assertEqual(19, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -142,6 +142,7 @@ class MarketAnalyticsTests(unittest.TestCase):
             "software_engineering",
             outputs["salary_by_role_category"].iloc[0]["role_category"],
         )
+        self.assertEqual("junior", outputs["salary_by_seniority"].iloc[0]["seniority"])
 
     def test_load_and_save_outputs_round_trip_csv(self) -> None:
         dataset = pd.DataFrame(

@@ -63,6 +63,19 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "salary_by_role_category.csv", index=False)
             pd.DataFrame(
                 [
+                    {
+                        "seniority": "senior",
+                        "salary_count": 2,
+                        "average_salary": 115000,
+                        "median_salary": 115000,
+                        "min_salary": 100000,
+                        "max_salary": 130000,
+                        "rank": 1,
+                    }
+                ]
+            ).to_csv(csv_dir / "salary_by_seniority.csv", index=False)
+            pd.DataFrame(
+                [
                     {"skill": "python", "vacancy_count": 2, "share": 0.6667},
                     {"skill": "sql", "vacancy_count": 1, "share": 0.3333},
                 ]
@@ -134,6 +147,7 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue(salary_metrics["available"])
             self.assertEqual(115000, salary_metrics["summary"]["average_salary"])
             self.assertEqual("data_ai", salary_metrics["by_role_category"][0]["role_category"])
+            self.assertEqual("senior", salary_metrics["by_seniority"][0]["seniority"])
 
             top_skills = json.loads((output_dir / "top_skills.json").read_text(encoding="utf-8"))
             self.assertEqual("python", top_skills["overall"][0]["skill"])
@@ -146,6 +160,7 @@ class BuildPublicStatsTests(unittest.TestCase):
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
+            self.assertTrue((copy_csv_dir / "salary_by_seniority.csv").exists())
 
     def test_build_public_snapshots_marks_missing_csv_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

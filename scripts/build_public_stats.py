@@ -13,6 +13,7 @@ EXPECTED_CSV_FILES: tuple[str, ...] = (
     "overview_metrics.csv",
     "salary_summary.csv",
     "salary_by_role_category.csv",
+    "salary_by_seniority.csv",
     "top_skills_overall.csv",
     "top_skills_by_role_category.csv",
     "top_skills_by_canton.csv",
@@ -112,6 +113,7 @@ def build_public_snapshots(
             generated_at=generated_at,
             summary_frame=csv_frames["salary_summary.csv"],
             by_role_category_frame=csv_frames["salary_by_role_category.csv"],
+            by_seniority_frame=csv_frames["salary_by_seniority.csv"],
         ),
         "top_skills.json": _build_top_skills_snapshot(
             generated_at=generated_at,
@@ -248,14 +250,17 @@ def _build_salary_snapshot(
     generated_at: str,
     summary_frame: pd.DataFrame | None,
     by_role_category_frame: pd.DataFrame | None,
+    by_seniority_frame: pd.DataFrame | None,
 ) -> dict[str, Any]:
     summary = _metric_frame_to_dict(summary_frame)
     by_role_category = _frame_to_records(by_role_category_frame)
+    by_seniority = _frame_to_records(by_seniority_frame)
     return {
         "generated_at": generated_at,
-        "available": bool(summary or by_role_category),
+        "available": bool(summary or by_role_category or by_seniority),
         "summary": summary,
         "by_role_category": by_role_category,
+        "by_seniority": by_seniority,
     }
 
 

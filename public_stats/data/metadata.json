@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-20T07:36:17Z",
+  "generated_at": "2026-04-20T07:55:44Z",
   "schema_version": 2,
   "source_csv_dir": "analytics_output",
   "public_data_dir": "public_stats/data",
@@ -7,6 +7,7 @@
     "overview_metrics.csv",
     "salary_summary.csv",
     "salary_by_role_category.csv",
+    "salary_by_seniority.csv",
     "top_skills_overall.csv",
     "top_skills_by_role_category.csv",
     "top_skills_by_canton.csv",

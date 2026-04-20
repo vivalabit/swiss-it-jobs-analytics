@@ -36,6 +36,7 @@ function App() {
     data: null,
     error: null,
   });
+  const [salaryBreakdown, setSalaryBreakdown] = useState("role_category");
 
   useEffect(() => {
     let cancelled = false;
@@ -134,6 +135,26 @@ function App() {
     ),
     6,
   );
+  const salarySeniorityItems = selectTopItems(
+    (salaryMetrics.by_seniority ?? []).filter(
+      (item) => item.seniority && item.seniority !== "Unknown",
+    ),
+    6,
+  );
+  const salaryChartConfig =
+    salaryBreakdown === "seniority"
+      ? {
+          title: "Seniority ranked by average salary",
+          description: "Seniority levels with normalized CHF yearly salary ranges.",
+          items: salarySeniorityItems,
+          groupKey: "seniority",
+        }
+      : {
+          title: "Roles ranked by average salary",
+          description: "Role categories with normalized CHF yearly salary ranges.",
+          items: salaryRoleItems,
+          groupKey: "role_category",
+        };
   const topRoleGroups = selectTopItems(
     (topSkills.by_role_category ?? []).filter((group) => group.group !== "Unknown"),
     3,
@@ -302,6 +323,23 @@ function App() {
                 </p>
               </div>
 
+              <div className="cy-salary-toggle" aria-label="Salary breakdown">
+                <button
+                  type="button"
+                  className={salaryBreakdown === "role_category" ? "is-active" : ""}
+                  onClick={() => setSalaryBreakdown("role_category")}
+                >
+                  Roles
+                </button>
+                <button
+                  type="button"
+                  className={salaryBreakdown === "seniority" ? "is-active" : ""}
+                  onClick={() => setSalaryBreakdown("seniority")}
+                >
+                  Seniority
+                </button>
+              </div>
+
               <div className="cy-salary-stat-grid">
                 <SalaryStat
                   value={formatCurrency(salarySummary.average_salary)}
@@ -321,12 +359,14 @@ function App() {
 
             <article className="cy-card cy-data-panel cy-salary-chart-panel">
               <div className="cy-data-panel-head">
-                <h3>Roles ranked by average salary</h3>
-                <p className="cy-copy">
-                  Role categories with normalized CHF yearly salary ranges.
-                </p>
+                <h3>{salaryChartConfig.title}</h3>
+                <p className="cy-copy">{salaryChartConfig.description}</p>
               </div>
-              <SalaryRankingChart items={salaryRoleItems} summary={salarySummary} />
+              <SalaryRankingChart
+                items={salaryChartConfig.items}
+                summary={salarySummary}
+                groupKey={salaryChartConfig.groupKey}
+              />
             </article>
           </div>
         </div>
@@ -644,7 +684,7 @@ function SegmentChart({ items }) {
   );
 }
 
-function SalaryRankingChart({ items, summary }) {
+function SalaryRankingChart({ items, summary, groupKey }) {
   const maxValue = Math.max(
     ...items.map((item) => item.average_salary ?? 0),
     summary.median_salary ?? 0,
@@ -678,9 +718,9 @@ function SalaryRankingChart({ items, summary }) {
 
       <div className="cy-salary-row-list">
         {items.map((item, index) => (
-          <div key={item.role_category} className="cy-salary-row">
+          <div key={item[groupKey]} className="cy-salary-row">
             <div className="cy-salary-role">
-              <strong>{prettifyLabel(item.role_category)}</strong>
+              <strong>{prettifyLabel(item[groupKey])}</strong>
               <span>{formatInteger(item.salary_count)} salaries</span>
             </div>
             <div className="cy-salary-bar-cell">

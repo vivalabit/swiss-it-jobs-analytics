@@ -103,11 +103,19 @@ def calculate_salary_summary(dataset: pd.DataFrame) -> pd.DataFrame:
 
 
 def calculate_salary_by_role_category(dataset: pd.DataFrame) -> pd.DataFrame:
+    return calculate_salary_by_dimension(dataset, "role_category")
+
+
+def calculate_salary_by_seniority(dataset: pd.DataFrame) -> pd.DataFrame:
+    return calculate_salary_by_dimension(dataset, "seniority")
+
+
+def calculate_salary_by_dimension(dataset: pd.DataFrame, dimension: str) -> pd.DataFrame:
     salaries = _annual_salary_frame(dataset)
     if salaries.empty:
         return pd.DataFrame(
             columns=[
-                "role_category",
+                dimension,
                 "salary_count",
                 "average_salary",
                 "median_salary",
@@ -118,7 +126,7 @@ def calculate_salary_by_role_category(dataset: pd.DataFrame) -> pd.DataFrame:
         )
 
     grouped = (
-        salaries.groupby("role_category", dropna=False)["annual_salary"]
+        salaries.groupby(dimension, dropna=False)["annual_salary"]
         .agg(
             salary_count="count",
             average_salary="mean",
@@ -128,11 +136,11 @@ def calculate_salary_by_role_category(dataset: pd.DataFrame) -> pd.DataFrame:
         )
         .reset_index()
     )
-    grouped["role_category"] = grouped["role_category"].fillna(UNKNOWN_LABEL)
+    grouped[dimension] = grouped[dimension].fillna(UNKNOWN_LABEL)
     for column in ("average_salary", "median_salary", "min_salary", "max_salary"):
         grouped[column] = grouped[column].round(0).astype(int)
     grouped = grouped.sort_values(
-        ["average_salary", "salary_count", "role_category"],
+        ["average_salary", "salary_count", dimension],
         ascending=[False, False, True],
     ).reset_index(drop=True)
     grouped["rank"] = grouped.index + 1
@@ -142,7 +150,7 @@ def calculate_salary_by_role_category(dataset: pd.DataFrame) -> pd.DataFrame:
 def _annual_salary_frame(dataset: pd.DataFrame) -> pd.DataFrame:
     required_columns = {"salary_min", "salary_max", "salary_currency", "salary_unit"}
     if not required_columns.issubset(dataset.columns):
-        return pd.DataFrame(columns=["role_category", "annual_salary"])
+        return pd.DataFrame(columns=["role_category", "seniority", "annual_salary"])
 
     minimum = pd.to_numeric(dataset["salary_min"], errors="coerce")
     maximum = pd.to_numeric(dataset["salary_max"], errors="coerce")
@@ -165,6 +173,7 @@ def _annual_salary_frame(dataset: pd.DataFrame) -> pd.DataFrame:
     salaries = pd.DataFrame(
         {
             "role_category": dataset["role_category"].fillna(UNKNOWN_LABEL),
+            "seniority": dataset["seniority"].fillna(UNKNOWN_LABEL),
             "annual_salary": annual_salary,
         }
     )

@@ -10,6 +10,7 @@ from .analytics import (
     calculate_distributions,
     calculate_overview_metrics,
     calculate_salary_by_role_category,
+    calculate_salary_by_seniority,
     calculate_salary_summary,
 )
 from .skills import (
@@ -30,6 +31,7 @@ def build_analytics_outputs(
         "overview_metrics": calculate_overview_metrics(dataset),
         "salary_summary": calculate_salary_summary(dataset),
         "salary_by_role_category": calculate_salary_by_role_category(dataset),
+        "salary_by_seniority": calculate_salary_by_seniority(dataset),
         **calculate_distributions(dataset),
         "top_skills_overall": calculate_top_skills_overall(
             dataset,

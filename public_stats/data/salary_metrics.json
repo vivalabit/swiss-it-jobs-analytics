@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-20T07:36:17Z",
+  "generated_at": "2026-04-20T07:55:44Z",
   "available": true,
   "summary": {
     "salary_count": 3045,
@@ -103,6 +103,62 @@
       "min_salary": 80291,
       "max_salary": 89206,
       "rank": 10
+    }
+  ],
+  "by_seniority": [
+    {
+      "seniority": "mid",
+      "salary_count": 95,
+      "average_salary": 102777,
+      "median_salary": 96982,
+      "min_salary": 72000,
+      "max_salary": 191000,
+      "rank": 1
+    },
+    {
+      "seniority": "senior",
+      "salary_count": 1198,
+      "average_salary": 101625,
+      "median_salary": 97000,
+      "min_salary": 28746,
+      "max_salary": 161000,
+      "rank": 2
+    },
+    {
+      "seniority": "manager",
+      "salary_count": 357,
+      "average_salary": 98577,
+      "median_salary": 97533,
+      "min_salary": 40000,
+      "max_salary": 155000,
+      "rank": 3
+    },
+    {
+      "seniority": "Unknown",
+      "salary_count": 1031,
+      "average_salary": 95714,
+      "median_salary": 96303,
+      "min_salary": 40000,
+      "max_salary": 152125,
+      "rank": 4
+    },
+    {
+      "seniority": "junior",
+      "salary_count": 217,
+      "average_salary": 94326,
+      "median_salary": 96317,
+      "min_salary": 33313,
+      "max_salary": 148000,
+      "rank": 5
+    },
+    {
+      "seniority": "intern",
+      "salary_count": 147,
+      "average_salary": 81779,
+      "median_salary": 95000,
+      "min_salary": 33313,
+      "max_salary": 140000,
+      "rank": 6
     }
   ]
 }
