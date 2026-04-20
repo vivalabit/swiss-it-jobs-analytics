@@ -1,5 +1,5 @@
-vacancy_id,company,role_category,city,canton,seniority,work_mode,skills,programming_languages,frameworks_libraries
-sample-001,Alpine Data,data_ai,Zürich,ZH,senior,hybrid,"python|sql|airflow","python|sql","airflow|pandas"
-sample-002,Helvetic Cloud,devops_platform,Bern,BE,mid,remote,"aws|terraform|kubernetes","python|bash","terraform"
-sample-003,Lake Software,software_engineering,Lausanne,VD,junior,onsite,"java|spring|sql","java|sql","spring"
-sample-004,Rhine Product,product_management,Basel,BS,mid,hybrid,"agile|sql|analytics","sql",""
+vacancy_id,company,role_category,city,canton,seniority,work_mode,skills,programming_languages,frameworks_libraries,salary_min,salary_max,salary_currency,salary_unit
+sample-001,Alpine Data,data_ai,Zürich,ZH,senior,hybrid,"python|sql|airflow","python|sql","airflow|pandas",115000,140000,CHF,YEAR
+sample-002,Helvetic Cloud,devops_platform,Bern,BE,mid,remote,"aws|terraform|kubernetes","python|bash","terraform",105000,130000,CHF,YEAR
+sample-003,Lake Software,software_engineering,Lausanne,VD,junior,onsite,"java|spring|sql","java|sql","spring",95000,120000,CHF,YEAR
+sample-004,Rhine Product,product_management,Basel,BS,mid,hybrid,"agile|sql|analytics","sql","",85000,100000,CHF,YEAR

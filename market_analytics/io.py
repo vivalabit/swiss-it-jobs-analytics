@@ -260,6 +260,34 @@ def validate_and_standardize_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
             _coalesce_columns(standardized, optional_id_columns)
         )
 
+    for canonical_name in ("salary_min", "salary_max"):
+        source_columns = _find_matching_columns(
+            normalized_columns=normalized_columns,
+            aliases=CANONICAL_COLUMN_ALIASES[canonical_name],
+        )
+        if source_columns:
+            standardized[canonical_name] = pd.to_numeric(
+                _coalesce_columns(standardized, source_columns),
+                errors="coerce",
+            )
+        else:
+            standardized[canonical_name] = pd.Series(pd.NA, index=standardized.index)
+
+    for canonical_name in ("salary_currency", "salary_unit", "salary_text"):
+        source_columns = _find_matching_columns(
+            normalized_columns=normalized_columns,
+            aliases=CANONICAL_COLUMN_ALIASES[canonical_name],
+        )
+        if source_columns:
+            standardized[canonical_name] = _clean_text_series(
+                _coalesce_columns(standardized, source_columns)
+            )
+        else:
+            standardized[canonical_name] = pd.Series(pd.NA, index=standardized.index)
+
+    standardized["salary_currency"] = standardized["salary_currency"].map(_uppercase_text_value)
+    standardized["salary_unit"] = standardized["salary_unit"].map(_uppercase_text_value)
+
     if missing_required:
         missing_list = ", ".join(sorted(missing_required))
         raise ValueError(
@@ -390,6 +418,13 @@ def _normalize_text_value(value: Any) -> Any:
     return value
 
 
+def _uppercase_text_value(value: Any) -> Any:
+    text = _normalize_text_value(value)
+    if text is pd.NA:
+        return pd.NA
+    return str(text).upper()
+
+
 def _empty_list_series(index: pd.Index) -> pd.Series:
     return pd.Series([[] for _ in index], index=index, dtype="object")
 
@@ -402,15 +437,30 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             for row in connection.execute("PRAGMA table_info(vacancies)").fetchall()
         }
         source_select = "source" if "source" in columns else "NULL AS source"
+        salary_selects = {
+            column: column if column in columns else f"NULL AS {column}"
+            for column in (
+                "salary_min",
+                "salary_max",
+                "salary_currency",
+                "salary_unit",
+                "salary_text",
+            )
+        }
         query = """
         SELECT
             vacancy_id,
             {source_select},
             company,
             place,
-            analytics_json
+            analytics_json,
+            {salary_min},
+            {salary_max},
+            {salary_currency},
+            {salary_unit},
+            {salary_text}
         FROM vacancies
-        """.format(source_select=source_select)
+        """.format(source_select=source_select, **salary_selects)
         dataset = pd.read_sql_query(query, connection)
     finally:
         connection.close()
@@ -464,6 +514,11 @@ def _build_record_from_sqlite_row(
         "programming_languages": analytics.get("programming_languages", []),
         "frameworks_libraries": analytics.get("frameworks_libraries", []),
         "skills": _collect_skills_from_analytics(analytics),
+        "salary_min": row.get("salary_min"),
+        "salary_max": row.get("salary_max"),
+        "salary_currency": row.get("salary_currency"),
+        "salary_unit": row.get("salary_unit"),
+        "salary_text": row.get("salary_text"),
     }
 
 

@@ -1,0 +1,11 @@
+role_category,salary_count,average_salary,median_salary,min_salary,max_salary,rank
+erp_business_systems,28,109760,113854,87141,130000,1
+product_project_analysis,233,104655,108539,40000,140000,2
+data_ai,227,104632,100000,40000,160000,3
+security,332,102597,110587,28746,191000,4
+software_engineering,580,100133,96919,40000,148000,5
+devops_cloud_platform,671,98087,94544,40000,155000,6
+Unknown,610,93146,95414,33313,161000,7
+qa_testing,55,92349,96278,40000,120585,8
+support_operations,297,86811,80000,40000,152220,9
+ux_ui_design,12,85646,89186,80291,89206,10

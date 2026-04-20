@@ -40,6 +40,29 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "overview_metrics.csv", index=False)
             pd.DataFrame(
                 [
+                    {"metric": "salary_count", "value": 2},
+                    {"metric": "salary_coverage", "value": 0.6667},
+                    {"metric": "average_salary", "value": 115000},
+                    {"metric": "median_salary", "value": 115000},
+                    {"metric": "currency", "value": "CHF"},
+                    {"metric": "unit", "value": "YEAR"},
+                ]
+            ).to_csv(csv_dir / "salary_summary.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
+                        "role_category": "data_ai",
+                        "salary_count": 2,
+                        "average_salary": 115000,
+                        "median_salary": 115000,
+                        "min_salary": 100000,
+                        "max_salary": 130000,
+                        "rank": 1,
+                    }
+                ]
+            ).to_csv(csv_dir / "salary_by_role_category.csv", index=False)
+            pd.DataFrame(
+                [
                     {"skill": "python", "vacancy_count": 2, "share": 0.6667},
                     {"skill": "sql", "vacancy_count": 1, "share": 0.3333},
                 ]
@@ -105,6 +128,13 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue(overview["available"])
             self.assertEqual(3, overview["metrics"]["total_vacancies"])
 
+            salary_metrics = json.loads(
+                (output_dir / "salary_metrics.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(salary_metrics["available"])
+            self.assertEqual(115000, salary_metrics["summary"]["average_salary"])
+            self.assertEqual("data_ai", salary_metrics["by_role_category"][0]["role_category"])
+
             top_skills = json.loads((output_dir / "top_skills.json").read_text(encoding="utf-8"))
             self.assertEqual("python", top_skills["overall"][0]["skill"])
             self.assertEqual("data_ai", top_skills["by_role_category"][0]["group"])
@@ -115,6 +145,7 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertEqual("ZH", canton_distribution["items"][0]["key"])
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
+            self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
 
     def test_build_public_snapshots_marks_missing_csv_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

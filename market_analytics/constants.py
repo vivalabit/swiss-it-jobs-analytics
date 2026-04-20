@@ -34,6 +34,11 @@ CANONICAL_COLUMN_ALIASES: dict[str, tuple[str, ...]] = {
         "libraries",
         "framework_library",
     ),
+    "salary_min": ("salary_min", "salary_from", "annual_salary_from", "min_salary"),
+    "salary_max": ("salary_max", "salary_to", "annual_salary_to", "max_salary"),
+    "salary_currency": ("salary_currency", "currency"),
+    "salary_unit": ("salary_unit", "salary_period", "salary_frequency", "unit"),
+    "salary_text": ("salary_text", "salary", "salary_display"),
 }
 
 REQUIRED_COLUMNS: tuple[str, ...] = (

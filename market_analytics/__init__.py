@@ -4,6 +4,8 @@ from .analytics import (
     calculate_distribution,
     calculate_distributions,
     calculate_overview_metrics,
+    calculate_salary_by_role_category,
+    calculate_salary_summary,
 )
 from .io import (
     load_and_validate_dataset,
@@ -30,6 +32,8 @@ __all__ = [
     "calculate_distributions",
     "calculate_list_summary",
     "calculate_overview_metrics",
+    "calculate_salary_by_role_category",
+    "calculate_salary_summary",
     "calculate_skill_cooccurrence_pairs",
     "calculate_top_list_items",
     "calculate_top_skills_by_dimension",

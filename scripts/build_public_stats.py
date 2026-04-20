@@ -11,6 +11,8 @@ import pandas as pd
 
 EXPECTED_CSV_FILES: tuple[str, ...] = (
     "overview_metrics.csv",
+    "salary_summary.csv",
+    "salary_by_role_category.csv",
     "top_skills_overall.csv",
     "top_skills_by_role_category.csv",
     "top_skills_by_canton.csv",
@@ -106,6 +108,11 @@ def build_public_snapshots(
             generated_at=generated_at,
             overview_frame=csv_frames["overview_metrics.csv"],
         ),
+        "salary_metrics.json": _build_salary_snapshot(
+            generated_at=generated_at,
+            summary_frame=csv_frames["salary_summary.csv"],
+            by_role_category_frame=csv_frames["salary_by_role_category.csv"],
+        ),
         "top_skills.json": _build_top_skills_snapshot(
             generated_at=generated_at,
             overall_frame=csv_frames["top_skills_overall.csv"],
@@ -162,13 +169,14 @@ def _build_metadata_snapshot(
     generated_snapshots = [
         "metadata.json",
         "overview.json",
+        "salary_metrics.json",
         "top_skills.json",
         "skill_pairs.json",
         *[f"distributions_{dimension}.json" for dimension in DISTRIBUTION_DIMENSIONS],
     ]
     return {
         "generated_at": generated_at,
-        "schema_version": 1,
+        "schema_version": 2,
         "source_csv_dir": str(csv_dir),
         "public_data_dir": str(output_dir),
         "available_csv_files": available_csv_files,
@@ -232,6 +240,22 @@ def _build_top_skills_snapshot(
             "summary": _metric_frame_to_dict(frameworks_summary_frame),
             "items": _frame_to_records(frameworks_frame),
         },
+    }
+
+
+def _build_salary_snapshot(
+    *,
+    generated_at: str,
+    summary_frame: pd.DataFrame | None,
+    by_role_category_frame: pd.DataFrame | None,
+) -> dict[str, Any]:
+    summary = _metric_frame_to_dict(summary_frame)
+    by_role_category = _frame_to_records(by_role_category_frame)
+    return {
+        "generated_at": generated_at,
+        "available": bool(summary or by_role_category),
+        "summary": summary,
+        "by_role_category": by_role_category,
     }
 
 
@@ -323,15 +347,31 @@ def _to_python_value(value: Any) -> Any:
 
 def _normalize_metric_value(metric_name: str, value: Any) -> Any:
     normalized = _to_python_value(value)
+    numeric_metrics = {
+        "salary_coverage",
+        "vacancy_coverage",
+        "average_vacancies_per_company",
+    }
+    integer_metrics = {
+        "total_vacancies",
+        "total_companies",
+        "distinct_items",
+        "total_mentions",
+        "vacancies_with_items",
+        "salary_count",
+        "average_salary",
+        "median_salary",
+        "p25_salary",
+        "p75_salary",
+        "min_salary",
+        "max_salary",
+    }
+    if metric_name in {*integer_metrics, *numeric_metrics} and isinstance(normalized, str):
+        numeric_value = pd.to_numeric(normalized, errors="coerce")
+        if not pd.isna(numeric_value):
+            normalized = numeric_value.item() if hasattr(numeric_value, "item") else numeric_value
     if (
-        metric_name
-        in {
-            "total_vacancies",
-            "total_companies",
-            "distinct_items",
-            "total_mentions",
-            "vacancies_with_items",
-        }
+        metric_name in integer_metrics
         and isinstance(normalized, float)
         and normalized.is_integer()
     ):

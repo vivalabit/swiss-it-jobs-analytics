@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-04-17T07:57:16Z",
+  "generated_at": "2026-04-20T07:36:17Z",
   "available": true,
   "dimension": "city",
   "items": [
     {
       "key": "Zürich",
       "label": "Zürich",
-      "vacancy_count": 2015,
-      "share": 0.2699
+      "vacancy_count": 2021,
+      "share": 0.27
     },
     {
       "key": "Bern",
       "label": "Bern",
-      "vacancy_count": 357,
-      "share": 0.0478
+      "vacancy_count": 359,
+      "share": 0.048
+    },
+    {
+      "key": "Genève",
+      "label": "Genève",
+      "vacancy_count": 311,
+      "share": 0.0416
     },
     {
       "key": "Basel",
       "label": "Basel",
       "vacancy_count": 303,
-      "share": 0.0406
-    },
-    {
-      "key": "Genève",
-      "label": "Genève",
-      "vacancy_count": 303,
-      "share": 0.0406
+      "share": 0.0405
     },
     {
       "key": "Berne",
@@ -36,8 +36,8 @@
     {
       "key": "Luzern",
       "label": "Luzern",
-      "vacancy_count": 165,
-      "share": 0.0221
+      "vacancy_count": 166,
+      "share": 0.0222
     },
     {
       "key": "Lausanne",
@@ -67,25 +67,25 @@
       "key": "Aarau",
       "label": "Aarau",
       "vacancy_count": 90,
-      "share": 0.0121
+      "share": 0.012
     },
     {
       "key": "Region Zürich",
       "label": "Region Zürich",
       "vacancy_count": 90,
-      "share": 0.0121
+      "share": 0.012
+    },
+    {
+      "key": "Baden",
+      "label": "Baden",
+      "vacancy_count": 66,
+      "share": 0.0088
     },
     {
       "key": "Wallisellen",
       "label": "Wallisellen",
       "vacancy_count": 66,
       "share": 0.0088
-    },
-    {
-      "key": "Baden",
-      "label": "Baden",
-      "vacancy_count": 65,
-      "share": 0.0087
     },
     {
       "key": "Innerschweiz",
@@ -97,13 +97,13 @@
       "key": "Olten",
       "label": "Olten",
       "vacancy_count": 52,
-      "share": 0.007
+      "share": 0.0069
     },
     {
       "key": "Lenzburg",
       "label": "Lenzburg",
-      "vacancy_count": 46,
-      "share": 0.0062
+      "vacancy_count": 47,
+      "share": 0.0063
     },
     {
       "key": "Frauenfeld",
@@ -145,7 +145,7 @@
       "key": "Herisau",
       "label": "Herisau",
       "vacancy_count": 37,
-      "share": 0.005
+      "share": 0.0049
     },
     {
       "key": "Rotkreuz",
@@ -163,13 +163,13 @@
       "key": "Spreitenbach",
       "label": "Spreitenbach",
       "vacancy_count": 34,
-      "share": 0.0046
+      "share": 0.0045
     },
     {
       "key": "Schlieren",
       "label": "Schlieren",
       "vacancy_count": 28,
-      "share": 0.0038
+      "share": 0.0037
     },
     {
       "key": "Schaffhausen",
@@ -328,6 +328,12 @@
       "share": 0.0024
     },
     {
+      "key": "Zürich Seebach",
+      "label": "Zürich Seebach",
+      "vacancy_count": 17,
+      "share": 0.0023
+    },
+    {
       "key": "Aargau",
       "label": "Aargau",
       "vacancy_count": 16,
@@ -354,12 +360,6 @@
     {
       "key": "Region Luzern",
       "label": "Region Luzern",
-      "vacancy_count": 16,
-      "share": 0.0021
-    },
-    {
-      "key": "Zürich Seebach",
-      "label": "Zürich Seebach",
       "vacancy_count": 16,
       "share": 0.0021
     },
@@ -496,12 +496,6 @@
       "share": 0.0015
     },
     {
-      "key": "Opfikon",
-      "label": "Opfikon",
-      "vacancy_count": 11,
-      "share": 0.0015
-    },
-    {
       "key": "Ostermundigen",
       "label": "Ostermundigen",
       "vacancy_count": 11,
@@ -558,6 +552,12 @@
     {
       "key": "Glattpark",
       "label": "Glattpark",
+      "vacancy_count": 10,
+      "share": 0.0013
+    },
+    {
+      "key": "Opfikon",
+      "label": "Opfikon",
       "vacancy_count": 10,
       "share": 0.0013
     },
@@ -856,12 +856,6 @@
       "share": 0.0009
     },
     {
-      "key": "Zurich, CH",
-      "label": "Zurich, CH",
-      "vacancy_count": 7,
-      "share": 0.0009
-    },
-    {
       "key": "Zürich Flughafen",
       "label": "Zürich Flughafen",
       "vacancy_count": 7,
@@ -888,6 +882,12 @@
     {
       "key": "Brugg",
       "label": "Brugg",
+      "vacancy_count": 6,
+      "share": 0.0008
+    },
+    {
+      "key": "CH - Zürich",
+      "label": "CH - Zürich",
       "vacancy_count": 6,
       "share": 0.0008
     },
@@ -1060,6 +1060,12 @@
       "share": 0.0008
     },
     {
+      "key": "Zurich, CH",
+      "label": "Zurich, CH",
+      "vacancy_count": 6,
+      "share": 0.0008
+    },
+    {
       "key": "Aarburg",
       "label": "Aarburg",
       "vacancy_count": 5,
@@ -1078,14 +1084,14 @@
       "share": 0.0007
     },
     {
-      "key": "Bern, Zürich",
-      "label": "Bern, Zürich",
+      "key": "Basel-Stadt",
+      "label": "Basel-Stadt",
       "vacancy_count": 5,
       "share": 0.0007
     },
     {
-      "key": "CH - Zürich",
-      "label": "CH - Zürich",
+      "key": "Bern, Zürich",
+      "label": "Bern, Zürich",
       "vacancy_count": 5,
       "share": 0.0007
     },
@@ -1146,6 +1152,12 @@
     {
       "key": "Hauptsitz Zollikofen",
       "label": "Hauptsitz Zollikofen",
+      "vacancy_count": 5,
+      "share": 0.0007
+    },
+    {
+      "key": "Hochdorf",
+      "label": "Hochdorf",
       "vacancy_count": 5,
       "share": 0.0007
     },
@@ -1218,12 +1230,6 @@
     {
       "key": "Sissach",
       "label": "Sissach",
-      "vacancy_count": 5,
-      "share": 0.0007
-    },
-    {
-      "key": "Suisse",
-      "label": "Suisse",
       "vacancy_count": 5,
       "share": 0.0007
     },
@@ -1368,12 +1374,6 @@
     {
       "key": "Glarus",
       "label": "Glarus",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Hochdorf",
-      "label": "Hochdorf",
       "vacancy_count": 4,
       "share": 0.0005
     },
@@ -1528,6 +1528,12 @@
       "share": 0.0005
     },
     {
+      "key": "Suisse",
+      "label": "Suisse",
+      "vacancy_count": 4,
+      "share": 0.0005
+    },
+    {
       "key": "Switzerland &gt; Basel : H-127 A2",
       "label": "Switzerland &gt; Basel : H-127 A2",
       "vacancy_count": 4,
@@ -1626,12 +1632,6 @@
     {
       "key": "Basel-Land, Basel",
       "label": "Basel-Land, Basel",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Basel-Stadt",
-      "label": "Basel-Stadt",
       "vacancy_count": 3,
       "share": 0.0004
     },
@@ -2266,12 +2266,6 @@
       "share": 0.0003
     },
     {
-      "key": "Giesshuebelstrasse 30, Zurich, Switzerland",
-      "label": "Giesshuebelstrasse 30, Zurich, Switzerland",
-      "vacancy_count": 2,
-      "share": 0.0003
-    },
-    {
       "key": "Glarus,",
       "label": "Glarus,",
       "vacancy_count": 2,
@@ -2364,12 +2358,6 @@
     {
       "key": "La Chaux-de-Fonds",
       "label": "La Chaux-de-Fonds",
-      "vacancy_count": 2,
-      "share": 0.0003
-    },
-    {
-      "key": "Lenzburg, Aargau, Switzerland",
-      "label": "Lenzburg, Aargau, Switzerland",
       "vacancy_count": 2,
       "share": 0.0003
     },
@@ -2562,12 +2550,6 @@
     {
       "key": "Richterswil",
       "label": "Richterswil",
-      "vacancy_count": 2,
-      "share": 0.0003
-    },
-    {
-      "key": "Roman",
-      "label": "Roman",
       "vacancy_count": 2,
       "share": 0.0003
     },
@@ -3334,6 +3316,12 @@
       "share": 0.0001
     },
     {
+      "key": "Giesshuebelstrasse 30, Zurich, Switzerland",
+      "label": "Giesshuebelstrasse 30, Zurich, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Gilching, DE",
       "label": "Gilching, DE",
       "vacancy_count": 1,
@@ -3498,6 +3486,12 @@
     {
       "key": "Lenggenwil",
       "label": "Lenggenwil",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Lenzburg, Aargau, Switzerland",
+      "label": "Lenzburg, Aargau, Switzerland",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3834,6 +3828,12 @@
     {
       "key": "Riehen",
       "label": "Riehen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Roman",
+      "label": "Roman",
       "vacancy_count": 1,
       "share": 0.0001
     },

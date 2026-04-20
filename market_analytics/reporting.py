@@ -9,6 +9,8 @@ from .analytics import (
     calculate_crosstabs,
     calculate_distributions,
     calculate_overview_metrics,
+    calculate_salary_by_role_category,
+    calculate_salary_summary,
 )
 from .skills import (
     calculate_list_summary,
@@ -26,6 +28,8 @@ def build_analytics_outputs(
 ) -> dict[str, pd.DataFrame]:
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),
+        "salary_summary": calculate_salary_summary(dataset),
+        "salary_by_role_category": calculate_salary_by_role_category(dataset),
         **calculate_distributions(dataset),
         "top_skills_overall": calculate_top_skills_overall(
             dataset,

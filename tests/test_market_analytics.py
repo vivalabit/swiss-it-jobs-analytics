@@ -29,6 +29,10 @@ class MarketAnalyticsTests(unittest.TestCase):
                 "state": ["ZH", "BE", None],
                 "seniority_level": ["senior", "mid", None],
                 "remote_mode": ["hybrid", "remote", None],
+                "salary_min": [100000, 90000, None],
+                "salary_max": [130000, 110000, None],
+                "salary_currency": ["chf", "CHF", None],
+                "salary_unit": ["year", "YEAR", None],
                 "detected_skills": [
                     '["python", "sql", "airflow"]',
                     ["python", "pandas"],
@@ -41,6 +45,8 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         self.assertIn("company", standardized.columns)
         self.assertIn("skills_list", standardized.columns)
+        self.assertEqual("CHF", standardized.loc[0, "salary_currency"])
+        self.assertEqual("YEAR", standardized.loc[0, "salary_unit"])
         self.assertEqual(["python", "sql", "airflow"], standardized.loc[0, "skills_list"])
         self.assertEqual(["sql", "excel"], standardized.loc[2, "skills_list"])
         self.assertTrue(pd.isna(standardized.loc[2, "work_mode"]))
@@ -86,6 +92,10 @@ class MarketAnalyticsTests(unittest.TestCase):
                 "canton": ["ZH", "BE", "ZH"],
                 "seniority": ["senior", "mid", "junior"],
                 "work_mode": ["hybrid", "remote", "onsite"],
+                "salary_min": [100000, 90000, 120000],
+                "salary_max": [130000, 110000, 140000],
+                "salary_currency": ["CHF", "CHF", "CHF"],
+                "salary_unit": ["YEAR", "YEAR", "YEAR"],
                 "programming_languages": [
                     ["python", "sql"],
                     ["python"],
@@ -107,7 +117,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(16, len(outputs))
+        self.assertEqual(18, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -124,6 +134,13 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertIn(
             "spring",
             set(outputs["top_frameworks_libraries"]["framework_library"]),
+        )
+        salary_summary = outputs["salary_summary"].set_index("metric")["value"].to_dict()
+        self.assertEqual(3, salary_summary["salary_count"])
+        self.assertEqual(115000, salary_summary["average_salary"])
+        self.assertEqual(
+            "software_engineering",
+            outputs["salary_by_role_category"].iloc[0]["role_category"],
         )
 
     def test_load_and_save_outputs_round_trip_csv(self) -> None:
@@ -176,16 +193,41 @@ class MarketAnalyticsTests(unittest.TestCase):
                         vacancy_id TEXT PRIMARY KEY,
                         company TEXT,
                         place TEXT,
-                        analytics_json TEXT
+                        analytics_json TEXT,
+                        salary_min INTEGER,
+                        salary_max INTEGER,
+                        salary_currency TEXT,
+                        salary_unit TEXT,
+                        salary_text TEXT
                     )
                     """
                 )
                 connection.execute(
                     """
-                    INSERT INTO vacancies (vacancy_id, company, place, analytics_json)
-                    VALUES (?, ?, ?, ?)
+                    INSERT INTO vacancies (
+                        vacancy_id,
+                        company,
+                        place,
+                        analytics_json,
+                        salary_min,
+                        salary_max,
+                        salary_currency,
+                        salary_unit,
+                        salary_text
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
-                    ("vacancy-1", "Acme", "Zurich", analytics_json),
+                    (
+                        "vacancy-1",
+                        "Acme",
+                        "Zurich",
+                        analytics_json,
+                        100000,
+                        120000,
+                        "CHF",
+                        "YEAR",
+                        "CHF 100000-120000 / year",
+                    ),
                 )
                 connection.commit()
             finally:
@@ -199,6 +241,8 @@ class MarketAnalyticsTests(unittest.TestCase):
             self.assertEqual(["python", "sql"], loaded.loc[0, "programming_languages_list"])
             self.assertEqual(["airflow"], loaded.loc[0, "frameworks_libraries_list"])
             self.assertEqual(["python", "sql", "airflow", "aws"], loaded.loc[0, "skills_list"])
+            self.assertEqual(100000, loaded.loc[0, "salary_min"])
+            self.assertEqual("CHF", loaded.loc[0, "salary_currency"])
 
     def test_load_and_validate_datasets_combines_multiple_sqlite_inputs(self) -> None:
         analytics_json_a = """

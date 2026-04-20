@@ -1,10 +1,12 @@
 {
-  "generated_at": "2026-04-17T07:57:16Z",
-  "schema_version": 1,
+  "generated_at": "2026-04-20T07:36:17Z",
+  "schema_version": 2,
   "source_csv_dir": "analytics_output",
   "public_data_dir": "public_stats/data",
   "available_csv_files": [
     "overview_metrics.csv",
+    "salary_summary.csv",
+    "salary_by_role_category.csv",
     "top_skills_overall.csv",
     "top_skills_by_role_category.csv",
     "top_skills_by_canton.csv",
@@ -23,6 +25,7 @@
   "generated_snapshots": [
     "metadata.json",
     "overview.json",
+    "salary_metrics.json",
     "top_skills.json",
     "skill_pairs.json",
     "distributions_role_category.json",

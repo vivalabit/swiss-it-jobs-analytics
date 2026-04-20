@@ -1,32 +1,32 @@
 city,vacancy_count,share
-Zürich,2015,0.2699
-Bern,357,0.0478
-Basel,303,0.0406
-Genève,303,0.0406
+Zürich,2021,0.27
+Bern,359,0.048
+Genève,311,0.0416
+Basel,303,0.0405
 Berne,204,0.0273
-Luzern,165,0.0221
+Luzern,166,0.0222
 Lausanne,130,0.0174
 Winterthur,113,0.0151
 Zug,113,0.0151
 St. Gallen,110,0.0147
-Aarau,90,0.0121
-Region Zürich,90,0.0121
+Aarau,90,0.012
+Region Zürich,90,0.012
+Baden,66,0.0088
 Wallisellen,66,0.0088
-Baden,65,0.0087
 Innerschweiz,57,0.0076
-Olten,52,0.007
-Lenzburg,46,0.0062
+Olten,52,0.0069
+Lenzburg,47,0.0063
 Frauenfeld,44,0.0059
 Mittelland,44,0.0059
 Baar,42,0.0056
 Thun,42,0.0056
 Region Bern,39,0.0052
 Solothurn,38,0.0051
-Herisau,37,0.005
+Herisau,37,0.0049
 Rotkreuz,36,0.0048
 Sursee,36,0.0048
-Spreitenbach,34,0.0046
-Schlieren,28,0.0038
+Spreitenbach,34,0.0045
+Schlieren,28,0.0037
 Schaffhausen,27,0.0036
 Chur,26,0.0035
 Moosseedorf,24,0.0032
@@ -53,12 +53,12 @@ Urdorf,19,0.0025
 Biel,18,0.0024
 Bussnang,18,0.0024
 Region Sankt Gallen,18,0.0024
+Zürich Seebach,17,0.0023
 Aargau,16,0.0021
 Bülach,16,0.0021
 Dietikon,16,0.0021
 Dübendorf,16,0.0021
 Region Luzern,16,0.0021
-Zürich Seebach,16,0.0021
 Dällikon,15,0.002
 Yverdon-les-Bains,15,0.002
 Altishofen,14,0.0019
@@ -81,7 +81,6 @@ Region Zug,12,0.0016
 Schaan,12,0.0016
 Balzers,11,0.0015
 Jona,11,0.0015
-Opfikon,11,0.0015
 Ostermundigen,11,0.0015
 Stabio,11,0.0015
 Wil,11,0.0015
@@ -92,6 +91,7 @@ Burgdorf,10,0.0013
 Coppet,10,0.0013
 "Dietikon,",10,0.0013
 Glattpark,10,0.0013
+Opfikon,10,0.0013
 Region Basel-Landschaft,10,0.0013
 Region Basel-Stadt,10,0.0013
 Region Bern Mittelland (BE/SO/AG),10,0.0013
@@ -141,12 +141,12 @@ Stans,7,0.0009
 Suhr,7,0.0009
 Würenlingen,7,0.0009
 Zollikofen,7,0.0009
-"Zurich, CH",7,0.0009
 Zürich Flughafen,7,0.0009
 "Aarau,",6,0.0008
 Affoltern am Albis,6,0.0008
 "Basel, Geneva, Zurich",6,0.0008
 Brugg,6,0.0008
+CH - Zürich,6,0.0008
 Davos Platz,6,0.0008
 Dietlikon,6,0.0008
 Dotzigen,6,0.0008
@@ -175,11 +175,12 @@ Vaduz,6,0.0008
 Yverdon,6,0.0008
 "Zug,",6,0.0008
 Zurich (Headquarter),6,0.0008
+"Zurich, CH",6,0.0008
 Aarburg,5,0.0007
 Amriswil,5,0.0007
 Appenzell,5,0.0007
+Basel-Stadt,5,0.0007
 "Bern, Zürich",5,0.0007
-CH - Zürich,5,0.0007
 Dottikon,5,0.0007
 Dättwil,5,0.0007
 EMEA &gt; CHE &gt; Stabio &gt; VF Campus VF1,5,0.0007
@@ -190,6 +191,7 @@ Grosshöchstetten,5,0.0007
 Grüsch,5,0.0007
 Haag,5,0.0007
 Hauptsitz Zollikofen,5,0.0007
+Hochdorf,5,0.0007
 Jegenstorf,5,0.0007
 Kreuzlingen,5,0.0007
 Meilen,5,0.0007
@@ -202,7 +204,6 @@ Rapperswil-Jona,5,0.0007
 Region Bern / Berner Oberland,5,0.0007
 Renens,5,0.0007
 Sissach,5,0.0007
-Suisse,5,0.0007
 Switzerland + FL,5,0.0007
 Triesen,5,0.0007
 Vernier,5,0.0007
@@ -227,7 +228,6 @@ Fahrweid,4,0.0005
 Frick,4,0.0005
 Gamprin-Bendern,4,0.0005
 Glarus,4,0.0005
-Hochdorf,4,0.0005
 Horw,4,0.0005
 Härkingen,4,0.0005
 "Innerschweiz, Zürich",4,0.0005
@@ -253,6 +253,7 @@ Sonceboz,4,0.0005
 Sonceboz-Sombeval,4,0.0005
 "Stäfa, Schweiz",4,0.0005
 "Stäfa, Switzerland",4,0.0005
+Suisse,4,0.0005
 Switzerland &gt; Basel : H-127 A2,4,0.0005
 "Uster,",4,0.0005
 Visp,4,0.0005
@@ -270,7 +271,6 @@ BAD IR,3,0.0004
 Balgach,3,0.0004
 "Basel, Zurich",3,0.0004
 "Basel-Land, Basel",3,0.0004
-Basel-Stadt,3,0.0004
 Bellinzona,3,0.0004
 Biel-Benken,3,0.0004
 "Bülach,",3,0.0004
@@ -376,7 +376,6 @@ Dietfurt,2,0.0003
 Egerkingen,2,0.0003
 Freienbach,2,0.0003
 Gelterkinden,2,0.0003
-"Giesshuebelstrasse 30, Zurich, Switzerland",2,0.0003
 "Glarus,",2,0.0003
 Gwatt,2,0.0003
 Hauptsitz Zollikofen (BE),2,0.0003
@@ -393,7 +392,6 @@ Kirchberg,2,0.0003
 Kriegstetten,2,0.0003
 "Kriens,",2,0.0003
 La Chaux-de-Fonds,2,0.0003
-"Lenzburg, Aargau, Switzerland",2,0.0003
 Liebefeld,2,0.0003
 Lützelflüh-Goldbach,2,0.0003
 Malters,2,0.0003
@@ -426,7 +424,6 @@ Reiden,2,0.0003
 Rheintal,2,0.0003
 Rheintal/Ostschweiz,2,0.0003
 Richterswil,2,0.0003
-Roman,2,0.0003
 Ruggell,2,0.0003
 Sachseln,2,0.0003
 Samstagern,2,0.0003
@@ -554,6 +551,7 @@ Geneva - 20 Quai Ernest - Ansermet,1,0.0001
 Genf,1,0.0001
 Genolier,1,0.0001
 "Germany, Koblenz",1,0.0001
+"Giesshuebelstrasse 30, Zurich, Switzerland",1,0.0001
 "Gilching, DE",1,0.0001
 Givisiez,1,0.0001
 "Glattpark, Opfikon",1,0.0001
@@ -582,6 +580,7 @@ Küssnacht,1,0.0001
 Küssnacht District,1,0.0001
 Lausanne (und Homeoffice),1,0.0001
 Lenggenwil,1,0.0001
+"Lenzburg, Aargau, Switzerland",1,0.0001
 Les Acacias,1,0.0001
 Lohn,1,0.0001
 "Losone, Meyrin or Biel",1,0.0001
@@ -638,6 +637,7 @@ Region Zürich / Schaffhausen,1,0.0001
 Remote / Office Baar oder Bern,1,0.0001
 Remote-Switzerland -City of Zurich/ Lakeside,1,0.0001
 Riehen,1,0.0001
+Roman,1,0.0001
 Rorschach,1,0.0001
 Région Fribourg,1,0.0001
 Région Genève,1,0.0001

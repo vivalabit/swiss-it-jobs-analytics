@@ -20,6 +20,7 @@ const footerShapeUrl =
 const SNAPSHOT_FILES = {
   metadata: "metadata.json",
   overview: "overview.json",
+  salaryMetrics: "salary_metrics.json",
   topSkills: "top_skills.json",
   skillPairs: "skill_pairs.json",
   cityDistribution: "distributions_city.json",
@@ -96,6 +97,7 @@ function App() {
   const {
     metadata,
     overview,
+    salaryMetrics,
     topSkills,
     skillPairs,
     cityDistribution,
@@ -106,6 +108,7 @@ function App() {
   } = state.data;
 
   const overviewMetrics = overview.metrics ?? {};
+  const salarySummary = salaryMetrics.summary ?? {};
   const lastUpdated = metadata.generated_at ?? overview.generated_at ?? null;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 8);
   const programmingLanguages = topSkills.programming_languages ?? {};
@@ -125,6 +128,12 @@ function App() {
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
   const workModeItems = selectTopItems(filterUnknown(workModeDistribution.items ?? []), 4);
+  const salaryRoleItems = selectTopItems(
+    (salaryMetrics.by_role_category ?? []).filter(
+      (item) => item.role_category && item.role_category !== "Unknown",
+    ),
+    6,
+  );
   const topRoleGroups = selectTopItems(
     (topSkills.by_role_category ?? []).filter((group) => group.group !== "Unknown"),
     3,
@@ -269,6 +278,55 @@ function App() {
                 valueKey="vacancy_count"
                 shareKey="share"
               />
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      <section className="cy-section" id="salary">
+        <div className="cy-container">
+          <div className="cy-section-intro cy-section-intro-compact">
+            <h2 className="cy-heading cy-section-title">
+              Salary <span className="cy-hero-title-accent">metrics</span>
+            </h2>
+          </div>
+
+          <div className="cy-salary-layout">
+            <article className="cy-card cy-data-panel cy-salary-summary-panel">
+              <div className="cy-data-panel-head">
+                <h3>Compensation snapshot</h3>
+                <p className="cy-copy">
+                  Comparable CHF salaries normalized to yearly values.
+                </p>
+              </div>
+
+              <div className="cy-salary-stat-grid">
+                <SalaryStat
+                  value={formatCurrency(salarySummary.average_salary)}
+                  label="Average yearly"
+                />
+                <SalaryStat
+                  value={formatCurrency(salarySummary.median_salary)}
+                  label="Median yearly"
+                />
+                <SalaryStat
+                  value={formatPercent(salarySummary.salary_coverage)}
+                  label="Salary coverage"
+                />
+                <SalaryStat value={formatInteger(salarySummary.salary_count)} label="Records" />
+              </div>
+            </article>
+
+            <article className="cy-card cy-data-panel cy-salary-chart-panel">
+              <div className="cy-data-panel-head">
+                <h3>Roles ranked by average salary</h3>
+                <p className="cy-copy">
+                  Role categories with normalized CHF yearly salary ranges.
+                </p>
+              </div>
+              <SalaryRankingChart items={salaryRoleItems} summary={salarySummary} />
             </article>
           </div>
         </div>
@@ -524,6 +582,15 @@ function MetricCard({ value, description }) {
   );
 }
 
+function SalaryStat({ value, label }) {
+  return (
+    <div className="cy-salary-stat">
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </div>
+  );
+}
+
 function HorizontalBarChart({ items, labelKey, valueKey, shareKey }) {
   const maxValue = Math.max(...items.map((item) => item[valueKey] ?? 0), 1);
 
@@ -577,6 +644,63 @@ function SegmentChart({ items }) {
   );
 }
 
+function SalaryRankingChart({ items, summary }) {
+  const maxValue = Math.max(
+    ...items.map((item) => item.average_salary ?? 0),
+    summary.median_salary ?? 0,
+    1,
+  );
+  const referenceValues = [
+    { label: "Median", value: summary.median_salary },
+  ].filter((item) => typeof item.value === "number");
+
+  if (!items.length) {
+    return <p className="cy-copy cy-empty-state">No comparable salary metrics available.</p>;
+  }
+
+  return (
+    <div className="cy-salary-chart">
+      <div className="cy-salary-reference-layer" aria-hidden="true">
+        <div className="cy-salary-reference-track">
+          {referenceValues.map((reference) => (
+            <div
+              key={reference.label}
+              className="cy-salary-reference"
+              style={{ left: `${Math.min((reference.value / maxValue) * 100, 100)}%` }}
+            >
+              <span>
+                {reference.label} · {formatSalaryShort(reference.value)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="cy-salary-row-list">
+        {items.map((item, index) => (
+          <div key={item.role_category} className="cy-salary-row">
+            <div className="cy-salary-role">
+              <strong>{prettifyLabel(item.role_category)}</strong>
+              <span>{formatInteger(item.salary_count)} salaries</span>
+            </div>
+            <div className="cy-salary-bar-cell">
+              <div className="cy-salary-track">
+                <div
+                  className={`cy-salary-fill cy-salary-fill-${(index % 5) + 1}`}
+                  style={{
+                    width: `${Math.max((item.average_salary / maxValue) * 100, 8)}%`,
+                  }}
+                />
+              </div>
+            </div>
+            <span className="cy-salary-value">{formatCurrency(item.average_salary)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 async function fetchSnapshot(fileName) {
   const response = await fetch(`${import.meta.env.BASE_URL}data/${fileName}`);
   if (!response.ok) {
@@ -615,6 +739,24 @@ function formatPercent(value) {
     return "n/a";
   }
   return `${(value * 100).toFixed(value >= 0.1 ? 1 : 2)}%`;
+}
+
+function formatCurrency(value) {
+  if (typeof value !== "number") {
+    return "n/a";
+  }
+  return new Intl.NumberFormat("en-CH", {
+    style: "currency",
+    currency: "CHF",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function formatSalaryShort(value) {
+  if (typeof value !== "number") {
+    return "n/a";
+  }
+  return `CHF ${Math.round(value / 1000)}k`;
 }
 
 function formatDateTime(value) {

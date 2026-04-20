@@ -13,7 +13,7 @@ Current sources:
 
 The project is still in progress, so statistics and structure may change.
 
-The public site publishes aggregated snapshots of the Swiss IT job market built from processed vacancy datasets across multiple job boards. It highlights broad signals such as vacancy volume, employer activity, skill demand, geographic concentration, seniority mix, and work mode distribution.
+The public site publishes aggregated snapshots of the Swiss IT job market built from processed vacancy datasets across multiple job boards. It highlights broad signals such as vacancy volume, employer activity, skill demand, salary ranges, geographic concentration, seniority mix, and work mode distribution.
 
 
 ## What This Project Covers
@@ -24,4 +24,5 @@ This project is designed to answer practical, data-driven questions about the jo
 - Which skills and technologies appear most frequently
 - Which cantons and cities have the highest concentration of job postings
 - How demand is distributed across seniority levels
+- How comparable salary ranges differ across role categories
 - Which skills the market is actually valued by employers

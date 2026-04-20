@@ -1,0 +1,108 @@
+{
+  "generated_at": "2026-04-20T07:36:17Z",
+  "available": true,
+  "summary": {
+    "salary_count": 3045,
+    "salary_coverage": 0.4069,
+    "average_salary": 97824,
+    "median_salary": 96880,
+    "p25_salary": 91173,
+    "p75_salary": 107551,
+    "min_salary": 28746,
+    "max_salary": 191000,
+    "currency": "CHF",
+    "unit": "YEAR"
+  },
+  "by_role_category": [
+    {
+      "role_category": "erp_business_systems",
+      "salary_count": 28,
+      "average_salary": 109760,
+      "median_salary": 113854,
+      "min_salary": 87141,
+      "max_salary": 130000,
+      "rank": 1
+    },
+    {
+      "role_category": "product_project_analysis",
+      "salary_count": 233,
+      "average_salary": 104655,
+      "median_salary": 108539,
+      "min_salary": 40000,
+      "max_salary": 140000,
+      "rank": 2
+    },
+    {
+      "role_category": "data_ai",
+      "salary_count": 227,
+      "average_salary": 104632,
+      "median_salary": 100000,
+      "min_salary": 40000,
+      "max_salary": 160000,
+      "rank": 3
+    },
+    {
+      "role_category": "security",
+      "salary_count": 332,
+      "average_salary": 102597,
+      "median_salary": 110587,
+      "min_salary": 28746,
+      "max_salary": 191000,
+      "rank": 4
+    },
+    {
+      "role_category": "software_engineering",
+      "salary_count": 580,
+      "average_salary": 100133,
+      "median_salary": 96919,
+      "min_salary": 40000,
+      "max_salary": 148000,
+      "rank": 5
+    },
+    {
+      "role_category": "devops_cloud_platform",
+      "salary_count": 671,
+      "average_salary": 98087,
+      "median_salary": 94544,
+      "min_salary": 40000,
+      "max_salary": 155000,
+      "rank": 6
+    },
+    {
+      "role_category": "Unknown",
+      "salary_count": 610,
+      "average_salary": 93146,
+      "median_salary": 95414,
+      "min_salary": 33313,
+      "max_salary": 161000,
+      "rank": 7
+    },
+    {
+      "role_category": "qa_testing",
+      "salary_count": 55,
+      "average_salary": 92349,
+      "median_salary": 96278,
+      "min_salary": 40000,
+      "max_salary": 120585,
+      "rank": 8
+    },
+    {
+      "role_category": "support_operations",
+      "salary_count": 297,
+      "average_salary": 86811,
+      "median_salary": 80000,
+      "min_salary": 40000,
+      "max_salary": 152220,
+      "rank": 9
+    },
+    {
+      "role_category": "ux_ui_design",
+      "salary_count": 12,
+      "average_salary": 85646,
+      "median_salary": 89186,
+      "min_salary": 80291,
+      "max_salary": 89206,
+      "rank": 10
+    }
+  ]
+}
