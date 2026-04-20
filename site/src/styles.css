@@ -695,6 +695,29 @@ img {
   color: #fff;
 }
 
+.cy-salary-more-button {
+  align-self: flex-start;
+  min-width: 104px;
+  min-height: 40px;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  padding: 10px 16px;
+  text-transform: uppercase;
+}
+
+.cy-salary-more-button:hover {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: #fff;
+}
+
 .cy-salary-stat {
   display: flex;
   min-height: 0;
@@ -819,26 +842,6 @@ img {
 .cy-salary-fill {
   height: 100%;
   min-width: 20px;
-}
-
-.cy-salary-fill-1 {
-  background: #e7000b;
-}
-
-.cy-salary-fill-2 {
-  background: #c40009;
-}
-
-.cy-salary-fill-3 {
-  background: #ff3b45;
-}
-
-.cy-salary-fill-4 {
-  background: #a40007;
-}
-
-.cy-salary-fill-5 {
-  background: #ff7a82;
 }
 
 .cy-salary-value {

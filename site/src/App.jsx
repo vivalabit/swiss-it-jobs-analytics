@@ -37,6 +37,7 @@ function App() {
     error: null,
   });
   const [salaryBreakdown, setSalaryBreakdown] = useState("role_category");
+  const [showAllSalaryGroups, setShowAllSalaryGroups] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -129,18 +130,18 @@ function App() {
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
   const workModeItems = selectTopItems(filterUnknown(workModeDistribution.items ?? []), 4);
-  const salaryRoleItems = selectTopItems(
-    (salaryMetrics.by_role_category ?? []).filter(
-      (item) => item.role_category && item.role_category !== "Unknown",
-    ),
-    6,
+  const salaryRoleGroups = (salaryMetrics.by_role_category ?? []).filter(
+    (item) => item.role_category && item.role_category !== "Unknown",
   );
-  const salarySeniorityItems = selectTopItems(
-    (salaryMetrics.by_seniority ?? []).filter(
-      (item) => item.seniority && item.seniority !== "Unknown",
-    ),
-    6,
+  const salarySeniorityGroups = (salaryMetrics.by_seniority ?? []).filter(
+    (item) => item.seniority && item.seniority !== "Unknown",
   );
+  const salaryRoleItems = showAllSalaryGroups
+    ? salaryRoleGroups
+    : selectTopItems(salaryRoleGroups, 6);
+  const salarySeniorityItems = showAllSalaryGroups
+    ? salarySeniorityGroups
+    : selectTopItems(salarySeniorityGroups, 6);
   const salaryChartConfig =
     salaryBreakdown === "seniority"
       ? {
@@ -355,6 +356,14 @@ function App() {
                 />
                 <SalaryStat value={formatInteger(salarySummary.salary_count)} label="Records" />
               </div>
+
+              <button
+                type="button"
+                className="cy-salary-more-button"
+                onClick={() => setShowAllSalaryGroups((value) => !value)}
+              >
+                {showAllSalaryGroups ? "Less" : "More"}
+              </button>
             </article>
 
             <article className="cy-card cy-data-panel cy-salary-chart-panel">
@@ -693,6 +702,7 @@ function SalaryRankingChart({ items, summary, groupKey }) {
   const referenceValues = [
     { label: "Median", value: summary.median_salary },
   ].filter((item) => typeof item.value === "number");
+  const lastIndex = Math.max(items.length - 1, 1);
 
   if (!items.length) {
     return <p className="cy-copy cy-empty-state">No comparable salary metrics available.</p>;
@@ -726,9 +736,10 @@ function SalaryRankingChart({ items, summary, groupKey }) {
             <div className="cy-salary-bar-cell">
               <div className="cy-salary-track">
                 <div
-                  className={`cy-salary-fill cy-salary-fill-${(index % 5) + 1}`}
+                  className="cy-salary-fill"
                   style={{
                     width: `${Math.max((item.average_salary / maxValue) * 100, 8)}%`,
+                    backgroundColor: getSalaryBarColor(index / lastIndex),
                   }}
                 />
               </div>
@@ -797,6 +808,15 @@ function formatSalaryShort(value) {
     return "n/a";
   }
   return `CHF ${Math.round(value / 1000)}k`;
+}
+
+function getSalaryBarColor(progress) {
+  const start = [169, 0, 7];
+  const end = [255, 122, 130];
+  const clampedProgress = Math.min(Math.max(progress, 0), 1);
+  const channel = (index) =>
+    Math.round(start[index] + (end[index] - start[index]) * clampedProgress);
+  return `rgb(${channel(0)}, ${channel(1)}, ${channel(2)})`;
 }
 
 function formatDateTime(value) {
