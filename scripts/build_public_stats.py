@@ -22,6 +22,7 @@ EXPECTED_CSV_FILES: tuple[str, ...] = (
     "top_frameworks_libraries.csv",
     "frameworks_libraries_summary.csv",
     "distribution_role_category.csv",
+    "distribution_company.csv",
     "distribution_city.csv",
     "distribution_canton.csv",
     "distribution_seniority.csv",
@@ -30,6 +31,7 @@ EXPECTED_CSV_FILES: tuple[str, ...] = (
 )
 
 DISTRIBUTION_DIMENSIONS: tuple[str, ...] = (
+    "company",
     "role_category",
     "city",
     "canton",

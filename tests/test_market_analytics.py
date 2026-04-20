@@ -117,11 +117,13 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(19, len(outputs))
+        self.assertEqual(20, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
         self.assertEqual(1.5, overview["average_vacancies_per_company"])
+        self.assertEqual("Acme", outputs["distribution_company"].iloc[0]["company"])
+        self.assertEqual(2, outputs["distribution_company"].iloc[0]["vacancy_count"])
         self.assertEqual(
             "python",
             outputs["top_skills_overall"].iloc[0]["skill"],

@@ -1134,6 +1134,10 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .cy-company-panel {
+    grid-column: 1 / -1;
+  }
+
   .cy-data-grid {
     grid-template-columns: 1.15fr 0.85fr;
   }

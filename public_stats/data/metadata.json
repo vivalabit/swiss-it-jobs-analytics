@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-20T07:55:44Z",
+  "generated_at": "2026-04-20T09:53:50Z",
   "schema_version": 2,
   "source_csv_dir": "analytics_output",
   "public_data_dir": "public_stats/data",
@@ -16,6 +16,7 @@
     "top_frameworks_libraries.csv",
     "frameworks_libraries_summary.csv",
     "distribution_role_category.csv",
+    "distribution_company.csv",
     "distribution_city.csv",
     "distribution_canton.csv",
     "distribution_seniority.csv",
@@ -29,6 +30,7 @@
     "salary_metrics.json",
     "top_skills.json",
     "skill_pairs.json",
+    "distributions_company.json",
     "distributions_role_category.json",
     "distributions_city.json",
     "distributions_canton.json",

@@ -24,6 +24,7 @@ const SNAPSHOT_FILES = {
   salaryMetrics: "salary_metrics.json",
   topSkills: "top_skills.json",
   skillPairs: "skill_pairs.json",
+  companyDistribution: "distributions_company.json",
   cityDistribution: "distributions_city.json",
   cantonDistribution: "distributions_canton.json",
   roleDistribution: "distributions_role_category.json",
@@ -327,6 +328,7 @@ function App() {
     salaryMetrics,
     topSkills,
     skillPairs,
+    companyDistribution,
     cityDistribution,
     cantonDistribution,
     roleDistribution,
@@ -350,6 +352,7 @@ function App() {
   const frameworksSummary = frameworksLibraries.summary ?? {};
   const topFrameworksLibraries = selectTopItems(frameworksLibraries.items ?? [], 8);
   const topPairs = selectTopItems(skillPairs.items ?? [], 4);
+  const companyItems = selectTopItems(filterUnknown(companyDistribution.items ?? []), 8);
   const cityItems = selectTopItems(filterUnknown(cityDistribution.items ?? []), 6);
   const cityMapItems = buildSwissCityVacancyPoints(cityDistribution.items ?? []);
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
@@ -536,6 +539,18 @@ function App() {
               </div>
               <HorizontalBarChart
                 items={cityItems}
+                labelKey="label"
+                valueKey="vacancy_count"
+                shareKey="share"
+              />
+            </article>
+
+            <article className="cy-card cy-dashboard-panel cy-company-panel">
+              <div className="cy-data-panel-head">
+                <h3>Top hiring companies</h3>
+              </div>
+              <HorizontalBarChart
+                items={companyItems}
                 labelKey="label"
                 valueKey="vacancy_count"
                 shareKey="share"

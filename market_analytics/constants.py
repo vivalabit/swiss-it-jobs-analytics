@@ -52,6 +52,7 @@ REQUIRED_COLUMNS: tuple[str, ...] = (
 )
 
 DISTRIBUTION_COLUMNS: tuple[str, ...] = (
+    "company",
     "role_category",
     "city",
     "canton",

@@ -105,6 +105,20 @@ class BuildPublicStatsTests(unittest.TestCase):
             pd.DataFrame(
                 [
                     {
+                        "company": "Acme",
+                        "vacancy_count": 2,
+                        "share": 0.6667,
+                    },
+                    {
+                        "company": "Beta",
+                        "vacancy_count": 1,
+                        "share": 0.3333,
+                    },
+                ]
+            ).to_csv(csv_dir / "distribution_company.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
                         "role_category": "data_ai",
                         "vacancy_count": 2,
                         "share": 0.6667,
@@ -157,6 +171,12 @@ class BuildPublicStatsTests(unittest.TestCase):
                 (output_dir / "distributions_canton.json").read_text(encoding="utf-8")
             )
             self.assertEqual("ZH", canton_distribution["items"][0]["key"])
+
+            company_distribution = json.loads(
+                (output_dir / "distributions_company.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual("Acme", company_distribution["items"][0]["key"])
+            self.assertEqual(2, company_distribution["items"][0]["vacancy_count"])
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
