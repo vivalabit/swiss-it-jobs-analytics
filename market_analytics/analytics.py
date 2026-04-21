@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import re
+import unicodedata
+
 import pandas as pd
 
-from .constants import DISTRIBUTION_COLUMNS, UNKNOWN_LABEL
+from .constants import DISTRIBUTION_COLUMNS, STAFFING_AGENCY_COMPANY_NAMES, UNKNOWN_LABEL
 
 MIN_ANNUAL_SALARY = 20_000
 MAX_ANNUAL_SALARY = 300_000
@@ -10,9 +13,10 @@ MAX_ANNUAL_SALARY = 300_000
 
 def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
     total_vacancies = int(len(dataset))
-    total_companies = int(dataset["company"].dropna().nunique())
+    direct_employer_dataset = _exclude_staffing_agencies(dataset)
+    total_companies = int(direct_employer_dataset["company"].dropna().nunique())
     average_vacancies_per_company = (
-        total_vacancies / total_companies if total_companies else 0.0
+        len(direct_employer_dataset) / total_companies if total_companies else 0.0
     )
 
     return pd.DataFrame(
@@ -25,6 +29,28 @@ def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
             },
         ]
     )
+
+
+def _exclude_staffing_agencies(dataset: pd.DataFrame) -> pd.DataFrame:
+    company_names = dataset["company"].map(_normalize_company_name)
+    return dataset.loc[~company_names.isin(NORMALIZED_STAFFING_AGENCY_COMPANY_NAMES)]
+
+
+def _normalize_company_name(value: object) -> str:
+    if pd.isna(value):
+        return ""
+    normalized = unicodedata.normalize("NFD", str(value))
+    without_marks = "".join(
+        character for character in normalized if unicodedata.category(character) != "Mn"
+    )
+    without_marks = without_marks.replace("&", " and ")
+    without_marks = without_marks.replace("®", "").replace("™", "")
+    return re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9]+", " ", without_marks)).strip().casefold()
+
+
+NORMALIZED_STAFFING_AGENCY_COMPANY_NAMES = frozenset(
+    _normalize_company_name(company) for company in STAFFING_AGENCY_COMPANY_NAMES
+)
 
 
 def calculate_distribution(dataset: pd.DataFrame, column: str) -> pd.DataFrame:

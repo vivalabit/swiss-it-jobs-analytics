@@ -77,6 +77,46 @@ MISSING_TEXT_VALUES: frozenset[str] = frozenset(
 )
 
 UNKNOWN_LABEL = "Unknown"
+STAFFING_AGENCY_COMPANY_NAMES: frozenset[str] = frozenset(
+    {
+        "Adecco",
+        "albedis",
+        "Art of Work Personalberatung AG",
+        "bruederlinpartner GmbH",
+        "Careerplus AG",
+        "Consult & Pepper AG",
+        "Experis",
+        "Experis AG",
+        "Freestar-Informatik AG",
+        "Hays",
+        "Impact Recruitment GmbH",
+        "ITech Consult AG",
+        "ictjobs (Stellenmarkt)",
+        "IQ Plus AG",
+        "Job Impuls AG",
+        "Manpower",
+        "Michael Page",
+        "mühlemann IT-personal",
+        "myitjob GmbH",
+        "myScience",
+        "Nemensis AG",
+        "Nexus Personal- & Unternehmensberatung AG",
+        "ONE Agency GmbH",
+        "Page Personnel",
+        "persona service GmbH",
+        "Prime21",
+        "Prime21 AG",
+        "Progress Personal AG",
+        "Randstad",
+        "Randstad (Schweiz) AG",
+        "Rocken®",
+        "Rockstar Recruiting AG",
+        "Summit Recruitment AG",
+        "Universal-Job AG",
+        "Work Selection",
+        "yellowshark",
+    }
+)
 DEFAULT_TOP_SKILLS = 20
 DEFAULT_TOP_SKILL_PAIRS = 50
 OPTIONAL_LIST_COLUMNS: tuple[str, ...] = (

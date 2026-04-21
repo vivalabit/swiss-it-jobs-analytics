@@ -86,30 +86,33 @@ class MarketAnalyticsTests(unittest.TestCase):
     def test_build_analytics_outputs_creates_expected_tables(self) -> None:
         dataset = pd.DataFrame(
             {
-                "company": ["Acme", "Acme", "Beta"],
-                "role_category": ["data_ai", "data_ai", "software_engineering"],
-                "city": ["Zurich", "Bern", "Zurich"],
-                "canton": ["ZH", "BE", "ZH"],
-                "seniority": ["senior", "mid", "junior"],
-                "work_mode": ["hybrid", "remote", "onsite"],
-                "salary_min": [100000, 90000, 120000],
-                "salary_max": [130000, 110000, 140000],
-                "salary_currency": ["CHF", "CHF", "CHF"],
-                "salary_unit": ["YEAR", "YEAR", "YEAR"],
+                "company": ["Acme", "Acme", "Beta", "Rocken®"],
+                "role_category": ["data_ai", "data_ai", "software_engineering", "data_ai"],
+                "city": ["Zurich", "Bern", "Zurich", "Zurich"],
+                "canton": ["ZH", "BE", "ZH", "ZH"],
+                "seniority": ["senior", "mid", "junior", "mid"],
+                "work_mode": ["hybrid", "remote", "onsite", "hybrid"],
+                "salary_min": [100000, 90000, 120000, None],
+                "salary_max": [130000, 110000, 140000, None],
+                "salary_currency": ["CHF", "CHF", "CHF", None],
+                "salary_unit": ["YEAR", "YEAR", "YEAR", None],
                 "programming_languages": [
                     ["python", "sql"],
                     ["python"],
                     ["java"],
+                    ["go"],
                 ],
                 "frameworks_libraries": [
                     ["airflow"],
                     ["pandas"],
                     ["spring"],
+                    ["react"],
                 ],
                 "skills": [
                     ["python", "sql", "airflow"],
                     ["python", "pandas"],
                     ["java", "spring"],
+                    ["go", "react"],
                 ],
             }
         )
@@ -119,7 +122,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         self.assertEqual(20, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
-        self.assertEqual(3, overview["total_vacancies"])
+        self.assertEqual(4, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
         self.assertEqual(1.5, overview["average_vacancies_per_company"])
         self.assertEqual("Acme", outputs["distribution_company"].iloc[0]["company"])

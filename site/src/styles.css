@@ -823,7 +823,8 @@ img {
   color: #fff;
 }
 
-.cy-salary-more-button {
+.cy-salary-more-button,
+.cy-data-more-button {
   align-self: flex-start;
   min-width: 104px;
   min-height: 40px;
@@ -840,7 +841,8 @@ img {
   text-transform: uppercase;
 }
 
-.cy-salary-more-button:hover {
+.cy-salary-more-button:hover,
+.cy-data-more-button:hover {
   border-color: var(--foreground);
   background: var(--foreground);
   color: #fff;
@@ -1071,6 +1073,20 @@ img {
 
 .cy-footer-bottom-compact {
   padding-top: 10px;
+}
+
+.cy-footer-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cy-footer-github-icon {
+  flex: none;
+}
+
+.cy-footer-bottom a:hover {
+  color: var(--primary);
 }
 
 @media (min-width: 768px) {
