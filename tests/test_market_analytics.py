@@ -150,7 +150,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(25, len(outputs))
+        self.assertEqual(27, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(4, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -171,6 +171,12 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertIn("vacancy_trends_daily", outputs)
         self.assertIn("vacancy_trends_weekly", outputs)
         self.assertIn("vacancy_trends_monthly", outputs)
+        self.assertIn("vacancy_trends_segments_daily", outputs)
+        self.assertIn("vacancy_trends_segments_weekly", outputs)
+        self.assertEqual(
+            {"BE", "ZH"},
+            set(outputs["vacancy_trends_segments_daily"]["canton"]),
+        )
         self.assertEqual(
             "python",
             outputs["top_skills_overall"].iloc[0]["skill"],

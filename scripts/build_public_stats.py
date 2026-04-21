@@ -26,6 +26,8 @@ EXPECTED_CSV_FILES: tuple[str, ...] = (
     "vacancy_trends_daily.csv",
     "vacancy_trends_weekly.csv",
     "vacancy_trends_monthly.csv",
+    "vacancy_trends_segments_daily.csv",
+    "vacancy_trends_segments_weekly.csv",
     "distribution_role_category.csv",
     "distribution_company.csv",
     "distribution_city.csv",
@@ -147,6 +149,8 @@ def build_public_snapshots(
             daily_frame=csv_frames["vacancy_trends_daily.csv"],
             weekly_frame=csv_frames["vacancy_trends_weekly.csv"],
             monthly_frame=csv_frames["vacancy_trends_monthly.csv"],
+            daily_segments_frame=csv_frames["vacancy_trends_segments_daily.csv"],
+            weekly_segments_frame=csv_frames["vacancy_trends_segments_weekly.csv"],
         ),
     }
 
@@ -285,17 +289,25 @@ def _build_vacancy_trends_snapshot(
     daily_frame: pd.DataFrame | None,
     weekly_frame: pd.DataFrame | None,
     monthly_frame: pd.DataFrame | None,
+    daily_segments_frame: pd.DataFrame | None,
+    weekly_segments_frame: pd.DataFrame | None,
 ) -> dict[str, Any]:
     summary = _metric_frame_to_dict(summary_frame)
     daily = _frame_to_records(daily_frame)
     weekly = _frame_to_records(weekly_frame)
     monthly = _frame_to_records(monthly_frame)
+    daily_segments = _frame_to_records(daily_segments_frame)
+    weekly_segments = _frame_to_records(weekly_segments_frame)
     return {
         "generated_at": generated_at,
-        "available": bool(summary or daily or weekly or monthly),
+        "available": bool(summary or daily or weekly or monthly or daily_segments or weekly_segments),
         "summary": summary,
         "daily": daily,
         "weekly": weekly,
+        "segments": {
+            "daily": daily_segments,
+            "weekly": weekly_segments,
+        },
         "seasonality": {
             "monthly": monthly,
         },

@@ -1002,15 +1002,72 @@ img {
   margin-top: 40px;
 }
 
-.cy-trend-head {
-  display: grid;
-  gap: 22px;
-  align-items: start;
-}
-
-.cy-trend-controls {
+.cy-trend-title-block {
   display: grid;
   gap: 10px;
+}
+
+.cy-trend-title-block h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.8rem, 4vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.06;
+}
+
+.cy-trend-filter-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.cy-trend-filter-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  border: 1px solid var(--border);
+  background: rgba(249, 250, 251, 0.72);
+  padding: 16px;
+}
+
+.cy-trend-filter-card > span {
+  color: var(--foreground);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.cy-trend-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cy-trend-chip-row button {
+  min-height: 36px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  padding: 8px 11px;
+}
+
+.cy-trend-chip-row button:hover {
+  border-color: var(--trend-color, var(--primary));
+  color: var(--foreground);
+}
+
+.cy-trend-chip-row button.is-active {
+  border-color: var(--trend-color, var(--foreground));
+  background: color-mix(in srgb, var(--trend-color, var(--foreground)) 13%, #fff);
+  box-shadow: inset 0 -3px 0 var(--trend-color, var(--foreground));
+  color: var(--foreground);
 }
 
 .cy-trend-toggle {
@@ -1031,7 +1088,7 @@ img {
   font: inherit;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   padding: 8px 10px;
   text-transform: uppercase;
 }
@@ -1048,80 +1105,71 @@ img {
   margin-top: 24px;
 }
 
-.cy-trend-chart-shell {
-  overflow-x: auto;
-  margin-top: 26px;
-  border: 1px solid var(--border);
-  background:
-    linear-gradient(to bottom, transparent 24%, rgba(16, 24, 40, 0.05) 25%, transparent 26%),
-    linear-gradient(to bottom, transparent 49%, rgba(16, 24, 40, 0.05) 50%, transparent 51%),
-    linear-gradient(to bottom, transparent 74%, rgba(16, 24, 40, 0.05) 75%, transparent 76%),
-    rgba(249, 250, 251, 0.48);
-  padding: 18px 14px 12px;
-}
-
-.cy-trend-chart {
+.cy-trend-legend {
   display: flex;
-  min-width: 720px;
-  height: 250px;
-  align-items: end;
-  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 20px;
+  margin-top: 28px;
+  color: var(--foreground);
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
-.cy-trend-bar-group {
-  display: grid;
-  flex: 1 0 12px;
-  min-width: 12px;
-  height: 100%;
-  grid-template-rows: 22px minmax(0, 1fr) 28px;
-  align-items: end;
-  gap: 7px;
+.cy-trend-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.cy-trend-bar-value {
-  overflow: hidden;
-  color: var(--muted-foreground);
-  font-size: 0.6rem;
-  letter-spacing: -0.04em;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.cy-trend-legend i {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 999px;
 }
 
-.cy-trend-bar-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.cy-trend-line-chart-shell {
+  overflow-x: auto;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 10px 8px 4px;
 }
 
-.cy-trend-bar,
-.cy-trend-bar-closed {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.cy-trend-line-chart {
   display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
 }
 
-.cy-trend-bar {
-  background: linear-gradient(180deg, rgba(231, 0, 11, 0.72), var(--primary));
+.cy-trend-grid-line line {
+  stroke: rgba(16, 24, 40, 0.08);
+  stroke-width: 1;
 }
 
-.cy-trend-bar-closed {
-  right: 18%;
-  left: 18%;
-  background: rgba(16, 24, 40, 0.5);
+.cy-trend-grid-line text {
+  fill: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.cy-trend-bar-label {
-  overflow: hidden;
-  color: var(--muted-foreground);
-  font-size: 0.58rem;
-  letter-spacing: 0;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  writing-mode: vertical-rl;
+.cy-trend-axis {
+  stroke: var(--foreground);
+  stroke-width: 2.2;
+}
+
+.cy-trend-x-label {
+  fill: var(--foreground);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cy-trend-line {
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .cy-trend-footnote {
@@ -1132,20 +1180,6 @@ img {
   margin-top: 14px;
   color: var(--muted-foreground);
   font-size: 0.76rem;
-}
-
-.cy-trend-legend-dot {
-  width: 10px;
-  height: 10px;
-  flex: none;
-}
-
-.cy-trend-legend-published {
-  background: var(--primary);
-}
-
-.cy-trend-legend-closed {
-  background: rgba(16, 24, 40, 0.5);
 }
 
 .cy-role-highlight-card {
@@ -1274,10 +1308,6 @@ img {
     grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
   }
 
-  .cy-trend-head {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  }
-
   .cy-trend-stat-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1314,6 +1344,10 @@ img {
 
   .cy-data-grid {
     grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .cy-trend-filter-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.2fr) minmax(220px, 0.65fr);
   }
 
   .cy-salary-layout {

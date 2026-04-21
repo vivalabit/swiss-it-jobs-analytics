@@ -321,6 +321,16 @@ const MONTH_NAMES = [
   "Nov",
   "Dec",
 ];
+const TREND_ROLE_COLORS = [
+  "#1f65b7",
+  "#cc3b86",
+  "#b9852d",
+  "#2f806e",
+  "#f2df5b",
+  "#5b6ee1",
+  "#e75a4f",
+  "#5f9f45",
+];
 
 function App() {
   const [state, setState] = useState({
@@ -1023,31 +1033,110 @@ function SalaryStat({ value, label }) {
 function VacancyTrendsPanel({ trends }) {
   const [periodDays, setPeriodDays] = useState(90);
   const [granularity, setGranularity] = useState("weekly");
-  const sourceItems = granularity === "daily" ? trends.daily ?? [] : trends.weekly ?? [];
-  const periodItems = filterTrendItemsByPeriod(sourceItems, periodDays, granularity);
-  const chartItems = periodItems.slice(-120);
-  const maxPublished = Math.max(...chartItems.map((item) => item.published_count ?? 0), 1);
-  const publishedCount = periodItems.reduce((sum, item) => sum + (item.published_count ?? 0), 0);
-  const closedCount = periodItems.reduce((sum, item) => sum + (item.closed_count ?? 0), 0);
-  const summaryGrowth = getTrendSummaryGrowth(trends.summary ?? {}, periodDays);
-  const growth = summaryGrowth ?? calculateTrendGrowth(periodItems);
-  const strongestMonth = getStrongestSeasonalityMonth(
-    trends.seasonality?.monthly ?? [],
+  const [selectedCantons, setSelectedCantons] = useState([]);
+  const [selectedRoles, setSelectedRoles] = useState([]);
+  const allSegments = getTrendSegments(trends, granularity);
+  const periodSegments = filterTrendItemsByPeriod(allSegments, periodDays, granularity);
+  const locationSegments = filterTrendSegmentsByCantons(periodSegments, selectedCantons);
+  const roleOptions = getTopTrendRoles(locationSegments, 8);
+  const validSelectedRoles = selectedRoles.filter((role) => roleOptions.includes(role));
+  const activeRoles = validSelectedRoles.length ? validSelectedRoles : roleOptions.slice(0, 5);
+  const chartSegments = filterTrendSegmentsByRoles(locationSegments, activeRoles);
+  const chartData = buildTrendLineChartData(chartSegments, activeRoles, granularity);
+  const allLocationSegments = filterTrendSegmentsByCantons(allSegments, selectedCantons);
+  const publishedCount = chartSegments.reduce((sum, item) => sum + (item.published_count ?? 0), 0);
+  const closedCount = chartSegments.reduce((sum, item) => sum + (item.closed_count ?? 0), 0);
+  const growth = calculateSegmentTrendGrowth(
+    filterTrendSegmentsByRoles(allLocationSegments, activeRoles),
+    periodDays,
+    granularity,
   );
-  const weakestMonth = getWeakestSeasonalityMonth(trends.seasonality?.monthly ?? []);
+  const dailyLocationSegments = filterTrendSegmentsByCantons(
+    getTrendSegments(trends, "daily"),
+    selectedCantons,
+  );
+  const seasonality = getTrendRoleSeasonality(
+    filterTrendSegmentsByRoles(dailyLocationSegments, activeRoles),
+  );
+  const strongestMonth = getStrongestSeasonalityMonth(seasonality);
+  const weakestMonth = getWeakestSeasonalityMonth(seasonality);
+  const cantonOptions = getTrendCantonOptions(
+    trends?.segments?.weekly ?? trends?.segments?.daily ?? [],
+  );
+  const locationLabel = selectedCantons.length
+    ? selectedCantons.join(", ")
+    : "Switzerland";
 
   return (
     <article className="cy-card cy-data-panel cy-trend-panel">
-      <div className="cy-trend-head">
-        <div className="cy-data-panel-head">
-          <h3>Vacancy trend</h3>
-          <p className="cy-copy">
-            Publication-date trend with new postings, inferred closures, growth and monthly
-            seasonality.
-          </p>
+      <div className="cy-trend-title-block">
+        <p className="cy-kicker">Publication date index</p>
+        <h3>Job postings in {locationLabel}</h3>
+        <p className="cy-copy">
+          Role-category posting trend with canton filters, inferred closures and seasonality.
+        </p>
+      </div>
+
+      <div className="cy-trend-filter-grid" aria-label="Vacancy trend filters">
+        <div className="cy-trend-filter-card">
+          <span>Region</span>
+          <div className="cy-trend-chip-row">
+            <button
+              type="button"
+              className={selectedCantons.length === 0 ? "is-active" : ""}
+              onClick={() => setSelectedCantons([])}
+            >
+              Switzerland
+            </button>
+            {cantonOptions.map((canton) => (
+              <button
+                key={canton}
+                type="button"
+                className={selectedCantons.includes(canton) ? "is-active" : ""}
+                onClick={() => {
+                  setSelectedCantons((current) =>
+                    current.includes(canton)
+                      ? current.filter((item) => item !== canton)
+                      : [...current, canton].sort(),
+                  );
+                }}
+              >
+                {canton}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="cy-trend-controls" aria-label="Vacancy trend controls">
+        <div className="cy-trend-filter-card">
+          <span>Professions</span>
+          <div className="cy-trend-chip-row">
+            {roleOptions.map((role, index) => (
+              <button
+                key={role}
+                type="button"
+                className={activeRoles.includes(role) ? "is-active" : ""}
+                style={{
+                  "--trend-color": getTrendRoleColor(
+                    activeRoles.includes(role) ? activeRoles.indexOf(role) : index,
+                  ),
+                }}
+                onClick={() => {
+                  setSelectedRoles((current) => {
+                    const base = current.length ? current : roleOptions.slice(0, 5);
+                    return base.includes(role)
+                      ? base.filter((item) => item !== role)
+                      : [...base, role];
+                  });
+                }}
+              >
+                {prettifyLabel(role)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="cy-trend-filter-card cy-trend-filter-card-compact">
+          <span>Period</span>
           <div className="cy-trend-toggle" aria-label="Period">
             {TREND_PERIOD_OPTIONS.map((option) => (
               <button
@@ -1080,7 +1169,7 @@ function VacancyTrendsPanel({ trends }) {
       </div>
 
       <div className="cy-trend-stat-grid">
-        <SalaryStat value={formatInteger(publishedCount)} label="Published in period" />
+        <SalaryStat value={formatInteger(publishedCount)} label="Published in selection" />
         <SalaryStat value={formatSignedPercent(growth)} label="Growth vs previous period" />
         <SalaryStat value={formatInteger(closedCount)} label="Closed / disappeared" />
         <SalaryStat
@@ -1093,34 +1182,117 @@ function VacancyTrendsPanel({ trends }) {
         />
       </div>
 
-      <div className="cy-trend-chart-shell">
-        <div className="cy-trend-chart" aria-label="Vacancy trend chart">
-          {chartItems.map((item) => {
-            const dateLabel = getTrendItemDate(item, granularity);
-            const height = Math.max(((item.published_count ?? 0) / maxPublished) * 100, 4);
-            const closedHeight = Math.max(((item.closed_count ?? 0) / maxPublished) * 100, 0);
+      <div className="cy-trend-legend" aria-label="Profession legend">
+        {chartData.series.map((series, index) => (
+          <span key={series.role}>
+            <i style={{ background: getTrendRoleColor(index) }} />
+            {prettifyLabel(series.role)}
+          </span>
+        ))}
+      </div>
 
-            return (
-              <div key={dateLabel} className="cy-trend-bar-group" title={formatTrendTooltip(item, dateLabel)}>
-                <span className="cy-trend-bar-value">{formatInteger(item.published_count)}</span>
-                <div className="cy-trend-bar-track">
-                  <span className="cy-trend-bar" style={{ height: `${height}%` }} />
-                  <span className="cy-trend-bar-closed" style={{ height: `${closedHeight}%` }} />
-                </div>
-                <span className="cy-trend-bar-label">{formatTrendAxisLabel(dateLabel, granularity)}</span>
-              </div>
-            );
-          })}
-        </div>
+      <div className="cy-trend-line-chart-shell">
+        <TrendLineChart chartData={chartData} granularity={granularity} />
       </div>
 
       <div className="cy-trend-footnote">
-        <span className="cy-trend-legend-dot cy-trend-legend-published" />
-        <span>Published vacancies</span>
-        <span className="cy-trend-legend-dot cy-trend-legend-closed" />
         <span>Closed means last seen before the latest crawl.</span>
+        <span>Trend uses vacancy publication dates.</span>
       </div>
     </article>
+  );
+}
+
+function TrendLineChart({ chartData, granularity }) {
+  const width = 1040;
+  const height = 430;
+  const margin = { top: 24, right: 24, bottom: 58, left: 66 };
+  const innerWidth = width - margin.left - margin.right;
+  const innerHeight = height - margin.top - margin.bottom;
+  const maxValue = Math.max(chartData.maxValue, 1);
+  const yTicks = buildYAxisTicks(maxValue);
+  const xTickStep = Math.max(Math.ceil(chartData.labels.length / 9), 1);
+
+  if (!chartData.labels.length || !chartData.series.length) {
+    return <p className="cy-copy cy-empty-state">No trend data for this selection.</p>;
+  }
+
+  return (
+    <svg className="cy-trend-line-chart" viewBox={`0 0 ${width} ${height}`} role="img">
+      <title>Vacancy trend by profession</title>
+      <g transform={`translate(${margin.left} ${margin.top})`}>
+        {yTicks.map((tick) => {
+          const y = innerHeight - (tick / maxValue) * innerHeight;
+          return (
+            <g key={tick} className="cy-trend-grid-line">
+              <line x1="0" x2={innerWidth} y1={y} y2={y} />
+              <text x="-14" y={y + 4} textAnchor="end">
+                {formatInteger(tick)}
+              </text>
+            </g>
+          );
+        })}
+
+        <line className="cy-trend-axis" x1="0" x2="0" y1="0" y2={innerHeight} />
+        <line className="cy-trend-axis" x1="0" x2={innerWidth} y1={innerHeight} y2={innerHeight} />
+
+        {chartData.labels.map((label, index) => {
+          if (index % xTickStep !== 0 && index !== chartData.labels.length - 1) {
+            return null;
+          }
+          const x = projectTrendX(index, chartData.labels.length, innerWidth);
+          return (
+            <text
+              key={label}
+              className="cy-trend-x-label"
+              x={x}
+              y={innerHeight + 34}
+              textAnchor="end"
+              transform={`rotate(-45 ${x} ${innerHeight + 34})`}
+            >
+              {formatTrendAxisLabel(label, granularity)}
+            </text>
+          );
+        })}
+
+        {chartData.series.map((series, index) => (
+          <g key={series.role}>
+            <polyline
+              className="cy-trend-line"
+              fill="none"
+              stroke={getTrendRoleColor(index)}
+              points={series.values
+                .map((value, valueIndex) => {
+                  const x = projectTrendX(valueIndex, chartData.labels.length, innerWidth);
+                  const y = innerHeight - (value / maxValue) * innerHeight;
+                  return `${x.toFixed(1)},${y.toFixed(1)}`;
+                })
+                .join(" ")}
+            />
+            {series.values.map((value, valueIndex) => {
+              if (valueIndex !== series.values.length - 1) {
+                return null;
+              }
+              const x = projectTrendX(valueIndex, chartData.labels.length, innerWidth);
+              const y = innerHeight - (value / maxValue) * innerHeight;
+              return (
+                <circle
+                  key={`${series.role}-${valueIndex}`}
+                  cx={x}
+                  cy={y}
+                  r="4"
+                  fill={getTrendRoleColor(index)}
+                >
+                  <title>
+                    {prettifyLabel(series.role)}: {formatInteger(value)}
+                  </title>
+                </circle>
+              );
+            })}
+          </g>
+        ))}
+      </g>
+    </svg>
   );
 }
 
@@ -1497,34 +1669,156 @@ function filterTrendItemsByPeriod(items, periodDays, granularity) {
   });
 }
 
-function getTrendSummaryGrowth(summary, periodDays) {
-  if (!periodDays) {
-    return null;
+function getTrendSegments(trends, granularity) {
+  if (granularity === "daily") {
+    return trends?.segments?.daily ?? [];
   }
-  const value = summary[`growth_${periodDays}d`];
-  return typeof value === "number" ? value : null;
+  return trends?.segments?.weekly ?? [];
 }
 
-function calculateTrendGrowth(items) {
-  if (!items.length) {
+function getTrendCantonOptions(items) {
+  return [...new Set((items ?? []).map((item) => item.canton).filter(isKnownTrendValue))].sort(
+    (a, b) => a.localeCompare(b, "en-US"),
+  );
+}
+
+function filterTrendSegmentsByCantons(items, selectedCantons) {
+  if (!selectedCantons.length) {
+    return items ?? [];
+  }
+
+  const selected = new Set(selectedCantons);
+  return (items ?? []).filter((item) => selected.has(item.canton));
+}
+
+function filterTrendSegmentsByRoles(items, selectedRoles) {
+  if (!selectedRoles.length) {
+    return items ?? [];
+  }
+
+  const selected = new Set(selectedRoles);
+  return (items ?? []).filter((item) => selected.has(item.role_category));
+}
+
+function getTopTrendRoles(items, limit) {
+  const totals = new Map();
+  for (const item of items ?? []) {
+    const role = item.role_category;
+    if (!isKnownTrendValue(role)) {
+      continue;
+    }
+    totals.set(role, (totals.get(role) ?? 0) + (item.published_count ?? 0));
+  }
+
+  return [...totals.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "en-US"))
+    .slice(0, limit)
+    .map(([role]) => role);
+}
+
+function buildTrendLineChartData(items, roles, granularity) {
+  const dateKey = granularity === "daily" ? "date" : "week_start";
+  const labels = [...new Set((items ?? []).map((item) => item[dateKey]).filter(Boolean))].sort();
+  const countsByRoleDate = new Map();
+
+  for (const item of items ?? []) {
+    const role = item.role_category;
+    const label = item[dateKey];
+    if (!role || !label) {
+      continue;
+    }
+
+    const key = `${role}|${label}`;
+    countsByRoleDate.set(key, (countsByRoleDate.get(key) ?? 0) + (item.published_count ?? 0));
+  }
+
+  const series = roles.map((role) => ({
+    role,
+    values: labels.map((label) => countsByRoleDate.get(`${role}|${label}`) ?? 0),
+  }));
+  const maxValue = Math.max(...series.flatMap((line) => line.values), 1);
+
+  return { labels, series, maxValue };
+}
+
+function calculateSegmentTrendGrowth(items, periodDays, granularity) {
+  const dateKey = granularity === "daily" ? "date" : "week_start";
+  const labels = [...new Set((items ?? []).map((item) => item[dateKey]).filter(Boolean))].sort();
+  if (!labels.length) {
     return null;
   }
 
-  const midpoint = Math.floor(items.length / 2);
-  const previousItems = items.slice(0, midpoint);
-  const currentItems = items.slice(midpoint);
-  const previousCount = previousItems.reduce(
-    (sum, item) => sum + (item.published_count ?? 0),
+  const totalsByLabel = new Map();
+  for (const item of items ?? []) {
+    const label = item[dateKey];
+    if (!label) {
+      continue;
+    }
+    totalsByLabel.set(label, (totalsByLabel.get(label) ?? 0) + (item.published_count ?? 0));
+  }
+
+  if (periodDays === null) {
+    const midpoint = Math.floor(labels.length / 2);
+    return calculateGrowthFromLabels(
+      labels.slice(midpoint),
+      labels.slice(0, midpoint),
+      totalsByLabel,
+    );
+  }
+
+  const latestTime = Math.max(...labels.map((label) => new Date(label).getTime()));
+  if (!Number.isFinite(latestTime)) {
+    return null;
+  }
+
+  const dayMs = 24 * 60 * 60 * 1000;
+  const currentStart = latestTime - (periodDays - 1) * dayMs;
+  const previousStart = currentStart - periodDays * dayMs;
+  const previousEnd = currentStart - dayMs;
+  const currentLabels = labels.filter((label) => {
+    const time = new Date(label).getTime();
+    return Number.isFinite(time) && time >= currentStart && time <= latestTime;
+  });
+  const previousLabels = labels.filter((label) => {
+    const time = new Date(label).getTime();
+    return Number.isFinite(time) && time >= previousStart && time <= previousEnd;
+  });
+
+  return calculateGrowthFromLabels(currentLabels, previousLabels, totalsByLabel);
+}
+
+function calculateGrowthFromLabels(currentLabels, previousLabels, totalsByLabel) {
+  const currentCount = currentLabels.reduce(
+    (sum, label) => sum + (totalsByLabel.get(label) ?? 0),
     0,
   );
-  const currentCount = currentItems.reduce(
-    (sum, item) => sum + (item.published_count ?? 0),
+  const previousCount = previousLabels.reduce(
+    (sum, label) => sum + (totalsByLabel.get(label) ?? 0),
     0,
   );
   if (!previousCount) {
     return null;
   }
   return (currentCount - previousCount) / previousCount;
+}
+
+function getTrendRoleSeasonality(items) {
+  const totalsByMonth = new Map();
+  for (const item of items ?? []) {
+    if (!item.date) {
+      continue;
+    }
+    const date = new Date(item.date);
+    if (Number.isNaN(date.getTime())) {
+      continue;
+    }
+    const month = date.getUTCMonth() + 1;
+    totalsByMonth.set(month, (totalsByMonth.get(month) ?? 0) + (item.published_count ?? 0));
+  }
+
+  return [...totalsByMonth.entries()]
+    .map(([month, vacancy_count]) => ({ month, vacancy_count }))
+    .sort((a, b) => a.month - b.month);
 }
 
 function getStrongestSeasonalityMonth(items) {
@@ -1535,14 +1829,37 @@ function getWeakestSeasonalityMonth(items) {
   return [...items].sort((a, b) => (a.vacancy_count ?? 0) - (b.vacancy_count ?? 0))[0] ?? null;
 }
 
-function getTrendItemDate(item, granularity) {
-  return granularity === "daily" ? item.date : item.week_start;
+function isKnownTrendValue(value) {
+  return Boolean(value && value !== "Unknown" && value !== "unknown");
 }
 
-function formatTrendTooltip(item, dateLabel) {
-  return `${dateLabel}: ${formatInteger(item.published_count)} published, ${formatInteger(
-    item.closed_count,
-  )} closed`;
+function getTrendRoleColor(index) {
+  return TREND_ROLE_COLORS[index % TREND_ROLE_COLORS.length];
+}
+
+function buildYAxisTicks(maxValue) {
+  const targetTickCount = 5;
+  const roughStep = Math.max(maxValue / (targetTickCount - 1), 1);
+  const magnitude = 10 ** Math.floor(Math.log10(roughStep));
+  const normalizedStep = roughStep / magnitude;
+  const niceStep =
+    normalizedStep <= 1 ? 1 : normalizedStep <= 2 ? 2 : normalizedStep <= 5 ? 5 : 10;
+  const step = niceStep * magnitude;
+  const top = Math.ceil(maxValue / step) * step;
+  const ticks = [];
+
+  for (let value = 0; value <= top; value += step) {
+    ticks.push(value);
+  }
+
+  return ticks.length >= 2 ? ticks : [0, top || 1];
+}
+
+function projectTrendX(index, count, width) {
+  if (count <= 1) {
+    return 0;
+  }
+  return (index / (count - 1)) * width;
 }
 
 function formatTrendAxisLabel(value, granularity) {

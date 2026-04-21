@@ -90,6 +90,38 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "vacancy_trends_monthly.csv", index=False)
             pd.DataFrame(
                 [
+                    {
+                        "date": "2026-04-20",
+                        "canton": "ZH",
+                        "role_category": "data_ai",
+                        "published_count": 1,
+                        "closed_count": 0,
+                        "net_change": 1,
+                    },
+                    {
+                        "date": "2026-04-21",
+                        "canton": "BE",
+                        "role_category": "software_engineering",
+                        "published_count": 2,
+                        "closed_count": 1,
+                        "net_change": 1,
+                    },
+                ]
+            ).to_csv(csv_dir / "vacancy_trends_segments_daily.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
+                        "week_start": "2026-04-20",
+                        "canton": "ZH",
+                        "role_category": "data_ai",
+                        "published_count": 3,
+                        "closed_count": 1,
+                        "net_change": 2,
+                    },
+                ]
+            ).to_csv(csv_dir / "vacancy_trends_segments_weekly.csv", index=False)
+            pd.DataFrame(
+                [
                     {"metric": "salary_count", "value": 2},
                     {"metric": "salary_coverage", "value": 0.6667},
                     {"metric": "average_salary", "value": 115000},
@@ -225,6 +257,11 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertEqual(3, vacancy_trends["summary"]["published_total"])
             self.assertEqual(2, vacancy_trends["summary"]["published_30d"])
             self.assertEqual("2026-04-21", vacancy_trends["daily"][1]["date"])
+            self.assertEqual("ZH", vacancy_trends["segments"]["daily"][0]["canton"])
+            self.assertEqual(
+                "data_ai",
+                vacancy_trends["segments"]["weekly"][0]["role_category"],
+            )
             self.assertEqual(4, vacancy_trends["seasonality"]["monthly"][0]["month"])
 
             salary_metrics = json.loads(
@@ -253,6 +290,7 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
             self.assertTrue((copy_csv_dir / "education_requirements_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "vacancy_trends_daily.csv").exists())
+            self.assertTrue((copy_csv_dir / "vacancy_trends_segments_weekly.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_by_seniority.csv").exists())
 

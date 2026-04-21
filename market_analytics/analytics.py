@@ -101,34 +101,66 @@ def calculate_vacancy_trend_outputs(dataset: pd.DataFrame) -> dict[str, pd.DataF
         closed=closed,
         latest_date=latest_date,
     )
+    daily_segments = _build_segment_trend_frame(
+        published=published,
+        closed=closed,
+        frequency="D",
+        period_column="date",
+    )
+    weekly_segments = _build_segment_trend_frame(
+        published=published,
+        closed=closed,
+        frequency="W-SUN",
+        period_column="week_start",
+    )
     return {
         "vacancy_trends_summary": summary,
         "vacancy_trends_daily": daily,
         "vacancy_trends_weekly": weekly,
         "vacancy_trends_monthly": monthly,
+        "vacancy_trends_segments_daily": daily_segments,
+        "vacancy_trends_segments_weekly": weekly_segments,
     }
 
 
 def _published_vacancy_frame(dataset: pd.DataFrame) -> pd.DataFrame:
     if "publication_date" not in dataset.columns:
-        return pd.DataFrame(columns=["published_date"])
+        return pd.DataFrame(columns=["published_date", "canton", "role_category"])
 
     published_at = _parse_datetime_series(dataset["publication_date"])
-    return pd.DataFrame({"published_date": published_at.dropna().dt.date})
+    result = pd.DataFrame(
+        {
+            "published_date": published_at.dt.date,
+            "canton": dataset.get("canton", UNKNOWN_LABEL),
+            "role_category": dataset.get("role_category", UNKNOWN_LABEL),
+        }
+    )
+    result["canton"] = result["canton"].fillna(UNKNOWN_LABEL)
+    result["role_category"] = result["role_category"].fillna(UNKNOWN_LABEL)
+    return result.dropna(subset=["published_date"]).reset_index(drop=True)
 
 
 def _closed_vacancy_frame(dataset: pd.DataFrame) -> pd.DataFrame:
     required_columns = {"last_seen_at", "publication_date"}
     if not required_columns.issubset(dataset.columns):
-        return pd.DataFrame(columns=["closed_date"])
+        return pd.DataFrame(columns=["closed_date", "canton", "role_category"])
 
     last_seen_at = _parse_datetime_series(dataset["last_seen_at"])
     if last_seen_at.dropna().empty:
-        return pd.DataFrame(columns=["closed_date"])
+        return pd.DataFrame(columns=["closed_date", "canton", "role_category"])
 
     latest_seen_date = last_seen_at.max().date()
-    closed_at = last_seen_at[last_seen_at.dt.date < latest_seen_date]
-    return pd.DataFrame({"closed_date": closed_at.dropna().dt.date})
+    closed_mask = last_seen_at.dt.date < latest_seen_date
+    result = pd.DataFrame(
+        {
+            "closed_date": last_seen_at.dt.date,
+            "canton": dataset.get("canton", UNKNOWN_LABEL),
+            "role_category": dataset.get("role_category", UNKNOWN_LABEL),
+        }
+    )
+    result["canton"] = result["canton"].fillna(UNKNOWN_LABEL)
+    result["role_category"] = result["role_category"].fillna(UNKNOWN_LABEL)
+    return result.loc[closed_mask].dropna(subset=["closed_date"]).reset_index(drop=True)
 
 
 def _latest_available_date(published: pd.DataFrame, closed: pd.DataFrame) -> pd.Timestamp | None:
@@ -191,6 +223,72 @@ def _build_monthly_seasonality_frame(published: pd.DataFrame) -> pd.DataFrame:
     counts = counts.sort_values("month").reset_index(drop=True)
     counts["share"] = (counts["vacancy_count"] / len(published)).round(4)
     return counts
+
+
+def _build_segment_trend_frame(
+    *,
+    published: pd.DataFrame,
+    closed: pd.DataFrame,
+    frequency: str,
+    period_column: str,
+) -> pd.DataFrame:
+    columns = [
+        period_column,
+        "canton",
+        "role_category",
+        "published_count",
+        "closed_count",
+        "net_change",
+    ]
+    if published.empty:
+        return pd.DataFrame(columns=columns)
+
+    published_counts = _segment_date_counts(
+        frame=published,
+        date_column="published_date",
+        frequency=frequency,
+        period_column=period_column,
+        value_column="published_count",
+    )
+    closed_counts = (
+        _segment_date_counts(
+            frame=closed,
+            date_column="closed_date",
+            frequency=frequency,
+            period_column=period_column,
+            value_column="closed_count",
+        )
+        if not closed.empty
+        else pd.DataFrame(columns=[period_column, "canton", "role_category", "closed_count"])
+    )
+    trend = published_counts.merge(
+        closed_counts,
+        how="outer",
+        on=[period_column, "canton", "role_category"],
+    )
+    trend["published_count"] = trend["published_count"].fillna(0).astype(int)
+    trend["closed_count"] = trend["closed_count"].fillna(0).astype(int)
+    trend["net_change"] = trend["published_count"] - trend["closed_count"]
+    trend = trend.sort_values([period_column, "canton", "role_category"]).reset_index(drop=True)
+    return trend[columns]
+
+
+def _segment_date_counts(
+    *,
+    frame: pd.DataFrame,
+    date_column: str,
+    frequency: str,
+    period_column: str,
+    value_column: str,
+) -> pd.DataFrame:
+    period = pd.to_datetime(frame[date_column]).dt.to_period(frequency).dt.start_time.dt.date.astype(str)
+    grouped = (
+        frame.assign(**{period_column: period})
+        .groupby([period_column, "canton", "role_category"], dropna=False)
+        .size()
+        .reset_index(name=value_column)
+    )
+    return grouped
 
 
 def _build_vacancy_trend_summary(
