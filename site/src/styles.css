@@ -991,6 +991,78 @@ img {
   margin-top: 24px;
 }
 
+.cy-skill-matrix-panel {
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+.cy-skill-matrix {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.cy-skill-matrix-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.cy-skill-matrix-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.cy-skill-matrix-legend i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 999px;
+}
+
+.cy-skill-matrix-grid {
+  display: grid;
+  gap: 18px;
+  min-width: 760px;
+}
+
+.cy-skill-matrix-row {
+  display: grid;
+  grid-template-columns: minmax(128px, 180px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.cy-skill-matrix-role {
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cy-skill-matrix-track {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  height: 16px;
+}
+
+.cy-skill-matrix-segment {
+  display: block;
+  flex-basis: 0;
+  min-width: 2px;
+  height: 100%;
+}
+
 .cy-summary-chip-row {
   display: flex;
   flex-wrap: wrap;

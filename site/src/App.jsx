@@ -331,6 +331,26 @@ const TREND_ROLE_COLORS = [
   "#e75a4f",
   "#5f9f45",
 ];
+const SKILL_MATRIX_COLORS = [
+  "#3095df",
+  "#182a9b",
+  "#f25322",
+  "#20b9d2",
+  "#74158d",
+  "#d43ca3",
+  "#6d55b3",
+  "#5d97df",
+  "#f59b5f",
+  "#8bd33f",
+  "#b748b7",
+  "#e82645",
+  "#5c16c9",
+  "#9d8ee5",
+  "#f4ed27",
+  "#35c7b6",
+  "#20a84f",
+  "#ef0b79",
+];
 
 function App() {
   const [state, setState] = useState({
@@ -476,6 +496,7 @@ function App() {
     (topSkills.by_role_category ?? []).filter((group) => group.group !== "Unknown"),
     3,
   );
+  const skillRoleMatrix = buildSkillRoleMatrix(topSkills.by_role_category ?? [], 8, 18);
 
   return (
     <main className="cy-app">
@@ -554,10 +575,6 @@ function App() {
               description={`${formatInteger(
                 educationSummary.higher_education_vacancy_count,
               )} vacancies explicitly mention higher education.`}
-            />
-            <MetricCard
-              value={formatShortDate(lastUpdated)}
-              description="Latest snapshot generation date in Zurich time."
             />
           </div>
         </div>
@@ -913,6 +930,18 @@ function App() {
                 </tbody>
               </table>
             </div>
+          </article>
+
+          <article className="cy-card cy-data-panel cy-skill-matrix-panel">
+            <div className="cy-data-panel-head">
+              <h3>Job skills by role</h3>
+              <p className="cy-copy">
+                Skill mix within the leading role categories. Segment width is normalized inside
+                each role.
+              </p>
+            </div>
+
+            <SkillRoleMatrix matrix={skillRoleMatrix} />
           </article>
         </div>
       </section>
@@ -1649,6 +1678,52 @@ function SalaryRankingChart({ items, summary, groupKey }) {
   );
 }
 
+function SkillRoleMatrix({ matrix }) {
+  if (!matrix.rows.length || !matrix.skills.length) {
+    return <p className="cy-copy cy-empty-state">No role skill matrix available.</p>;
+  }
+
+  return (
+    <div className="cy-skill-matrix">
+      <div className="cy-skill-matrix-legend" aria-label="Skill legend">
+        {matrix.skills.map((skill) => (
+          <span key={skill.skill}>
+            <i style={{ background: skill.color }} />
+            {prettifyLabel(skill.skill)}
+          </span>
+        ))}
+      </div>
+
+      <div className="cy-skill-matrix-grid" role="table" aria-label="Skills by role">
+        {matrix.rows.map((row) => (
+          <div key={row.role} className="cy-skill-matrix-row" role="row">
+            <div className="cy-skill-matrix-role" role="rowheader">
+              {prettifyLabel(row.role)}
+            </div>
+            <div className="cy-skill-matrix-track" role="cell">
+              {row.segments.map((segment) => (
+                <span
+                  key={`${row.role}-${segment.skill}`}
+                  className="cy-skill-matrix-segment"
+                  style={{
+                    flexGrow: Math.max(segment.normalizedShare * 100, 1.2),
+                    background: segment.color,
+                  }}
+                  title={`${prettifyLabel(row.role)} · ${prettifyLabel(
+                    segment.skill,
+                  )}: ${formatInteger(segment.vacancy_count)} vacancies, ${formatPercent(
+                    segment.share_within_group,
+                  )}`}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function cityLocation(key, label, lat, lon, aliases = []) {
   return { key, label, lat, lon, aliases };
 }
@@ -1686,6 +1761,63 @@ function buildSwissCityVacancyPoints(items) {
     })
     .filter((item) => item.vacancy_count > 0)
     .sort((a, b) => b.vacancy_count - a.vacancy_count);
+}
+
+function buildSkillRoleMatrix(groups, roleLimit, skillLimit) {
+  const roleGroups = (groups ?? [])
+    .filter((group) => group.group && group.group !== "Unknown" && Array.isArray(group.items))
+    .map((group) => ({
+      role: group.group,
+      items: group.items.filter((item) => item.skill && item.skill !== "Unknown"),
+      total: group.items.reduce((sum, item) => sum + (item.vacancy_count ?? 0), 0),
+    }))
+    .filter((group) => group.total > 0)
+    .sort((a, b) => b.total - a.total || a.role.localeCompare(b.role, "en-US"))
+    .slice(0, roleLimit);
+  const skillTotals = new Map();
+
+  for (const group of roleGroups) {
+    for (const item of group.items) {
+      skillTotals.set(item.skill, (skillTotals.get(item.skill) ?? 0) + (item.vacancy_count ?? 0));
+    }
+  }
+
+  const skills = [...skillTotals.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "en-US"))
+    .slice(0, skillLimit)
+    .map(([skill], index) => ({
+      skill,
+      color: SKILL_MATRIX_COLORS[index % SKILL_MATRIX_COLORS.length],
+    }));
+  const colorBySkill = new Map(skills.map((skill) => [skill.skill, skill.color]));
+  const rows = roleGroups
+    .map((group) => {
+      const segments = skills
+        .map((skill) => {
+          const item = group.items.find((candidate) => candidate.skill === skill.skill);
+          return item
+            ? {
+                skill: skill.skill,
+                color: colorBySkill.get(skill.skill),
+                vacancy_count: item.vacancy_count ?? 0,
+                share_within_group: item.share_within_group ?? 0,
+              }
+            : null;
+        })
+        .filter(Boolean);
+      const visibleTotal = segments.reduce((sum, segment) => sum + segment.vacancy_count, 0);
+
+      return {
+        role: group.role,
+        segments: segments.map((segment) => ({
+          ...segment,
+          normalizedShare: visibleTotal ? segment.vacancy_count / visibleTotal : 0,
+        })),
+      };
+    })
+    .filter((row) => row.segments.length);
+
+  return { skills, rows };
 }
 
 function resolveCityKeys(value) {
