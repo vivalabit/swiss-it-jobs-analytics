@@ -22,6 +22,10 @@ EXPECTED_CSV_FILES: tuple[str, ...] = (
     "programming_languages_summary.csv",
     "top_frameworks_libraries.csv",
     "frameworks_libraries_summary.csv",
+    "vacancy_trends_summary.csv",
+    "vacancy_trends_daily.csv",
+    "vacancy_trends_weekly.csv",
+    "vacancy_trends_monthly.csv",
     "distribution_role_category.csv",
     "distribution_company.csv",
     "distribution_city.csv",
@@ -137,6 +141,13 @@ def build_public_snapshots(
             frame=csv_frames["skill_cooccurrence_pairs.csv"],
             items_key="items",
         ),
+        "vacancy_trends.json": _build_vacancy_trends_snapshot(
+            generated_at=generated_at,
+            summary_frame=csv_frames["vacancy_trends_summary.csv"],
+            daily_frame=csv_frames["vacancy_trends_daily.csv"],
+            weekly_frame=csv_frames["vacancy_trends_weekly.csv"],
+            monthly_frame=csv_frames["vacancy_trends_monthly.csv"],
+        ),
     }
 
     for dimension in DISTRIBUTION_DIMENSIONS:
@@ -182,6 +193,7 @@ def _build_metadata_snapshot(
         "salary_metrics.json",
         "top_skills.json",
         "skill_pairs.json",
+        "vacancy_trends.json",
         *[f"distributions_{dimension}.json" for dimension in DISTRIBUTION_DIMENSIONS],
     ]
     return {
@@ -263,6 +275,30 @@ def _build_education_requirements_snapshot(
         "generated_at": generated_at,
         "available": bool(summary),
         "summary": summary,
+    }
+
+
+def _build_vacancy_trends_snapshot(
+    *,
+    generated_at: str,
+    summary_frame: pd.DataFrame | None,
+    daily_frame: pd.DataFrame | None,
+    weekly_frame: pd.DataFrame | None,
+    monthly_frame: pd.DataFrame | None,
+) -> dict[str, Any]:
+    summary = _metric_frame_to_dict(summary_frame)
+    daily = _frame_to_records(daily_frame)
+    weekly = _frame_to_records(weekly_frame)
+    monthly = _frame_to_records(monthly_frame)
+    return {
+        "generated_at": generated_at,
+        "available": bool(summary or daily or weekly or monthly),
+        "summary": summary,
+        "daily": daily,
+        "weekly": weekly,
+        "seasonality": {
+            "monthly": monthly,
+        },
     }
 
 
@@ -378,12 +414,26 @@ def _normalize_metric_value(metric_name: str, value: Any) -> Any:
         "vacancy_coverage",
         "higher_education_vacancy_share",
         "average_vacancies_per_company",
+        "growth_30d",
+        "growth_90d",
+        "growth_180d",
+        "growth_365d",
     }
     integer_metrics = {
         "total_vacancies",
         "total_companies",
         "higher_education_vacancy_count",
         "without_explicit_higher_education_count",
+        "published_total",
+        "closed_total",
+        "published_30d",
+        "published_90d",
+        "published_180d",
+        "published_365d",
+        "published_previous_30d",
+        "published_previous_90d",
+        "published_previous_180d",
+        "published_previous_365d",
         "distinct_items",
         "total_mentions",
         "vacancies_with_items",

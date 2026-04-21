@@ -441,6 +441,11 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
         description_text_select = (
             "description_text" if "description_text" in columns else "NULL AS description_text"
         )
+        publication_date_select = (
+            "publication_date" if "publication_date" in columns else "NULL AS publication_date"
+        )
+        first_seen_at_select = "first_seen_at" if "first_seen_at" in columns else "NULL AS first_seen_at"
+        last_seen_at_select = "last_seen_at" if "last_seen_at" in columns else "NULL AS last_seen_at"
         salary_selects = {
             column: column if column in columns else f"NULL AS {column}"
             for column in (
@@ -458,6 +463,9 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             {title_select},
             company,
             place,
+            {publication_date_select},
+            {first_seen_at_select},
+            {last_seen_at_select},
             {description_text_select},
             analytics_json,
             {salary_min},
@@ -470,6 +478,9 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             source_select=source_select,
             title_select=title_select,
             description_text_select=description_text_select,
+            publication_date_select=publication_date_select,
+            first_seen_at_select=first_seen_at_select,
+            last_seen_at_select=last_seen_at_select,
             **salary_selects,
         )
         dataset = pd.read_sql_query(query, connection)
@@ -512,6 +523,9 @@ def _build_record_from_sqlite_row(
         "vacancy_id": row.get("vacancy_id"),
         "source": row.get("source"),
         "title": row.get("title"),
+        "publication_date": row.get("publication_date"),
+        "first_seen_at": row.get("first_seen_at"),
+        "last_seen_at": row.get("last_seen_at"),
         "company": row.get("company") or _nested_value(company_info, "name"),
         "role_category": analytics.get("role_family_primary"),
         "city": _normalize_city_value(locality),

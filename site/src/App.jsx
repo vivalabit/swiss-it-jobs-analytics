@@ -22,6 +22,7 @@ const SNAPSHOT_FILES = {
   metadata: "metadata.json",
   overview: "overview.json",
   educationRequirements: "education_requirements.json",
+  vacancyTrends: "vacancy_trends.json",
   salaryMetrics: "salary_metrics.json",
   topSkills: "top_skills.json",
   skillPairs: "skill_pairs.json",
@@ -299,6 +300,27 @@ const STAFFING_AGENCY_COMPANY_NAMES = new Set(
 );
 const COMPANY_PREVIEW_LIMIT = 8;
 const COMPANY_EXPANDED_LIMIT = 24;
+const TREND_PERIOD_OPTIONS = [
+  { label: "30D", days: 30 },
+  { label: "90D", days: 90 },
+  { label: "180D", days: 180 },
+  { label: "1Y", days: 365 },
+  { label: "ALL", days: null },
+];
+const MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 function App() {
   const [state, setState] = useState({
@@ -371,6 +393,7 @@ function App() {
     metadata,
     overview,
     educationRequirements,
+    vacancyTrends,
     salaryMetrics,
     topSkills,
     skillPairs,
@@ -527,6 +550,14 @@ function App() {
               description="Latest snapshot generation date in Zurich time."
             />
           </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      <section className="cy-section" id="vacancy-trends">
+        <div className="cy-container">
+          <VacancyTrendsPanel trends={vacancyTrends} />
         </div>
       </section>
 
@@ -989,6 +1020,110 @@ function SalaryStat({ value, label }) {
   );
 }
 
+function VacancyTrendsPanel({ trends }) {
+  const [periodDays, setPeriodDays] = useState(90);
+  const [granularity, setGranularity] = useState("weekly");
+  const sourceItems = granularity === "daily" ? trends.daily ?? [] : trends.weekly ?? [];
+  const periodItems = filterTrendItemsByPeriod(sourceItems, periodDays, granularity);
+  const chartItems = periodItems.slice(-120);
+  const maxPublished = Math.max(...chartItems.map((item) => item.published_count ?? 0), 1);
+  const publishedCount = periodItems.reduce((sum, item) => sum + (item.published_count ?? 0), 0);
+  const closedCount = periodItems.reduce((sum, item) => sum + (item.closed_count ?? 0), 0);
+  const summaryGrowth = getTrendSummaryGrowth(trends.summary ?? {}, periodDays);
+  const growth = summaryGrowth ?? calculateTrendGrowth(periodItems);
+  const strongestMonth = getStrongestSeasonalityMonth(
+    trends.seasonality?.monthly ?? [],
+  );
+  const weakestMonth = getWeakestSeasonalityMonth(trends.seasonality?.monthly ?? []);
+
+  return (
+    <article className="cy-card cy-data-panel cy-trend-panel">
+      <div className="cy-trend-head">
+        <div className="cy-data-panel-head">
+          <h3>Vacancy trend</h3>
+          <p className="cy-copy">
+            Publication-date trend with new postings, inferred closures, growth and monthly
+            seasonality.
+          </p>
+        </div>
+
+        <div className="cy-trend-controls" aria-label="Vacancy trend controls">
+          <div className="cy-trend-toggle" aria-label="Period">
+            {TREND_PERIOD_OPTIONS.map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                className={periodDays === option.days ? "is-active" : ""}
+                onClick={() => setPeriodDays(option.days)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div className="cy-trend-toggle" aria-label="Granularity">
+            <button
+              type="button"
+              className={granularity === "daily" ? "is-active" : ""}
+              onClick={() => setGranularity("daily")}
+            >
+              Days
+            </button>
+            <button
+              type="button"
+              className={granularity === "weekly" ? "is-active" : ""}
+              onClick={() => setGranularity("weekly")}
+            >
+              Weeks
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="cy-trend-stat-grid">
+        <SalaryStat value={formatInteger(publishedCount)} label="Published in period" />
+        <SalaryStat value={formatSignedPercent(growth)} label="Growth vs previous period" />
+        <SalaryStat value={formatInteger(closedCount)} label="Closed / disappeared" />
+        <SalaryStat
+          value={strongestMonth ? MONTH_NAMES[strongestMonth.month - 1] : "n/a"}
+          label={
+            strongestMonth && weakestMonth
+              ? `Seasonality high / low: ${MONTH_NAMES[weakestMonth.month - 1]}`
+              : "Seasonality high / low"
+          }
+        />
+      </div>
+
+      <div className="cy-trend-chart-shell">
+        <div className="cy-trend-chart" aria-label="Vacancy trend chart">
+          {chartItems.map((item) => {
+            const dateLabel = getTrendItemDate(item, granularity);
+            const height = Math.max(((item.published_count ?? 0) / maxPublished) * 100, 4);
+            const closedHeight = Math.max(((item.closed_count ?? 0) / maxPublished) * 100, 0);
+
+            return (
+              <div key={dateLabel} className="cy-trend-bar-group" title={formatTrendTooltip(item, dateLabel)}>
+                <span className="cy-trend-bar-value">{formatInteger(item.published_count)}</span>
+                <div className="cy-trend-bar-track">
+                  <span className="cy-trend-bar" style={{ height: `${height}%` }} />
+                  <span className="cy-trend-bar-closed" style={{ height: `${closedHeight}%` }} />
+                </div>
+                <span className="cy-trend-bar-label">{formatTrendAxisLabel(dateLabel, granularity)}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="cy-trend-footnote">
+        <span className="cy-trend-legend-dot cy-trend-legend-published" />
+        <span>Published vacancies</span>
+        <span className="cy-trend-legend-dot cy-trend-legend-closed" />
+        <span>Closed means last seen before the latest crawl.</span>
+      </div>
+    </article>
+  );
+}
+
 function SwissVacancyMap({ items }) {
   const maxValue = Math.max(...items.map((item) => item.vacancy_count), 1);
   const mappedVacancies = items.reduce((sum, item) => sum + item.vacancy_count, 0);
@@ -1342,6 +1477,86 @@ function getMapBubbleOpacity(value, maxValue) {
   return 0.2 + Math.sqrt(value / maxValue) * 0.52;
 }
 
+function filterTrendItemsByPeriod(items, periodDays, granularity) {
+  if (!Array.isArray(items) || !items.length || periodDays === null) {
+    return items ?? [];
+  }
+
+  const dateKey = granularity === "daily" ? "date" : "week_start";
+  const latestTime = Math.max(
+    ...items.map((item) => new Date(item[dateKey]).getTime()).filter(Number.isFinite),
+  );
+  if (!Number.isFinite(latestTime)) {
+    return items;
+  }
+
+  const startTime = latestTime - (periodDays - 1) * 24 * 60 * 60 * 1000;
+  return items.filter((item) => {
+    const itemTime = new Date(item[dateKey]).getTime();
+    return Number.isFinite(itemTime) && itemTime >= startTime && itemTime <= latestTime;
+  });
+}
+
+function getTrendSummaryGrowth(summary, periodDays) {
+  if (!periodDays) {
+    return null;
+  }
+  const value = summary[`growth_${periodDays}d`];
+  return typeof value === "number" ? value : null;
+}
+
+function calculateTrendGrowth(items) {
+  if (!items.length) {
+    return null;
+  }
+
+  const midpoint = Math.floor(items.length / 2);
+  const previousItems = items.slice(0, midpoint);
+  const currentItems = items.slice(midpoint);
+  const previousCount = previousItems.reduce(
+    (sum, item) => sum + (item.published_count ?? 0),
+    0,
+  );
+  const currentCount = currentItems.reduce(
+    (sum, item) => sum + (item.published_count ?? 0),
+    0,
+  );
+  if (!previousCount) {
+    return null;
+  }
+  return (currentCount - previousCount) / previousCount;
+}
+
+function getStrongestSeasonalityMonth(items) {
+  return [...items].sort((a, b) => (b.vacancy_count ?? 0) - (a.vacancy_count ?? 0))[0] ?? null;
+}
+
+function getWeakestSeasonalityMonth(items) {
+  return [...items].sort((a, b) => (a.vacancy_count ?? 0) - (b.vacancy_count ?? 0))[0] ?? null;
+}
+
+function getTrendItemDate(item, granularity) {
+  return granularity === "daily" ? item.date : item.week_start;
+}
+
+function formatTrendTooltip(item, dateLabel) {
+  return `${dateLabel}: ${formatInteger(item.published_count)} published, ${formatInteger(
+    item.closed_count,
+  )} closed`;
+}
+
+function formatTrendAxisLabel(value, granularity) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value ?? "";
+  }
+  return new Intl.DateTimeFormat("en-CH", {
+    month: "short",
+    day: granularity === "daily" ? "numeric" : undefined,
+    timeZone: "Europe/Zurich",
+  }).format(date);
+}
+
 async function fetchSnapshot(fileName) {
   const response = await fetch(`${import.meta.env.BASE_URL}data/${fileName}`);
   if (!response.ok) {
@@ -1400,6 +1615,16 @@ function formatPercent(value) {
     return "n/a";
   }
   return `${(value * 100).toFixed(value >= 0.1 ? 1 : 2)}%`;
+}
+
+function formatSignedPercent(value) {
+  if (typeof value !== "number") {
+    return "n/a";
+  }
+  const sign = value > 0 ? "+" : "";
+  const absoluteValue = Math.abs(value);
+  const digits = absoluteValue >= 0.1 ? 1 : 2;
+  return `${sign}${(value * 100).toFixed(digits)}%`;
 }
 
 function formatCurrency(value) {

@@ -13,6 +13,7 @@ from .analytics import (
     calculate_salary_by_role_category,
     calculate_salary_by_seniority,
     calculate_salary_summary,
+    calculate_vacancy_trend_outputs,
 )
 from .skills import (
     calculate_list_summary,
@@ -73,6 +74,7 @@ def build_analytics_outputs(
             dataset,
             top_n=top_skill_pairs_limit,
         ),
+        **calculate_vacancy_trend_outputs(dataset),
         **calculate_crosstabs(dataset),
     }
     return outputs

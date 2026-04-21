@@ -99,6 +99,24 @@ class MarketAnalyticsTests(unittest.TestCase):
                     "Bachelor or Master in engineering.",
                     "Agency vacancy with FH degree mentioned.",
                 ],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2026-04-14T10:00:00+02:00",
+                    "2026-03-01T10:00:00+01:00",
+                    "2026-04-21T10:00:00+02:00",
+                ],
+                "first_seen_at": [
+                    "2026-04-20T08:00:00+00:00",
+                    "2026-04-14T08:00:00+00:00",
+                    "2026-03-01T08:00:00+00:00",
+                    "2026-04-21T08:00:00+00:00",
+                ],
+                "last_seen_at": [
+                    "2026-04-21T08:00:00+00:00",
+                    "2026-04-20T08:00:00+00:00",
+                    "2026-04-21T08:00:00+00:00",
+                    "2026-04-21T08:00:00+00:00",
+                ],
                 "role_category": ["data_ai", "data_ai", "software_engineering", "data_ai"],
                 "city": ["Zurich", "Bern", "Zurich", "Zurich"],
                 "canton": ["ZH", "BE", "ZH", "ZH"],
@@ -132,7 +150,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(21, len(outputs))
+        self.assertEqual(25, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(4, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -145,6 +163,14 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertEqual(4, education_summary["total_vacancies"])
         self.assertEqual(3, education_summary["higher_education_vacancy_count"])
         self.assertEqual(0.75, education_summary["higher_education_vacancy_share"])
+        trend_summary = outputs["vacancy_trends_summary"].set_index("metric")["value"].to_dict()
+        self.assertEqual(4, trend_summary["published_total"])
+        self.assertEqual(1, trend_summary["closed_total"])
+        self.assertEqual(3, trend_summary["published_30d"])
+        self.assertEqual(1, trend_summary["published_previous_30d"])
+        self.assertIn("vacancy_trends_daily", outputs)
+        self.assertIn("vacancy_trends_weekly", outputs)
+        self.assertIn("vacancy_trends_monthly", outputs)
         self.assertEqual(
             "python",
             outputs["top_skills_overall"].iloc[0]["skill"],

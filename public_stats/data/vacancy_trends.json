@@ -1,0 +1,2938 @@
+{
+  "generated_at": "2026-04-21T08:57:36Z",
+  "available": true,
+  "summary": {
+    "published_total": 7937,
+    "closed_total": 1572,
+    "latest_publication_date": "2026-04-21",
+    "published_30d": 5916,
+    "published_previous_30d": 996,
+    "growth_30d": 4.9398,
+    "published_90d": 7252,
+    "published_previous_90d": 319,
+    "growth_90d": 21.7335,
+    "published_180d": 7571,
+    "published_previous_180d": 221,
+    "growth_180d": 33.2579,
+    "published_365d": 7792,
+    "published_previous_365d": 118,
+    "growth_365d": 65.0339
+  },
+  "daily": [
+    {
+      "date": "2023-11-22",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": null
+    },
+    {
+      "date": "2023-11-23",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2023-11-24",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-01-06",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 5.0
+    },
+    {
+      "date": "2024-01-08",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-01-30",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2024-02-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-02-21",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-02-29",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2024-03-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-04-02",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 4.0
+    },
+    {
+      "date": "2024-04-11",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8
+    },
+    {
+      "date": "2024-04-19",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-04-22",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-04-24",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2024-04-25",
+      "published_count": 16,
+      "closed_count": 0,
+      "net_change": 16,
+      "growth_rate": 4.3333
+    },
+    {
+      "date": "2024-04-26",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.875
+    },
+    {
+      "date": "2024-04-29",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-04-30",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-05-01",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-05-07",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2024-05-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2024-05-09",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 7.0
+    },
+    {
+      "date": "2024-05-10",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-05-23",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2024-05-27",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 7.0
+    },
+    {
+      "date": "2024-06-19",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.875
+    },
+    {
+      "date": "2024-06-28",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-07-19",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-08-10",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-08-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-08-22",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2024-09-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-09-12",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-09-22",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-10-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-10-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-10-15",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-01",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-06",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-07",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-13",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2024-11-16",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-22",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2024-11-26",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-28",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-11-29",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-12-07",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2024-12-12",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2024-12-18",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2024-12-25",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-01-17",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-01-24",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": 6.0
+    },
+    {
+      "date": "2025-01-30",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.8571
+    },
+    {
+      "date": "2025-02-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-02-13",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-03-13",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-03-18",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-03-24",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-04-01",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-04-02",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-04-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-04-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-04-11",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-04-12",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-04-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-04-15",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-05-09",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-05-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-05-15",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-05-16",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-05-20",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-05-28",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-05-29",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8333
+    },
+    {
+      "date": "2025-05-30",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-06-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-06-06",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-06-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-06-17",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-06-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-06-25",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-06-26",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2025-06-27",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2025-06-28",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-07-02",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-07-03",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-06",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-07",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-07-09",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-07-10",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-07-11",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-13",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-07-16",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-07-18",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-07-21",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 1.5
+    },
+    {
+      "date": "2025-07-23",
+      "published_count": 23,
+      "closed_count": 0,
+      "net_change": 23,
+      "growth_rate": 3.6
+    },
+    {
+      "date": "2025-07-25",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.9565
+    },
+    {
+      "date": "2025-07-29",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-07-30",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-07-31",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 1.5
+    },
+    {
+      "date": "2025-08-01",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.4
+    },
+    {
+      "date": "2025-08-05",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-08-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-08-10",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-08-12",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": 6.0
+    },
+    {
+      "date": "2025-08-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8571
+    },
+    {
+      "date": "2025-08-19",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-08-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-08-21",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-08-22",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-08-23",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-08-25",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": 12.0
+    },
+    {
+      "date": "2025-08-27",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.9231
+    },
+    {
+      "date": "2025-08-28",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-08-29",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-09-02",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-09-04",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-09-06",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-09-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-09-10",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2025-09-11",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-09-15",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2025-09-16",
+      "published_count": 9,
+      "closed_count": 0,
+      "net_change": 9,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-09-17",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": -0.2222
+    },
+    {
+      "date": "2025-09-18",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.5714
+    },
+    {
+      "date": "2025-09-19",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-09-22",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2025-09-23",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-09-24",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-09-25",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2025-09-26",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2025-09-27",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-09-28",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-09-30",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2025-10-01",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-10-02",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.25
+    },
+    {
+      "date": "2025-10-03",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-10-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-10-06",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 4.0
+    },
+    {
+      "date": "2025-10-07",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.6
+    },
+    {
+      "date": "2025-10-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-10-09",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-10-10",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-10-13",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-10-14",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-10-15",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-10-16",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-10-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-10-21",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-10-22",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-10-23",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2025-10-24",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-10-27",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-10-28",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-10-30",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-10-31",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-11-03",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-11-04",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-11-05",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 4.0
+    },
+    {
+      "date": "2025-11-06",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.6
+    },
+    {
+      "date": "2025-11-07",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-11-10",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-11-11",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-11-12",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 4.0
+    },
+    {
+      "date": "2025-11-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8
+    },
+    {
+      "date": "2025-11-15",
+      "published_count": 12,
+      "closed_count": 0,
+      "net_change": 12,
+      "growth_rate": 11.0
+    },
+    {
+      "date": "2025-11-18",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.9167
+    },
+    {
+      "date": "2025-11-19",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": 10.0
+    },
+    {
+      "date": "2025-11-20",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": -0.2727
+    },
+    {
+      "date": "2025-11-21",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": -0.125
+    },
+    {
+      "date": "2025-11-23",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.7143
+    },
+    {
+      "date": "2025-11-24",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-11-25",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-11-26",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-11-27",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2025-11-28",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.3333
+    },
+    {
+      "date": "2025-11-29",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-12-02",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2025-12-03",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-12-04",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2025-12-05",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 0.6667
+    },
+    {
+      "date": "2025-12-06",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.6
+    },
+    {
+      "date": "2025-12-08",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 1.5
+    },
+    {
+      "date": "2025-12-09",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.6
+    },
+    {
+      "date": "2025-12-10",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-12-11",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 0.25
+    },
+    {
+      "date": "2025-12-12",
+      "published_count": 12,
+      "closed_count": 0,
+      "net_change": 12,
+      "growth_rate": 1.4
+    },
+    {
+      "date": "2025-12-13",
+      "published_count": 10,
+      "closed_count": 0,
+      "net_change": 10,
+      "growth_rate": -0.1667
+    },
+    {
+      "date": "2025-12-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.9
+    },
+    {
+      "date": "2025-12-15",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2025-12-16",
+      "published_count": 20,
+      "closed_count": 0,
+      "net_change": 20,
+      "growth_rate": 9.0
+    },
+    {
+      "date": "2025-12-17",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2025-12-18",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 0.6
+    },
+    {
+      "date": "2025-12-19",
+      "published_count": 12,
+      "closed_count": 0,
+      "net_change": 12,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2025-12-20",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2025-12-21",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "date": "2025-12-22",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "date": "2025-12-23",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2025-12-24",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2025-12-29",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": 2.5
+    },
+    {
+      "date": "2025-12-30",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.7143
+    },
+    {
+      "date": "2025-12-31",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2026-01-01",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2026-01-02",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2026-01-05",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2026-01-06",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2026-01-07",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2026-01-08",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2026-01-09",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 0.6667
+    },
+    {
+      "date": "2026-01-10",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.2
+    },
+    {
+      "date": "2026-01-11",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2026-01-12",
+      "published_count": 9,
+      "closed_count": 0,
+      "net_change": 9,
+      "growth_rate": 3.5
+    },
+    {
+      "date": "2026-01-13",
+      "published_count": 16,
+      "closed_count": 0,
+      "net_change": 16,
+      "growth_rate": 0.7778
+    },
+    {
+      "date": "2026-01-14",
+      "published_count": 10,
+      "closed_count": 0,
+      "net_change": 10,
+      "growth_rate": -0.375
+    },
+    {
+      "date": "2026-01-15",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.5
+    },
+    {
+      "date": "2026-01-16",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": 1.6
+    },
+    {
+      "date": "2026-01-17",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.8462
+    },
+    {
+      "date": "2026-01-18",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.5
+    },
+    {
+      "date": "2026-01-20",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.3333
+    },
+    {
+      "date": "2026-01-21",
+      "published_count": 9,
+      "closed_count": 0,
+      "net_change": 9,
+      "growth_rate": 1.25
+    },
+    {
+      "date": "2026-01-22",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.4444
+    },
+    {
+      "date": "2026-01-23",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.2
+    },
+    {
+      "date": "2026-01-24",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 0.25
+    },
+    {
+      "date": "2026-01-25",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 0.2
+    },
+    {
+      "date": "2026-01-26",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8333
+    },
+    {
+      "date": "2026-01-27",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2026-01-28",
+      "published_count": 21,
+      "closed_count": 0,
+      "net_change": 21,
+      "growth_rate": 4.25
+    },
+    {
+      "date": "2026-01-29",
+      "published_count": 18,
+      "closed_count": 0,
+      "net_change": 18,
+      "growth_rate": -0.1429
+    },
+    {
+      "date": "2026-01-30",
+      "published_count": 12,
+      "closed_count": 0,
+      "net_change": 12,
+      "growth_rate": -0.3333
+    },
+    {
+      "date": "2026-01-31",
+      "published_count": 9,
+      "closed_count": 0,
+      "net_change": 9,
+      "growth_rate": -0.25
+    },
+    {
+      "date": "2026-02-01",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.7778
+    },
+    {
+      "date": "2026-02-02",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 1.5
+    },
+    {
+      "date": "2026-02-03",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 0.6
+    },
+    {
+      "date": "2026-02-04",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": 0.375
+    },
+    {
+      "date": "2026-02-05",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": 0.0
+    },
+    {
+      "date": "2026-02-06",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": -0.2727
+    },
+    {
+      "date": "2026-02-07",
+      "published_count": 10,
+      "closed_count": 0,
+      "net_change": 10,
+      "growth_rate": 0.25
+    },
+    {
+      "date": "2026-02-09",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": -0.3
+    },
+    {
+      "date": "2026-02-10",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": 0.5714
+    },
+    {
+      "date": "2026-02-11",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": -0.4545
+    },
+    {
+      "date": "2026-02-12",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": 1.1667
+    },
+    {
+      "date": "2026-02-13",
+      "published_count": 34,
+      "closed_count": 0,
+      "net_change": 34,
+      "growth_rate": 1.6154
+    },
+    {
+      "date": "2026-02-14",
+      "published_count": 32,
+      "closed_count": 0,
+      "net_change": 32,
+      "growth_rate": -0.0588
+    },
+    {
+      "date": "2026-02-15",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.875
+    },
+    {
+      "date": "2026-02-16",
+      "published_count": 17,
+      "closed_count": 0,
+      "net_change": 17,
+      "growth_rate": 3.25
+    },
+    {
+      "date": "2026-02-17",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": -0.1765
+    },
+    {
+      "date": "2026-02-18",
+      "published_count": 20,
+      "closed_count": 0,
+      "net_change": 20,
+      "growth_rate": 0.4286
+    },
+    {
+      "date": "2026-02-19",
+      "published_count": 18,
+      "closed_count": 0,
+      "net_change": 18,
+      "growth_rate": -0.1
+    },
+    {
+      "date": "2026-02-20",
+      "published_count": 24,
+      "closed_count": 0,
+      "net_change": 24,
+      "growth_rate": 0.3333
+    },
+    {
+      "date": "2026-02-21",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": -0.4583
+    },
+    {
+      "date": "2026-02-22",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.6154
+    },
+    {
+      "date": "2026-02-23",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": 1.2
+    },
+    {
+      "date": "2026-02-24",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": -0.4545
+    },
+    {
+      "date": "2026-02-25",
+      "published_count": 33,
+      "closed_count": 0,
+      "net_change": 33,
+      "growth_rate": 4.5
+    },
+    {
+      "date": "2026-02-26",
+      "published_count": 18,
+      "closed_count": 0,
+      "net_change": 18,
+      "growth_rate": -0.4545
+    },
+    {
+      "date": "2026-02-27",
+      "published_count": 22,
+      "closed_count": 0,
+      "net_change": 22,
+      "growth_rate": 0.2222
+    },
+    {
+      "date": "2026-02-28",
+      "published_count": 21,
+      "closed_count": 0,
+      "net_change": 21,
+      "growth_rate": -0.0455
+    },
+    {
+      "date": "2026-03-01",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.9048
+    },
+    {
+      "date": "2026-03-02",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 3.0
+    },
+    {
+      "date": "2026-03-03",
+      "published_count": 38,
+      "closed_count": 0,
+      "net_change": 38,
+      "growth_rate": 3.75
+    },
+    {
+      "date": "2026-03-04",
+      "published_count": 45,
+      "closed_count": 0,
+      "net_change": 45,
+      "growth_rate": 0.1842
+    },
+    {
+      "date": "2026-03-05",
+      "published_count": 24,
+      "closed_count": 0,
+      "net_change": 24,
+      "growth_rate": -0.4667
+    },
+    {
+      "date": "2026-03-06",
+      "published_count": 91,
+      "closed_count": 0,
+      "net_change": 91,
+      "growth_rate": 2.7917
+    },
+    {
+      "date": "2026-03-07",
+      "published_count": 19,
+      "closed_count": 0,
+      "net_change": 19,
+      "growth_rate": -0.7912
+    },
+    {
+      "date": "2026-03-09",
+      "published_count": 38,
+      "closed_count": 0,
+      "net_change": 38,
+      "growth_rate": 1.0
+    },
+    {
+      "date": "2026-03-10",
+      "published_count": 41,
+      "closed_count": 0,
+      "net_change": 41,
+      "growth_rate": 0.0789
+    },
+    {
+      "date": "2026-03-11",
+      "published_count": 45,
+      "closed_count": 0,
+      "net_change": 45,
+      "growth_rate": 0.0976
+    },
+    {
+      "date": "2026-03-12",
+      "published_count": 57,
+      "closed_count": 0,
+      "net_change": 57,
+      "growth_rate": 0.2667
+    },
+    {
+      "date": "2026-03-13",
+      "published_count": 51,
+      "closed_count": 0,
+      "net_change": 51,
+      "growth_rate": -0.1053
+    },
+    {
+      "date": "2026-03-14",
+      "published_count": 19,
+      "closed_count": 0,
+      "net_change": 19,
+      "growth_rate": -0.6275
+    },
+    {
+      "date": "2026-03-15",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.8421
+    },
+    {
+      "date": "2026-03-16",
+      "published_count": 59,
+      "closed_count": 0,
+      "net_change": 59,
+      "growth_rate": 18.6667
+    },
+    {
+      "date": "2026-03-17",
+      "published_count": 73,
+      "closed_count": 0,
+      "net_change": 73,
+      "growth_rate": 0.2373
+    },
+    {
+      "date": "2026-03-18",
+      "published_count": 99,
+      "closed_count": 0,
+      "net_change": 99,
+      "growth_rate": 0.3562
+    },
+    {
+      "date": "2026-03-19",
+      "published_count": 57,
+      "closed_count": 0,
+      "net_change": 57,
+      "growth_rate": -0.4242
+    },
+    {
+      "date": "2026-03-20",
+      "published_count": 68,
+      "closed_count": 0,
+      "net_change": 68,
+      "growth_rate": 0.193
+    },
+    {
+      "date": "2026-03-21",
+      "published_count": 24,
+      "closed_count": 0,
+      "net_change": 24,
+      "growth_rate": -0.6471
+    },
+    {
+      "date": "2026-03-22",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": -0.75
+    },
+    {
+      "date": "2026-03-23",
+      "published_count": 125,
+      "closed_count": 0,
+      "net_change": 125,
+      "growth_rate": 19.8333
+    },
+    {
+      "date": "2026-03-24",
+      "published_count": 133,
+      "closed_count": 0,
+      "net_change": 133,
+      "growth_rate": 0.064
+    },
+    {
+      "date": "2026-03-25",
+      "published_count": 96,
+      "closed_count": 0,
+      "net_change": 96,
+      "growth_rate": -0.2782
+    },
+    {
+      "date": "2026-03-26",
+      "published_count": 90,
+      "closed_count": 0,
+      "net_change": 90,
+      "growth_rate": -0.0625
+    },
+    {
+      "date": "2026-03-27",
+      "published_count": 121,
+      "closed_count": 0,
+      "net_change": 121,
+      "growth_rate": 0.3444
+    },
+    {
+      "date": "2026-03-28",
+      "published_count": 46,
+      "closed_count": 0,
+      "net_change": 46,
+      "growth_rate": -0.6198
+    },
+    {
+      "date": "2026-03-29",
+      "published_count": 9,
+      "closed_count": 0,
+      "net_change": 9,
+      "growth_rate": -0.8043
+    },
+    {
+      "date": "2026-03-30",
+      "published_count": 132,
+      "closed_count": 0,
+      "net_change": 132,
+      "growth_rate": 13.6667
+    },
+    {
+      "date": "2026-03-31",
+      "published_count": 87,
+      "closed_count": 0,
+      "net_change": 87,
+      "growth_rate": -0.3409
+    },
+    {
+      "date": "2026-04-01",
+      "published_count": 1881,
+      "closed_count": 0,
+      "net_change": 1881,
+      "growth_rate": 20.6207
+    },
+    {
+      "date": "2026-04-02",
+      "published_count": 223,
+      "closed_count": 0,
+      "net_change": 223,
+      "growth_rate": -0.8814
+    },
+    {
+      "date": "2026-04-03",
+      "published_count": 84,
+      "closed_count": 0,
+      "net_change": 84,
+      "growth_rate": -0.6233
+    },
+    {
+      "date": "2026-04-04",
+      "published_count": 35,
+      "closed_count": 0,
+      "net_change": 35,
+      "growth_rate": -0.5833
+    },
+    {
+      "date": "2026-04-05",
+      "published_count": 11,
+      "closed_count": 0,
+      "net_change": 11,
+      "growth_rate": -0.6857
+    },
+    {
+      "date": "2026-04-06",
+      "published_count": 27,
+      "closed_count": 0,
+      "net_change": 27,
+      "growth_rate": 1.4545
+    },
+    {
+      "date": "2026-04-07",
+      "published_count": 182,
+      "closed_count": 0,
+      "net_change": 182,
+      "growth_rate": 5.7407
+    },
+    {
+      "date": "2026-04-08",
+      "published_count": 147,
+      "closed_count": 0,
+      "net_change": 147,
+      "growth_rate": -0.1923
+    },
+    {
+      "date": "2026-04-09",
+      "published_count": 198,
+      "closed_count": 0,
+      "net_change": 198,
+      "growth_rate": 0.3469
+    },
+    {
+      "date": "2026-04-10",
+      "published_count": 222,
+      "closed_count": 0,
+      "net_change": 222,
+      "growth_rate": 0.1212
+    },
+    {
+      "date": "2026-04-11",
+      "published_count": 95,
+      "closed_count": 0,
+      "net_change": 95,
+      "growth_rate": -0.5721
+    },
+    {
+      "date": "2026-04-12",
+      "published_count": 67,
+      "closed_count": 0,
+      "net_change": 67,
+      "growth_rate": -0.2947
+    },
+    {
+      "date": "2026-04-13",
+      "published_count": 323,
+      "closed_count": 0,
+      "net_change": 323,
+      "growth_rate": 3.8209
+    },
+    {
+      "date": "2026-04-14",
+      "published_count": 256,
+      "closed_count": 786,
+      "net_change": -530,
+      "growth_rate": -0.2074
+    },
+    {
+      "date": "2026-04-15",
+      "published_count": 266,
+      "closed_count": 0,
+      "net_change": 266,
+      "growth_rate": 0.0391
+    },
+    {
+      "date": "2026-04-16",
+      "published_count": 280,
+      "closed_count": 0,
+      "net_change": 280,
+      "growth_rate": 0.0526
+    },
+    {
+      "date": "2026-04-17",
+      "published_count": 253,
+      "closed_count": 776,
+      "net_change": -523,
+      "growth_rate": -0.0964
+    },
+    {
+      "date": "2026-04-18",
+      "published_count": 90,
+      "closed_count": 10,
+      "net_change": 80,
+      "growth_rate": -0.6443
+    },
+    {
+      "date": "2026-04-19",
+      "published_count": 94,
+      "closed_count": 0,
+      "net_change": 94,
+      "growth_rate": 0.0444
+    },
+    {
+      "date": "2026-04-20",
+      "published_count": 255,
+      "closed_count": 0,
+      "net_change": 255,
+      "growth_rate": 1.7128
+    },
+    {
+      "date": "2026-04-21",
+      "published_count": 88,
+      "closed_count": 0,
+      "net_change": 88,
+      "growth_rate": -0.6549
+    }
+  ],
+  "weekly": [
+    {
+      "week_start": "2023-11-20",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": null
+    },
+    {
+      "week_start": "2024-01-01",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": 0.2
+    },
+    {
+      "week_start": "2024-01-08",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2024-01-29",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "week_start": "2024-02-19",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "week_start": "2024-02-26",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-03-18",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2024-04-01",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": 4.0
+    },
+    {
+      "week_start": "2024-04-08",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.8
+    },
+    {
+      "week_start": "2024-04-15",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-04-22",
+      "published_count": 22,
+      "closed_count": 0,
+      "net_change": 22,
+      "growth_rate": 21.0
+    },
+    {
+      "week_start": "2024-04-29",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.8636
+    },
+    {
+      "week_start": "2024-05-06",
+      "published_count": 16,
+      "closed_count": 0,
+      "net_change": 16,
+      "growth_rate": 4.3333
+    },
+    {
+      "week_start": "2024-05-20",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.9375
+    },
+    {
+      "week_start": "2024-05-27",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 7.0
+    },
+    {
+      "week_start": "2024-06-17",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.875
+    },
+    {
+      "week_start": "2024-06-24",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-07-15",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-08-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-08-19",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2024-09-02",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "week_start": "2024-09-09",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-09-16",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-09-30",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-10-07",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-10-14",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-10-28",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2024-11-04",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2024-11-11",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.3333
+    },
+    {
+      "week_start": "2024-11-18",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.75
+    },
+    {
+      "week_start": "2024-11-25",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2024-12-02",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "week_start": "2024-12-09",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2024-12-16",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "week_start": "2024-12-23",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-01-13",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": 1.0
+    },
+    {
+      "week_start": "2025-01-20",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": 6.0
+    },
+    {
+      "week_start": "2025-01-27",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.8571
+    },
+    {
+      "week_start": "2025-02-03",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2025-02-10",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2025-03-10",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.6667
+    },
+    {
+      "week_start": "2025-03-17",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-03-24",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 2.0
+    },
+    {
+      "week_start": "2025-03-31",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.3333
+    },
+    {
+      "week_start": "2025-04-07",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-04-14",
+      "published_count": 2,
+      "closed_count": 0,
+      "net_change": 2,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2025-05-05",
+      "published_count": 1,
+      "closed_count": 0,
+      "net_change": 1,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2025-05-12",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": 3.0
+    },
+    {
+      "week_start": "2025-05-19",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.25
+    },
+    {
+      "week_start": "2025-05-26",
+      "published_count": 10,
+      "closed_count": 0,
+      "net_change": 10,
+      "growth_rate": 2.3333
+    },
+    {
+      "week_start": "2025-06-02",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": -0.7
+    },
+    {
+      "week_start": "2025-06-16",
+      "published_count": 3,
+      "closed_count": 0,
+      "net_change": 3,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-06-23",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 1.6667
+    },
+    {
+      "week_start": "2025-06-30",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.375
+    },
+    {
+      "week_start": "2025-07-07",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 0.6
+    },
+    {
+      "week_start": "2025-07-14",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.5
+    },
+    {
+      "week_start": "2025-07-21",
+      "published_count": 29,
+      "closed_count": 0,
+      "net_change": 29,
+      "growth_rate": 6.25
+    },
+    {
+      "week_start": "2025-07-28",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": -0.5517
+    },
+    {
+      "week_start": "2025-08-04",
+      "published_count": 4,
+      "closed_count": 0,
+      "net_change": 4,
+      "growth_rate": -0.6923
+    },
+    {
+      "week_start": "2025-08-11",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 1.0
+    },
+    {
+      "week_start": "2025-08-18",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-08-25",
+      "published_count": 16,
+      "closed_count": 0,
+      "net_change": 16,
+      "growth_rate": 1.0
+    },
+    {
+      "week_start": "2025-09-01",
+      "published_count": 5,
+      "closed_count": 0,
+      "net_change": 5,
+      "growth_rate": -0.6875
+    },
+    {
+      "week_start": "2025-09-08",
+      "published_count": 7,
+      "closed_count": 0,
+      "net_change": 7,
+      "growth_rate": 0.4
+    },
+    {
+      "week_start": "2025-09-15",
+      "published_count": 23,
+      "closed_count": 0,
+      "net_change": 23,
+      "growth_rate": 2.2857
+    },
+    {
+      "week_start": "2025-09-22",
+      "published_count": 16,
+      "closed_count": 0,
+      "net_change": 16,
+      "growth_rate": -0.3043
+    },
+    {
+      "week_start": "2025-09-29",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": -0.125
+    },
+    {
+      "week_start": "2025-10-06",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": 0.0
+    },
+    {
+      "week_start": "2025-10-13",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": -0.4286
+    },
+    {
+      "week_start": "2025-10-20",
+      "published_count": 10,
+      "closed_count": 0,
+      "net_change": 10,
+      "growth_rate": 0.25
+    },
+    {
+      "week_start": "2025-10-27",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": -0.2
+    },
+    {
+      "week_start": "2025-11-03",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": 0.625
+    },
+    {
+      "week_start": "2025-11-10",
+      "published_count": 21,
+      "closed_count": 0,
+      "net_change": 21,
+      "growth_rate": 0.6154
+    },
+    {
+      "week_start": "2025-11-17",
+      "published_count": 29,
+      "closed_count": 0,
+      "net_change": 29,
+      "growth_rate": 0.381
+    },
+    {
+      "week_start": "2025-11-24",
+      "published_count": 14,
+      "closed_count": 0,
+      "net_change": 14,
+      "growth_rate": -0.5172
+    },
+    {
+      "week_start": "2025-12-01",
+      "published_count": 19,
+      "closed_count": 0,
+      "net_change": 19,
+      "growth_rate": 0.3571
+    },
+    {
+      "week_start": "2025-12-08",
+      "published_count": 39,
+      "closed_count": 0,
+      "net_change": 39,
+      "growth_rate": 1.0526
+    },
+    {
+      "week_start": "2025-12-15",
+      "published_count": 51,
+      "closed_count": 0,
+      "net_change": 51,
+      "growth_rate": 0.3077
+    },
+    {
+      "week_start": "2025-12-22",
+      "published_count": 8,
+      "closed_count": 0,
+      "net_change": 8,
+      "growth_rate": -0.8431
+    },
+    {
+      "week_start": "2025-12-29",
+      "published_count": 13,
+      "closed_count": 0,
+      "net_change": 13,
+      "growth_rate": 0.625
+    },
+    {
+      "week_start": "2026-01-05",
+      "published_count": 30,
+      "closed_count": 0,
+      "net_change": 30,
+      "growth_rate": 1.3077
+    },
+    {
+      "week_start": "2026-01-12",
+      "published_count": 58,
+      "closed_count": 0,
+      "net_change": 58,
+      "growth_rate": 0.9333
+    },
+    {
+      "week_start": "2026-01-19",
+      "published_count": 33,
+      "closed_count": 0,
+      "net_change": 33,
+      "growth_rate": -0.431
+    },
+    {
+      "week_start": "2026-01-26",
+      "published_count": 67,
+      "closed_count": 0,
+      "net_change": 67,
+      "growth_rate": 1.0303
+    },
+    {
+      "week_start": "2026-02-02",
+      "published_count": 53,
+      "closed_count": 0,
+      "net_change": 53,
+      "growth_rate": -0.209
+    },
+    {
+      "week_start": "2026-02-09",
+      "published_count": 107,
+      "closed_count": 0,
+      "net_change": 107,
+      "growth_rate": 1.0189
+    },
+    {
+      "week_start": "2026-02-16",
+      "published_count": 111,
+      "closed_count": 0,
+      "net_change": 111,
+      "growth_rate": 0.0374
+    },
+    {
+      "week_start": "2026-02-23",
+      "published_count": 113,
+      "closed_count": 0,
+      "net_change": 113,
+      "growth_rate": 0.018
+    },
+    {
+      "week_start": "2026-03-02",
+      "published_count": 225,
+      "closed_count": 0,
+      "net_change": 225,
+      "growth_rate": 0.9912
+    },
+    {
+      "week_start": "2026-03-09",
+      "published_count": 254,
+      "closed_count": 0,
+      "net_change": 254,
+      "growth_rate": 0.1289
+    },
+    {
+      "week_start": "2026-03-16",
+      "published_count": 386,
+      "closed_count": 0,
+      "net_change": 386,
+      "growth_rate": 0.5197
+    },
+    {
+      "week_start": "2026-03-23",
+      "published_count": 620,
+      "closed_count": 0,
+      "net_change": 620,
+      "growth_rate": 0.6062
+    },
+    {
+      "week_start": "2026-03-30",
+      "published_count": 2453,
+      "closed_count": 0,
+      "net_change": 2453,
+      "growth_rate": 2.9565
+    },
+    {
+      "week_start": "2026-04-06",
+      "published_count": 938,
+      "closed_count": 0,
+      "net_change": 938,
+      "growth_rate": -0.6176
+    },
+    {
+      "week_start": "2026-04-13",
+      "published_count": 1562,
+      "closed_count": 1572,
+      "net_change": -10,
+      "growth_rate": 0.6652
+    },
+    {
+      "week_start": "2026-04-20",
+      "published_count": 343,
+      "closed_count": 0,
+      "net_change": 343,
+      "growth_rate": -0.7804
+    }
+  ],
+  "seasonality": {
+    "monthly": [
+      {
+        "month": 1,
+        "vacancy_count": 216,
+        "share": 0.0272
+      },
+      {
+        "month": 2,
+        "vacancy_count": 392,
+        "share": 0.0494
+      },
+      {
+        "month": 3,
+        "vacancy_count": 1712,
+        "share": 0.2157
+      },
+      {
+        "month": 4,
+        "vacancy_count": 5118,
+        "share": 0.6448
+      },
+      {
+        "month": 5,
+        "vacancy_count": 44,
+        "share": 0.0055
+      },
+      {
+        "month": 6,
+        "vacancy_count": 16,
+        "share": 0.002
+      },
+      {
+        "month": 7,
+        "vacancy_count": 57,
+        "share": 0.0072
+      },
+      {
+        "month": 8,
+        "vacancy_count": 43,
+        "share": 0.0054
+      },
+      {
+        "month": 9,
+        "vacancy_count": 58,
+        "share": 0.0073
+      },
+      {
+        "month": 10,
+        "vacancy_count": 53,
+        "share": 0.0067
+      },
+      {
+        "month": 11,
+        "vacancy_count": 94,
+        "share": 0.0118
+      },
+      {
+        "month": 12,
+        "vacancy_count": 134,
+        "share": 0.0169
+      }
+    ]
+  }
+}
