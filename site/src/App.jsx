@@ -1204,6 +1204,7 @@ function VacancyTrendsPanel({ trends }) {
 }
 
 function TrendLineChart({ chartData, granularity }) {
+  const [hoverIndex, setHoverIndex] = useState(null);
   const width = 1040;
   const height = 430;
   const margin = { top: 24, right: 24, bottom: 58, left: 66 };
@@ -1212,14 +1213,51 @@ function TrendLineChart({ chartData, granularity }) {
   const maxValue = Math.max(chartData.maxValue, 1);
   const yTicks = buildYAxisTicks(maxValue);
   const xTickStep = Math.max(Math.ceil(chartData.labels.length / 9), 1);
+  const activeHoverIndex =
+    typeof hoverIndex === "number" && chartData.labels[hoverIndex] ? hoverIndex : null;
+  const tooltipRows =
+    activeHoverIndex === null
+      ? []
+      : chartData.series.map((series, index) => ({
+          role: series.role,
+          value: series.values[activeHoverIndex] ?? 0,
+          color: getTrendRoleColor(index),
+        }));
+  const hoverX =
+    activeHoverIndex === null
+      ? null
+      : projectTrendX(activeHoverIndex, chartData.labels.length, innerWidth);
+  const tooltipWidth = 330;
+  const tooltipHeight = Math.min(54 + tooltipRows.length * 22, height - 26);
+  const tooltipX =
+    hoverX === null
+      ? 0
+      : Math.min(
+          Math.max(margin.left + hoverX + 16, 8),
+          width - tooltipWidth - 8,
+        );
+  const tooltipY = margin.top + 8;
 
   if (!chartData.labels.length || !chartData.series.length) {
     return <p className="cy-copy cy-empty-state">No trend data for this selection.</p>;
   }
 
+  function handlePointerMove(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relativeX = event.clientX - rect.left;
+    const clampedX = Math.min(Math.max(relativeX, 0), rect.width);
+    const index = Math.round((clampedX / rect.width) * (chartData.labels.length - 1));
+    setHoverIndex(index);
+  }
+
   return (
     <svg className="cy-trend-line-chart" viewBox={`0 0 ${width} ${height}`} role="img">
       <title>Vacancy trend by profession</title>
+      <defs>
+        <filter id="trendTooltipShadow" x="-10%" y="-10%" width="120%" height="140%">
+          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#101828" floodOpacity="0.16" />
+        </filter>
+      </defs>
       <g transform={`translate(${margin.left} ${margin.top})`}>
         {yTicks.map((tick) => {
           const y = innerHeight - (tick / maxValue) * innerHeight;
@@ -1291,7 +1329,77 @@ function TrendLineChart({ chartData, granularity }) {
             })}
           </g>
         ))}
+
+        {activeHoverIndex !== null && hoverX !== null ? (
+          <g className="cy-trend-hover-layer">
+            <line
+              className="cy-trend-hover-line"
+              x1={hoverX}
+              x2={hoverX}
+              y1="0"
+              y2={innerHeight}
+            />
+            {chartData.series.map((series, index) => {
+              const value = series.values[activeHoverIndex] ?? 0;
+              const y = innerHeight - (value / maxValue) * innerHeight;
+              return (
+                <circle
+                  key={`${series.role}-hover`}
+                  className="cy-trend-hover-dot"
+                  cx={hoverX}
+                  cy={y}
+                  r="5.5"
+                  fill={getTrendRoleColor(index)}
+                />
+              );
+            })}
+          </g>
+        ) : null}
+
+        <rect
+          className="cy-trend-hover-target"
+          x="0"
+          y="0"
+          width={innerWidth}
+          height={innerHeight}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={() => setHoverIndex(null)}
+        />
       </g>
+
+      {activeHoverIndex !== null ? (
+        <g className="cy-trend-tooltip" transform={`translate(${tooltipX} ${tooltipY})`}>
+          <rect
+            className="cy-trend-tooltip-panel"
+            width={tooltipWidth}
+            height={tooltipHeight}
+            rx="8"
+            ry="8"
+          />
+          <text className="cy-trend-tooltip-title" x="16" y="25">
+            {formatTrendTooltipDate(chartData.labels[activeHoverIndex], granularity)}
+          </text>
+          <text className="cy-trend-tooltip-total" x={tooltipWidth - 16} y="25" textAnchor="end">
+            Total {formatInteger(tooltipRows.reduce((sum, row) => sum + row.value, 0))}
+          </text>
+          {tooltipRows.map((row, index) => (
+            <g key={row.role} transform={`translate(16 ${50 + index * 22})`}>
+              <circle cx="4" cy="-4" r="4" fill={row.color} />
+              <text className="cy-trend-tooltip-label" x="16" y="0">
+                {prettifyLabel(row.role)}
+              </text>
+              <text
+                className="cy-trend-tooltip-value"
+                x={tooltipWidth - 32}
+                y="0"
+                textAnchor="end"
+              >
+                {formatInteger(row.value)}
+              </text>
+            </g>
+          ))}
+        </g>
+      ) : null}
     </svg>
   );
 }
@@ -1872,6 +1980,21 @@ function formatTrendAxisLabel(value, granularity) {
     day: granularity === "daily" ? "numeric" : undefined,
     timeZone: "Europe/Zurich",
   }).format(date);
+}
+
+function formatTrendTooltipDate(value, granularity) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value ?? "";
+  }
+
+  const formattedDate = new Intl.DateTimeFormat("en-CH", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "Europe/Zurich",
+  }).format(date);
+  return granularity === "weekly" ? `Week of ${formattedDate}` : formattedDate;
 }
 
 async function fetchSnapshot(fileName) {

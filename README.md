@@ -26,3 +26,5 @@ This project is designed to answer practical, data-driven questions about the jo
 - How demand is distributed across seniority levels
 - How comparable salary ranges differ across role categories
 - Which skills the market is actually valued by employers
+
+**The statistics cover vacancies published from March 2026 onward.**

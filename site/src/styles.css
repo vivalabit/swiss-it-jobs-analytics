@@ -1172,6 +1172,58 @@ img {
   stroke-linejoin: round;
 }
 
+.cy-trend-hover-target {
+  cursor: crosshair;
+  fill: transparent;
+  pointer-events: all;
+}
+
+.cy-trend-hover-line {
+  stroke: rgba(16, 24, 40, 0.42);
+  stroke-dasharray: 5 5;
+  stroke-width: 1.5;
+}
+
+.cy-trend-hover-dot {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.cy-trend-tooltip-panel {
+  fill: #fff;
+  stroke: var(--border);
+  filter: url("#trendTooltipShadow");
+}
+
+.cy-trend-tooltip-title,
+.cy-trend-tooltip-total,
+.cy-trend-tooltip-label,
+.cy-trend-tooltip-value {
+  fill: var(--foreground);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+.cy-trend-tooltip-title {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cy-trend-tooltip-total {
+  fill: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cy-trend-tooltip-label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cy-trend-tooltip-value {
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .cy-trend-footnote {
   display: flex;
   flex-wrap: wrap;
