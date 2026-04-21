@@ -22,6 +22,7 @@ const SNAPSHOT_FILES = {
   metadata: "metadata.json",
   overview: "overview.json",
   educationRequirements: "education_requirements.json",
+  experienceRequirements: "experience_requirements.json",
   vacancyTrends: "vacancy_trends.json",
   salaryMetrics: "salary_metrics.json",
   topSkills: "top_skills.json",
@@ -300,6 +301,7 @@ const STAFFING_AGENCY_COMPANY_NAMES = new Set(
 );
 const COMPANY_PREVIEW_LIMIT = 8;
 const COMPANY_EXPANDED_LIMIT = 24;
+const EXPERIENCE_MIN_SAMPLE_SIZE = 10;
 const TREND_PERIOD_OPTIONS = [
   { label: "30D", days: 30 },
   { label: "90D", days: 90 },
@@ -423,6 +425,7 @@ function App() {
     metadata,
     overview,
     educationRequirements,
+    experienceRequirements,
     vacancyTrends,
     salaryMetrics,
     topSkills,
@@ -437,6 +440,10 @@ function App() {
 
   const overviewMetrics = overview.metrics ?? {};
   const educationSummary = educationRequirements.summary ?? {};
+  const experienceSummary = experienceRequirements.summary ?? {};
+  const experienceBySeniority = (experienceRequirements.by_seniority ?? []).filter(
+    (item) => item.seniority && item.seniority !== "Unknown",
+  );
   const salarySummary = salaryMetrics.summary ?? {};
   const lastUpdated = metadata.generated_at ?? overview.generated_at ?? null;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 20);
@@ -686,6 +693,17 @@ function App() {
               ) : null}
             </article>
           </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      <section className="cy-section" id="experience">
+        <div className="cy-container">
+          <ExperienceRequirementsPanel
+            summary={experienceSummary}
+            bySeniority={experienceBySeniority}
+          />
         </div>
       </section>
 
@@ -1056,6 +1074,91 @@ function SalaryStat({ value, label }) {
       <strong>{value}</strong>
       <span>{label}</span>
     </div>
+  );
+}
+
+function ExperienceRequirementsPanel({ summary, bySeniority }) {
+  const topSeniorityItems = selectTopItems(bySeniority, 5);
+  const maxVacancyCount = Math.max(...topSeniorityItems.map((item) => item.vacancy_count ?? 0), 1);
+
+  return (
+    <article className="cy-card cy-data-panel cy-experience-panel">
+      <div className="cy-data-panel-head">
+        <h3>Experience requirements</h3>
+        <p className="cy-copy">
+          Seniority labels and explicit years of experience requested in vacancy text.
+          Averages by seniority require at least {EXPERIENCE_MIN_SAMPLE_SIZE} year mentions.
+        </p>
+      </div>
+
+      <div className="cy-experience-stat-grid">
+        <SalaryStat
+          value={formatPercent(summary.seniority_known_share)}
+          label={`${formatInteger(summary.seniority_known_count)} vacancies with seniority`}
+        />
+        <SalaryStat
+          value={formatPercent(summary.experience_years_mentioned_share)}
+          label={`${formatInteger(
+            summary.experience_years_mentioned_count,
+          )} mention years of experience`}
+        />
+        <SalaryStat
+          value={formatYears(summary.average_min_experience_years)}
+          label="Average minimum requested"
+        />
+        <SalaryStat
+          value={formatYears(summary.median_min_experience_years)}
+          label="Median minimum requested"
+        />
+      </div>
+
+      <div className="cy-experience-layout">
+        <div className="cy-experience-bar-list">
+          {topSeniorityItems.map((item) => (
+            <div key={item.seniority} className="cy-experience-row">
+              <div className="cy-experience-row-head">
+                <strong>{prettifyLabel(item.seniority)}</strong>
+                <span>
+                  {formatInteger(item.vacancy_count)} · {formatPercent(item.share)}
+                </span>
+              </div>
+              <div className="cy-experience-track">
+                <span
+                  style={{
+                    width: `${Math.max(((item.vacancy_count ?? 0) / maxVacancyCount) * 100, 8)}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="cy-table-shell cy-experience-table-shell">
+          <table className="cy-data-table">
+            <thead>
+              <tr>
+                <th>Seniority</th>
+                <th>Avg. min exp.</th>
+                <th>Mentions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topSeniorityItems.map((item) => (
+                <tr key={`${item.seniority}-experience`}>
+                  <td>{prettifyLabel(item.seniority)}</td>
+                  <td>
+                    {item.experience_years_count >= EXPERIENCE_MIN_SAMPLE_SIZE
+                      ? formatYears(item.average_min_experience_years)
+                      : "n/a"}
+                  </td>
+                  <td>{formatInteger(item.experience_years_count)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -2215,6 +2318,15 @@ function formatSalaryShort(value) {
     return "n/a";
   }
   return `CHF ${Math.round(value / 1000)}k`;
+}
+
+function formatYears(value) {
+  if (typeof value !== "number") {
+    return "n/a";
+  }
+  return `${new Intl.NumberFormat("en-CH", {
+    maximumFractionDigits: value >= 10 ? 0 : 1,
+  }).format(value)} yrs`;
 }
 
 function formatCantonCode(value) {

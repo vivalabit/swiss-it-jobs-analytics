@@ -774,6 +774,68 @@ img {
   margin-top: 28px;
 }
 
+.cy-experience-panel {
+  margin-top: 40px;
+}
+
+.cy-experience-stat-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cy-experience-layout {
+  display: grid;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.cy-experience-bar-list {
+  display: grid;
+  gap: 16px;
+}
+
+.cy-experience-row {
+  display: grid;
+  gap: 8px;
+}
+
+.cy-experience-row-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--foreground);
+  font-size: 0.92rem;
+}
+
+.cy-experience-row-head strong {
+  letter-spacing: -0.04em;
+}
+
+.cy-experience-row-head span {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.cy-experience-track {
+  overflow: hidden;
+  height: 12px;
+  background: rgba(16, 24, 40, 0.08);
+}
+
+.cy-experience-track span {
+  display: block;
+  height: 100%;
+  min-width: 18px;
+  background: linear-gradient(90deg, #101828, var(--primary));
+}
+
+.cy-experience-table-shell {
+  margin-top: 0;
+}
+
 .cy-salary-layout {
   display: grid;
   gap: 24px;
@@ -1419,6 +1481,7 @@ img {
   .cy-metrics-grid,
   .cy-dashboard-grid,
   .cy-data-grid,
+  .cy-experience-stat-grid,
   .cy-salary-stat-grid,
   .cy-meta-strip-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1468,6 +1531,11 @@ img {
 
   .cy-data-grid {
     grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .cy-experience-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    align-items: start;
   }
 
   .cy-trend-filter-grid {

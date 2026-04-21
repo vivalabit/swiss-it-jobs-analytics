@@ -1,0 +1,7 @@
+seniority,vacancy_count,share,experience_years_count,average_min_experience_years,median_min_experience_years,average_experience_years,median_experience_years,rank
+Unknown,3755,0.4638,436,5.95,4.0,6.1,4.0,1
+senior,2413,0.298,983,5.11,5.0,5.24,5.0,2
+manager,1334,0.1648,341,5.16,5.0,5.35,5.0,3
+junior,358,0.0442,123,2.96,2.0,3.2,2.0,4
+mid,138,0.017,127,3.11,3.0,3.31,3.0,5
+intern,99,0.0122,2,8.0,8.0,8.0,8.0,6

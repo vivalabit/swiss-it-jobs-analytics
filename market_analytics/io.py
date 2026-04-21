@@ -515,6 +515,7 @@ def _build_record_from_sqlite_row(
     location = analytics.get("job_location")
     company_info = analytics.get("company")
     seniority_labels = analytics.get("seniority_labels")
+    experience_years = analytics.get("experience_years")
     locality = _nested_value(location, "locality") or row.get("place")
     postal_code = _nested_value(location, "postal_code")
     region = _nested_value(location, "region")
@@ -535,7 +536,9 @@ def _build_record_from_sqlite_row(
             place=row.get("place"),
             postal_code=postal_code,
         ),
-        "seniority": _first_list_item(seniority_labels),
+        "seniority": _select_seniority_label(seniority_labels, title=row.get("title")),
+        "experience_years_min": _nested_value(experience_years, "min"),
+        "experience_years_max": _nested_value(experience_years, "max"),
         "work_mode": analytics.get("remote_mode"),
         "programming_languages": analytics.get("programming_languages", []),
         "frameworks_libraries": analytics.get("frameworks_libraries", []),
@@ -559,6 +562,42 @@ def _first_list_item(value: Any) -> Any:
     if isinstance(value, list) and value:
         return value[0]
     return None
+
+
+def _select_seniority_label(value: Any, *, title: Any = None) -> Any:
+    if not isinstance(value, list) or not value:
+        return None
+
+    labels = [str(item).casefold() for item in value if item]
+    if not labels:
+        return None
+
+    title_key = _normalize_lookup_key(title) if title is not None else ""
+    title_matches = [
+        label
+        for label, pattern in (
+            ("manager", r"\b(?:manager|lead|leiter|responsable|head)\b"),
+            ("senior", r"\b(?:senior|staff|principal|architect|expert)\b"),
+            ("junior", r"\b(?:junior|graduate|entry)\b"),
+            ("intern", r"\b(?:intern|internship|trainee|werkstudent|student)\b"),
+            ("mid", r"\b(?:mid|professional)\b"),
+        )
+        if label in labels and re.search(pattern, title_key)
+    ]
+    if len(title_matches) == 1:
+        return title_matches[0]
+    if len(title_matches) > 1:
+        return pd.NA
+
+    if labels == ["intern"]:
+        return pd.NA
+
+    for label in ("manager", "senior", "mid", "junior", "intern"):
+        if label in labels:
+            if label == "intern":
+                continue
+            return label
+    return labels[0]
 
 
 def _collect_skills_from_analytics(analytics: dict[str, Any]) -> list[str]:

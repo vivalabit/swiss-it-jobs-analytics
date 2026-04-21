@@ -48,6 +48,45 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "education_requirements_summary.csv", index=False)
             pd.DataFrame(
                 [
+                    {"metric": "total_vacancies", "value": 3},
+                    {"metric": "seniority_known_count", "value": 3},
+                    {"metric": "seniority_known_share", "value": 1.0},
+                    {"metric": "experience_years_mentioned_count", "value": 2},
+                    {"metric": "experience_years_mentioned_share", "value": 0.6667},
+                    {"metric": "average_min_experience_years", "value": 4.0},
+                    {"metric": "median_min_experience_years", "value": 4.0},
+                    {"metric": "average_experience_years", "value": 4.5},
+                    {"metric": "median_experience_years", "value": 4.5},
+                ]
+            ).to_csv(csv_dir / "experience_requirements_summary.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
+                        "seniority": "senior",
+                        "vacancy_count": 2,
+                        "share": 0.6667,
+                        "experience_years_count": 1,
+                        "average_min_experience_years": 5.0,
+                        "median_min_experience_years": 5.0,
+                        "average_experience_years": 5.0,
+                        "median_experience_years": 5.0,
+                        "rank": 1,
+                    },
+                    {
+                        "seniority": "mid",
+                        "vacancy_count": 1,
+                        "share": 0.3333,
+                        "experience_years_count": 1,
+                        "average_min_experience_years": 3.0,
+                        "median_min_experience_years": 3.0,
+                        "average_experience_years": 4.0,
+                        "median_experience_years": 4.0,
+                        "rank": 2,
+                    },
+                ]
+            ).to_csv(csv_dir / "experience_by_seniority.csv", index=False)
+            pd.DataFrame(
+                [
                     {"metric": "published_total", "value": 3},
                     {"metric": "closed_total", "value": 1},
                     {"metric": "latest_publication_date", "value": "2026-04-21"},
@@ -250,6 +289,19 @@ class BuildPublicStatsTests(unittest.TestCase):
                 education_requirements["summary"]["higher_education_vacancy_share"],
             )
 
+            experience_requirements = json.loads(
+                (output_dir / "experience_requirements.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(experience_requirements["available"])
+            self.assertEqual(
+                2,
+                experience_requirements["summary"]["experience_years_mentioned_count"],
+            )
+            self.assertEqual(
+                "senior",
+                experience_requirements["by_seniority"][0]["seniority"],
+            )
+
             vacancy_trends = json.loads(
                 (output_dir / "vacancy_trends.json").read_text(encoding="utf-8")
             )
@@ -289,6 +341,7 @@ class BuildPublicStatsTests(unittest.TestCase):
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
             self.assertTrue((copy_csv_dir / "education_requirements_summary.csv").exists())
+            self.assertTrue((copy_csv_dir / "experience_by_seniority.csv").exists())
             self.assertTrue((copy_csv_dir / "vacancy_trends_daily.csv").exists())
             self.assertTrue((copy_csv_dir / "vacancy_trends_segments_weekly.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())

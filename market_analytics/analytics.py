@@ -27,6 +27,21 @@ HIGHER_EDUCATION_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
         r"\b(?:formation|diplome)\s+(?:universitaire|superieure)\b",
     )
 )
+EXPERIENCE_YEAR_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
+    re.compile(pattern, flags=re.IGNORECASE)
+    for pattern in (
+        r"\b(?:you|your|youll|youre|du|dein|sie|ihr|vous|votre|profile|profil|requirements?|anforderungen|qualifications?|qualifikationen|bring|bringst|bringen|have|hast|haben|possess|verfugst|mitbringst|required|requires|minimum|min\.?|at\s+least|mindestens|au moins)\D{0,90}(?P<min>\d{1,2})\s*(?:-|to|bis|a)\s*(?P<max>\d{1,2})\s*(?:years?|yrs?|jahre|jahren|ans|annees)\b",
+        r"\b(?:you|your|youll|youre|du|dein|sie|ihr|vous|votre|profile|profil|requirements?|anforderungen|qualifications?|qualifikationen|bring|bringst|bringen|have|hast|haben|possess|verfugst|mitbringst|required|requires|minimum|min\.?|at\s+least|mindestens|au moins)\D{0,90}(?P<min>\d{1,2})\+?\s*(?:years?|yrs?|jahre|jahren|ans|annees)\b",
+        r"\b(?P<min>\d{1,2})\s*(?:-|to|bis|a)\s*(?P<max>\d{1,2})\s*(?:years?|yrs?|jahre|jahren|ans|annees)\s+(?:of\s+)?(?:professional\s+|relevant\s+)?(?:experience|erfahrung|experience)\b",
+        r"\b(?P<min>\d{1,2})\+?\s*(?:years?|yrs?|jahre|jahren|ans|annees)\s+(?:of\s+)?(?:professional\s+|relevant\s+)?(?:experience|erfahrung|experience)\b",
+    )
+)
+MAX_REASONABLE_EXPERIENCE_YEARS = 30
+EXPERIENCE_CONTEXT_REJECT_PATTERN = re.compile(
+    r"\b(?:company|provider|leader|manufacturer|firm|group|unternehmen|anbieter|seit|founded|history|market|"
+    r"over|more\s+than|uber|ueber|based\s+on|hours?|hrs?|std|stunden|week|woche|wochen|month|months|monat|monate|days?|tage)\b",
+    flags=re.IGNORECASE,
+)
 
 
 def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
@@ -76,6 +91,111 @@ def calculate_education_requirements_summary(dataset: pd.DataFrame) -> pd.DataFr
             },
         ]
     )
+
+
+def calculate_experience_requirements_summary(dataset: pd.DataFrame) -> pd.DataFrame:
+    experience = _experience_requirement_frame(dataset)
+    total_vacancies = int(len(dataset))
+    seniority = dataset["seniority"].fillna(UNKNOWN_LABEL)
+    known_seniority_count = int(seniority.ne(UNKNOWN_LABEL).sum())
+    experience_count = int(len(experience))
+    metrics: list[dict[str, float | int | str | None]] = [
+        {"metric": "total_vacancies", "value": total_vacancies},
+        {"metric": "seniority_known_count", "value": known_seniority_count},
+        {
+            "metric": "seniority_known_share",
+            "value": round(known_seniority_count / total_vacancies, 4) if total_vacancies else 0.0,
+        },
+        {"metric": "experience_years_mentioned_count", "value": experience_count},
+        {
+            "metric": "experience_years_mentioned_share",
+            "value": round(experience_count / total_vacancies, 4) if total_vacancies else 0.0,
+        },
+    ]
+    if experience_count:
+        metrics.extend(
+            [
+                {
+                    "metric": "average_min_experience_years",
+                    "value": round(float(experience["experience_min_years"].mean()), 2),
+                },
+                {
+                    "metric": "median_min_experience_years",
+                    "value": round(float(experience["experience_min_years"].median()), 2),
+                },
+                {
+                    "metric": "average_experience_years",
+                    "value": round(float(experience["experience_mid_years"].mean()), 2),
+                },
+                {
+                    "metric": "median_experience_years",
+                    "value": round(float(experience["experience_mid_years"].median()), 2),
+                },
+            ]
+        )
+    return pd.DataFrame(metrics)
+
+
+def calculate_experience_by_seniority(dataset: pd.DataFrame) -> pd.DataFrame:
+    columns = [
+        "seniority",
+        "vacancy_count",
+        "share",
+        "experience_years_count",
+        "average_min_experience_years",
+        "median_min_experience_years",
+        "average_experience_years",
+        "median_experience_years",
+        "rank",
+    ]
+    if dataset.empty:
+        return pd.DataFrame(columns=columns)
+
+    seniority_counts = (
+        dataset["seniority"]
+        .fillna(UNKNOWN_LABEL)
+        .value_counts(dropna=False)
+        .rename_axis("seniority")
+        .reset_index(name="vacancy_count")
+    )
+    seniority_counts["share"] = (seniority_counts["vacancy_count"] / len(dataset)).round(4)
+    experience = _experience_requirement_frame(dataset)
+    if experience.empty:
+        seniority_counts["experience_years_count"] = 0
+        seniority_counts["average_min_experience_years"] = pd.NA
+        seniority_counts["median_min_experience_years"] = pd.NA
+        seniority_counts["average_experience_years"] = pd.NA
+        seniority_counts["median_experience_years"] = pd.NA
+    else:
+        grouped = (
+            experience.groupby("seniority", dropna=False)
+            .agg(
+                experience_years_count=("experience_min_years", "count"),
+                average_min_experience_years=("experience_min_years", "mean"),
+                median_min_experience_years=("experience_min_years", "median"),
+                average_experience_years=("experience_mid_years", "mean"),
+                median_experience_years=("experience_mid_years", "median"),
+            )
+            .reset_index()
+        )
+        seniority_counts = seniority_counts.merge(grouped, how="left", on="seniority")
+        seniority_counts["experience_years_count"] = (
+            seniority_counts["experience_years_count"].fillna(0).astype(int)
+        )
+        for column in (
+            "average_min_experience_years",
+            "median_min_experience_years",
+            "average_experience_years",
+            "median_experience_years",
+        ):
+            seniority_counts[column] = seniority_counts[column].round(2)
+
+    seniority_counts = seniority_counts.sort_values(
+        ["vacancy_count", "seniority"],
+        ascending=[False, True],
+    ).reset_index(drop=True)
+    seniority_counts["rank"] = seniority_counts.index + 1
+    return seniority_counts[columns]
 
 
 def calculate_vacancy_trend_outputs(dataset: pd.DataFrame) -> dict[str, pd.DataFrame]:
@@ -378,6 +498,97 @@ def _has_higher_education_requirement(row: pd.Series) -> bool:
 
     normalized = _normalize_search_text(text)
     return any(pattern.search(normalized) for pattern in HIGHER_EDUCATION_PATTERNS)
+
+
+def _experience_requirement_frame(dataset: pd.DataFrame) -> pd.DataFrame:
+    records: list[dict[str, float | str]] = []
+    for _, row in dataset.iterrows():
+        experience = _extract_experience_years(row)
+        if experience is None:
+            continue
+        minimum, maximum = experience
+        midpoint = (minimum + maximum) / 2 if maximum is not None else minimum
+        records.append(
+            {
+                "seniority": _known_or_unknown(row.get("seniority")),
+                "role_category": _known_or_unknown(row.get("role_category")),
+                "experience_min_years": minimum,
+                "experience_max_years": maximum,
+                "experience_mid_years": midpoint,
+            }
+        )
+    return pd.DataFrame.from_records(
+        records,
+        columns=[
+            "seniority",
+            "role_category",
+            "experience_min_years",
+            "experience_max_years",
+            "experience_mid_years",
+        ],
+    )
+
+
+def _extract_experience_years(row: pd.Series) -> tuple[float, float | None] | None:
+    text = " ".join(
+        str(value)
+        for value in (
+            row.get("title"),
+            row.get("description_text"),
+        )
+        if not pd.isna(value) and str(value).strip()
+    )
+    if not text:
+        return None
+
+    normalized = _normalize_search_text(text)
+    matches: list[tuple[float, float | None]] = []
+    for pattern in EXPERIENCE_YEAR_PATTERNS:
+        for match in pattern.finditer(normalized):
+            if _is_rejected_experience_context(normalized, match.start(), match.end()):
+                continue
+            minimum = _coerce_experience_years(match.group("min"))
+            maximum = _coerce_experience_years(match.groupdict().get("max"))
+            if minimum is None:
+                continue
+            if maximum is not None and maximum < minimum:
+                maximum = minimum
+            matches.append((minimum, maximum))
+    if not matches:
+        return None
+    return min(matches, key=lambda item: item[0])
+
+
+def _is_rejected_experience_context(text: str, start: int, end: int) -> bool:
+    window = text[max(0, start - 80) : min(len(text), end + 80)]
+    if EXPERIENCE_CONTEXT_REJECT_PATTERN.search(window):
+        required_context = re.search(
+            r"\b(?:you|your|youll|youre|du|dein|sie|ihr|vous|votre|bring|bringst|"
+            r"bringen|have|hast|haben|possess|verfugst|mitbringst|required|requires|"
+            r"minimum|min\.?|at\s+least|mindestens|au moins)\b",
+            window,
+            flags=re.IGNORECASE,
+        )
+        return required_context is None
+    return False
+
+
+def _coerce_experience_years(value: object) -> float | None:
+    if value is None or pd.isna(value):
+        return None
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return None
+    if numeric < 0 or numeric > MAX_REASONABLE_EXPERIENCE_YEARS:
+        return None
+    return numeric
+
+
+def _known_or_unknown(value: object) -> str:
+    if value is None or pd.isna(value) or not str(value).strip():
+        return UNKNOWN_LABEL
+    return str(value)
 
 
 def _normalize_search_text(value: str) -> str:

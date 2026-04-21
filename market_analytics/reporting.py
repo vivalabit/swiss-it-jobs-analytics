@@ -7,6 +7,8 @@ import pandas as pd
 
 from .analytics import (
     calculate_education_requirements_summary,
+    calculate_experience_by_seniority,
+    calculate_experience_requirements_summary,
     calculate_crosstabs,
     calculate_distributions,
     calculate_overview_metrics,
@@ -32,6 +34,8 @@ def build_analytics_outputs(
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),
         "education_requirements_summary": calculate_education_requirements_summary(dataset),
+        "experience_requirements_summary": calculate_experience_requirements_summary(dataset),
+        "experience_by_seniority": calculate_experience_by_seniority(dataset),
         "salary_summary": calculate_salary_summary(dataset),
         "salary_by_role_category": calculate_salary_by_role_category(dataset),
         "salary_by_seniority": calculate_salary_by_seniority(dataset),

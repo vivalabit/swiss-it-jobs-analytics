@@ -95,7 +95,7 @@ class MarketAnalyticsTests(unittest.TestCase):
                 ],
                 "description_text": [
                     "University degree in computer science is required.",
-                    "Strong Python delivery experience.",
+                    "Strong Python delivery experience with at least 3 years.",
                     "Bachelor or Master in engineering.",
                     "Agency vacancy with FH degree mentioned.",
                 ],
@@ -150,7 +150,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(27, len(outputs))
+        self.assertEqual(29, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(4, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -163,6 +163,14 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertEqual(4, education_summary["total_vacancies"])
         self.assertEqual(3, education_summary["higher_education_vacancy_count"])
         self.assertEqual(0.75, education_summary["higher_education_vacancy_share"])
+        experience_summary = outputs["experience_requirements_summary"].set_index("metric")[
+            "value"
+        ].to_dict()
+        self.assertEqual(4, experience_summary["seniority_known_count"])
+        self.assertEqual(1, experience_summary["experience_years_mentioned_count"])
+        self.assertEqual(3.0, experience_summary["average_min_experience_years"])
+        experience_by_seniority = outputs["experience_by_seniority"].set_index("seniority")
+        self.assertEqual(1, experience_by_seniority.loc["mid", "experience_years_count"])
         trend_summary = outputs["vacancy_trends_summary"].set_index("metric")["value"].to_dict()
         self.assertEqual(4, trend_summary["published_total"])
         self.assertEqual(1, trend_summary["closed_total"])
@@ -229,6 +237,7 @@ class MarketAnalyticsTests(unittest.TestCase):
         {
           "role_family_primary": "data_ai",
           "seniority_labels": ["senior"],
+          "experience_years": {"min": 5},
           "remote_mode": "hybrid",
           "job_location": {"locality": "Zurich", "region": "ZH"},
           "programming_languages": ["python", "sql"],
@@ -294,6 +303,7 @@ class MarketAnalyticsTests(unittest.TestCase):
             self.assertEqual("Acme", loaded.loc[0, "company"])
             self.assertEqual("data_ai", loaded.loc[0, "role_category"])
             self.assertEqual("ZH", loaded.loc[0, "canton"])
+            self.assertEqual(5, loaded.loc[0, "experience_years_min"])
             self.assertEqual(["python", "sql"], loaded.loc[0, "programming_languages_list"])
             self.assertEqual(["airflow"], loaded.loc[0, "frameworks_libraries_list"])
             self.assertEqual(["python", "sql", "airflow", "aws"], loaded.loc[0, "skills_list"])

@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-04-21T10:17:20Z",
+  "available": true,
+  "summary": {
+    "total_vacancies": 8097,
+    "seniority_known_count": 4342,
+    "seniority_known_share": 0.5362,
+    "experience_years_mentioned_count": 2012,
+    "experience_years_mentioned_share": 0.2485,
+    "average_min_experience_years": 5.05,
+    "median_min_experience_years": 5.0,
+    "average_experience_years": 5.2,
+    "median_experience_years": 5.0
+  },
+  "by_seniority": [
+    {
+      "seniority": "Unknown",
+      "vacancy_count": 3755,
+      "share": 0.4638,
+      "experience_years_count": 436,
+      "average_min_experience_years": 5.95,
+      "median_min_experience_years": 4.0,
+      "average_experience_years": 6.1,
+      "median_experience_years": 4.0,
+      "rank": 1
+    },
+    {
+      "seniority": "senior",
+      "vacancy_count": 2413,
+      "share": 0.298,
+      "experience_years_count": 983,
+      "average_min_experience_years": 5.11,
+      "median_min_experience_years": 5.0,
+      "average_experience_years": 5.24,
+      "median_experience_years": 5.0,
+      "rank": 2
+    },
+    {
+      "seniority": "manager",
+      "vacancy_count": 1334,
+      "share": 0.1648,
+      "experience_years_count": 341,
+      "average_min_experience_years": 5.16,
+      "median_min_experience_years": 5.0,
+      "average_experience_years": 5.35,
+      "median_experience_years": 5.0,
+      "rank": 3
+    },
+    {
+      "seniority": "junior",
+      "vacancy_count": 358,
+      "share": 0.0442,
+      "experience_years_count": 123,
+      "average_min_experience_years": 2.96,
+      "median_min_experience_years": 2.0,
+      "average_experience_years": 3.2,
+      "median_experience_years": 2.0,
+      "rank": 4
+    },
+    {
+      "seniority": "mid",
+      "vacancy_count": 138,
+      "share": 0.017,
+      "experience_years_count": 127,
+      "average_min_experience_years": 3.11,
+      "median_min_experience_years": 3.0,
+      "average_experience_years": 3.31,
+      "median_experience_years": 3.0,
+      "rank": 5
+    },
+    {
+      "seniority": "intern",
+      "vacancy_count": 99,
+      "share": 0.0122,
+      "experience_years_count": 2,
+      "average_min_experience_years": 8.0,
+      "median_min_experience_years": 8.0,
+      "average_experience_years": 8.0,
+      "median_experience_years": 8.0,
+      "rank": 6
+    }
+  ]
+}
