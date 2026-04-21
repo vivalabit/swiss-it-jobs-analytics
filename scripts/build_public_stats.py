@@ -11,6 +11,7 @@ import pandas as pd
 
 EXPECTED_CSV_FILES: tuple[str, ...] = (
     "overview_metrics.csv",
+    "education_requirements_summary.csv",
     "salary_summary.csv",
     "salary_by_role_category.csv",
     "salary_by_seniority.csv",
@@ -111,6 +112,10 @@ def build_public_snapshots(
             generated_at=generated_at,
             overview_frame=csv_frames["overview_metrics.csv"],
         ),
+        "education_requirements.json": _build_education_requirements_snapshot(
+            generated_at=generated_at,
+            summary_frame=csv_frames["education_requirements_summary.csv"],
+        ),
         "salary_metrics.json": _build_salary_snapshot(
             generated_at=generated_at,
             summary_frame=csv_frames["salary_summary.csv"],
@@ -173,6 +178,7 @@ def _build_metadata_snapshot(
     generated_snapshots = [
         "metadata.json",
         "overview.json",
+        "education_requirements.json",
         "salary_metrics.json",
         "top_skills.json",
         "skill_pairs.json",
@@ -244,6 +250,19 @@ def _build_top_skills_snapshot(
             "summary": _metric_frame_to_dict(frameworks_summary_frame),
             "items": _frame_to_records(frameworks_frame),
         },
+    }
+
+
+def _build_education_requirements_snapshot(
+    *,
+    generated_at: str,
+    summary_frame: pd.DataFrame | None,
+) -> dict[str, Any]:
+    summary = _metric_frame_to_dict(summary_frame)
+    return {
+        "generated_at": generated_at,
+        "available": bool(summary),
+        "summary": summary,
     }
 
 
@@ -357,11 +376,14 @@ def _normalize_metric_value(metric_name: str, value: Any) -> Any:
     numeric_metrics = {
         "salary_coverage",
         "vacancy_coverage",
+        "higher_education_vacancy_share",
         "average_vacancies_per_company",
     }
     integer_metrics = {
         "total_vacancies",
         "total_companies",
+        "higher_education_vacancy_count",
+        "without_explicit_higher_education_count",
         "distinct_items",
         "total_mentions",
         "vacancies_with_items",

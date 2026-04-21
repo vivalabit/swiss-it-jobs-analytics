@@ -40,6 +40,14 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "overview_metrics.csv", index=False)
             pd.DataFrame(
                 [
+                    {"metric": "total_vacancies", "value": 3},
+                    {"metric": "higher_education_vacancy_count", "value": 2},
+                    {"metric": "higher_education_vacancy_share", "value": 0.6667},
+                    {"metric": "without_explicit_higher_education_count", "value": 1},
+                ]
+            ).to_csv(csv_dir / "education_requirements_summary.csv", index=False)
+            pd.DataFrame(
+                [
                     {"metric": "salary_count", "value": 2},
                     {"metric": "salary_coverage", "value": 0.6667},
                     {"metric": "average_salary", "value": 115000},
@@ -155,6 +163,19 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue(overview["available"])
             self.assertEqual(3, overview["metrics"]["total_vacancies"])
 
+            education_requirements = json.loads(
+                (output_dir / "education_requirements.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(education_requirements["available"])
+            self.assertEqual(
+                2,
+                education_requirements["summary"]["higher_education_vacancy_count"],
+            )
+            self.assertEqual(
+                0.6667,
+                education_requirements["summary"]["higher_education_vacancy_share"],
+            )
+
             salary_metrics = json.loads(
                 (output_dir / "salary_metrics.json").read_text(encoding="utf-8")
             )
@@ -179,6 +200,7 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertEqual(2, company_distribution["items"][0]["vacancy_count"])
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
+            self.assertTrue((copy_csv_dir / "education_requirements_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_by_seniority.csv").exists())
 

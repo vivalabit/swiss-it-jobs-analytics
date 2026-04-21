@@ -1,139 +1,139 @@
 {
-  "generated_at": "2026-04-21T07:33:41Z",
+  "generated_at": "2026-04-21T08:42:42Z",
   "available": true,
   "dimension": "canton",
   "items": [
     {
       "key": "ZH",
       "label": "ZH",
-      "vacancy_count": 2806,
-      "share": 0.3749
+      "vacancy_count": 3003,
+      "share": 0.3709
     },
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 817,
-      "share": 0.1092
+      "vacancy_count": 868,
+      "share": 0.1072
     },
     {
       "key": "BE",
       "label": "BE",
-      "vacancy_count": 736,
-      "share": 0.0983
+      "vacancy_count": 800,
+      "share": 0.0988
     },
     {
       "key": "AG",
       "label": "AG",
-      "vacancy_count": 438,
-      "share": 0.0585
+      "vacancy_count": 480,
+      "share": 0.0593
     },
     {
       "key": "LU",
       "label": "LU",
-      "vacancy_count": 413,
-      "share": 0.0552
+      "vacancy_count": 446,
+      "share": 0.0551
     },
     {
       "key": "BS",
       "label": "BS",
-      "vacancy_count": 401,
-      "share": 0.0536
+      "vacancy_count": 421,
+      "share": 0.052
     },
     {
       "key": "GE",
       "label": "GE",
-      "vacancy_count": 362,
-      "share": 0.0484
+      "vacancy_count": 415,
+      "share": 0.0513
     },
     {
       "key": "SG",
       "label": "SG",
-      "vacancy_count": 304,
-      "share": 0.0406
+      "vacancy_count": 338,
+      "share": 0.0417
     },
     {
       "key": "ZG",
       "label": "ZG",
-      "vacancy_count": 245,
-      "share": 0.0327
+      "vacancy_count": 282,
+      "share": 0.0348
     },
     {
       "key": "VD",
       "label": "VD",
-      "vacancy_count": 224,
-      "share": 0.0299
+      "vacancy_count": 241,
+      "share": 0.0298
     },
     {
       "key": "SO",
       "label": "SO",
-      "vacancy_count": 158,
-      "share": 0.0211
+      "vacancy_count": 167,
+      "share": 0.0206
     },
     {
       "key": "TG",
       "label": "TG",
-      "vacancy_count": 92,
-      "share": 0.0123
-    },
-    {
-      "key": "GR",
-      "label": "GR",
-      "vacancy_count": 75,
-      "share": 0.01
+      "vacancy_count": 98,
+      "share": 0.0121
     },
     {
       "key": "BL",
       "label": "BL",
-      "vacancy_count": 73,
-      "share": 0.0098
+      "vacancy_count": 84,
+      "share": 0.0104
+    },
+    {
+      "key": "GR",
+      "label": "GR",
+      "vacancy_count": 81,
+      "share": 0.01
     },
     {
       "key": "TI",
       "label": "TI",
-      "vacancy_count": 68,
-      "share": 0.0091
+      "vacancy_count": 77,
+      "share": 0.0095
     },
     {
       "key": "NE",
       "label": "NE",
-      "vacancy_count": 66,
-      "share": 0.0088
+      "vacancy_count": 73,
+      "share": 0.009
     },
     {
       "key": "SZ",
       "label": "SZ",
-      "vacancy_count": 59,
-      "share": 0.0079
+      "vacancy_count": 62,
+      "share": 0.0077
     },
     {
       "key": "FR",
       "label": "FR",
-      "vacancy_count": 44,
-      "share": 0.0059
+      "vacancy_count": 47,
+      "share": 0.0058
     },
     {
       "key": "SH",
       "label": "SH",
-      "vacancy_count": 38,
+      "vacancy_count": 41,
       "share": 0.0051
     },
     {
       "key": "VS",
       "label": "VS",
-      "vacancy_count": 32,
-      "share": 0.0043
+      "vacancy_count": 36,
+      "share": 0.0044
     },
     {
       "key": "AR",
       "label": "AR",
-      "vacancy_count": 18,
-      "share": 0.0024
+      "vacancy_count": 22,
+      "share": 0.0027
     },
     {
       "key": "GL",
       "label": "GL",
       "vacancy_count": 6,
-      "share": 0.0008
+      "share": 0.0007
     },
     {
       "key": "NW",
@@ -151,7 +151,7 @@
       "key": "AI",
       "label": "AI",
       "vacancy_count": 2,
-      "share": 0.0003
+      "share": 0.0002
     },
     {
       "key": "OW",

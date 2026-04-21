@@ -1,106 +1,106 @@
 {
-  "generated_at": "2026-04-21T07:33:41Z",
+  "generated_at": "2026-04-21T08:42:42Z",
   "available": true,
   "overall": [
     {
       "skill": "agile",
-      "vacancy_count": 1418,
-      "share": 0.1895
-    },
-    {
-      "skill": "ci_cd",
-      "vacancy_count": 1017,
-      "share": 0.1359
-    },
-    {
-      "skill": "java",
-      "vacancy_count": 1016,
-      "share": 0.1358
+      "vacancy_count": 1538,
+      "share": 0.1899
     },
     {
       "skill": "devops",
-      "vacancy_count": 1015,
-      "share": 0.1356
+      "vacancy_count": 1091,
+      "share": 0.1347
     },
     {
-      "skill": "sql",
-      "vacancy_count": 999,
+      "skill": "java",
+      "vacancy_count": 1090,
+      "share": 0.1346
+    },
+    {
+      "skill": "ci_cd",
+      "vacancy_count": 1081,
       "share": 0.1335
     },
     {
       "skill": "python",
-      "vacancy_count": 985,
-      "share": 0.1316
+      "vacancy_count": 1074,
+      "share": 0.1326
+    },
+    {
+      "skill": "sql",
+      "vacancy_count": 1064,
+      "share": 0.1314
     },
     {
       "skill": "azure",
-      "vacancy_count": 567,
-      "share": 0.0758
+      "vacancy_count": 588,
+      "share": 0.0726
     },
     {
       "skill": "csharp",
-      "vacancy_count": 495,
-      "share": 0.0661
+      "vacancy_count": 528,
+      "share": 0.0652
     },
     {
       "skill": "dotnet",
-      "vacancy_count": 495,
-      "share": 0.0661
-    },
-    {
-      "skill": "aws",
-      "vacancy_count": 462,
-      "share": 0.0617
+      "vacancy_count": 511,
+      "share": 0.0631
     },
     {
       "skill": "angular",
-      "vacancy_count": 456,
-      "share": 0.0609
+      "vacancy_count": 492,
+      "share": 0.0608
+    },
+    {
+      "skill": "aws",
+      "vacancy_count": 479,
+      "share": 0.0592
     },
     {
       "skill": "spring",
-      "vacancy_count": 411,
-      "share": 0.0549
+      "vacancy_count": 433,
+      "share": 0.0535
     },
     {
       "skill": "javascript",
-      "vacancy_count": 381,
-      "share": 0.0509
+      "vacancy_count": 408,
+      "share": 0.0504
     },
     {
       "skill": "react",
-      "vacancy_count": 368,
-      "share": 0.0492
+      "vacancy_count": 395,
+      "share": 0.0488
     },
     {
       "skill": "terraform",
-      "vacancy_count": 363,
-      "share": 0.0485
+      "vacancy_count": 379,
+      "share": 0.0468
     },
     {
       "skill": "typescript",
-      "vacancy_count": 322,
-      "share": 0.043
-    },
-    {
-      "skill": "c++",
-      "vacancy_count": 303,
-      "share": 0.0405
+      "vacancy_count": 352,
+      "share": 0.0435
     },
     {
       "skill": "ansible",
-      "vacancy_count": 303,
-      "share": 0.0405
+      "vacancy_count": 340,
+      "share": 0.042
+    },
+    {
+      "skill": "c++",
+      "vacancy_count": 312,
+      "share": 0.0385
     },
     {
       "skill": "oracle",
-      "vacancy_count": 286,
-      "share": 0.0382
+      "vacancy_count": 310,
+      "share": 0.0383
     },
     {
       "skill": "microservices",
-      "vacancy_count": 260,
-      "share": 0.0347
+      "vacancy_count": 274,
+      "share": 0.0338
     }
   ],
   "by_role_category": [
@@ -109,195 +109,189 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 116,
+          "vacancy_count": 122,
           "rank": 1,
-          "share_within_group": 0.1212
+          "share_within_group": 0.1165
         },
         {
           "skill": "agile",
-          "vacancy_count": 101,
+          "vacancy_count": 115,
           "rank": 2,
-          "share_within_group": 0.1055
+          "share_within_group": 0.1098
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 66,
+          "vacancy_count": 68,
           "rank": 3,
-          "share_within_group": 0.069
+          "share_within_group": 0.0649
         },
         {
           "skill": "sql",
-          "vacancy_count": 60,
+          "vacancy_count": 66,
           "rank": 4,
-          "share_within_group": 0.0627
+          "share_within_group": 0.063
         },
         {
           "skill": "devops",
-          "vacancy_count": 53,
+          "vacancy_count": 59,
           "rank": 5,
-          "share_within_group": 0.0554
+          "share_within_group": 0.0564
         },
         {
           "skill": "aws",
           "vacancy_count": 41,
           "rank": 6,
-          "share_within_group": 0.0428
+          "share_within_group": 0.0392
         },
         {
           "skill": "azure",
           "vacancy_count": 41,
           "rank": 6,
-          "share_within_group": 0.0428
+          "share_within_group": 0.0392
         },
         {
           "skill": "java",
-          "vacancy_count": 36,
+          "vacancy_count": 38,
           "rank": 7,
-          "share_within_group": 0.0376
+          "share_within_group": 0.0363
+        },
+        {
+          "skill": "spark",
+          "vacancy_count": 29,
+          "rank": 8,
+          "share_within_group": 0.0277
         },
         {
           "skill": "c++",
           "vacancy_count": 28,
-          "rank": 8,
-          "share_within_group": 0.0293
+          "rank": 9,
+          "share_within_group": 0.0267
         },
         {
-          "skill": "spark",
-          "vacancy_count": 28,
-          "rank": 8,
-          "share_within_group": 0.0293
+          "skill": "php",
+          "vacancy_count": 23,
+          "rank": 10,
+          "share_within_group": 0.022
         },
         {
           "skill": "gcp",
           "vacancy_count": 21,
-          "rank": 9,
-          "share_within_group": 0.0219
-        },
-        {
-          "skill": "php",
-          "vacancy_count": 21,
-          "rank": 9,
-          "share_within_group": 0.0219
+          "rank": 11,
+          "share_within_group": 0.0201
         },
         {
           "skill": "postgresql",
           "vacancy_count": 21,
-          "rank": 9,
-          "share_within_group": 0.0219
+          "rank": 11,
+          "share_within_group": 0.0201
         },
         {
           "skill": "terraform",
           "vacancy_count": 20,
-          "rank": 10,
-          "share_within_group": 0.0209
+          "rank": 12,
+          "share_within_group": 0.0191
+        },
+        {
+          "skill": "boost",
+          "vacancy_count": 19,
+          "rank": 13,
+          "share_within_group": 0.0181
         },
         {
           "skill": "databricks",
           "vacancy_count": 19,
-          "rank": 11,
-          "share_within_group": 0.0199
+          "rank": 13,
+          "share_within_group": 0.0181
         },
         {
           "skill": "csharp",
           "vacancy_count": 17,
-          "rank": 12,
-          "share_within_group": 0.0178
+          "rank": 14,
+          "share_within_group": 0.0162
+        },
+        {
+          "skill": "react",
+          "vacancy_count": 17,
+          "rank": 14,
+          "share_within_group": 0.0162
         },
         {
           "skill": "snowflake",
           "vacancy_count": 17,
-          "rank": 12,
-          "share_within_group": 0.0178
-        },
-        {
-          "skill": "boost",
-          "vacancy_count": 16,
-          "rank": 13,
-          "share_within_group": 0.0167
-        },
-        {
-          "skill": "react",
-          "vacancy_count": 15,
           "rank": 14,
-          "share_within_group": 0.0157
+          "share_within_group": 0.0162
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 15,
+          "rank": 15,
+          "share_within_group": 0.0143
         },
         {
           "skill": "angular",
           "vacancy_count": 13,
-          "rank": 15,
-          "share_within_group": 0.0136
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 13,
-          "rank": 15,
-          "share_within_group": 0.0136
+          "rank": 16,
+          "share_within_group": 0.0124
         },
         {
           "skill": "ansible",
           "vacancy_count": 12,
-          "rank": 16,
-          "share_within_group": 0.0125
-        },
-        {
-          "skill": "oracle",
-          "vacancy_count": 11,
           "rank": 17,
           "share_within_group": 0.0115
         },
         {
+          "skill": "microservices",
+          "vacancy_count": 12,
+          "rank": 17,
+          "share_within_group": 0.0115
+        },
+        {
+          "skill": "oracle",
+          "vacancy_count": 12,
+          "rank": 17,
+          "share_within_group": 0.0115
+        },
+        {
+          "skill": "typescript",
+          "vacancy_count": 11,
+          "rank": 18,
+          "share_within_group": 0.0105
+        },
+        {
           "skill": "c",
           "vacancy_count": 10,
-          "rank": 18,
-          "share_within_group": 0.0104
+          "rank": 19,
+          "share_within_group": 0.0096
         },
         {
           "skill": "devsecops",
           "vacancy_count": 10,
-          "rank": 18,
-          "share_within_group": 0.0104
+          "rank": 19,
+          "share_within_group": 0.0096
         },
         {
           "skill": "dotnet",
           "vacancy_count": 10,
-          "rank": 18,
-          "share_within_group": 0.0104
+          "rank": 19,
+          "share_within_group": 0.0096
         },
         {
           "skill": "etl",
           "vacancy_count": 10,
-          "rank": 18,
-          "share_within_group": 0.0104
-        },
-        {
-          "skill": "microservices",
-          "vacancy_count": 10,
-          "rank": 18,
-          "share_within_group": 0.0104
+          "rank": 19,
+          "share_within_group": 0.0096
         },
         {
           "skill": "rust",
           "vacancy_count": 9,
-          "rank": 19,
-          "share_within_group": 0.0094
-        },
-        {
-          "skill": "typescript",
-          "vacancy_count": 9,
-          "rank": 19,
-          "share_within_group": 0.0094
-        },
-        {
-          "skill": "kafka",
-          "vacancy_count": 8,
           "rank": 20,
-          "share_within_group": 0.0084
+          "share_within_group": 0.0086
         },
         {
           "skill": "spring",
-          "vacancy_count": 8,
+          "vacancy_count": 9,
           "rank": 20,
-          "share_within_group": 0.0084
+          "share_within_group": 0.0086
         }
       ]
     },
@@ -306,135 +300,141 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 240,
+          "vacancy_count": 262,
           "rank": 1,
-          "share_within_group": 0.5161
+          "share_within_group": 0.5261
         },
         {
           "skill": "sql",
-          "vacancy_count": 188,
+          "vacancy_count": 199,
           "rank": 2,
-          "share_within_group": 0.4043
+          "share_within_group": 0.3996
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 94,
+          "vacancy_count": 98,
           "rank": 3,
-          "share_within_group": 0.2022
+          "share_within_group": 0.1968
         },
         {
           "skill": "etl",
-          "vacancy_count": 87,
+          "vacancy_count": 90,
           "rank": 4,
-          "share_within_group": 0.1871
+          "share_within_group": 0.1807
         },
         {
           "skill": "agile",
-          "vacancy_count": 79,
+          "vacancy_count": 82,
           "rank": 5,
-          "share_within_group": 0.1699
+          "share_within_group": 0.1647
         },
         {
           "skill": "spark",
-          "vacancy_count": 77,
+          "vacancy_count": 80,
           "rank": 6,
-          "share_within_group": 0.1656
+          "share_within_group": 0.1606
         },
         {
           "skill": "aws",
-          "vacancy_count": 75,
+          "vacancy_count": 77,
           "rank": 7,
-          "share_within_group": 0.1613
+          "share_within_group": 0.1546
         },
         {
           "skill": "devops",
-          "vacancy_count": 72,
-          "rank": 8,
-          "share_within_group": 0.1548
+          "vacancy_count": 77,
+          "rank": 7,
+          "share_within_group": 0.1546
         },
         {
           "skill": "databricks",
-          "vacancy_count": 70,
-          "rank": 9,
-          "share_within_group": 0.1505
+          "vacancy_count": 75,
+          "rank": 8,
+          "share_within_group": 0.1506
         },
         {
           "skill": "snowflake",
-          "vacancy_count": 67,
-          "rank": 10,
-          "share_within_group": 0.1441
+          "vacancy_count": 74,
+          "rank": 9,
+          "share_within_group": 0.1486
         },
         {
           "skill": "gcp",
-          "vacancy_count": 57,
-          "rank": 11,
-          "share_within_group": 0.1226
+          "vacancy_count": 59,
+          "rank": 10,
+          "share_within_group": 0.1185
         },
         {
           "skill": "dbt",
-          "vacancy_count": 53,
-          "rank": 12,
-          "share_within_group": 0.114
+          "vacancy_count": 55,
+          "rank": 11,
+          "share_within_group": 0.1104
         },
         {
           "skill": "terraform",
-          "vacancy_count": 52,
-          "rank": 13,
-          "share_within_group": 0.1118
+          "vacancy_count": 53,
+          "rank": 12,
+          "share_within_group": 0.1064
         },
         {
           "skill": "java",
           "vacancy_count": 51,
-          "rank": 14,
-          "share_within_group": 0.1097
+          "rank": 13,
+          "share_within_group": 0.1024
         },
         {
           "skill": "pytorch",
           "vacancy_count": 42,
+          "rank": 14,
+          "share_within_group": 0.0843
+        },
+        {
+          "skill": "oracle",
+          "vacancy_count": 37,
           "rank": 15,
-          "share_within_group": 0.0903
+          "share_within_group": 0.0743
         },
         {
           "skill": "airflow",
           "vacancy_count": 34,
           "rank": 16,
-          "share_within_group": 0.0731
-        },
-        {
-          "skill": "oracle",
-          "vacancy_count": 29,
-          "rank": 17,
-          "share_within_group": 0.0624
+          "share_within_group": 0.0683
         },
         {
           "skill": "azure",
           "vacancy_count": 28,
-          "rank": 18,
-          "share_within_group": 0.0602
+          "rank": 17,
+          "share_within_group": 0.0562
         },
         {
           "skill": "scala",
           "vacancy_count": 28,
-          "rank": 18,
-          "share_within_group": 0.0602
+          "rank": 17,
+          "share_within_group": 0.0562
         },
         {
           "skill": "tensorflow",
           "vacancy_count": 28,
-          "rank": 18,
-          "share_within_group": 0.0602
+          "rank": 17,
+          "share_within_group": 0.0562
         },
         {
           "skill": "scikit_learn",
           "vacancy_count": 27,
-          "rank": 19,
-          "share_within_group": 0.0581
+          "rank": 18,
+          "share_within_group": 0.0542
         },
         {
           "skill": "pandas",
           "vacancy_count": 24,
+          "rank": 19,
+          "share_within_group": 0.0482
+        },
+        {
+          "skill": "kafka",
+          "vacancy_count": 22,
           "rank": 20,
-          "share_within_group": 0.0516
+          "share_within_group": 0.0442
         }
       ]
     },
@@ -443,135 +443,129 @@
       "items": [
         {
           "skill": "devops",
-          "vacancy_count": 355,
+          "vacancy_count": 380,
           "rank": 1,
-          "share_within_group": 0.1821
+          "share_within_group": 0.1789
         },
         {
           "skill": "azure",
-          "vacancy_count": 323,
+          "vacancy_count": 342,
           "rank": 2,
-          "share_within_group": 0.1656
+          "share_within_group": 0.161
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 259,
+          "vacancy_count": 280,
           "rank": 3,
-          "share_within_group": 0.1328
+          "share_within_group": 0.1318
         },
         {
           "skill": "ansible",
-          "vacancy_count": 242,
+          "vacancy_count": 274,
           "rank": 4,
-          "share_within_group": 0.1241
+          "share_within_group": 0.129
         },
         {
           "skill": "terraform",
-          "vacancy_count": 207,
+          "vacancy_count": 221,
           "rank": 5,
-          "share_within_group": 0.1062
+          "share_within_group": 0.104
         },
         {
           "skill": "python",
-          "vacancy_count": 192,
+          "vacancy_count": 217,
           "rank": 6,
-          "share_within_group": 0.0985
+          "share_within_group": 0.1022
         },
         {
           "skill": "sql",
-          "vacancy_count": 166,
+          "vacancy_count": 178,
           "rank": 7,
-          "share_within_group": 0.0851
+          "share_within_group": 0.0838
         },
         {
           "skill": "agile",
-          "vacancy_count": 147,
+          "vacancy_count": 159,
           "rank": 8,
-          "share_within_group": 0.0754
+          "share_within_group": 0.0749
         },
         {
           "skill": "aws",
-          "vacancy_count": 128,
+          "vacancy_count": 136,
           "rank": 9,
-          "share_within_group": 0.0656
+          "share_within_group": 0.064
         },
         {
           "skill": "java",
-          "vacancy_count": 86,
+          "vacancy_count": 97,
           "rank": 10,
-          "share_within_group": 0.0441
-        },
-        {
-          "skill": "oracle",
-          "vacancy_count": 63,
-          "rank": 11,
-          "share_within_group": 0.0323
+          "share_within_group": 0.0457
         },
         {
           "skill": "gcp",
-          "vacancy_count": 62,
-          "rank": 12,
-          "share_within_group": 0.0318
+          "vacancy_count": 69,
+          "rank": 11,
+          "share_within_group": 0.0325
         },
         {
-          "skill": "mssql",
-          "vacancy_count": 58,
-          "rank": 13,
-          "share_within_group": 0.0297
+          "skill": "oracle",
+          "vacancy_count": 67,
+          "rank": 12,
+          "share_within_group": 0.0315
         },
         {
           "skill": "postgresql",
-          "vacancy_count": 56,
-          "rank": 14,
+          "vacancy_count": 61,
+          "rank": 13,
           "share_within_group": 0.0287
         },
         {
-          "skill": "dotnet",
-          "vacancy_count": 30,
-          "rank": 15,
-          "share_within_group": 0.0154
+          "skill": "mssql",
+          "vacancy_count": 59,
+          "rank": 14,
+          "share_within_group": 0.0278
         },
         {
           "skill": "csharp",
-          "vacancy_count": 29,
-          "rank": 16,
-          "share_within_group": 0.0149
+          "vacancy_count": 36,
+          "rank": 15,
+          "share_within_group": 0.0169
         },
         {
           "skill": "microservices",
-          "vacancy_count": 29,
+          "vacancy_count": 32,
           "rank": 16,
-          "share_within_group": 0.0149
+          "share_within_group": 0.0151
+        },
+        {
+          "skill": "dotnet",
+          "vacancy_count": 31,
+          "rank": 17,
+          "share_within_group": 0.0146
         },
         {
           "skill": "spring",
-          "vacancy_count": 28,
-          "rank": 17,
-          "share_within_group": 0.0144
+          "vacancy_count": 30,
+          "rank": 18,
+          "share_within_group": 0.0141
         },
         {
           "skill": "kafka",
-          "vacancy_count": 26,
-          "rank": 18,
-          "share_within_group": 0.0133
+          "vacancy_count": 27,
+          "rank": 19,
+          "share_within_group": 0.0127
         },
         {
           "skill": "linux",
           "vacancy_count": 25,
-          "rank": 19,
-          "share_within_group": 0.0128
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 22,
           "rank": 20,
-          "share_within_group": 0.0113
+          "share_within_group": 0.0118
         },
         {
           "skill": "php",
-          "vacancy_count": 22,
+          "vacancy_count": 25,
           "rank": 20,
-          "share_within_group": 0.0113
+          "share_within_group": 0.0118
         }
       ]
     },
@@ -582,67 +576,67 @@
           "skill": "agile",
           "vacancy_count": 18,
           "rank": 1,
-          "share_within_group": 0.1731
+          "share_within_group": 0.1698
         },
         {
           "skill": "devops",
           "vacancy_count": 10,
           "rank": 2,
-          "share_within_group": 0.0962
+          "share_within_group": 0.0943
         },
         {
           "skill": "azure",
           "vacancy_count": 4,
           "rank": 3,
-          "share_within_group": 0.0385
+          "share_within_group": 0.0377
         },
         {
           "skill": "oracle",
           "vacancy_count": 3,
           "rank": 4,
-          "share_within_group": 0.0288
+          "share_within_group": 0.0283
         },
         {
           "skill": "csharp",
           "vacancy_count": 2,
           "rank": 5,
-          "share_within_group": 0.0192
+          "share_within_group": 0.0189
         },
         {
           "skill": "javascript",
           "vacancy_count": 2,
           "rank": 5,
-          "share_within_group": 0.0192
+          "share_within_group": 0.0189
         },
         {
           "skill": "spark",
           "vacancy_count": 2,
           "rank": 5,
-          "share_within_group": 0.0192
+          "share_within_group": 0.0189
         },
         {
           "skill": "dotnet",
           "vacancy_count": 1,
           "rank": 6,
-          "share_within_group": 0.0096
+          "share_within_group": 0.0094
         },
         {
           "skill": "etl",
           "vacancy_count": 1,
           "rank": 6,
-          "share_within_group": 0.0096
+          "share_within_group": 0.0094
         },
         {
           "skill": "sql",
           "vacancy_count": 1,
           "rank": 6,
-          "share_within_group": 0.0096
+          "share_within_group": 0.0094
         },
         {
           "skill": "typescript",
           "vacancy_count": 1,
           "rank": 6,
-          "share_within_group": 0.0096
+          "share_within_group": 0.0094
         }
       ]
     },
@@ -651,213 +645,219 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 257,
+          "vacancy_count": 295,
           "rank": 1,
-          "share_within_group": 0.387
+          "share_within_group": 0.3944
         },
         {
           "skill": "sql",
           "vacancy_count": 62,
           "rank": 2,
-          "share_within_group": 0.0934
+          "share_within_group": 0.0829
         },
         {
           "skill": "devops",
-          "vacancy_count": 41,
+          "vacancy_count": 55,
           "rank": 3,
-          "share_within_group": 0.0617
+          "share_within_group": 0.0735
+        },
+        {
+          "skill": "java",
+          "vacancy_count": 23,
+          "rank": 4,
+          "share_within_group": 0.0307
         },
         {
           "skill": "python",
           "vacancy_count": 20,
-          "rank": 4,
-          "share_within_group": 0.0301
-        },
-        {
-          "skill": "java",
-          "vacancy_count": 19,
           "rank": 5,
-          "share_within_group": 0.0286
+          "share_within_group": 0.0267
         },
         {
           "skill": "oracle",
           "vacancy_count": 19,
-          "rank": 5,
-          "share_within_group": 0.0286
+          "rank": 6,
+          "share_within_group": 0.0254
         },
         {
           "skill": "aws",
           "vacancy_count": 17,
-          "rank": 6,
-          "share_within_group": 0.0256
+          "rank": 7,
+          "share_within_group": 0.0227
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 14,
-          "rank": 7,
-          "share_within_group": 0.0211
+          "rank": 8,
+          "share_within_group": 0.0187
         },
         {
           "skill": "kafka",
           "vacancy_count": 14,
-          "rank": 7,
-          "share_within_group": 0.0211
+          "rank": 8,
+          "share_within_group": 0.0187
         },
         {
           "skill": "gcp",
           "vacancy_count": 13,
-          "rank": 8,
-          "share_within_group": 0.0196
+          "rank": 9,
+          "share_within_group": 0.0174
+        },
+        {
+          "skill": "microservices",
+          "vacancy_count": 13,
+          "rank": 9,
+          "share_within_group": 0.0174
         },
         {
           "skill": "dotnet",
           "vacancy_count": 12,
-          "rank": 9,
-          "share_within_group": 0.0181
+          "rank": 10,
+          "share_within_group": 0.016
         },
         {
           "skill": "azure",
           "vacancy_count": 11,
-          "rank": 10,
-          "share_within_group": 0.0166
+          "rank": 11,
+          "share_within_group": 0.0147
         },
         {
           "skill": "csharp",
           "vacancy_count": 11,
-          "rank": 10,
-          "share_within_group": 0.0166
+          "rank": 11,
+          "share_within_group": 0.0147
         },
         {
-          "skill": "microservices",
-          "vacancy_count": 11,
-          "rank": 10,
-          "share_within_group": 0.0166
+          "skill": "spark",
+          "vacancy_count": 9,
+          "rank": 12,
+          "share_within_group": 0.012
         },
         {
           "skill": "javascript",
           "vacancy_count": 8,
-          "rank": 11,
-          "share_within_group": 0.012
-        },
-        {
-          "skill": "spark",
-          "vacancy_count": 7,
-          "rank": 12,
-          "share_within_group": 0.0105
+          "rank": 13,
+          "share_within_group": 0.0107
         },
         {
           "skill": "mssql",
           "vacancy_count": 6,
-          "rank": 13,
-          "share_within_group": 0.009
+          "rank": 14,
+          "share_within_group": 0.008
         },
         {
           "skill": "swift",
           "vacancy_count": 6,
-          "rank": 13,
-          "share_within_group": 0.009
+          "rank": 14,
+          "share_within_group": 0.008
         },
         {
           "skill": "nodejs",
           "vacancy_count": 5,
-          "rank": 14,
-          "share_within_group": 0.0075
+          "rank": 15,
+          "share_within_group": 0.0067
         },
         {
           "skill": "kotlin",
           "vacancy_count": 4,
-          "rank": 15,
-          "share_within_group": 0.006
+          "rank": 16,
+          "share_within_group": 0.0053
+        },
+        {
+          "skill": "php",
+          "vacancy_count": 4,
+          "rank": 16,
+          "share_within_group": 0.0053
         },
         {
           "skill": "snowflake",
           "vacancy_count": 4,
-          "rank": 15,
-          "share_within_group": 0.006
+          "rank": 16,
+          "share_within_group": 0.0053
         },
         {
           "skill": "bigquery",
           "vacancy_count": 3,
-          "rank": 16,
-          "share_within_group": 0.0045
+          "rank": 17,
+          "share_within_group": 0.004
+        },
+        {
+          "skill": "mysql",
+          "vacancy_count": 3,
+          "rank": 17,
+          "share_within_group": 0.004
         },
         {
           "skill": "react",
           "vacancy_count": 3,
-          "rank": 16,
-          "share_within_group": 0.0045
+          "rank": 17,
+          "share_within_group": 0.004
         },
         {
           "skill": "rest_api",
           "vacancy_count": 3,
-          "rank": 16,
-          "share_within_group": 0.0045
+          "rank": 17,
+          "share_within_group": 0.004
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
-          "rank": 16,
-          "share_within_group": 0.0045
+          "rank": 17,
+          "share_within_group": 0.004
         },
         {
           "skill": "typescript",
           "vacancy_count": 3,
-          "rank": 16,
-          "share_within_group": 0.0045
+          "rank": 17,
+          "share_within_group": 0.004
         },
         {
           "skill": "databricks",
           "vacancy_count": 2,
-          "rank": 17,
-          "share_within_group": 0.003
+          "rank": 18,
+          "share_within_group": 0.0027
         },
         {
           "skill": "docker",
           "vacancy_count": 2,
-          "rank": 17,
-          "share_within_group": 0.003
+          "rank": 18,
+          "share_within_group": 0.0027
         },
         {
           "skill": "express",
           "vacancy_count": 2,
-          "rank": 17,
-          "share_within_group": 0.003
-        },
-        {
-          "skill": "mysql",
-          "vacancy_count": 2,
-          "rank": 17,
-          "share_within_group": 0.003
+          "rank": 18,
+          "share_within_group": 0.0027
         },
         {
           "skill": "nextjs",
           "vacancy_count": 2,
-          "rank": 17,
-          "share_within_group": 0.003
+          "rank": 18,
+          "share_within_group": 0.0027
         },
         {
           "skill": "boost",
           "vacancy_count": 1,
-          "rank": 18,
-          "share_within_group": 0.0015
+          "rank": 19,
+          "share_within_group": 0.0013
         },
         {
           "skill": "etl",
           "vacancy_count": 1,
-          "rank": 18,
-          "share_within_group": 0.0015
+          "rank": 19,
+          "share_within_group": 0.0013
         },
         {
           "skill": "postgresql",
           "vacancy_count": 1,
-          "rank": 18,
-          "share_within_group": 0.0015
+          "rank": 19,
+          "share_within_group": 0.0013
         },
         {
           "skill": "vue",
           "vacancy_count": 1,
-          "rank": 18,
-          "share_within_group": 0.0015
+          "rank": 19,
+          "share_within_group": 0.0013
         }
       ]
     },
@@ -866,201 +866,207 @@
       "items": [
         {
           "skill": "test_automation",
-          "vacancy_count": 56,
+          "vacancy_count": 72,
           "rank": 1,
-          "share_within_group": 0.4828
+          "share_within_group": 0.5143
         },
         {
           "skill": "agile",
-          "vacancy_count": 39,
+          "vacancy_count": 55,
           "rank": 2,
-          "share_within_group": 0.3362
+          "share_within_group": 0.3929
         },
         {
           "skill": "python",
-          "vacancy_count": 35,
+          "vacancy_count": 49,
           "rank": 3,
-          "share_within_group": 0.3017
+          "share_within_group": 0.35
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 30,
+          "vacancy_count": 43,
           "rank": 4,
-          "share_within_group": 0.2586
+          "share_within_group": 0.3071
         },
         {
           "skill": "java",
-          "vacancy_count": 29,
+          "vacancy_count": 37,
           "rank": 5,
-          "share_within_group": 0.25
-        },
-        {
-          "skill": "devops",
-          "vacancy_count": 20,
-          "rank": 6,
-          "share_within_group": 0.1724
+          "share_within_group": 0.2643
         },
         {
           "skill": "javascript",
-          "vacancy_count": 17,
+          "vacancy_count": 24,
+          "rank": 6,
+          "share_within_group": 0.1714
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 22,
           "rank": 7,
-          "share_within_group": 0.1466
+          "share_within_group": 0.1571
         },
         {
           "skill": "csharp",
-          "vacancy_count": 13,
+          "vacancy_count": 21,
           "rank": 8,
-          "share_within_group": 0.1121
+          "share_within_group": 0.15
+        },
+        {
+          "skill": "typescript",
+          "vacancy_count": 11,
+          "rank": 9,
+          "share_within_group": 0.0786
         },
         {
           "skill": "sql",
           "vacancy_count": 9,
-          "rank": 9,
-          "share_within_group": 0.0776
+          "rank": 10,
+          "share_within_group": 0.0643
         },
         {
-          "skill": "typescript",
-          "vacancy_count": 8,
+          "skill": "swift",
+          "vacancy_count": 9,
           "rank": 10,
-          "share_within_group": 0.069
+          "share_within_group": 0.0643
+        },
+        {
+          "skill": "php",
+          "vacancy_count": 8,
+          "rank": 11,
+          "share_within_group": 0.0571
         },
         {
           "skill": "c++",
           "vacancy_count": 7,
-          "rank": 11,
-          "share_within_group": 0.0603
+          "rank": 12,
+          "share_within_group": 0.05
+        },
+        {
+          "skill": "dotnet",
+          "vacancy_count": 7,
+          "rank": 12,
+          "share_within_group": 0.05
         },
         {
           "skill": "microservices",
           "vacancy_count": 7,
-          "rank": 11,
-          "share_within_group": 0.0603
+          "rank": 12,
+          "share_within_group": 0.05
         },
         {
-          "skill": "swift",
-          "vacancy_count": 6,
-          "rank": 12,
-          "share_within_group": 0.0517
+          "skill": "kotlin",
+          "vacancy_count": 5,
+          "rank": 13,
+          "share_within_group": 0.0357
+        },
+        {
+          "skill": "rust",
+          "vacancy_count": 5,
+          "rank": 13,
+          "share_within_group": 0.0357
+        },
+        {
+          "skill": "angular",
+          "vacancy_count": 4,
+          "rank": 14,
+          "share_within_group": 0.0286
         },
         {
           "skill": "c",
           "vacancy_count": 4,
-          "rank": 13,
-          "share_within_group": 0.0345
+          "rank": 14,
+          "share_within_group": 0.0286
         },
         {
           "skill": "cypress",
           "vacancy_count": 4,
-          "rank": 13,
-          "share_within_group": 0.0345
+          "rank": 14,
+          "share_within_group": 0.0286
         },
         {
-          "skill": "dotnet",
+          "skill": "react",
           "vacancy_count": 4,
-          "rank": 13,
-          "share_within_group": 0.0345
-        },
-        {
-          "skill": "php",
-          "vacancy_count": 4,
-          "rank": 13,
-          "share_within_group": 0.0345
+          "rank": 14,
+          "share_within_group": 0.0286
         },
         {
           "skill": "playwright",
           "vacancy_count": 3,
-          "rank": 14,
-          "share_within_group": 0.0259
-        },
-        {
-          "skill": "rust",
-          "vacancy_count": 3,
-          "rank": 14,
-          "share_within_group": 0.0259
+          "rank": 15,
+          "share_within_group": 0.0214
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
-          "rank": 14,
-          "share_within_group": 0.0259
+          "rank": 15,
+          "share_within_group": 0.0214
         },
         {
           "skill": "aws",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
+          "rank": 16,
+          "share_within_group": 0.0143
+        },
+        {
+          "skill": "boost",
+          "vacancy_count": 2,
+          "rank": 16,
+          "share_within_group": 0.0143
         },
         {
           "skill": "clean_code",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
+          "rank": 16,
+          "share_within_group": 0.0143
         },
         {
           "skill": "kafka",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
-        },
-        {
-          "skill": "kotlin",
-          "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
+          "rank": 16,
+          "share_within_group": 0.0143
         },
         {
           "skill": "mongodb",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
+          "rank": 16,
+          "share_within_group": 0.0143
         },
         {
           "skill": "mssql",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
+          "rank": 16,
+          "share_within_group": 0.0143
         },
         {
           "skill": "selenium",
           "vacancy_count": 2,
-          "rank": 15,
-          "share_within_group": 0.0172
-        },
-        {
-          "skill": "angular",
-          "vacancy_count": 1,
           "rank": 16,
-          "share_within_group": 0.0086
+          "share_within_group": 0.0143
         },
         {
           "skill": "azure",
           "vacancy_count": 1,
-          "rank": 16,
-          "share_within_group": 0.0086
+          "rank": 17,
+          "share_within_group": 0.0071
         },
         {
           "skill": "docker",
           "vacancy_count": 1,
-          "rank": 16,
-          "share_within_group": 0.0086
+          "rank": 17,
+          "share_within_group": 0.0071
         },
         {
           "skill": "git",
           "vacancy_count": 1,
-          "rank": 16,
-          "share_within_group": 0.0086
+          "rank": 17,
+          "share_within_group": 0.0071
         },
         {
           "skill": "linux",
           "vacancy_count": 1,
-          "rank": 16,
-          "share_within_group": 0.0086
-        },
-        {
-          "skill": "react",
-          "vacancy_count": 1,
-          "rank": 16,
-          "share_within_group": 0.0086
+          "rank": 17,
+          "share_within_group": 0.0071
         }
       ]
     },
@@ -1069,237 +1075,201 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 67,
+          "vacancy_count": 71,
           "rank": 1,
-          "share_within_group": 0.1104
+          "share_within_group": 0.1106
         },
         {
           "skill": "agile",
-          "vacancy_count": 51,
+          "vacancy_count": 53,
           "rank": 2,
-          "share_within_group": 0.084
+          "share_within_group": 0.0826
         },
         {
           "skill": "aws",
-          "vacancy_count": 39,
+          "vacancy_count": 40,
           "rank": 3,
-          "share_within_group": 0.0643
+          "share_within_group": 0.0623
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 39,
+          "vacancy_count": 40,
           "rank": 3,
-          "share_within_group": 0.0643
+          "share_within_group": 0.0623
         },
         {
           "skill": "devops",
-          "vacancy_count": 28,
+          "vacancy_count": 33,
           "rank": 4,
-          "share_within_group": 0.0461
+          "share_within_group": 0.0514
         },
         {
           "skill": "azure",
-          "vacancy_count": 27,
+          "vacancy_count": 28,
           "rank": 5,
-          "share_within_group": 0.0445
+          "share_within_group": 0.0436
         },
         {
           "skill": "gcp",
-          "vacancy_count": 22,
+          "vacancy_count": 23,
           "rank": 6,
-          "share_within_group": 0.0362
-        },
-        {
-          "skill": "sql",
-          "vacancy_count": 19,
-          "rank": 7,
-          "share_within_group": 0.0313
+          "share_within_group": 0.0358
         },
         {
           "skill": "ansible",
-          "vacancy_count": 18,
+          "vacancy_count": 21,
+          "rank": 7,
+          "share_within_group": 0.0327
+        },
+        {
+          "skill": "sql",
+          "vacancy_count": 20,
           "rank": 8,
-          "share_within_group": 0.0297
+          "share_within_group": 0.0312
         },
         {
           "skill": "terraform",
-          "vacancy_count": 18,
-          "rank": 8,
-          "share_within_group": 0.0297
+          "vacancy_count": 19,
+          "rank": 9,
+          "share_within_group": 0.0296
         },
         {
           "skill": "java",
-          "vacancy_count": 17,
-          "rank": 9,
+          "vacancy_count": 18,
+          "rank": 10,
           "share_within_group": 0.028
         },
         {
           "skill": "spark",
           "vacancy_count": 15,
-          "rank": 10,
-          "share_within_group": 0.0247
+          "rank": 11,
+          "share_within_group": 0.0234
         },
         {
           "skill": "devsecops",
-          "vacancy_count": 11,
-          "rank": 11,
-          "share_within_group": 0.0181
+          "vacancy_count": 13,
+          "rank": 12,
+          "share_within_group": 0.0202
         },
         {
           "skill": "boost",
           "vacancy_count": 10,
-          "rank": 12,
-          "share_within_group": 0.0165
+          "rank": 13,
+          "share_within_group": 0.0156
         },
         {
           "skill": "databricks",
           "vacancy_count": 10,
-          "rank": 12,
-          "share_within_group": 0.0165
+          "rank": 13,
+          "share_within_group": 0.0156
         },
         {
           "skill": "postgresql",
           "vacancy_count": 10,
-          "rank": 12,
-          "share_within_group": 0.0165
+          "rank": 13,
+          "share_within_group": 0.0156
         },
         {
           "skill": "react",
           "vacancy_count": 10,
-          "rank": 12,
-          "share_within_group": 0.0165
+          "rank": 13,
+          "share_within_group": 0.0156
         },
         {
           "skill": "csharp",
           "vacancy_count": 9,
-          "rank": 13,
-          "share_within_group": 0.0148
+          "rank": 14,
+          "share_within_group": 0.014
         },
         {
           "skill": "snowflake",
           "vacancy_count": 8,
-          "rank": 14,
-          "share_within_group": 0.0132
+          "rank": 15,
+          "share_within_group": 0.0125
+        },
+        {
+          "skill": "mssql",
+          "vacancy_count": 7,
+          "rank": 16,
+          "share_within_group": 0.0109
         },
         {
           "skill": "oracle",
           "vacancy_count": 7,
-          "rank": 15,
-          "share_within_group": 0.0115
-        },
-        {
-          "skill": "mssql",
-          "vacancy_count": 6,
           "rank": 16,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0109
         },
         {
           "skill": "nodejs",
           "vacancy_count": 6,
-          "rank": 16,
-          "share_within_group": 0.0099
+          "rank": 17,
+          "share_within_group": 0.0093
         },
         {
           "skill": "test_automation",
           "vacancy_count": 6,
-          "rank": 16,
-          "share_within_group": 0.0099
+          "rank": 17,
+          "share_within_group": 0.0093
         },
         {
           "skill": "etl",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0082
+          "rank": 18,
+          "share_within_group": 0.0078
         },
         {
           "skill": "typescript",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0082
+          "rank": 18,
+          "share_within_group": 0.0078
         },
         {
           "skill": "c++",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0066
+          "rank": 19,
+          "share_within_group": 0.0062
         },
         {
           "skill": "express",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0066
+          "rank": 19,
+          "share_within_group": 0.0062
         },
         {
           "skill": "go",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0066
+          "rank": 19,
+          "share_within_group": 0.0062
         },
         {
           "skill": "microservices",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0066
+          "rank": 19,
+          "share_within_group": 0.0062
+        },
+        {
+          "skill": "php",
+          "vacancy_count": 4,
+          "rank": 19,
+          "share_within_group": 0.0062
         },
         {
           "skill": "rust",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0066
+          "rank": 19,
+          "share_within_group": 0.0062
         },
         {
           "skill": "kafka",
           "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0049
-        },
-        {
-          "skill": "php",
-          "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0049
+          "rank": 20,
+          "share_within_group": 0.0047
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0049
-        },
-        {
-          "skill": "airflow",
-          "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0033
-        },
-        {
-          "skill": "dbt",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0033
-        },
-        {
-          "skill": "dotnet",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0033
-        },
-        {
-          "skill": "git",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0033
-        },
-        {
-          "skill": "graphql",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0033
-        },
-        {
-          "skill": "kubernetes",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0033
+          "share_within_group": 0.0047
         }
       ]
     },
@@ -1308,123 +1278,123 @@
       "items": [
         {
           "skill": "java",
-          "vacancy_count": 765,
+          "vacancy_count": 811,
           "rank": 1,
-          "share_within_group": 0.4063
+          "share_within_group": 0.4092
         },
         {
           "skill": "agile",
-          "vacancy_count": 679,
+          "vacancy_count": 712,
           "rank": 2,
-          "share_within_group": 0.3606
+          "share_within_group": 0.3592
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 505,
+          "vacancy_count": 528,
           "rank": 3,
-          "share_within_group": 0.2682
+          "share_within_group": 0.2664
         },
         {
           "skill": "sql",
-          "vacancy_count": 432,
+          "vacancy_count": 465,
           "rank": 4,
-          "share_within_group": 0.2294
+          "share_within_group": 0.2346
         },
         {
           "skill": "angular",
-          "vacancy_count": 426,
+          "vacancy_count": 456,
           "rank": 5,
-          "share_within_group": 0.2262
+          "share_within_group": 0.2301
         },
         {
           "skill": "devops",
-          "vacancy_count": 421,
+          "vacancy_count": 438,
           "rank": 6,
-          "share_within_group": 0.2236
+          "share_within_group": 0.221
         },
         {
           "skill": "dotnet",
-          "vacancy_count": 418,
+          "vacancy_count": 430,
           "rank": 7,
-          "share_within_group": 0.222
+          "share_within_group": 0.217
         },
         {
           "skill": "csharp",
-          "vacancy_count": 391,
+          "vacancy_count": 408,
           "rank": 8,
-          "share_within_group": 0.2076
+          "share_within_group": 0.2059
         },
         {
           "skill": "spring",
-          "vacancy_count": 360,
+          "vacancy_count": 379,
           "rank": 9,
           "share_within_group": 0.1912
         },
         {
           "skill": "react",
-          "vacancy_count": 318,
+          "vacancy_count": 334,
           "rank": 10,
-          "share_within_group": 0.1689
+          "share_within_group": 0.1685
         },
         {
           "skill": "javascript",
-          "vacancy_count": 307,
+          "vacancy_count": 323,
           "rank": 11,
           "share_within_group": 0.163
         },
         {
           "skill": "python",
-          "vacancy_count": 300,
+          "vacancy_count": 318,
           "rank": 12,
-          "share_within_group": 0.1593
+          "share_within_group": 0.1604
         },
         {
           "skill": "typescript",
-          "vacancy_count": 273,
+          "vacancy_count": 296,
           "rank": 13,
-          "share_within_group": 0.145
+          "share_within_group": 0.1493
         },
         {
           "skill": "c++",
-          "vacancy_count": 235,
+          "vacancy_count": 244,
           "rank": 14,
-          "share_within_group": 0.1248
+          "share_within_group": 0.1231
         },
         {
           "skill": "microservices",
-          "vacancy_count": 188,
+          "vacancy_count": 195,
           "rank": 15,
-          "share_within_group": 0.0998
+          "share_within_group": 0.0984
         },
         {
           "skill": "aws",
-          "vacancy_count": 152,
+          "vacancy_count": 155,
           "rank": 16,
-          "share_within_group": 0.0807
+          "share_within_group": 0.0782
         },
         {
           "skill": "oracle",
-          "vacancy_count": 140,
+          "vacancy_count": 150,
           "rank": 17,
-          "share_within_group": 0.0743
+          "share_within_group": 0.0757
         },
         {
           "skill": "postgresql",
-          "vacancy_count": 136,
+          "vacancy_count": 145,
           "rank": 18,
-          "share_within_group": 0.0722
+          "share_within_group": 0.0732
         },
         {
           "skill": "clean_code",
-          "vacancy_count": 115,
+          "vacancy_count": 130,
           "rank": 19,
-          "share_within_group": 0.0611
+          "share_within_group": 0.0656
         },
         {
           "skill": "azure",
-          "vacancy_count": 112,
+          "vacancy_count": 113,
           "rank": 20,
-          "share_within_group": 0.0595
+          "share_within_group": 0.057
         }
       ]
     },
@@ -1433,219 +1403,219 @@
       "items": [
         {
           "skill": "sql",
-          "vacancy_count": 60,
+          "vacancy_count": 62,
           "rank": 1,
-          "share_within_group": 0.0833
+          "share_within_group": 0.0784
         },
         {
           "skill": "agile",
-          "vacancy_count": 43,
+          "vacancy_count": 45,
           "rank": 2,
-          "share_within_group": 0.0597
+          "share_within_group": 0.0569
         },
         {
           "skill": "azure",
           "vacancy_count": 20,
           "rank": 3,
-          "share_within_group": 0.0278
+          "share_within_group": 0.0253
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 15,
+          "rank": 4,
+          "share_within_group": 0.019
+        },
+        {
+          "skill": "java",
+          "vacancy_count": 15,
+          "rank": 4,
+          "share_within_group": 0.019
+        },
+        {
+          "skill": "oracle",
+          "vacancy_count": 15,
+          "rank": 4,
+          "share_within_group": 0.019
         },
         {
           "skill": "python",
           "vacancy_count": 15,
           "rank": 4,
-          "share_within_group": 0.0208
+          "share_within_group": 0.019
         },
         {
-          "skill": "oracle",
-          "vacancy_count": 14,
+          "skill": "aws",
+          "vacancy_count": 11,
           "rank": 5,
-          "share_within_group": 0.0194
+          "share_within_group": 0.0139
         },
         {
-          "skill": "devops",
-          "vacancy_count": 13,
+          "skill": "csharp",
+          "vacancy_count": 9,
           "rank": 6,
-          "share_within_group": 0.0181
-        },
-        {
-          "skill": "java",
-          "vacancy_count": 13,
-          "rank": 6,
-          "share_within_group": 0.0181
+          "share_within_group": 0.0114
         },
         {
           "skill": "dotnet",
           "vacancy_count": 9,
-          "rank": 7,
-          "share_within_group": 0.0125
-        },
-        {
-          "skill": "aws",
-          "vacancy_count": 8,
-          "rank": 8,
-          "share_within_group": 0.0111
+          "rank": 6,
+          "share_within_group": 0.0114
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 8,
-          "rank": 8,
-          "share_within_group": 0.0111
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 8,
-          "rank": 8,
-          "share_within_group": 0.0111
+          "rank": 7,
+          "share_within_group": 0.0101
         },
         {
           "skill": "express",
           "vacancy_count": 7,
-          "rank": 9,
-          "share_within_group": 0.0097
+          "rank": 8,
+          "share_within_group": 0.0088
         },
         {
           "skill": "linux",
           "vacancy_count": 6,
-          "rank": 10,
-          "share_within_group": 0.0083
+          "rank": 9,
+          "share_within_group": 0.0076
         },
         {
           "skill": "mssql",
           "vacancy_count": 6,
-          "rank": 10,
-          "share_within_group": 0.0083
+          "rank": 9,
+          "share_within_group": 0.0076
         },
         {
           "skill": "postgresql",
-          "vacancy_count": 5,
-          "rank": 11,
-          "share_within_group": 0.0069
+          "vacancy_count": 6,
+          "rank": 9,
+          "share_within_group": 0.0076
         },
         {
           "skill": "gcp",
           "vacancy_count": 4,
-          "rank": 12,
-          "share_within_group": 0.0056
+          "rank": 10,
+          "share_within_group": 0.0051
         },
         {
           "skill": "javascript",
           "vacancy_count": 4,
-          "rank": 12,
-          "share_within_group": 0.0056
+          "rank": 10,
+          "share_within_group": 0.0051
+        },
+        {
+          "skill": "mysql",
+          "vacancy_count": 4,
+          "rank": 10,
+          "share_within_group": 0.0051
         },
         {
           "skill": "angular",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
+          "rank": 11,
+          "share_within_group": 0.0038
         },
         {
           "skill": "c++",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
+          "rank": 11,
+          "share_within_group": 0.0038
         },
         {
           "skill": "microservices",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
-        },
-        {
-          "skill": "mysql",
-          "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
+          "rank": 11,
+          "share_within_group": 0.0038
         },
         {
           "skill": "php",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
+          "rank": 11,
+          "share_within_group": 0.0038
         },
         {
           "skill": "terraform",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0042
+          "rank": 11,
+          "share_within_group": 0.0038
         },
         {
           "skill": "etl",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0028
+          "rank": 12,
+          "share_within_group": 0.0025
         },
         {
           "skill": "git",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0028
+          "rank": 12,
+          "share_within_group": 0.0025
         },
         {
           "skill": "nodejs",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0028
+          "rank": 12,
+          "share_within_group": 0.0025
         },
         {
           "skill": "react",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0028
+          "rank": 12,
+          "share_within_group": 0.0025
         },
         {
           "skill": "ansible",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "databricks",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "docker",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "kafka",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "openshift",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "rest_api",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "spring",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         },
         {
           "skill": "vue",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0014
+          "rank": 13,
+          "share_within_group": 0.0013
         }
       ]
     },
@@ -1656,67 +1626,67 @@
           "skill": "agile",
           "vacancy_count": 4,
           "rank": 1,
-          "share_within_group": 0.2222
+          "share_within_group": 0.2105
         },
         {
           "skill": "angular",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "clean_code",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "devops",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "react",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "rest_api",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "sql",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "typescript",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         },
         {
           "skill": "vue",
           "vacancy_count": 2,
           "rank": 2,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1053
         }
       ]
     }
@@ -1726,274 +1696,214 @@
       "group": "AG",
       "items": [
         {
-          "skill": "sql",
-          "vacancy_count": 53,
+          "skill": "agile",
+          "vacancy_count": 57,
           "rank": 1,
-          "share_within_group": 0.121
+          "share_within_group": 0.1188
         },
         {
-          "skill": "agile",
-          "vacancy_count": 49,
+          "skill": "sql",
+          "vacancy_count": 54,
           "rank": 2,
-          "share_within_group": 0.1119
+          "share_within_group": 0.1125
         },
         {
           "skill": "azure",
           "vacancy_count": 39,
           "rank": 3,
-          "share_within_group": 0.089
+          "share_within_group": 0.0812
+        },
+        {
+          "skill": "ci_cd",
+          "vacancy_count": 32,
+          "rank": 4,
+          "share_within_group": 0.0667
         },
         {
           "skill": "java",
-          "vacancy_count": 31,
+          "vacancy_count": 32,
           "rank": 4,
-          "share_within_group": 0.0708
+          "share_within_group": 0.0667
         },
         {
           "skill": "python",
           "vacancy_count": 31,
-          "rank": 4,
-          "share_within_group": 0.0708
+          "rank": 5,
+          "share_within_group": 0.0646
         },
         {
           "skill": "devops",
           "vacancy_count": 29,
-          "rank": 5,
-          "share_within_group": 0.0662
-        },
-        {
-          "skill": "ci_cd",
-          "vacancy_count": 28,
           "rank": 6,
-          "share_within_group": 0.0639
+          "share_within_group": 0.0604
         },
         {
           "skill": "csharp",
           "vacancy_count": 26,
           "rank": 7,
-          "share_within_group": 0.0594
+          "share_within_group": 0.0542
         },
         {
           "skill": "javascript",
           "vacancy_count": 21,
           "rank": 8,
-          "share_within_group": 0.0479
+          "share_within_group": 0.0438
         },
         {
           "skill": "c++",
           "vacancy_count": 17,
           "rank": 9,
-          "share_within_group": 0.0388
+          "share_within_group": 0.0354
         },
         {
           "skill": "dotnet",
           "vacancy_count": 17,
           "rank": 9,
-          "share_within_group": 0.0388
+          "share_within_group": 0.0354
         },
         {
           "skill": "aws",
           "vacancy_count": 16,
           "rank": 10,
-          "share_within_group": 0.0365
-        },
-        {
-          "skill": "angular",
-          "vacancy_count": 12,
-          "rank": 11,
-          "share_within_group": 0.0274
-        },
-        {
-          "skill": "react",
-          "vacancy_count": 12,
-          "rank": 11,
-          "share_within_group": 0.0274
+          "share_within_group": 0.0333
         },
         {
           "skill": "typescript",
-          "vacancy_count": 12,
+          "vacancy_count": 14,
           "rank": 11,
-          "share_within_group": 0.0274
+          "share_within_group": 0.0292
+        },
+        {
+          "skill": "angular",
+          "vacancy_count": 13,
+          "rank": 12,
+          "share_within_group": 0.0271
+        },
+        {
+          "skill": "react",
+          "vacancy_count": 13,
+          "rank": 12,
+          "share_within_group": 0.0271
+        },
+        {
+          "skill": "microservices",
+          "vacancy_count": 12,
+          "rank": 13,
+          "share_within_group": 0.025
         },
         {
           "skill": "oracle",
           "vacancy_count": 11,
-          "rank": 12,
-          "share_within_group": 0.0251
+          "rank": 14,
+          "share_within_group": 0.0229
         },
         {
-          "skill": "microservices",
+          "skill": "spring",
           "vacancy_count": 10,
-          "rank": 13,
-          "share_within_group": 0.0228
+          "rank": 15,
+          "share_within_group": 0.0208
         },
         {
           "skill": "databricks",
           "vacancy_count": 9,
-          "rank": 14,
-          "share_within_group": 0.0205
+          "rank": 16,
+          "share_within_group": 0.0188
         },
         {
-          "skill": "spring",
+          "skill": "postgresql",
           "vacancy_count": 9,
-          "rank": 14,
-          "share_within_group": 0.0205
+          "rank": 16,
+          "share_within_group": 0.0188
+        },
+        {
+          "skill": "terraform",
+          "vacancy_count": 9,
+          "rank": 16,
+          "share_within_group": 0.0188
         },
         {
           "skill": "c",
           "vacancy_count": 8,
-          "rank": 15,
-          "share_within_group": 0.0183
+          "rank": 17,
+          "share_within_group": 0.0167
         },
         {
           "skill": "etl",
           "vacancy_count": 8,
-          "rank": 15,
-          "share_within_group": 0.0183
+          "rank": 17,
+          "share_within_group": 0.0167
+        },
+        {
+          "skill": "mysql",
+          "vacancy_count": 8,
+          "rank": 17,
+          "share_within_group": 0.0167
+        },
+        {
+          "skill": "nodejs",
+          "vacancy_count": 8,
+          "rank": 17,
+          "share_within_group": 0.0167
         },
         {
           "skill": "php",
           "vacancy_count": 8,
-          "rank": 15,
-          "share_within_group": 0.0183
+          "rank": 17,
+          "share_within_group": 0.0167
         },
         {
-          "skill": "postgresql",
-          "vacancy_count": 8,
-          "rank": 15,
-          "share_within_group": 0.0183
-        },
-        {
-          "skill": "terraform",
-          "vacancy_count": 8,
-          "rank": 15,
-          "share_within_group": 0.0183
-        },
-        {
-          "skill": "mysql",
+          "skill": "test_automation",
           "vacancy_count": 7,
-          "rank": 16,
-          "share_within_group": 0.016
+          "rank": 18,
+          "share_within_group": 0.0146
         },
         {
-          "skill": "nodejs",
-          "vacancy_count": 7,
-          "rank": 16,
-          "share_within_group": 0.016
+          "skill": "ansible",
+          "vacancy_count": 5,
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "bigquery",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "dbt",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "gcp",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "git",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "kafka",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "snowflake",
           "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
-        },
-        {
-          "skill": "test_automation",
-          "vacancy_count": 5,
-          "rank": 17,
-          "share_within_group": 0.0114
-        },
-        {
-          "skill": "ansible",
-          "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0091
+          "rank": 19,
+          "share_within_group": 0.0104
         },
         {
           "skill": "linux",
           "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0091
-        },
-        {
-          "skill": "docker",
-          "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0068
-        },
-        {
-          "skill": "kubernetes",
-          "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0068
-        },
-        {
-          "skill": "mongodb",
-          "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0068
-        },
-        {
-          "skill": "mssql",
-          "vacancy_count": 3,
-          "rank": 19,
-          "share_within_group": 0.0068
-        },
-        {
-          "skill": "boost",
-          "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0046
-        },
-        {
-          "skill": "nextjs",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0046
-        },
-        {
-          "skill": "rest_api",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0046
-        },
-        {
-          "skill": "rust",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0046
-        },
-        {
-          "skill": "spark",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0046
-        },
-        {
-          "skill": "swift",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0046
+          "share_within_group": 0.0083
         }
       ]
     },
@@ -2001,94 +1911,94 @@
       "group": "AR",
       "items": [
         {
-          "skill": "agile",
-          "vacancy_count": 6,
+          "skill": "java",
+          "vacancy_count": 8,
           "rank": 1,
-          "share_within_group": 0.3333
+          "share_within_group": 0.3636
         },
         {
-          "skill": "java",
-          "vacancy_count": 5,
+          "skill": "agile",
+          "vacancy_count": 7,
           "rank": 2,
-          "share_within_group": 0.2778
+          "share_within_group": 0.3182
         },
         {
           "skill": "devops",
-          "vacancy_count": 3,
+          "vacancy_count": 5,
           "rank": 3,
-          "share_within_group": 0.1667
+          "share_within_group": 0.2273
         },
         {
           "skill": "ansible",
-          "vacancy_count": 2,
+          "vacancy_count": 4,
           "rank": 4,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1818
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 2,
+          "vacancy_count": 4,
           "rank": 4,
-          "share_within_group": 0.1111
+          "share_within_group": 0.1818
+        },
+        {
+          "skill": "elasticsearch",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
+        },
+        {
+          "skill": "microservices",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
+        },
+        {
+          "skill": "mysql",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
+        },
+        {
+          "skill": "nextjs",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
+        },
+        {
+          "skill": "react",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
+        },
+        {
+          "skill": "typescript",
+          "vacancy_count": 3,
+          "rank": 5,
+          "share_within_group": 0.1364
         },
         {
           "skill": "clean_code",
           "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
+          "rank": 6,
+          "share_within_group": 0.0909
         },
         {
           "skill": "csharp",
           "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
+          "rank": 6,
+          "share_within_group": 0.0909
         },
         {
           "skill": "dotnet",
           "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "elasticsearch",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "microservices",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "mysql",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "nextjs",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "react",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
-        },
-        {
-          "skill": "typescript",
-          "vacancy_count": 2,
-          "rank": 4,
-          "share_within_group": 0.1111
+          "rank": 6,
+          "share_within_group": 0.0909
         },
         {
           "skill": "c++",
           "vacancy_count": 1,
-          "rank": 5,
-          "share_within_group": 0.0556
+          "rank": 7,
+          "share_within_group": 0.0455
         }
       ]
     },
@@ -2097,141 +2007,141 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 148,
+          "vacancy_count": 166,
           "rank": 1,
-          "share_within_group": 0.2011
+          "share_within_group": 0.2075
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 117,
+          "vacancy_count": 130,
           "rank": 2,
-          "share_within_group": 0.159
+          "share_within_group": 0.1625
         },
         {
           "skill": "java",
-          "vacancy_count": 101,
+          "vacancy_count": 114,
           "rank": 3,
-          "share_within_group": 0.1372
+          "share_within_group": 0.1425
         },
         {
           "skill": "devops",
-          "vacancy_count": 99,
+          "vacancy_count": 106,
           "rank": 4,
-          "share_within_group": 0.1345
+          "share_within_group": 0.1325
         },
         {
           "skill": "sql",
-          "vacancy_count": 81,
+          "vacancy_count": 84,
           "rank": 5,
-          "share_within_group": 0.1101
+          "share_within_group": 0.105
         },
         {
           "skill": "python",
-          "vacancy_count": 73,
+          "vacancy_count": 78,
           "rank": 6,
-          "share_within_group": 0.0992
+          "share_within_group": 0.0975
         },
         {
           "skill": "ansible",
-          "vacancy_count": 70,
+          "vacancy_count": 77,
           "rank": 7,
-          "share_within_group": 0.0951
+          "share_within_group": 0.0962
         },
         {
           "skill": "azure",
           "vacancy_count": 66,
           "rank": 8,
-          "share_within_group": 0.0897
+          "share_within_group": 0.0825
         },
         {
           "skill": "spring",
-          "vacancy_count": 56,
+          "vacancy_count": 63,
           "rank": 9,
-          "share_within_group": 0.0761
+          "share_within_group": 0.0788
         },
         {
           "skill": "angular",
-          "vacancy_count": 48,
+          "vacancy_count": 53,
           "rank": 10,
-          "share_within_group": 0.0652
+          "share_within_group": 0.0662
         },
         {
           "skill": "dotnet",
           "vacancy_count": 47,
           "rank": 11,
-          "share_within_group": 0.0639
+          "share_within_group": 0.0588
         },
         {
           "skill": "aws",
           "vacancy_count": 45,
           "rank": 12,
-          "share_within_group": 0.0611
+          "share_within_group": 0.0562
+        },
+        {
+          "skill": "terraform",
+          "vacancy_count": 44,
+          "rank": 13,
+          "share_within_group": 0.055
         },
         {
           "skill": "microservices",
           "vacancy_count": 43,
-          "rank": 13,
-          "share_within_group": 0.0584
-        },
-        {
-          "skill": "terraform",
-          "vacancy_count": 43,
-          "rank": 13,
-          "share_within_group": 0.0584
+          "rank": 14,
+          "share_within_group": 0.0538
         },
         {
           "skill": "react",
-          "vacancy_count": 35,
-          "rank": 14,
-          "share_within_group": 0.0476
+          "vacancy_count": 37,
+          "rank": 15,
+          "share_within_group": 0.0462
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 36,
+          "rank": 16,
+          "share_within_group": 0.045
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 33,
+          "rank": 17,
+          "share_within_group": 0.0412
         },
         {
           "skill": "kafka",
           "vacancy_count": 33,
-          "rank": 15,
-          "share_within_group": 0.0448
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 30,
-          "rank": 16,
-          "share_within_group": 0.0408
+          "rank": 17,
+          "share_within_group": 0.0412
         },
         {
           "skill": "oracle",
-          "vacancy_count": 27,
-          "rank": 17,
-          "share_within_group": 0.0367
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 26,
+          "vacancy_count": 28,
           "rank": 18,
-          "share_within_group": 0.0353
+          "share_within_group": 0.035
         },
         {
           "skill": "postgresql",
           "vacancy_count": 26,
-          "rank": 18,
-          "share_within_group": 0.0353
+          "rank": 19,
+          "share_within_group": 0.0325
+        },
+        {
+          "skill": "test_automation",
+          "vacancy_count": 26,
+          "rank": 19,
+          "share_within_group": 0.0325
         },
         {
           "skill": "gcp",
           "vacancy_count": 23,
-          "rank": 19,
-          "share_within_group": 0.0312
+          "rank": 20,
+          "share_within_group": 0.0288
         },
         {
           "skill": "typescript",
           "vacancy_count": 23,
-          "rank": 19,
-          "share_within_group": 0.0312
-        },
-        {
-          "skill": "test_automation",
-          "vacancy_count": 21,
           "rank": 20,
-          "share_within_group": 0.0285
+          "share_within_group": 0.0288
         }
       ]
     },
@@ -2239,142 +2149,154 @@
       "group": "BL",
       "items": [
         {
-          "skill": "azure",
-          "vacancy_count": 12,
+          "skill": "agile",
+          "vacancy_count": 14,
           "rank": 1,
-          "share_within_group": 0.1644
+          "share_within_group": 0.1667
         },
         {
-          "skill": "agile",
-          "vacancy_count": 10,
+          "skill": "azure",
+          "vacancy_count": 12,
           "rank": 2,
-          "share_within_group": 0.137
+          "share_within_group": 0.1429
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 11,
+          "rank": 3,
+          "share_within_group": 0.131
         },
         {
           "skill": "c",
           "vacancy_count": 7,
-          "rank": 3,
-          "share_within_group": 0.0959
+          "rank": 4,
+          "share_within_group": 0.0833
         },
         {
           "skill": "c++",
           "vacancy_count": 7,
-          "rank": 3,
-          "share_within_group": 0.0959
-        },
-        {
-          "skill": "devops",
-          "vacancy_count": 6,
           "rank": 4,
-          "share_within_group": 0.0822
+          "share_within_group": 0.0833
         },
         {
           "skill": "sql",
           "vacancy_count": 6,
-          "rank": 4,
-          "share_within_group": 0.0822
+          "rank": 5,
+          "share_within_group": 0.0714
         },
         {
           "skill": "aws",
           "vacancy_count": 5,
-          "rank": 5,
-          "share_within_group": 0.0685
+          "rank": 6,
+          "share_within_group": 0.0595
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 5,
-          "rank": 5,
-          "share_within_group": 0.0685
+          "rank": 6,
+          "share_within_group": 0.0595
         },
         {
           "skill": "python",
           "vacancy_count": 5,
-          "rank": 5,
-          "share_within_group": 0.0685
+          "rank": 6,
+          "share_within_group": 0.0595
+        },
+        {
+          "skill": "boost",
+          "vacancy_count": 3,
+          "rank": 7,
+          "share_within_group": 0.0357
         },
         {
           "skill": "gcp",
           "vacancy_count": 3,
-          "rank": 6,
-          "share_within_group": 0.0411
-        },
-        {
-          "skill": "boost",
-          "vacancy_count": 2,
           "rank": 7,
-          "share_within_group": 0.0274
+          "share_within_group": 0.0357
         },
         {
           "skill": "dbt",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "etl",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "java",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "laravel",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "rust",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "terraform",
           "vacancy_count": 2,
-          "rank": 7,
-          "share_within_group": 0.0274
+          "rank": 8,
+          "share_within_group": 0.0238
         },
         {
           "skill": "airflow",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
         },
         {
           "skill": "databricks",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
         },
         {
           "skill": "hadoop",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 1,
+          "rank": 9,
+          "share_within_group": 0.0119
+        },
+        {
+          "skill": "php",
+          "vacancy_count": 1,
+          "rank": 9,
+          "share_within_group": 0.0119
         },
         {
           "skill": "scala",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
         },
         {
           "skill": "snowflake",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
         },
         {
           "skill": "spark",
           "vacancy_count": 1,
-          "rank": 8,
-          "share_within_group": 0.0137
+          "rank": 9,
+          "share_within_group": 0.0119
         }
       ]
     },
@@ -2385,157 +2307,175 @@
           "skill": "ci_cd",
           "vacancy_count": 78,
           "rank": 1,
-          "share_within_group": 0.1945
+          "share_within_group": 0.1853
         },
         {
           "skill": "devops",
           "vacancy_count": 74,
           "rank": 2,
-          "share_within_group": 0.1845
+          "share_within_group": 0.1758
         },
         {
           "skill": "python",
-          "vacancy_count": 69,
+          "vacancy_count": 70,
           "rank": 3,
-          "share_within_group": 0.1721
+          "share_within_group": 0.1663
+        },
+        {
+          "skill": "agile",
+          "vacancy_count": 68,
+          "rank": 4,
+          "share_within_group": 0.1615
         },
         {
           "skill": "terraform",
           "vacancy_count": 68,
           "rank": 4,
-          "share_within_group": 0.1696
-        },
-        {
-          "skill": "agile",
-          "vacancy_count": 65,
-          "rank": 5,
-          "share_within_group": 0.1621
+          "share_within_group": 0.1615
         },
         {
           "skill": "aws",
-          "vacancy_count": 52,
-          "rank": 6,
-          "share_within_group": 0.1297
+          "vacancy_count": 53,
+          "rank": 5,
+          "share_within_group": 0.1259
         },
         {
           "skill": "java",
-          "vacancy_count": 51,
+          "vacancy_count": 52,
+          "rank": 6,
+          "share_within_group": 0.1235
+        },
+        {
+          "skill": "azure",
+          "vacancy_count": 49,
           "rank": 7,
-          "share_within_group": 0.1272
+          "share_within_group": 0.1164
         },
         {
           "skill": "sql",
           "vacancy_count": 48,
           "rank": 8,
-          "share_within_group": 0.1197
-        },
-        {
-          "skill": "azure",
-          "vacancy_count": 46,
-          "rank": 9,
-          "share_within_group": 0.1147
+          "share_within_group": 0.114
         },
         {
           "skill": "ansible",
           "vacancy_count": 26,
-          "rank": 10,
-          "share_within_group": 0.0648
+          "rank": 9,
+          "share_within_group": 0.0618
         },
         {
           "skill": "angular",
           "vacancy_count": 25,
+          "rank": 10,
+          "share_within_group": 0.0594
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 21,
           "rank": 11,
-          "share_within_group": 0.0623
+          "share_within_group": 0.0499
         },
         {
           "skill": "spark",
           "vacancy_count": 21,
-          "rank": 12,
-          "share_within_group": 0.0524
+          "rank": 11,
+          "share_within_group": 0.0499
         },
         {
           "skill": "etl",
           "vacancy_count": 20,
-          "rank": 13,
-          "share_within_group": 0.0499
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 20,
-          "rank": 13,
-          "share_within_group": 0.0499
+          "rank": 12,
+          "share_within_group": 0.0475
         },
         {
           "skill": "react",
           "vacancy_count": 20,
-          "rank": 13,
-          "share_within_group": 0.0499
+          "rank": 12,
+          "share_within_group": 0.0475
         },
         {
           "skill": "dotnet",
           "vacancy_count": 19,
-          "rank": 14,
-          "share_within_group": 0.0474
+          "rank": 13,
+          "share_within_group": 0.0451
         },
         {
           "skill": "mssql",
           "vacancy_count": 17,
-          "rank": 15,
-          "share_within_group": 0.0424
+          "rank": 14,
+          "share_within_group": 0.0404
         },
         {
           "skill": "spring",
           "vacancy_count": 17,
-          "rank": 15,
-          "share_within_group": 0.0424
+          "rank": 14,
+          "share_within_group": 0.0404
         },
         {
           "skill": "csharp",
           "vacancy_count": 16,
-          "rank": 16,
-          "share_within_group": 0.0399
+          "rank": 15,
+          "share_within_group": 0.038
+        },
+        {
+          "skill": "gcp",
+          "vacancy_count": 16,
+          "rank": 15,
+          "share_within_group": 0.038
         },
         {
           "skill": "typescript",
           "vacancy_count": 16,
-          "rank": 16,
-          "share_within_group": 0.0399
-        },
-        {
-          "skill": "gcp",
-          "vacancy_count": 15,
-          "rank": 17,
-          "share_within_group": 0.0374
+          "rank": 15,
+          "share_within_group": 0.038
         },
         {
           "skill": "dbt",
           "vacancy_count": 14,
-          "rank": 18,
-          "share_within_group": 0.0349
+          "rank": 16,
+          "share_within_group": 0.0333
         },
         {
           "skill": "oracle",
           "vacancy_count": 14,
-          "rank": 18,
-          "share_within_group": 0.0349
+          "rank": 16,
+          "share_within_group": 0.0333
         },
         {
           "skill": "scala",
           "vacancy_count": 11,
-          "rank": 19,
-          "share_within_group": 0.0274
+          "rank": 17,
+          "share_within_group": 0.0261
         },
         {
           "skill": "databricks",
           "vacancy_count": 10,
-          "rank": 20,
-          "share_within_group": 0.0249
+          "rank": 18,
+          "share_within_group": 0.0238
         },
         {
           "skill": "postgresql",
           "vacancy_count": 10,
+          "rank": 18,
+          "share_within_group": 0.0238
+        },
+        {
+          "skill": "airflow",
+          "vacancy_count": 9,
+          "rank": 19,
+          "share_within_group": 0.0214
+        },
+        {
+          "skill": "snowflake",
+          "vacancy_count": 9,
+          "rank": 19,
+          "share_within_group": 0.0214
+        },
+        {
+          "skill": "hadoop",
+          "vacancy_count": 7,
           "rank": 20,
-          "share_within_group": 0.0249
+          "share_within_group": 0.0166
         }
       ]
     },
@@ -2546,163 +2486,163 @@
           "skill": "dotnet",
           "vacancy_count": 10,
           "rank": 1,
-          "share_within_group": 0.2273
+          "share_within_group": 0.2128
         },
         {
           "skill": "devops",
           "vacancy_count": 9,
           "rank": 2,
-          "share_within_group": 0.2045
+          "share_within_group": 0.1915
         },
         {
           "skill": "java",
           "vacancy_count": 7,
           "rank": 3,
-          "share_within_group": 0.1591
+          "share_within_group": 0.1489
         },
         {
           "skill": "sql",
           "vacancy_count": 7,
           "rank": 3,
-          "share_within_group": 0.1591
+          "share_within_group": 0.1489
         },
         {
           "skill": "agile",
           "vacancy_count": 6,
           "rank": 4,
-          "share_within_group": 0.1364
+          "share_within_group": 0.1277
         },
         {
           "skill": "csharp",
           "vacancy_count": 6,
           "rank": 4,
-          "share_within_group": 0.1364
+          "share_within_group": 0.1277
         },
         {
           "skill": "microservices",
           "vacancy_count": 6,
           "rank": 4,
-          "share_within_group": 0.1364
+          "share_within_group": 0.1277
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.1136
+          "share_within_group": 0.1064
         },
         {
           "skill": "javascript",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.1136
+          "share_within_group": 0.1064
         },
         {
           "skill": "mssql",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.1136
+          "share_within_group": 0.1064
         },
         {
           "skill": "python",
           "vacancy_count": 4,
           "rank": 6,
-          "share_within_group": 0.0909
+          "share_within_group": 0.0851
         },
         {
           "skill": "typescript",
           "vacancy_count": 4,
           "rank": 6,
-          "share_within_group": 0.0909
+          "share_within_group": 0.0851
         },
         {
           "skill": "etl",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "kotlin",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "postgresql",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "react",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "terraform",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "vue",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0682
+          "share_within_group": 0.0638
         },
         {
           "skill": "docker",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0455
+          "share_within_group": 0.0426
         },
         {
           "skill": "linux",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0455
+          "share_within_group": 0.0426
         },
         {
           "skill": "rest_api",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0455
+          "share_within_group": 0.0426
         },
         {
           "skill": "angular",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0227
+          "share_within_group": 0.0213
         },
         {
           "skill": "azure",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0227
+          "share_within_group": 0.0213
         },
         {
           "skill": "devsecops",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0227
+          "share_within_group": 0.0213
         },
         {
           "skill": "nodejs",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0227
+          "share_within_group": 0.0213
         },
         {
           "skill": "oracle",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0227
+          "share_within_group": 0.0213
         }
       ]
     },
@@ -2711,141 +2651,165 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 117,
+          "vacancy_count": 141,
           "rank": 1,
-          "share_within_group": 0.3232
-        },
-        {
-          "skill": "java",
-          "vacancy_count": 61,
-          "rank": 2,
-          "share_within_group": 0.1685
+          "share_within_group": 0.3398
         },
         {
           "skill": "sql",
-          "vacancy_count": 60,
-          "rank": 3,
-          "share_within_group": 0.1657
+          "vacancy_count": 69,
+          "rank": 2,
+          "share_within_group": 0.1663
         },
         {
           "skill": "agile",
-          "vacancy_count": 57,
+          "vacancy_count": 68,
+          "rank": 3,
+          "share_within_group": 0.1639
+        },
+        {
+          "skill": "java",
+          "vacancy_count": 67,
           "rank": 4,
-          "share_within_group": 0.1575
+          "share_within_group": 0.1614
         },
         {
           "skill": "devops",
-          "vacancy_count": 52,
+          "vacancy_count": 64,
           "rank": 5,
-          "share_within_group": 0.1436
+          "share_within_group": 0.1542
+        },
+        {
+          "skill": "aws",
+          "vacancy_count": 49,
+          "rank": 6,
+          "share_within_group": 0.1181
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 45,
-          "rank": 6,
-          "share_within_group": 0.1243
-        },
-        {
-          "skill": "aws",
-          "vacancy_count": 43,
           "rank": 7,
-          "share_within_group": 0.1188
+          "share_within_group": 0.1084
         },
         {
           "skill": "oracle",
-          "vacancy_count": 34,
+          "vacancy_count": 40,
           "rank": 8,
-          "share_within_group": 0.0939
+          "share_within_group": 0.0964
         },
         {
           "skill": "php",
-          "vacancy_count": 33,
+          "vacancy_count": 37,
           "rank": 9,
-          "share_within_group": 0.0912
+          "share_within_group": 0.0892
+        },
+        {
+          "skill": "snowflake",
+          "vacancy_count": 30,
+          "rank": 10,
+          "share_within_group": 0.0723
+        },
+        {
+          "skill": "postgresql",
+          "vacancy_count": 27,
+          "rank": 11,
+          "share_within_group": 0.0651
         },
         {
           "skill": "azure",
           "vacancy_count": 26,
-          "rank": 10,
-          "share_within_group": 0.0718
-        },
-        {
-          "skill": "snowflake",
-          "vacancy_count": 24,
-          "rank": 11,
-          "share_within_group": 0.0663
-        },
-        {
-          "skill": "postgresql",
-          "vacancy_count": 23,
           "rank": 12,
-          "share_within_group": 0.0635
+          "share_within_group": 0.0627
+        },
+        {
+          "skill": "gcp",
+          "vacancy_count": 23,
+          "rank": 13,
+          "share_within_group": 0.0554
+        },
+        {
+          "skill": "ansible",
+          "vacancy_count": 22,
+          "rank": 14,
+          "share_within_group": 0.053
         },
         {
           "skill": "spark",
           "vacancy_count": 22,
-          "rank": 13,
-          "share_within_group": 0.0608
-        },
-        {
-          "skill": "gcp",
-          "vacancy_count": 20,
           "rank": 14,
-          "share_within_group": 0.0552
+          "share_within_group": 0.053
         },
         {
-          "skill": "ansible",
-          "vacancy_count": 18,
+          "skill": "terraform",
+          "vacancy_count": 20,
           "rank": 15,
-          "share_within_group": 0.0497
+          "share_within_group": 0.0482
         },
         {
           "skill": "etl",
           "vacancy_count": 18,
-          "rank": 15,
-          "share_within_group": 0.0497
-        },
-        {
-          "skill": "terraform",
-          "vacancy_count": 16,
           "rank": 16,
-          "share_within_group": 0.0442
+          "share_within_group": 0.0434
         },
         {
           "skill": "react",
-          "vacancy_count": 14,
+          "vacancy_count": 16,
           "rank": 17,
-          "share_within_group": 0.0387
+          "share_within_group": 0.0386
+        },
+        {
+          "skill": "angular",
+          "vacancy_count": 13,
+          "rank": 18,
+          "share_within_group": 0.0313
         },
         {
           "skill": "c++",
           "vacancy_count": 13,
           "rank": 18,
-          "share_within_group": 0.0359
+          "share_within_group": 0.0313
+        },
+        {
+          "skill": "test_automation",
+          "vacancy_count": 13,
+          "rank": 18,
+          "share_within_group": 0.0313
+        },
+        {
+          "skill": "flask",
+          "vacancy_count": 12,
+          "rank": 19,
+          "share_within_group": 0.0289
         },
         {
           "skill": "javascript",
           "vacancy_count": 12,
           "rank": 19,
-          "share_within_group": 0.0331
+          "share_within_group": 0.0289
+        },
+        {
+          "skill": "kafka",
+          "vacancy_count": 11,
+          "rank": 20,
+          "share_within_group": 0.0265
+        },
+        {
+          "skill": "mysql",
+          "vacancy_count": 11,
+          "rank": 20,
+          "share_within_group": 0.0265
         },
         {
           "skill": "spring",
           "vacancy_count": 11,
           "rank": 20,
-          "share_within_group": 0.0304
-        },
-        {
-          "skill": "test_automation",
-          "vacancy_count": 11,
-          "rank": 20,
-          "share_within_group": 0.0304
+          "share_within_group": 0.0265
         },
         {
           "skill": "typescript",
           "vacancy_count": 11,
           "rank": 20,
-          "share_within_group": 0.0304
+          "share_within_group": 0.0265
         }
       ]
     },
@@ -2913,159 +2877,165 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 16,
+          "vacancy_count": 19,
           "rank": 1,
-          "share_within_group": 0.2133
+          "share_within_group": 0.2346
         },
         {
           "skill": "agile",
           "vacancy_count": 11,
           "rank": 2,
-          "share_within_group": 0.1467
+          "share_within_group": 0.1358
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 9,
-          "rank": 3,
-          "share_within_group": 0.12
+          "vacancy_count": 11,
+          "rank": 2,
+          "share_within_group": 0.1358
         },
         {
           "skill": "sql",
-          "vacancy_count": 9,
-          "rank": 3,
-          "share_within_group": 0.12
+          "vacancy_count": 11,
+          "rank": 2,
+          "share_within_group": 0.1358
         },
         {
           "skill": "java",
-          "vacancy_count": 8,
-          "rank": 4,
-          "share_within_group": 0.1067
+          "vacancy_count": 9,
+          "rank": 3,
+          "share_within_group": 0.1111
         },
         {
           "skill": "dotnet",
           "vacancy_count": 7,
+          "rank": 4,
+          "share_within_group": 0.0864
+        },
+        {
+          "skill": "c++",
+          "vacancy_count": 6,
           "rank": 5,
-          "share_within_group": 0.0933
+          "share_within_group": 0.0741
         },
         {
           "skill": "csharp",
           "vacancy_count": 6,
-          "rank": 6,
-          "share_within_group": 0.08
+          "rank": 5,
+          "share_within_group": 0.0741
         },
         {
-          "skill": "c++",
-          "vacancy_count": 5,
-          "rank": 7,
-          "share_within_group": 0.0667
+          "skill": "angular",
+          "vacancy_count": 4,
+          "rank": 6,
+          "share_within_group": 0.0494
+        },
+        {
+          "skill": "clean_code",
+          "vacancy_count": 4,
+          "rank": 6,
+          "share_within_group": 0.0494
         },
         {
           "skill": "devops",
           "vacancy_count": 4,
-          "rank": 8,
-          "share_within_group": 0.0533
+          "rank": 6,
+          "share_within_group": 0.0494
         },
         {
           "skill": "react",
           "vacancy_count": 4,
-          "rank": 8,
-          "share_within_group": 0.0533
-        },
-        {
-          "skill": "angular",
-          "vacancy_count": 3,
-          "rank": 9,
-          "share_within_group": 0.04
+          "rank": 6,
+          "share_within_group": 0.0494
         },
         {
           "skill": "azure",
           "vacancy_count": 3,
-          "rank": 9,
-          "share_within_group": 0.04
-        },
-        {
-          "skill": "clean_code",
-          "vacancy_count": 3,
-          "rank": 9,
-          "share_within_group": 0.04
+          "rank": 7,
+          "share_within_group": 0.037
         },
         {
           "skill": "javascript",
           "vacancy_count": 3,
-          "rank": 9,
-          "share_within_group": 0.04
+          "rank": 7,
+          "share_within_group": 0.037
         },
         {
           "skill": "postgresql",
           "vacancy_count": 3,
-          "rank": 9,
-          "share_within_group": 0.04
+          "rank": 7,
+          "share_within_group": 0.037
+        },
+        {
+          "skill": "spring",
+          "vacancy_count": 3,
+          "rank": 7,
+          "share_within_group": 0.037
+        },
+        {
+          "skill": "typescript",
+          "vacancy_count": 3,
+          "rank": 7,
+          "share_within_group": 0.037
+        },
+        {
+          "skill": "c",
+          "vacancy_count": 2,
+          "rank": 8,
+          "share_within_group": 0.0247
+        },
+        {
+          "skill": "etl",
+          "vacancy_count": 2,
+          "rank": 8,
+          "share_within_group": 0.0247
         },
         {
           "skill": "mssql",
           "vacancy_count": 2,
-          "rank": 10,
-          "share_within_group": 0.0267
+          "rank": 8,
+          "share_within_group": 0.0247
         },
         {
           "skill": "rust",
           "vacancy_count": 2,
-          "rank": 10,
-          "share_within_group": 0.0267
-        },
-        {
-          "skill": "spring",
-          "vacancy_count": 2,
-          "rank": 10,
-          "share_within_group": 0.0267
-        },
-        {
-          "skill": "typescript",
-          "vacancy_count": 2,
-          "rank": 10,
-          "share_within_group": 0.0267
+          "rank": 8,
+          "share_within_group": 0.0247
         },
         {
           "skill": "ansible",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         },
         {
           "skill": "aws",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         },
         {
           "skill": "boost",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
-        },
-        {
-          "skill": "c",
-          "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         },
         {
           "skill": "microservices",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         },
         {
           "skill": "pytorch",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         },
         {
           "skill": "tensorflow",
           "vacancy_count": 1,
-          "rank": 11,
-          "share_within_group": 0.0133
+          "rank": 9,
+          "share_within_group": 0.0123
         }
       ]
     },
@@ -3074,165 +3044,165 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 73,
+          "vacancy_count": 75,
           "rank": 1,
-          "share_within_group": 0.1768
-        },
-        {
-          "skill": "ci_cd",
-          "vacancy_count": 44,
-          "rank": 2,
-          "share_within_group": 0.1065
+          "share_within_group": 0.1682
         },
         {
           "skill": "azure",
-          "vacancy_count": 43,
+          "vacancy_count": 49,
+          "rank": 2,
+          "share_within_group": 0.1099
+        },
+        {
+          "skill": "ci_cd",
+          "vacancy_count": 47,
           "rank": 3,
-          "share_within_group": 0.1041
+          "share_within_group": 0.1054
         },
         {
           "skill": "devops",
           "vacancy_count": 41,
           "rank": 4,
-          "share_within_group": 0.0993
+          "share_within_group": 0.0919
         },
         {
           "skill": "python",
-          "vacancy_count": 39,
+          "vacancy_count": 40,
           "rank": 5,
-          "share_within_group": 0.0944
+          "share_within_group": 0.0897
         },
         {
           "skill": "sql",
           "vacancy_count": 38,
           "rank": 6,
-          "share_within_group": 0.092
+          "share_within_group": 0.0852
         },
         {
           "skill": "java",
-          "vacancy_count": 31,
+          "vacancy_count": 33,
           "rank": 7,
-          "share_within_group": 0.0751
+          "share_within_group": 0.074
         },
         {
           "skill": "clean_code",
           "vacancy_count": 24,
           "rank": 8,
-          "share_within_group": 0.0581
+          "share_within_group": 0.0538
         },
         {
           "skill": "dotnet",
           "vacancy_count": 22,
           "rank": 9,
-          "share_within_group": 0.0533
+          "share_within_group": 0.0493
         },
         {
           "skill": "mssql",
           "vacancy_count": 22,
           "rank": 9,
-          "share_within_group": 0.0533
+          "share_within_group": 0.0493
         },
         {
           "skill": "angular",
-          "vacancy_count": 18,
+          "vacancy_count": 20,
           "rank": 10,
-          "share_within_group": 0.0436
+          "share_within_group": 0.0448
         },
         {
           "skill": "react",
-          "vacancy_count": 18,
+          "vacancy_count": 20,
           "rank": 10,
-          "share_within_group": 0.0436
+          "share_within_group": 0.0448
         },
         {
           "skill": "terraform",
-          "vacancy_count": 17,
+          "vacancy_count": 19,
           "rank": 11,
-          "share_within_group": 0.0412
+          "share_within_group": 0.0426
         },
         {
           "skill": "csharp",
           "vacancy_count": 16,
           "rank": 12,
-          "share_within_group": 0.0387
+          "share_within_group": 0.0359
         },
         {
           "skill": "ansible",
           "vacancy_count": 14,
           "rank": 13,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0314
         },
         {
           "skill": "typescript",
           "vacancy_count": 14,
           "rank": 13,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0314
         },
         {
           "skill": "javascript",
           "vacancy_count": 12,
           "rank": 14,
-          "share_within_group": 0.0291
+          "share_within_group": 0.0269
+        },
+        {
+          "skill": "microservices",
+          "vacancy_count": 10,
+          "rank": 15,
+          "share_within_group": 0.0224
         },
         {
           "skill": "oracle",
           "vacancy_count": 10,
           "rank": 15,
-          "share_within_group": 0.0242
+          "share_within_group": 0.0224
         },
         {
           "skill": "databricks",
           "vacancy_count": 9,
           "rank": 16,
-          "share_within_group": 0.0218
+          "share_within_group": 0.0202
         },
         {
           "skill": "c++",
           "vacancy_count": 8,
           "rank": 17,
-          "share_within_group": 0.0194
-        },
-        {
-          "skill": "microservices",
-          "vacancy_count": 8,
-          "rank": 17,
-          "share_within_group": 0.0194
+          "share_within_group": 0.0179
         },
         {
           "skill": "postgresql",
           "vacancy_count": 8,
           "rank": 17,
-          "share_within_group": 0.0194
+          "share_within_group": 0.0179
+        },
+        {
+          "skill": "spring",
+          "vacancy_count": 8,
+          "rank": 17,
+          "share_within_group": 0.0179
         },
         {
           "skill": "php",
           "vacancy_count": 7,
           "rank": 18,
-          "share_within_group": 0.0169
-        },
-        {
-          "skill": "spring",
-          "vacancy_count": 7,
-          "rank": 18,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0157
         },
         {
           "skill": "aws",
           "vacancy_count": 6,
           "rank": 19,
-          "share_within_group": 0.0145
+          "share_within_group": 0.0135
         },
         {
           "skill": "symfony",
           "vacancy_count": 5,
           "rank": 20,
-          "share_within_group": 0.0121
+          "share_within_group": 0.0112
         },
         {
           "skill": "test_automation",
           "vacancy_count": 5,
           "rank": 20,
-          "share_within_group": 0.0121
+          "share_within_group": 0.0112
         }
       ]
     },
@@ -3241,147 +3211,147 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 28,
+          "vacancy_count": 29,
           "rank": 1,
-          "share_within_group": 0.4242
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 13,
-          "rank": 2,
-          "share_within_group": 0.197
+          "share_within_group": 0.3973
         },
         {
           "skill": "agile",
-          "vacancy_count": 12,
-          "rank": 3,
-          "share_within_group": 0.1818
+          "vacancy_count": 14,
+          "rank": 2,
+          "share_within_group": 0.1918
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 14,
+          "rank": 2,
+          "share_within_group": 0.1918
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 9,
-          "rank": 4,
-          "share_within_group": 0.1364
+          "vacancy_count": 10,
+          "rank": 3,
+          "share_within_group": 0.137
         },
         {
           "skill": "sql",
           "vacancy_count": 7,
-          "rank": 5,
-          "share_within_group": 0.1061
+          "rank": 4,
+          "share_within_group": 0.0959
         },
         {
           "skill": "c++",
           "vacancy_count": 6,
+          "rank": 5,
+          "share_within_group": 0.0822
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 5,
           "rank": 6,
-          "share_within_group": 0.0909
+          "share_within_group": 0.0685
         },
         {
           "skill": "ansible",
           "vacancy_count": 4,
           "rank": 7,
-          "share_within_group": 0.0606
+          "share_within_group": 0.0548
         },
         {
           "skill": "c",
           "vacancy_count": 4,
           "rank": 7,
-          "share_within_group": 0.0606
+          "share_within_group": 0.0548
         },
         {
           "skill": "devops",
-          "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0455
+          "vacancy_count": 4,
+          "rank": 7,
+          "share_within_group": 0.0548
         },
         {
-          "skill": "javascript",
+          "skill": "azure",
           "vacancy_count": 3,
           "rank": 8,
-          "share_within_group": 0.0455
+          "share_within_group": 0.0411
         },
         {
           "skill": "oracle",
           "vacancy_count": 3,
           "rank": 8,
-          "share_within_group": 0.0455
+          "share_within_group": 0.0411
         },
         {
-          "skill": "azure",
-          "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0303
+          "skill": "terraform",
+          "vacancy_count": 3,
+          "rank": 8,
+          "share_within_group": 0.0411
         },
         {
           "skill": "dotnet",
           "vacancy_count": 2,
           "rank": 9,
-          "share_within_group": 0.0303
-        },
-        {
-          "skill": "terraform",
-          "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0303
+          "share_within_group": 0.0274
         },
         {
           "skill": "test_automation",
           "vacancy_count": 2,
           "rank": 9,
-          "share_within_group": 0.0303
+          "share_within_group": 0.0274
         },
         {
           "skill": "angular",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "dart",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "django",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "docker",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "gcp",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "kafka",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "microservices",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         },
         {
           "skill": "typescript",
           "vacancy_count": 1,
           "rank": 10,
-          "share_within_group": 0.0152
+          "share_within_group": 0.0137
         }
       ]
     },
@@ -3390,267 +3360,267 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 34,
+          "vacancy_count": 39,
           "rank": 1,
-          "share_within_group": 0.1118
+          "share_within_group": 0.1154
         },
         {
           "skill": "devops",
-          "vacancy_count": 30,
+          "vacancy_count": 36,
           "rank": 2,
-          "share_within_group": 0.0987
+          "share_within_group": 0.1065
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 27,
+          "vacancy_count": 31,
           "rank": 3,
-          "share_within_group": 0.0888
+          "share_within_group": 0.0917
         },
         {
           "skill": "sql",
           "vacancy_count": 27,
-          "rank": 3,
-          "share_within_group": 0.0888
+          "rank": 4,
+          "share_within_group": 0.0799
         },
         {
           "skill": "java",
-          "vacancy_count": 22,
-          "rank": 4,
-          "share_within_group": 0.0724
-        },
-        {
-          "skill": "python",
-          "vacancy_count": 19,
+          "vacancy_count": 25,
           "rank": 5,
-          "share_within_group": 0.0625
+          "share_within_group": 0.074
         },
         {
           "skill": "azure",
-          "vacancy_count": 18,
+          "vacancy_count": 20,
           "rank": 6,
           "share_within_group": 0.0592
         },
         {
-          "skill": "c++",
-          "vacancy_count": 16,
-          "rank": 7,
-          "share_within_group": 0.0526
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 15,
-          "rank": 8,
-          "share_within_group": 0.0493
+          "skill": "python",
+          "vacancy_count": 20,
+          "rank": 6,
+          "share_within_group": 0.0592
         },
         {
           "skill": "angular",
-          "vacancy_count": 14,
-          "rank": 9,
-          "share_within_group": 0.0461
+          "vacancy_count": 19,
+          "rank": 7,
+          "share_within_group": 0.0562
+        },
+        {
+          "skill": "c++",
+          "vacancy_count": 16,
+          "rank": 8,
+          "share_within_group": 0.0473
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 16,
+          "rank": 8,
+          "share_within_group": 0.0473
         },
         {
           "skill": "dotnet",
-          "vacancy_count": 12,
-          "rank": 10,
-          "share_within_group": 0.0395
+          "vacancy_count": 13,
+          "rank": 9,
+          "share_within_group": 0.0385
         },
         {
           "skill": "terraform",
-          "vacancy_count": 12,
-          "rank": 10,
-          "share_within_group": 0.0395
+          "vacancy_count": 13,
+          "rank": 9,
+          "share_within_group": 0.0385
         },
         {
           "skill": "aws",
+          "vacancy_count": 12,
+          "rank": 10,
+          "share_within_group": 0.0355
+        },
+        {
+          "skill": "react",
+          "vacancy_count": 12,
+          "rank": 10,
+          "share_within_group": 0.0355
+        },
+        {
+          "skill": "mysql",
           "vacancy_count": 11,
           "rank": 11,
-          "share_within_group": 0.0362
+          "share_within_group": 0.0325
         },
         {
           "skill": "spring",
           "vacancy_count": 11,
           "rank": 11,
-          "share_within_group": 0.0362
+          "share_within_group": 0.0325
         },
         {
-          "skill": "react",
-          "vacancy_count": 10,
-          "rank": 12,
-          "share_within_group": 0.0329
+          "skill": "typescript",
+          "vacancy_count": 11,
+          "rank": 11,
+          "share_within_group": 0.0325
         },
         {
           "skill": "mssql",
-          "vacancy_count": 9,
-          "rank": 13,
+          "vacancy_count": 10,
+          "rank": 12,
           "share_within_group": 0.0296
         },
         {
-          "skill": "mysql",
+          "skill": "php",
+          "vacancy_count": 9,
+          "rank": 13,
+          "share_within_group": 0.0266
+        },
+        {
+          "skill": "postgresql",
+          "vacancy_count": 9,
+          "rank": 13,
+          "share_within_group": 0.0266
+        },
+        {
+          "skill": "gcp",
           "vacancy_count": 8,
           "rank": 14,
-          "share_within_group": 0.0263
+          "share_within_group": 0.0237
         },
         {
           "skill": "clean_code",
           "vacancy_count": 7,
           "rank": 15,
-          "share_within_group": 0.023
+          "share_within_group": 0.0207
         },
         {
-          "skill": "gcp",
+          "skill": "microservices",
           "vacancy_count": 7,
           "rank": 15,
-          "share_within_group": 0.023
+          "share_within_group": 0.0207
         },
         {
-          "skill": "php",
-          "vacancy_count": 7,
-          "rank": 15,
-          "share_within_group": 0.023
-        },
-        {
-          "skill": "typescript",
-          "vacancy_count": 7,
-          "rank": 15,
-          "share_within_group": 0.023
+          "skill": "ansible",
+          "vacancy_count": 6,
+          "rank": 16,
+          "share_within_group": 0.0178
         },
         {
           "skill": "javascript",
           "vacancy_count": 6,
           "rank": 16,
-          "share_within_group": 0.0197
+          "share_within_group": 0.0178
         },
         {
-          "skill": "microservices",
+          "skill": "symfony",
           "vacancy_count": 6,
           "rank": 16,
-          "share_within_group": 0.0197
+          "share_within_group": 0.0178
         },
         {
-          "skill": "postgresql",
-          "vacancy_count": 6,
-          "rank": 16,
-          "share_within_group": 0.0197
+          "skill": "laravel",
+          "vacancy_count": 5,
+          "rank": 17,
+          "share_within_group": 0.0148
         },
         {
           "skill": "oracle",
           "vacancy_count": 5,
           "rank": 17,
-          "share_within_group": 0.0164
-        },
-        {
-          "skill": "ansible",
-          "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0132
+          "share_within_group": 0.0148
         },
         {
           "skill": "git",
           "vacancy_count": 4,
           "rank": 18,
-          "share_within_group": 0.0132
-        },
-        {
-          "skill": "symfony",
-          "vacancy_count": 4,
-          "rank": 18,
-          "share_within_group": 0.0132
+          "share_within_group": 0.0118
         },
         {
           "skill": "docker",
           "vacancy_count": 3,
           "rank": 19,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0089
+        },
+        {
+          "skill": "elasticsearch",
+          "vacancy_count": 3,
+          "rank": 19,
+          "share_within_group": 0.0089
         },
         {
           "skill": "kotlin",
           "vacancy_count": 3,
           "rank": 19,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0089
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 3,
           "rank": 19,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0089
         },
         {
-          "skill": "laravel",
+          "skill": "nextjs",
           "vacancy_count": 3,
           "rank": 19,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0089
         },
         {
           "skill": "rest_api",
           "vacancy_count": 3,
           "rank": 19,
-          "share_within_group": 0.0099
+          "share_within_group": 0.0089
         },
         {
           "skill": "boost",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "c",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "devsecops",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
-        },
-        {
-          "skill": "elasticsearch",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "go",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
-        },
-        {
-          "skill": "nextjs",
-          "vacancy_count": 2,
-          "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "nodejs",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "or_tools",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "pytorch",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "scikit_learn",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         },
         {
           "skill": "vue",
           "vacancy_count": 2,
           "rank": 20,
-          "share_within_group": 0.0066
+          "share_within_group": 0.0059
         }
       ]
     },
@@ -3661,67 +3631,67 @@
           "skill": "azure",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1316
+          "share_within_group": 0.122
         },
         {
           "skill": "csharp",
           "vacancy_count": 3,
           "rank": 2,
-          "share_within_group": 0.0789
+          "share_within_group": 0.0732
         },
         {
           "skill": "python",
           "vacancy_count": 3,
           "rank": 2,
-          "share_within_group": 0.0789
+          "share_within_group": 0.0732
         },
         {
           "skill": "sql",
           "vacancy_count": 3,
           "rank": 2,
-          "share_within_group": 0.0789
+          "share_within_group": 0.0732
         },
         {
           "skill": "ansible",
           "vacancy_count": 2,
           "rank": 3,
-          "share_within_group": 0.0526
+          "share_within_group": 0.0488
         },
         {
           "skill": "dart",
           "vacancy_count": 2,
           "rank": 3,
-          "share_within_group": 0.0526
+          "share_within_group": 0.0488
         },
         {
           "skill": "devops",
           "vacancy_count": 2,
           "rank": 3,
-          "share_within_group": 0.0526
+          "share_within_group": 0.0488
         },
         {
           "skill": "php",
           "vacancy_count": 2,
           "rank": 3,
-          "share_within_group": 0.0526
+          "share_within_group": 0.0488
         },
         {
           "skill": "java",
           "vacancy_count": 1,
           "rank": 4,
-          "share_within_group": 0.0263
+          "share_within_group": 0.0244
         },
         {
           "skill": "javascript",
           "vacancy_count": 1,
           "rank": 4,
-          "share_within_group": 0.0263
+          "share_within_group": 0.0244
         },
         {
           "skill": "mssql",
           "vacancy_count": 1,
           "rank": 4,
-          "share_within_group": 0.0263
+          "share_within_group": 0.0244
         }
       ]
     },
@@ -3730,213 +3700,213 @@
       "items": [
         {
           "skill": "sql",
-          "vacancy_count": 25,
+          "vacancy_count": 28,
           "rank": 1,
-          "share_within_group": 0.1582
+          "share_within_group": 0.1677
         },
         {
           "skill": "azure",
-          "vacancy_count": 20,
+          "vacancy_count": 22,
           "rank": 2,
-          "share_within_group": 0.1266
+          "share_within_group": 0.1317
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 18,
+          "vacancy_count": 22,
+          "rank": 2,
+          "share_within_group": 0.1317
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 16,
           "rank": 3,
-          "share_within_group": 0.1139
+          "share_within_group": 0.0958
         },
         {
           "skill": "agile",
           "vacancy_count": 14,
           "rank": 4,
-          "share_within_group": 0.0886
+          "share_within_group": 0.0838
         },
         {
-          "skill": "devops",
-          "vacancy_count": 12,
+          "skill": "python",
+          "vacancy_count": 10,
           "rank": 5,
-          "share_within_group": 0.0759
+          "share_within_group": 0.0599
+        },
+        {
+          "skill": "java",
+          "vacancy_count": 9,
+          "rank": 6,
+          "share_within_group": 0.0539
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 8,
+          "rank": 7,
+          "share_within_group": 0.0479
         },
         {
           "skill": "oracle",
           "vacancy_count": 8,
-          "rank": 6,
-          "share_within_group": 0.0506
+          "rank": 7,
+          "share_within_group": 0.0479
         },
         {
-          "skill": "python",
+          "skill": "typescript",
           "vacancy_count": 8,
-          "rank": 6,
-          "share_within_group": 0.0506
+          "rank": 7,
+          "share_within_group": 0.0479
         },
         {
           "skill": "csharp",
           "vacancy_count": 7,
-          "rank": 7,
-          "share_within_group": 0.0443
+          "rank": 8,
+          "share_within_group": 0.0419
         },
         {
           "skill": "dotnet",
           "vacancy_count": 7,
-          "rank": 7,
-          "share_within_group": 0.0443
-        },
-        {
-          "skill": "java",
-          "vacancy_count": 7,
-          "rank": 7,
-          "share_within_group": 0.0443
+          "rank": 8,
+          "share_within_group": 0.0419
         },
         {
           "skill": "angular",
           "vacancy_count": 6,
-          "rank": 8,
-          "share_within_group": 0.038
+          "rank": 9,
+          "share_within_group": 0.0359
         },
         {
           "skill": "ansible",
           "vacancy_count": 6,
-          "rank": 8,
-          "share_within_group": 0.038
+          "rank": 9,
+          "share_within_group": 0.0359
         },
         {
-          "skill": "javascript",
+          "skill": "databricks",
           "vacancy_count": 6,
-          "rank": 8,
-          "share_within_group": 0.038
+          "rank": 9,
+          "share_within_group": 0.0359
         },
         {
-          "skill": "typescript",
-          "vacancy_count": 6,
-          "rank": 8,
-          "share_within_group": 0.038
+          "skill": "mssql",
+          "vacancy_count": 5,
+          "rank": 10,
+          "share_within_group": 0.0299
+        },
+        {
+          "skill": "spring",
+          "vacancy_count": 5,
+          "rank": 10,
+          "share_within_group": 0.0299
         },
         {
           "skill": "terraform",
           "vacancy_count": 5,
-          "rank": 9,
-          "share_within_group": 0.0316
-        },
-        {
-          "skill": "databricks",
-          "vacancy_count": 4,
           "rank": 10,
-          "share_within_group": 0.0253
+          "share_within_group": 0.0299
         },
         {
           "skill": "gcp",
           "vacancy_count": 4,
-          "rank": 10,
-          "share_within_group": 0.0253
+          "rank": 11,
+          "share_within_group": 0.024
         },
         {
           "skill": "kafka",
           "vacancy_count": 4,
-          "rank": 10,
-          "share_within_group": 0.0253
-        },
-        {
-          "skill": "mssql",
-          "vacancy_count": 4,
-          "rank": 10,
-          "share_within_group": 0.0253
+          "rank": 11,
+          "share_within_group": 0.024
         },
         {
           "skill": "postgresql",
           "vacancy_count": 4,
-          "rank": 10,
-          "share_within_group": 0.0253
+          "rank": 11,
+          "share_within_group": 0.024
+        },
+        {
+          "skill": "spark",
+          "vacancy_count": 4,
+          "rank": 11,
+          "share_within_group": 0.024
         },
         {
           "skill": "bigquery",
           "vacancy_count": 3,
-          "rank": 11,
-          "share_within_group": 0.019
+          "rank": 12,
+          "share_within_group": 0.018
         },
         {
           "skill": "c++",
           "vacancy_count": 3,
-          "rank": 11,
-          "share_within_group": 0.019
-        },
-        {
-          "skill": "spring",
-          "vacancy_count": 3,
-          "rank": 11,
-          "share_within_group": 0.019
+          "rank": 12,
+          "share_within_group": 0.018
         },
         {
           "skill": "aws",
           "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
+          "rank": 13,
+          "share_within_group": 0.012
         },
         {
           "skill": "c",
           "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
+          "rank": 13,
+          "share_within_group": 0.012
         },
         {
           "skill": "docker",
           "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
+          "rank": 13,
+          "share_within_group": 0.012
         },
         {
           "skill": "linux",
           "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
-        },
-        {
-          "skill": "spark",
-          "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
+          "rank": 13,
+          "share_within_group": 0.012
         },
         {
           "skill": "test_automation",
           "vacancy_count": 2,
-          "rank": 12,
-          "share_within_group": 0.0127
+          "rank": 13,
+          "share_within_group": 0.012
         },
         {
           "skill": "boost",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         },
         {
           "skill": "microservices",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         },
         {
           "skill": "mongodb",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         },
         {
           "skill": "php",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         },
         {
           "skill": "react",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         },
         {
           "skill": "rust",
           "vacancy_count": 1,
-          "rank": 13,
-          "share_within_group": 0.0063
+          "rank": 14,
+          "share_within_group": 0.006
         }
       ]
     },
@@ -3947,205 +3917,205 @@
           "skill": "sql",
           "vacancy_count": 14,
           "rank": 1,
-          "share_within_group": 0.2373
+          "share_within_group": 0.2258
+        },
+        {
+          "skill": "agile",
+          "vacancy_count": 9,
+          "rank": 2,
+          "share_within_group": 0.1452
         },
         {
           "skill": "python",
           "vacancy_count": 9,
           "rank": 2,
-          "share_within_group": 0.1525
+          "share_within_group": 0.1452
         },
         {
-          "skill": "agile",
-          "vacancy_count": 7,
+          "skill": "devops",
+          "vacancy_count": 8,
           "rank": 3,
-          "share_within_group": 0.1186
+          "share_within_group": 0.129
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 7,
-          "rank": 3,
-          "share_within_group": 0.1186
+          "rank": 4,
+          "share_within_group": 0.1129
         },
         {
           "skill": "test_automation",
           "vacancy_count": 7,
-          "rank": 3,
-          "share_within_group": 0.1186
-        },
-        {
-          "skill": "devops",
-          "vacancy_count": 6,
           "rank": 4,
-          "share_within_group": 0.1017
+          "share_within_group": 0.1129
         },
         {
           "skill": "c++",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.0847
+          "share_within_group": 0.0806
         },
         {
           "skill": "java",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.0847
+          "share_within_group": 0.0806
         },
         {
           "skill": "mssql",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.0847
+          "share_within_group": 0.0806
         },
         {
           "skill": "typescript",
           "vacancy_count": 5,
           "rank": 5,
-          "share_within_group": 0.0847
+          "share_within_group": 0.0806
         },
         {
           "skill": "c",
           "vacancy_count": 4,
           "rank": 6,
-          "share_within_group": 0.0678
+          "share_within_group": 0.0645
         },
         {
           "skill": "javascript",
           "vacancy_count": 4,
           "rank": 6,
-          "share_within_group": 0.0678
+          "share_within_group": 0.0645
         },
         {
           "skill": "angular",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0508
+          "share_within_group": 0.0484
         },
         {
           "skill": "aws",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0508
+          "share_within_group": 0.0484
         },
         {
           "skill": "etl",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0508
+          "share_within_group": 0.0484
         },
         {
           "skill": "mysql",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0508
+          "share_within_group": 0.0484
         },
         {
           "skill": "oracle",
           "vacancy_count": 3,
           "rank": 7,
-          "share_within_group": 0.0508
+          "share_within_group": 0.0484
         },
         {
           "skill": "ansible",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "azure",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "csharp",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "dbt",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "gcp",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "kafka",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "mongodb",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "nodejs",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "rust",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "snowflake",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "spring",
           "vacancy_count": 2,
           "rank": 8,
-          "share_within_group": 0.0339
+          "share_within_group": 0.0323
         },
         {
           "skill": "dotnet",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         },
         {
           "skill": "go",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         },
         {
           "skill": "kotlin",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         },
         {
           "skill": "microservices",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         },
         {
           "skill": "scala",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         },
         {
           "skill": "swift",
           "vacancy_count": 1,
           "rank": 9,
-          "share_within_group": 0.0169
+          "share_within_group": 0.0161
         }
       ]
     },
@@ -4154,171 +4124,171 @@
       "items": [
         {
           "skill": "python",
-          "vacancy_count": 9,
+          "vacancy_count": 10,
           "rank": 1,
-          "share_within_group": 0.0978
+          "share_within_group": 0.102
         },
         {
           "skill": "c++",
           "vacancy_count": 7,
           "rank": 2,
-          "share_within_group": 0.0761
+          "share_within_group": 0.0714
         },
         {
           "skill": "sql",
           "vacancy_count": 6,
           "rank": 3,
-          "share_within_group": 0.0652
+          "share_within_group": 0.0612
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 5,
+          "rank": 4,
+          "share_within_group": 0.051
         },
         {
           "skill": "agile",
           "vacancy_count": 4,
-          "rank": 4,
-          "share_within_group": 0.0435
-        },
-        {
-          "skill": "devops",
-          "vacancy_count": 4,
-          "rank": 4,
-          "share_within_group": 0.0435
+          "rank": 5,
+          "share_within_group": 0.0408
         },
         {
           "skill": "ansible",
-          "vacancy_count": 3,
+          "vacancy_count": 4,
           "rank": 5,
-          "share_within_group": 0.0326
+          "share_within_group": 0.0408
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 3,
+          "vacancy_count": 4,
           "rank": 5,
-          "share_within_group": 0.0326
+          "share_within_group": 0.0408
         },
         {
           "skill": "azure",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 2,
+          "rank": 6,
+          "share_within_group": 0.0204
+        },
+        {
+          "skill": "dotnet",
+          "vacancy_count": 2,
+          "rank": 6,
+          "share_within_group": 0.0204
         },
         {
           "skill": "java",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
         },
         {
           "skill": "javascript",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
         },
         {
           "skill": "kafka",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
         },
         {
           "skill": "linux",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
+        },
+        {
+          "skill": "mssql",
+          "vacancy_count": 2,
+          "rank": 6,
+          "share_within_group": 0.0204
         },
         {
           "skill": "mysql",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
         },
         {
           "skill": "test_automation",
           "vacancy_count": 2,
           "rank": 6,
-          "share_within_group": 0.0217
+          "share_within_group": 0.0204
         },
         {
           "skill": "aws",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "bigquery",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "c",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 1,
-          "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "databricks",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
-        },
-        {
-          "skill": "dotnet",
-          "vacancy_count": 1,
-          "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "etl",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "gcp",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "kotlin",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
-        },
-        {
-          "skill": "mssql",
-          "vacancy_count": 1,
-          "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "rust",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "snowflake",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "symfony",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         },
         {
           "skill": "terraform",
           "vacancy_count": 1,
           "rank": 7,
-          "share_within_group": 0.0109
+          "share_within_group": 0.0102
         }
       ]
     },
@@ -4329,157 +4299,163 @@
           "skill": "agile",
           "vacancy_count": 18,
           "rank": 1,
-          "share_within_group": 0.2647
+          "share_within_group": 0.2338
         },
         {
           "skill": "sql",
-          "vacancy_count": 15,
+          "vacancy_count": 17,
           "rank": 2,
-          "share_within_group": 0.2206
+          "share_within_group": 0.2208
         },
         {
           "skill": "aws",
-          "vacancy_count": 11,
+          "vacancy_count": 13,
           "rank": 3,
-          "share_within_group": 0.1618
+          "share_within_group": 0.1688
         },
         {
           "skill": "python",
-          "vacancy_count": 10,
+          "vacancy_count": 11,
           "rank": 4,
-          "share_within_group": 0.1471
+          "share_within_group": 0.1429
         },
         {
           "skill": "java",
           "vacancy_count": 8,
           "rank": 5,
-          "share_within_group": 0.1176
-        },
-        {
-          "skill": "boost",
-          "vacancy_count": 6,
-          "rank": 6,
-          "share_within_group": 0.0882
+          "share_within_group": 0.1039
         },
         {
           "skill": "oracle",
-          "vacancy_count": 6,
+          "vacancy_count": 8,
+          "rank": 5,
+          "share_within_group": 0.1039
+        },
+        {
+          "skill": "boost",
+          "vacancy_count": 7,
           "rank": 6,
-          "share_within_group": 0.0882
+          "share_within_group": 0.0909
+        },
+        {
+          "skill": "devops",
+          "vacancy_count": 5,
+          "rank": 7,
+          "share_within_group": 0.0649
         },
         {
           "skill": "ansible",
           "vacancy_count": 4,
-          "rank": 7,
-          "share_within_group": 0.0588
+          "rank": 8,
+          "share_within_group": 0.0519
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 4,
-          "rank": 7,
-          "share_within_group": 0.0588
+          "rank": 8,
+          "share_within_group": 0.0519
         },
         {
-          "skill": "devops",
+          "skill": "gcp",
           "vacancy_count": 4,
-          "rank": 7,
-          "share_within_group": 0.0588
+          "rank": 8,
+          "share_within_group": 0.0519
         },
         {
           "skill": "terraform",
           "vacancy_count": 4,
-          "rank": 7,
-          "share_within_group": 0.0588
+          "rank": 8,
+          "share_within_group": 0.0519
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 3,
+          "rank": 9,
+          "share_within_group": 0.039
+        },
+        {
+          "skill": "dotnet",
+          "vacancy_count": 3,
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "javascript",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "nextjs",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "nodejs",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "react",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
+          "rank": 9,
+          "share_within_group": 0.039
         },
         {
           "skill": "typescript",
           "vacancy_count": 3,
-          "rank": 8,
-          "share_within_group": 0.0441
-        },
-        {
-          "skill": "csharp",
-          "vacancy_count": 2,
           "rank": 9,
-          "share_within_group": 0.0294
-        },
-        {
-          "skill": "dotnet",
-          "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0294
-        },
-        {
-          "skill": "gcp",
-          "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0294
+          "share_within_group": 0.039
         },
         {
           "skill": "microservices",
           "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0294
+          "rank": 10,
+          "share_within_group": 0.026
         },
         {
           "skill": "test_automation",
           "vacancy_count": 2,
-          "rank": 9,
-          "share_within_group": 0.0294
+          "rank": 10,
+          "share_within_group": 0.026
         },
         {
           "skill": "docker",
           "vacancy_count": 1,
-          "rank": 10,
-          "share_within_group": 0.0147
+          "rank": 11,
+          "share_within_group": 0.013
         },
         {
           "skill": "etl",
           "vacancy_count": 1,
-          "rank": 10,
-          "share_within_group": 0.0147
+          "rank": 11,
+          "share_within_group": 0.013
         },
         {
           "skill": "numpy",
           "vacancy_count": 1,
-          "rank": 10,
-          "share_within_group": 0.0147
+          "rank": 11,
+          "share_within_group": 0.013
         },
         {
           "skill": "pandas",
           "vacancy_count": 1,
-          "rank": 10,
-          "share_within_group": 0.0147
+          "rank": 11,
+          "share_within_group": 0.013
+        },
+        {
+          "skill": "pytorch",
+          "vacancy_count": 1,
+          "rank": 11,
+          "share_within_group": 0.013
         }
       ]
     },
@@ -4511,129 +4487,129 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 160,
+          "vacancy_count": 170,
           "rank": 1,
-          "share_within_group": 0.1958
+          "share_within_group": 0.1959
         },
         {
           "skill": "java",
-          "vacancy_count": 158,
+          "vacancy_count": 160,
           "rank": 2,
-          "share_within_group": 0.1934
+          "share_within_group": 0.1843
         },
         {
           "skill": "sql",
-          "vacancy_count": 118,
+          "vacancy_count": 124,
           "rank": 3,
-          "share_within_group": 0.1444
+          "share_within_group": 0.1429
         },
         {
           "skill": "devops",
-          "vacancy_count": 96,
+          "vacancy_count": 102,
           "rank": 4,
           "share_within_group": 0.1175
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 93,
+          "vacancy_count": 98,
           "rank": 5,
-          "share_within_group": 0.1138
+          "share_within_group": 0.1129
         },
         {
           "skill": "angular",
           "vacancy_count": 79,
           "rank": 6,
-          "share_within_group": 0.0967
-        },
-        {
-          "skill": "spring",
-          "vacancy_count": 75,
-          "rank": 7,
-          "share_within_group": 0.0918
+          "share_within_group": 0.091
         },
         {
           "skill": "python",
-          "vacancy_count": 71,
-          "rank": 8,
-          "share_within_group": 0.0869
+          "vacancy_count": 77,
+          "rank": 7,
+          "share_within_group": 0.0887
+        },
+        {
+          "skill": "spring",
+          "vacancy_count": 77,
+          "rank": 7,
+          "share_within_group": 0.0887
         },
         {
           "skill": "csharp",
-          "vacancy_count": 67,
-          "rank": 9,
-          "share_within_group": 0.082
+          "vacancy_count": 69,
+          "rank": 8,
+          "share_within_group": 0.0795
         },
         {
           "skill": "dotnet",
-          "vacancy_count": 66,
-          "rank": 10,
-          "share_within_group": 0.0808
+          "vacancy_count": 68,
+          "rank": 9,
+          "share_within_group": 0.0783
         },
         {
           "skill": "javascript",
-          "vacancy_count": 60,
-          "rank": 11,
-          "share_within_group": 0.0734
+          "vacancy_count": 61,
+          "rank": 10,
+          "share_within_group": 0.0703
         },
         {
           "skill": "c++",
           "vacancy_count": 50,
+          "rank": 11,
+          "share_within_group": 0.0576
+        },
+        {
+          "skill": "oracle",
+          "vacancy_count": 43,
           "rank": 12,
-          "share_within_group": 0.0612
+          "share_within_group": 0.0495
         },
         {
           "skill": "azure",
           "vacancy_count": 42,
           "rank": 13,
-          "share_within_group": 0.0514
+          "share_within_group": 0.0484
         },
         {
-          "skill": "oracle",
-          "vacancy_count": 40,
+          "skill": "ansible",
+          "vacancy_count": 37,
           "rank": 14,
-          "share_within_group": 0.049
+          "share_within_group": 0.0426
         },
         {
           "skill": "postgresql",
           "vacancy_count": 35,
           "rank": 15,
-          "share_within_group": 0.0428
+          "share_within_group": 0.0403
         },
         {
           "skill": "typescript",
-          "vacancy_count": 33,
+          "vacancy_count": 34,
           "rank": 16,
-          "share_within_group": 0.0404
+          "share_within_group": 0.0392
+        },
+        {
+          "skill": "mssql",
+          "vacancy_count": 33,
+          "rank": 17,
+          "share_within_group": 0.038
         },
         {
           "skill": "react",
           "vacancy_count": 32,
-          "rank": 17,
-          "share_within_group": 0.0392
+          "rank": 18,
+          "share_within_group": 0.0369
         },
         {
           "skill": "microservices",
           "vacancy_count": 31,
-          "rank": 18,
-          "share_within_group": 0.0379
-        },
-        {
-          "skill": "mssql",
-          "vacancy_count": 31,
-          "rank": 18,
-          "share_within_group": 0.0379
-        },
-        {
-          "skill": "ansible",
-          "vacancy_count": 30,
           "rank": 19,
-          "share_within_group": 0.0367
+          "share_within_group": 0.0357
         },
         {
           "skill": "aws",
-          "vacancy_count": 28,
+          "vacancy_count": 29,
           "rank": 20,
-          "share_within_group": 0.0343
+          "share_within_group": 0.0334
         }
       ]
     },
@@ -4642,237 +4618,225 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 66,
+          "vacancy_count": 69,
           "rank": 1,
-          "share_within_group": 0.2946
+          "share_within_group": 0.2863
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 50,
+          "vacancy_count": 51,
           "rank": 2,
-          "share_within_group": 0.2232
+          "share_within_group": 0.2116
         },
         {
           "skill": "python",
-          "vacancy_count": 45,
+          "vacancy_count": 46,
           "rank": 3,
-          "share_within_group": 0.2009
+          "share_within_group": 0.1909
         },
         {
           "skill": "java",
           "vacancy_count": 39,
           "rank": 4,
-          "share_within_group": 0.1741
+          "share_within_group": 0.1618
         },
         {
           "skill": "aws",
           "vacancy_count": 28,
           "rank": 5,
-          "share_within_group": 0.125
+          "share_within_group": 0.1162
         },
         {
           "skill": "devops",
-          "vacancy_count": 24,
+          "vacancy_count": 27,
           "rank": 6,
-          "share_within_group": 0.1071
+          "share_within_group": 0.112
+        },
+        {
+          "skill": "sql",
+          "vacancy_count": 23,
+          "rank": 7,
+          "share_within_group": 0.0954
         },
         {
           "skill": "kafka",
           "vacancy_count": 22,
-          "rank": 7,
-          "share_within_group": 0.0982
-        },
-        {
-          "skill": "sql",
-          "vacancy_count": 22,
-          "rank": 7,
-          "share_within_group": 0.0982
+          "rank": 8,
+          "share_within_group": 0.0913
         },
         {
           "skill": "spring",
           "vacancy_count": 17,
-          "rank": 8,
-          "share_within_group": 0.0759
+          "rank": 9,
+          "share_within_group": 0.0705
         },
         {
           "skill": "microservices",
           "vacancy_count": 16,
-          "rank": 9,
-          "share_within_group": 0.0714
+          "rank": 10,
+          "share_within_group": 0.0664
         },
         {
           "skill": "terraform",
           "vacancy_count": 15,
-          "rank": 10,
-          "share_within_group": 0.067
+          "rank": 11,
+          "share_within_group": 0.0622
         },
         {
           "skill": "c++",
           "vacancy_count": 14,
-          "rank": 11,
-          "share_within_group": 0.0625
+          "rank": 12,
+          "share_within_group": 0.0581
         },
         {
           "skill": "test_automation",
           "vacancy_count": 14,
-          "rank": 11,
-          "share_within_group": 0.0625
+          "rank": 12,
+          "share_within_group": 0.0581
         },
         {
           "skill": "csharp",
           "vacancy_count": 13,
-          "rank": 12,
-          "share_within_group": 0.058
+          "rank": 13,
+          "share_within_group": 0.0539
         },
         {
           "skill": "dotnet",
           "vacancy_count": 13,
-          "rank": 12,
-          "share_within_group": 0.058
+          "rank": 13,
+          "share_within_group": 0.0539
         },
         {
           "skill": "react",
           "vacancy_count": 13,
-          "rank": 12,
-          "share_within_group": 0.058
+          "rank": 13,
+          "share_within_group": 0.0539
         },
         {
           "skill": "redis",
-          "vacancy_count": 11,
-          "rank": 13,
-          "share_within_group": 0.0491
+          "vacancy_count": 12,
+          "rank": 14,
+          "share_within_group": 0.0498
         },
         {
           "skill": "javascript",
           "vacancy_count": 10,
-          "rank": 14,
-          "share_within_group": 0.0446
+          "rank": 15,
+          "share_within_group": 0.0415
         },
         {
           "skill": "mongodb",
           "vacancy_count": 10,
-          "rank": 14,
-          "share_within_group": 0.0446
+          "rank": 15,
+          "share_within_group": 0.0415
         },
         {
           "skill": "pytorch",
           "vacancy_count": 10,
-          "rank": 14,
-          "share_within_group": 0.0446
+          "rank": 15,
+          "share_within_group": 0.0415
         },
         {
           "skill": "azure",
           "vacancy_count": 9,
-          "rank": 15,
-          "share_within_group": 0.0402
+          "rank": 16,
+          "share_within_group": 0.0373
         },
         {
           "skill": "databricks",
           "vacancy_count": 9,
-          "rank": 15,
-          "share_within_group": 0.0402
+          "rank": 16,
+          "share_within_group": 0.0373
         },
         {
           "skill": "php",
           "vacancy_count": 9,
-          "rank": 15,
-          "share_within_group": 0.0402
+          "rank": 16,
+          "share_within_group": 0.0373
+        },
+        {
+          "skill": "postgresql",
+          "vacancy_count": 9,
+          "rank": 16,
+          "share_within_group": 0.0373
         },
         {
           "skill": "mysql",
           "vacancy_count": 8,
-          "rank": 16,
-          "share_within_group": 0.0357
-        },
-        {
-          "skill": "postgresql",
-          "vacancy_count": 8,
-          "rank": 16,
-          "share_within_group": 0.0357
+          "rank": 17,
+          "share_within_group": 0.0332
         },
         {
           "skill": "typescript",
           "vacancy_count": 8,
-          "rank": 16,
-          "share_within_group": 0.0357
+          "rank": 17,
+          "share_within_group": 0.0332
+        },
+        {
+          "skill": "devsecops",
+          "vacancy_count": 7,
+          "rank": 18,
+          "share_within_group": 0.029
         },
         {
           "skill": "gcp",
           "vacancy_count": 7,
-          "rank": 17,
-          "share_within_group": 0.0312
+          "rank": 18,
+          "share_within_group": 0.029
         },
         {
-          "skill": "devsecops",
-          "vacancy_count": 6,
+          "skill": "vue",
+          "vacancy_count": 7,
           "rank": 18,
-          "share_within_group": 0.0268
+          "share_within_group": 0.029
         },
         {
           "skill": "nodejs",
           "vacancy_count": 6,
-          "rank": 18,
-          "share_within_group": 0.0268
+          "rank": 19,
+          "share_within_group": 0.0249
         },
         {
           "skill": "oracle",
           "vacancy_count": 6,
-          "rank": 18,
-          "share_within_group": 0.0268
+          "rank": 19,
+          "share_within_group": 0.0249
         },
         {
           "skill": "spark",
           "vacancy_count": 6,
-          "rank": 18,
-          "share_within_group": 0.0268
+          "rank": 19,
+          "share_within_group": 0.0249
         },
         {
           "skill": "tensorflow",
           "vacancy_count": 6,
-          "rank": 18,
-          "share_within_group": 0.0268
+          "rank": 19,
+          "share_within_group": 0.0249
         },
         {
           "skill": "boost",
           "vacancy_count": 5,
-          "rank": 19,
-          "share_within_group": 0.0223
+          "rank": 20,
+          "share_within_group": 0.0207
         },
         {
           "skill": "etl",
           "vacancy_count": 5,
-          "rank": 19,
-          "share_within_group": 0.0223
+          "rank": 20,
+          "share_within_group": 0.0207
         },
         {
           "skill": "mssql",
           "vacancy_count": 5,
-          "rank": 19,
-          "share_within_group": 0.0223
+          "rank": 20,
+          "share_within_group": 0.0207
         },
         {
           "skill": "snowflake",
           "vacancy_count": 5,
-          "rank": 19,
-          "share_within_group": 0.0223
-        },
-        {
-          "skill": "bigquery",
-          "vacancy_count": 4,
           "rank": 20,
-          "share_within_group": 0.0179
-        },
-        {
-          "skill": "linux",
-          "vacancy_count": 4,
-          "rank": 20,
-          "share_within_group": 0.0179
-        },
-        {
-          "skill": "vue",
-          "vacancy_count": 4,
-          "rank": 20,
-          "share_within_group": 0.0179
+          "share_within_group": 0.0207
         }
       ]
     },
@@ -4883,163 +4847,163 @@
           "skill": "azure",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1562
+          "share_within_group": 0.1389
         },
         {
           "skill": "ci_cd",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1562
+          "share_within_group": 0.1389
         },
         {
           "skill": "devops",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1562
+          "share_within_group": 0.1389
         },
         {
           "skill": "gcp",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1562
+          "share_within_group": 0.1389
         },
         {
           "skill": "sql",
           "vacancy_count": 5,
           "rank": 1,
-          "share_within_group": 0.1562
+          "share_within_group": 0.1389
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 4,
           "rank": 2,
-          "share_within_group": 0.125
+          "share_within_group": 0.1111
         },
         {
           "skill": "react",
           "vacancy_count": 4,
           "rank": 2,
-          "share_within_group": 0.125
+          "share_within_group": 0.1111
         },
         {
           "skill": "agile",
           "vacancy_count": 3,
           "rank": 3,
-          "share_within_group": 0.0938
+          "share_within_group": 0.0833
         },
         {
           "skill": "aws",
           "vacancy_count": 3,
           "rank": 3,
-          "share_within_group": 0.0938
+          "share_within_group": 0.0833
         },
         {
           "skill": "angular",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "ansible",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "docker",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "git",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "linux",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "python",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "rest_api",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "terraform",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "typescript",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "vue",
           "vacancy_count": 2,
           "rank": 4,
-          "share_within_group": 0.0625
+          "share_within_group": 0.0556
         },
         {
           "skill": "databricks",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "dbt",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "etl",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "mssql",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "oracle",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "pandas",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "pytorch",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         },
         {
           "skill": "snowflake",
           "vacancy_count": 1,
           "rank": 5,
-          "share_within_group": 0.0312
+          "share_within_group": 0.0278
         }
       ]
     },
@@ -5048,243 +5012,243 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 35,
+          "vacancy_count": 44,
           "rank": 1,
-          "share_within_group": 0.1429
+          "share_within_group": 0.156
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 30,
+          "vacancy_count": 36,
           "rank": 2,
-          "share_within_group": 0.1224
+          "share_within_group": 0.1277
         },
         {
           "skill": "python",
-          "vacancy_count": 30,
-          "rank": 2,
-          "share_within_group": 0.1224
+          "vacancy_count": 35,
+          "rank": 3,
+          "share_within_group": 0.1241
         },
         {
           "skill": "devops",
-          "vacancy_count": 21,
-          "rank": 3,
-          "share_within_group": 0.0857
-        },
-        {
-          "skill": "sql",
-          "vacancy_count": 18,
+          "vacancy_count": 23,
           "rank": 4,
-          "share_within_group": 0.0735
+          "share_within_group": 0.0816
         },
         {
           "skill": "c++",
-          "vacancy_count": 16,
+          "vacancy_count": 20,
           "rank": 5,
-          "share_within_group": 0.0653
+          "share_within_group": 0.0709
+        },
+        {
+          "skill": "sql",
+          "vacancy_count": 19,
+          "rank": 6,
+          "share_within_group": 0.0674
+        },
+        {
+          "skill": "csharp",
+          "vacancy_count": 18,
+          "rank": 7,
+          "share_within_group": 0.0638
+        },
+        {
+          "skill": "java",
+          "vacancy_count": 15,
+          "rank": 8,
+          "share_within_group": 0.0532
+        },
+        {
+          "skill": "dotnet",
+          "vacancy_count": 14,
+          "rank": 9,
+          "share_within_group": 0.0496
         },
         {
           "skill": "azure",
-          "vacancy_count": 12,
-          "rank": 6,
-          "share_within_group": 0.049
+          "vacancy_count": 13,
+          "rank": 10,
+          "share_within_group": 0.0461
+        },
+        {
+          "skill": "rust",
+          "vacancy_count": 13,
+          "rank": 10,
+          "share_within_group": 0.0461
         },
         {
           "skill": "c",
           "vacancy_count": 12,
-          "rank": 6,
-          "share_within_group": 0.049
+          "rank": 11,
+          "share_within_group": 0.0426
         },
         {
-          "skill": "csharp",
+          "skill": "javascript",
           "vacancy_count": 12,
-          "rank": 6,
-          "share_within_group": 0.049
+          "rank": 11,
+          "share_within_group": 0.0426
         },
         {
-          "skill": "dotnet",
-          "vacancy_count": 11,
-          "rank": 7,
-          "share_within_group": 0.0449
+          "skill": "test_automation",
+          "vacancy_count": 12,
+          "rank": 11,
+          "share_within_group": 0.0426
         },
         {
           "skill": "aws",
           "vacancy_count": 10,
-          "rank": 8,
-          "share_within_group": 0.0408
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 10,
-          "rank": 8,
-          "share_within_group": 0.0408
-        },
-        {
-          "skill": "rust",
-          "vacancy_count": 10,
-          "rank": 8,
-          "share_within_group": 0.0408
+          "rank": 12,
+          "share_within_group": 0.0355
         },
         {
           "skill": "ansible",
           "vacancy_count": 8,
-          "rank": 9,
-          "share_within_group": 0.0327
+          "rank": 13,
+          "share_within_group": 0.0284
         },
         {
           "skill": "oracle",
           "vacancy_count": 8,
-          "rank": 9,
-          "share_within_group": 0.0327
+          "rank": 13,
+          "share_within_group": 0.0284
         },
         {
           "skill": "angular",
           "vacancy_count": 7,
-          "rank": 10,
-          "share_within_group": 0.0286
-        },
-        {
-          "skill": "test_automation",
-          "vacancy_count": 7,
-          "rank": 10,
-          "share_within_group": 0.0286
-        },
-        {
-          "skill": "java",
-          "vacancy_count": 6,
-          "rank": 11,
-          "share_within_group": 0.0245
+          "rank": 14,
+          "share_within_group": 0.0248
         },
         {
           "skill": "terraform",
           "vacancy_count": 4,
-          "rank": 12,
-          "share_within_group": 0.0163
+          "rank": 15,
+          "share_within_group": 0.0142
         },
         {
           "skill": "devsecops",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "etl",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "microservices",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "snowflake",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "spring",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "typescript",
           "vacancy_count": 3,
-          "rank": 13,
-          "share_within_group": 0.0122
+          "rank": 16,
+          "share_within_group": 0.0106
         },
         {
           "skill": "boost",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0082
+          "rank": 17,
+          "share_within_group": 0.0071
         },
         {
           "skill": "react",
           "vacancy_count": 2,
-          "rank": 14,
-          "share_within_group": 0.0082
+          "rank": 17,
+          "share_within_group": 0.0071
         },
         {
           "skill": "clean_code",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "databricks",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "gcp",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "git",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "go",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "kafka",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "kubernetes",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "linux",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "mysql",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "postgresql",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "pytorch",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "spark",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         },
         {
           "skill": "tensorflow",
           "vacancy_count": 1,
-          "rank": 15,
-          "share_within_group": 0.0041
+          "rank": 18,
+          "share_within_group": 0.0035
         }
       ]
     },
@@ -5293,129 +5257,129 @@
       "items": [
         {
           "skill": "agile",
-          "vacancy_count": 640,
+          "vacancy_count": 682,
           "rank": 1,
-          "share_within_group": 0.2281
+          "share_within_group": 0.2271
         },
         {
           "skill": "devops",
-          "vacancy_count": 490,
+          "vacancy_count": 514,
           "rank": 2,
-          "share_within_group": 0.1746
+          "share_within_group": 0.1712
         },
         {
           "skill": "java",
-          "vacancy_count": 471,
+          "vacancy_count": 502,
           "rank": 3,
-          "share_within_group": 0.1679
-        },
-        {
-          "skill": "ci_cd",
-          "vacancy_count": 437,
-          "rank": 4,
-          "share_within_group": 0.1557
+          "share_within_group": 0.1672
         },
         {
           "skill": "sql",
-          "vacancy_count": 435,
+          "vacancy_count": 472,
+          "rank": 4,
+          "share_within_group": 0.1572
+        },
+        {
+          "skill": "ci_cd",
+          "vacancy_count": 455,
           "rank": 5,
-          "share_within_group": 0.155
+          "share_within_group": 0.1515
         },
         {
           "skill": "python",
-          "vacancy_count": 397,
+          "vacancy_count": 434,
           "rank": 6,
-          "share_within_group": 0.1415
+          "share_within_group": 0.1445
         },
         {
           "skill": "csharp",
-          "vacancy_count": 250,
+          "vacancy_count": 265,
           "rank": 7,
-          "share_within_group": 0.0891
+          "share_within_group": 0.0882
         },
         {
           "skill": "dotnet",
-          "vacancy_count": 250,
-          "rank": 7,
-          "share_within_group": 0.0891
+          "vacancy_count": 258,
+          "rank": 8,
+          "share_within_group": 0.0859
         },
         {
           "skill": "angular",
-          "vacancy_count": 224,
-          "rank": 8,
-          "share_within_group": 0.0798
+          "vacancy_count": 243,
+          "rank": 9,
+          "share_within_group": 0.0809
         },
         {
           "skill": "azure",
-          "vacancy_count": 213,
-          "rank": 9,
-          "share_within_group": 0.0759
-        },
-        {
-          "skill": "aws",
-          "vacancy_count": 196,
+          "vacancy_count": 219,
           "rank": 10,
-          "share_within_group": 0.0699
+          "share_within_group": 0.0729
         },
         {
           "skill": "react",
-          "vacancy_count": 195,
+          "vacancy_count": 212,
           "rank": 11,
-          "share_within_group": 0.0695
+          "share_within_group": 0.0706
+        },
+        {
+          "skill": "aws",
+          "vacancy_count": 202,
+          "rank": 12,
+          "share_within_group": 0.0673
         },
         {
           "skill": "spring",
-          "vacancy_count": 192,
-          "rank": 12,
-          "share_within_group": 0.0684
-        },
-        {
-          "skill": "javascript",
-          "vacancy_count": 177,
+          "vacancy_count": 200,
           "rank": 13,
-          "share_within_group": 0.0631
+          "share_within_group": 0.0666
         },
         {
           "skill": "typescript",
-          "vacancy_count": 170,
+          "vacancy_count": 189,
           "rank": 14,
-          "share_within_group": 0.0606
+          "share_within_group": 0.0629
+        },
+        {
+          "skill": "javascript",
+          "vacancy_count": 188,
+          "rank": 15,
+          "share_within_group": 0.0626
         },
         {
           "skill": "terraform",
-          "vacancy_count": 144,
-          "rank": 15,
-          "share_within_group": 0.0513
+          "vacancy_count": 146,
+          "rank": 16,
+          "share_within_group": 0.0486
         },
         {
           "skill": "gcp",
-          "vacancy_count": 125,
-          "rank": 16,
-          "share_within_group": 0.0445
-        },
-        {
-          "skill": "c++",
-          "vacancy_count": 118,
+          "vacancy_count": 130,
           "rank": 17,
-          "share_within_group": 0.0421
+          "share_within_group": 0.0433
         },
         {
           "skill": "microservices",
-          "vacancy_count": 114,
+          "vacancy_count": 122,
           "rank": 18,
           "share_within_group": 0.0406
         },
         {
-          "skill": "postgresql",
-          "vacancy_count": 111,
+          "skill": "c++",
+          "vacancy_count": 120,
           "rank": 19,
-          "share_within_group": 0.0396
+          "share_within_group": 0.04
         },
         {
           "skill": "oracle",
-          "vacancy_count": 108,
+          "vacancy_count": 120,
+          "rank": 19,
+          "share_within_group": 0.04
+        },
+        {
+          "skill": "postgresql",
+          "vacancy_count": 119,
           "rank": 20,
-          "share_within_group": 0.0385
+          "share_within_group": 0.0396
         }
       ]
     }
@@ -5423,95 +5387,95 @@
   "programming_languages": {
     "summary": {
       "distinct_items": 18,
-      "total_mentions": 5549,
-      "vacancies_with_items": 2812,
-      "vacancy_coverage": 0.3757
+      "total_mentions": 5940,
+      "vacancies_with_items": 3015,
+      "vacancy_coverage": 0.3724
     },
     "items": [
       {
         "programming_language": "java",
-        "vacancy_count": 1016,
-        "share": 0.1358
-      },
-      {
-        "programming_language": "sql",
-        "vacancy_count": 999,
-        "share": 0.1335
+        "vacancy_count": 1090,
+        "share": 0.1346
       },
       {
         "programming_language": "python",
-        "vacancy_count": 985,
-        "share": 0.1316
+        "vacancy_count": 1074,
+        "share": 0.1326
+      },
+      {
+        "programming_language": "sql",
+        "vacancy_count": 1064,
+        "share": 0.1314
       },
       {
         "programming_language": "csharp",
-        "vacancy_count": 495,
-        "share": 0.0661
+        "vacancy_count": 528,
+        "share": 0.0652
       },
       {
         "programming_language": "dotnet",
-        "vacancy_count": 495,
-        "share": 0.0661
+        "vacancy_count": 511,
+        "share": 0.0631
       },
       {
         "programming_language": "javascript",
-        "vacancy_count": 381,
-        "share": 0.0509
+        "vacancy_count": 408,
+        "share": 0.0504
       },
       {
         "programming_language": "typescript",
-        "vacancy_count": 322,
-        "share": 0.043
+        "vacancy_count": 352,
+        "share": 0.0435
       },
       {
         "programming_language": "c++",
-        "vacancy_count": 303,
-        "share": 0.0405
+        "vacancy_count": 312,
+        "share": 0.0385
       },
       {
         "programming_language": "php",
-        "vacancy_count": 125,
-        "share": 0.0167
+        "vacancy_count": 142,
+        "share": 0.0175
       },
       {
         "programming_language": "c",
-        "vacancy_count": 103,
-        "share": 0.0138
+        "vacancy_count": 104,
+        "share": 0.0128
       },
       {
         "programming_language": "kotlin",
-        "vacancy_count": 90,
-        "share": 0.012
+        "vacancy_count": 103,
+        "share": 0.0127
       },
       {
         "programming_language": "rust",
-        "vacancy_count": 58,
-        "share": 0.0077
+        "vacancy_count": 61,
+        "share": 0.0075
+      },
+      {
+        "programming_language": "swift",
+        "vacancy_count": 55,
+        "share": 0.0068
       },
       {
         "programming_language": "go",
-        "vacancy_count": 50,
-        "share": 0.0067
+        "vacancy_count": 53,
+        "share": 0.0065
       },
       {
         "programming_language": "scala",
         "vacancy_count": 49,
-        "share": 0.0065
-      },
-      {
-        "programming_language": "swift",
-        "vacancy_count": 44,
-        "share": 0.0059
+        "share": 0.0061
       },
       {
         "programming_language": "dart",
         "vacancy_count": 16,
-        "share": 0.0021
+        "share": 0.002
       },
       {
         "programming_language": "ruby",
         "vacancy_count": 14,
-        "share": 0.0019
+        "share": 0.0017
       },
       {
         "programming_language": "r",
@@ -5523,109 +5487,109 @@
   "frameworks_libraries": {
     "summary": {
       "distinct_items": 25,
-      "total_mentions": 2068,
-      "vacancies_with_items": 1218,
-      "vacancy_coverage": 0.1627
+      "total_mentions": 2204,
+      "vacancies_with_items": 1298,
+      "vacancy_coverage": 0.1603
     },
     "items": [
       {
         "framework_library": "angular",
-        "vacancy_count": 456,
-        "share": 0.0609
+        "vacancy_count": 492,
+        "share": 0.0608
       },
       {
         "framework_library": "spring",
-        "vacancy_count": 411,
-        "share": 0.0549
+        "vacancy_count": 433,
+        "share": 0.0535
       },
       {
         "framework_library": "react",
-        "vacancy_count": 368,
-        "share": 0.0492
+        "vacancy_count": 395,
+        "share": 0.0488
       },
       {
         "framework_library": "spark",
-        "vacancy_count": 155,
-        "share": 0.0207
+        "vacancy_count": 163,
+        "share": 0.0201
       },
       {
         "framework_library": "nodejs",
-        "vacancy_count": 92,
-        "share": 0.0123
+        "vacancy_count": 98,
+        "share": 0.0121
       },
       {
         "framework_library": "pytorch",
-        "vacancy_count": 69,
-        "share": 0.0092
+        "vacancy_count": 72,
+        "share": 0.0089
       },
       {
         "framework_library": "dbt",
-        "vacancy_count": 65,
-        "share": 0.0087
+        "vacancy_count": 67,
+        "share": 0.0083
       },
       {
         "framework_library": "vue",
-        "vacancy_count": 55,
-        "share": 0.0073
+        "vacancy_count": 66,
+        "share": 0.0082
+      },
+      {
+        "framework_library": "boost",
+        "vacancy_count": 46,
+        "share": 0.0057
       },
       {
         "framework_library": "tensorflow",
         "vacancy_count": 45,
-        "share": 0.006
-      },
-      {
-        "framework_library": "boost",
-        "vacancy_count": 41,
-        "share": 0.0055
-      },
-      {
-        "framework_library": "nextjs",
-        "vacancy_count": 40,
-        "share": 0.0053
+        "share": 0.0056
       },
       {
         "framework_library": "airflow",
-        "vacancy_count": 39,
+        "vacancy_count": 42,
+        "share": 0.0052
+      },
+      {
+        "framework_library": "nextjs",
+        "vacancy_count": 42,
         "share": 0.0052
       },
       {
         "framework_library": "scikit_learn",
         "vacancy_count": 38,
-        "share": 0.0051
+        "share": 0.0047
+      },
+      {
+        "framework_library": "symfony",
+        "vacancy_count": 31,
+        "share": 0.0038
       },
       {
         "framework_library": "pandas",
         "vacancy_count": 30,
-        "share": 0.004
-      },
-      {
-        "framework_library": "symfony",
-        "vacancy_count": 28,
         "share": 0.0037
       },
       {
         "framework_library": "fastapi",
-        "vacancy_count": 28,
-        "share": 0.0037
+        "vacancy_count": 29,
+        "share": 0.0036
+      },
+      {
+        "framework_library": "laravel",
+        "vacancy_count": 23,
+        "share": 0.0028
       },
       {
         "framework_library": "express",
         "vacancy_count": 23,
-        "share": 0.0031
-      },
-      {
-        "framework_library": "laravel",
-        "vacancy_count": 20,
-        "share": 0.0027
+        "share": 0.0028
       },
       {
         "framework_library": "numpy",
         "vacancy_count": 17,
-        "share": 0.0023
+        "share": 0.0021
       },
       {
         "framework_library": "django",
-        "vacancy_count": 14,
+        "vacancy_count": 15,
         "share": 0.0019
       }
     ]

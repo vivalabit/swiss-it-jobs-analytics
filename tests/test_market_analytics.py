@@ -87,6 +87,18 @@ class MarketAnalyticsTests(unittest.TestCase):
         dataset = pd.DataFrame(
             {
                 "company": ["Acme", "Acme", "Beta", "Rocken®"],
+                "title": [
+                    "Data Engineer",
+                    "Python Developer",
+                    "Java Developer",
+                    "Go Developer",
+                ],
+                "description_text": [
+                    "University degree in computer science is required.",
+                    "Strong Python delivery experience.",
+                    "Bachelor or Master in engineering.",
+                    "Agency vacancy with FH degree mentioned.",
+                ],
                 "role_category": ["data_ai", "data_ai", "software_engineering", "data_ai"],
                 "city": ["Zurich", "Bern", "Zurich", "Zurich"],
                 "canton": ["ZH", "BE", "ZH", "ZH"],
@@ -120,13 +132,19 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(20, len(outputs))
+        self.assertEqual(21, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(4, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
         self.assertEqual(1.5, overview["average_vacancies_per_company"])
         self.assertEqual("Acme", outputs["distribution_company"].iloc[0]["company"])
         self.assertEqual(2, outputs["distribution_company"].iloc[0]["vacancy_count"])
+        education_summary = outputs["education_requirements_summary"].set_index("metric")[
+            "value"
+        ].to_dict()
+        self.assertEqual(4, education_summary["total_vacancies"])
+        self.assertEqual(3, education_summary["higher_education_vacancy_count"])
+        self.assertEqual(0.75, education_summary["higher_education_vacancy_share"])
         self.assertEqual(
             "python",
             outputs["top_skills_overall"].iloc[0]["skill"],

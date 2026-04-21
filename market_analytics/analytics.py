@@ -9,6 +9,23 @@ from .constants import DISTRIBUTION_COLUMNS, STAFFING_AGENCY_COMPANY_NAMES, UNKN
 
 MIN_ANNUAL_SALARY = 20_000
 MAX_ANNUAL_SALARY = 300_000
+HIGHER_EDUCATION_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
+    re.compile(pattern, flags=re.IGNORECASE)
+    for pattern in (
+        r"\b(?:bachelor|master|msc|bsc|phd|doctorate)\b",
+        r"\b(?:university|college)\s+degree\b",
+        r"\bdegree\s+in\s+(?:computer science|informatics|engineering|mathematics|physics|it)\b",
+        r"\b(?:computer science|informatics|engineering|mathematics|physics)\s+degree\b",
+        r"\b(?:eth|epfl|fh|tu)\b",
+        r"\bhochschulabschluss\b",
+        r"\bhochschulstudium\b",
+        r"\b(?:fachhochschule|universitat|universitaet|hochschule)\b",
+        r"\b(?:informatikstudium|wirtschaftsinformatikstudium)\b",
+        r"\b(?:abschluss|studium)\s+(?:in|der|im)\s+(?:informatik|wirtschaftsinformatik|ingenieurwesen|mathematik|physik)\b",
+        r"\b(?:diplom|diploma)\s+(?:in|der|im)?\s*(?:informatik|wirtschaftsinformatik|engineering|computer science)\b",
+        r"\b(?:formation|diplome)\s+(?:universitaire|superieure)\b",
+    )
+)
 
 
 def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
@@ -29,6 +46,60 @@ def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
             },
         ]
     )
+
+
+def calculate_education_requirements_summary(dataset: pd.DataFrame) -> pd.DataFrame:
+    total_vacancies = int(len(dataset))
+    if total_vacancies == 0:
+        higher_education_count = 0
+    else:
+        higher_education_count = int(
+            dataset.apply(_has_higher_education_requirement, axis=1).sum()
+        )
+    share = higher_education_count / total_vacancies if total_vacancies else 0.0
+
+    return pd.DataFrame(
+        [
+            {"metric": "total_vacancies", "value": total_vacancies},
+            {
+                "metric": "higher_education_vacancy_count",
+                "value": higher_education_count,
+            },
+            {
+                "metric": "higher_education_vacancy_share",
+                "value": round(share, 4),
+            },
+            {
+                "metric": "without_explicit_higher_education_count",
+                "value": total_vacancies - higher_education_count,
+            },
+        ]
+    )
+
+
+def _has_higher_education_requirement(row: pd.Series) -> bool:
+    text = " ".join(
+        str(value)
+        for value in (
+            row.get("title"),
+            row.get("description_text"),
+            row.get("salary_text"),
+        )
+        if not pd.isna(value) and str(value).strip()
+    )
+    if not text:
+        return False
+
+    normalized = _normalize_search_text(text)
+    return any(pattern.search(normalized) for pattern in HIGHER_EDUCATION_PATTERNS)
+
+
+def _normalize_search_text(value: str) -> str:
+    normalized = unicodedata.normalize("NFD", value)
+    without_marks = "".join(
+        character for character in normalized if unicodedata.category(character) != "Mn"
+    )
+    return without_marks.casefold()
 
 
 def _exclude_staffing_agencies(dataset: pd.DataFrame) -> pd.DataFrame:

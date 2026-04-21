@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-04-21T07:33:41Z",
+  "generated_at": "2026-04-21T08:42:42Z",
   "schema_version": 2,
   "source_csv_dir": "analytics_output",
   "public_data_dir": "public_stats/data",
   "available_csv_files": [
     "overview_metrics.csv",
+    "education_requirements_summary.csv",
     "salary_summary.csv",
     "salary_by_role_category.csv",
     "salary_by_seniority.csv",
@@ -27,6 +28,7 @@
   "generated_snapshots": [
     "metadata.json",
     "overview.json",
+    "education_requirements.json",
     "salary_metrics.json",
     "top_skills.json",
     "skill_pairs.json",

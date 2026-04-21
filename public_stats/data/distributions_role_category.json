@@ -1,67 +1,67 @@
 {
-  "generated_at": "2026-04-21T07:33:41Z",
+  "generated_at": "2026-04-21T08:42:42Z",
   "available": true,
   "dimension": "role_category",
   "items": [
     {
       "key": "devops_cloud_platform",
       "label": "devops_cloud_platform",
-      "vacancy_count": 1950,
-      "share": 0.2606
+      "vacancy_count": 2124,
+      "share": 0.2623
     },
     {
       "key": "software_engineering",
       "label": "software_engineering",
-      "vacancy_count": 1883,
-      "share": 0.2516
+      "vacancy_count": 1982,
+      "share": 0.2448
     },
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 957,
-      "share": 0.1279
+      "vacancy_count": 1047,
+      "share": 0.1293
     },
     {
       "key": "support_operations",
       "label": "support_operations",
-      "vacancy_count": 720,
-      "share": 0.0962
+      "vacancy_count": 791,
+      "share": 0.0977
     },
     {
       "key": "product_project_analysis",
       "label": "product_project_analysis",
-      "vacancy_count": 664,
-      "share": 0.0887
+      "vacancy_count": 748,
+      "share": 0.0924
     },
     {
       "key": "security",
       "label": "security",
-      "vacancy_count": 607,
-      "share": 0.0811
+      "vacancy_count": 642,
+      "share": 0.0793
     },
     {
       "key": "data_ai",
       "label": "data_ai",
-      "vacancy_count": 465,
-      "share": 0.0621
+      "vacancy_count": 498,
+      "share": 0.0615
     },
     {
       "key": "qa_testing",
       "label": "qa_testing",
-      "vacancy_count": 116,
-      "share": 0.0155
+      "vacancy_count": 140,
+      "share": 0.0173
     },
     {
       "key": "erp_business_systems",
       "label": "erp_business_systems",
-      "vacancy_count": 104,
-      "share": 0.0139
+      "vacancy_count": 106,
+      "share": 0.0131
     },
     {
       "key": "ux_ui_design",
       "label": "ux_ui_design",
-      "vacancy_count": 18,
-      "share": 0.0024
+      "vacancy_count": 19,
+      "share": 0.0023
     }
   ]
 }

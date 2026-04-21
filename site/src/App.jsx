@@ -21,6 +21,7 @@ const footerShapeUrl =
 const SNAPSHOT_FILES = {
   metadata: "metadata.json",
   overview: "overview.json",
+  educationRequirements: "education_requirements.json",
   salaryMetrics: "salary_metrics.json",
   topSkills: "top_skills.json",
   skillPairs: "skill_pairs.json",
@@ -369,6 +370,7 @@ function App() {
   const {
     metadata,
     overview,
+    educationRequirements,
     salaryMetrics,
     topSkills,
     skillPairs,
@@ -381,6 +383,7 @@ function App() {
   } = state.data;
 
   const overviewMetrics = overview.metrics ?? {};
+  const educationSummary = educationRequirements.summary ?? {};
   const salarySummary = salaryMetrics.summary ?? {};
   const lastUpdated = metadata.generated_at ?? overview.generated_at ?? null;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 20);
@@ -512,6 +515,12 @@ function App() {
             <MetricCard
               value={formatDecimal(overviewMetrics.average_vacancies_per_company)}
               description="Average vacancy volume per direct employer."
+            />
+            <MetricCard
+              value={formatPercent(educationSummary.higher_education_vacancy_share)}
+              description={`${formatInteger(
+                educationSummary.higher_education_vacancy_count,
+              )} vacancies explicitly mention higher education.`}
             />
             <MetricCard
               value={formatShortDate(lastUpdated)}

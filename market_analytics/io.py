@@ -437,6 +437,10 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             for row in connection.execute("PRAGMA table_info(vacancies)").fetchall()
         }
         source_select = "source" if "source" in columns else "NULL AS source"
+        title_select = "title" if "title" in columns else "NULL AS title"
+        description_text_select = (
+            "description_text" if "description_text" in columns else "NULL AS description_text"
+        )
         salary_selects = {
             column: column if column in columns else f"NULL AS {column}"
             for column in (
@@ -451,8 +455,10 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
         SELECT
             vacancy_id,
             {source_select},
+            {title_select},
             company,
             place,
+            {description_text_select},
             analytics_json,
             {salary_min},
             {salary_max},
@@ -460,7 +466,12 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             {salary_unit},
             {salary_text}
         FROM vacancies
-        """.format(source_select=source_select, **salary_selects)
+        """.format(
+            source_select=source_select,
+            title_select=title_select,
+            description_text_select=description_text_select,
+            **salary_selects,
+        )
         dataset = pd.read_sql_query(query, connection)
     finally:
         connection.close()
@@ -500,6 +511,7 @@ def _build_record_from_sqlite_row(
     return {
         "vacancy_id": row.get("vacancy_id"),
         "source": row.get("source"),
+        "title": row.get("title"),
         "company": row.get("company") or _nested_value(company_info, "name"),
         "role_category": analytics.get("role_family_primary"),
         "city": _normalize_city_value(locality),
@@ -519,6 +531,7 @@ def _build_record_from_sqlite_row(
         "salary_currency": row.get("salary_currency"),
         "salary_unit": row.get("salary_unit"),
         "salary_text": row.get("salary_text"),
+        "description_text": row.get("description_text"),
     }
 
 

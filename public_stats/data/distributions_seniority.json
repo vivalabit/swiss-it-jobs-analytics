@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-04-21T07:33:41Z",
+  "generated_at": "2026-04-21T08:42:42Z",
   "available": true,
   "dimension": "seniority",
   "items": [
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 3264,
-      "share": 0.4361
+      "vacancy_count": 3540,
+      "share": 0.4372
     },
     {
       "key": "senior",
       "label": "senior",
-      "vacancy_count": 2521,
-      "share": 0.3369
+      "vacancy_count": 2710,
+      "share": 0.3347
     },
     {
       "key": "manager",
       "label": "manager",
-      "vacancy_count": 737,
-      "share": 0.0985
+      "vacancy_count": 783,
+      "share": 0.0967
     },
     {
       "key": "junior",
       "label": "junior",
-      "vacancy_count": 487,
-      "share": 0.0651
+      "vacancy_count": 539,
+      "share": 0.0666
     },
     {
       "key": "intern",
       "label": "intern",
-      "vacancy_count": 293,
-      "share": 0.0392
+      "vacancy_count": 325,
+      "share": 0.0401
     },
     {
       "key": "mid",
       "label": "mid",
-      "vacancy_count": 182,
-      "share": 0.0243
+      "vacancy_count": 200,
+      "share": 0.0247
     }
   ]
 }
