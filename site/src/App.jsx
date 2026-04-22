@@ -302,6 +302,7 @@ const STAFFING_AGENCY_COMPANY_NAMES = new Set(
 const COMPANY_PREVIEW_LIMIT = 8;
 const COMPANY_EXPANDED_LIMIT = 24;
 const EXPERIENCE_MIN_SAMPLE_SIZE = 10;
+const HIDDEN_EXPERIENCE_SENIORITIES = new Set(["intern"]);
 const TREND_PERIOD_OPTIONS = [
   { label: "30D", days: 30 },
   { label: "90D", days: 90 },
@@ -441,9 +442,16 @@ function App() {
   const overviewMetrics = overview.metrics ?? {};
   const educationSummary = educationRequirements.summary ?? {};
   const experienceSummary = experienceRequirements.summary ?? {};
-  const experienceBySeniority = (experienceRequirements.by_seniority ?? []).filter(
-    (item) => item.seniority && item.seniority !== "Unknown",
-  );
+  const experienceBySeniority = (experienceRequirements.by_seniority ?? [])
+    .filter((item) => {
+      const seniority = String(item.seniority ?? "").toLocaleLowerCase("en-US");
+      return (
+        item.seniority &&
+        item.seniority !== "Unknown" &&
+        !HIDDEN_EXPERIENCE_SENIORITIES.has(seniority)
+      );
+    })
+    .sort(compareExperienceRequirements);
   const salarySummary = salaryMetrics.summary ?? {};
   const lastUpdated = metadata.generated_at ?? overview.generated_at ?? null;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 20);
@@ -2266,6 +2274,33 @@ function normalizeCompanyName(value) {
 
 function selectTopItems(items, limit) {
   return [...items].slice(0, limit);
+}
+
+function compareExperienceRequirements(first, second) {
+  const firstExperience = getComparableExperienceYears(first);
+  const secondExperience = getComparableExperienceYears(second);
+  if (firstExperience !== secondExperience) {
+    return secondExperience - firstExperience;
+  }
+
+  const firstMentions = first.experience_years_count ?? 0;
+  const secondMentions = second.experience_years_count ?? 0;
+  if (firstMentions !== secondMentions) {
+    return secondMentions - firstMentions;
+  }
+
+  return String(first.seniority ?? "").localeCompare(String(second.seniority ?? ""));
+}
+
+function getComparableExperienceYears(item) {
+  if (
+    item.experience_years_count < EXPERIENCE_MIN_SAMPLE_SIZE ||
+    typeof item.average_min_experience_years !== "number"
+  ) {
+    return Number.NEGATIVE_INFINITY;
+  }
+
+  return item.average_min_experience_years;
 }
 
 function formatInteger(value) {
