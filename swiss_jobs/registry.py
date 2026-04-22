@@ -18,6 +18,8 @@ from .providers.swissdevjobs_ch.service import (
 )
 from .providers.jobup_ch.cli import main as jobup_ch_cli_main
 from .providers.jobup_ch.service import JobupChParserService, run_jobup_ch_parser
+from .providers.linked_in.cli import main as linked_in_cli_main
+from .providers.linked_in.service import LinkedInParserService, run_linked_in_parser
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,6 +34,7 @@ CLI_ENTRYPOINTS: dict[str, Callable[[list[str] | None], int]] = {
     "jobs_ch": jobs_ch_cli_main,
     "jobscout24_ch": jobscout24_ch_cli_main,
     "jobup_ch": jobup_ch_cli_main,
+    "linked_in": linked_in_cli_main,
     "swissdevjobs_ch": swissdevjobs_ch_cli_main,
 }
 
@@ -39,6 +42,7 @@ RUNNERS: dict[str, Callable[..., object]] = {
     "jobs_ch": run_jobs_ch_parser,
     "jobscout24_ch": run_jobscout24_ch_parser,
     "jobup_ch": run_jobup_ch_parser,
+    "linked_in": run_linked_in_parser,
     "swissdevjobs_ch": run_swissdevjobs_ch_parser,
 }
 
@@ -46,6 +50,7 @@ SERVICES: dict[str, type[object]] = {
     "jobs_ch": JobsChParserService,
     "jobscout24_ch": JobScout24ChParserService,
     "jobup_ch": JobupChParserService,
+    "linked_in": LinkedInParserService,
     "swissdevjobs_ch": SwissDevJobsChParserService,
 }
 
@@ -84,6 +89,15 @@ SOURCE_INFO: dict[str, SourceInfo] = {
         description="Swiss developer jobs board",
         default_config_path=str(
             Path(__file__).resolve().parent / "providers" / "swissdevjobs_ch" / "configs" / "config_info.json"
+        ),
+    ),
+    "linked_in": SourceInfo(
+        key="linked_in",
+        display_name="LinkedIn",
+        domain="www.linkedin.com",
+        description="LinkedIn authenticated job search",
+        default_config_path=str(
+            Path(__file__).resolve().parent / "providers" / "linked_in" / "configs" / "config_info.json"
         ),
     ),
 }

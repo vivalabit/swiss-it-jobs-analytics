@@ -134,6 +134,13 @@ def _json_dumps(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True)
 
 
+def _redact_config_secrets(config: ClientConfig) -> dict[str, Any]:
+    data = config.to_dict()
+    if data.get("proxy_url"):
+        data["proxy_url"] = "<redacted>"
+    return data
+
+
 def _coerce_term_values(value: Any) -> list[str]:
     if value is None:
         return []
@@ -234,7 +241,7 @@ class JobsDatabase:
                     config.client_id,
                     result.timestamp,
                     0 if result.errors else 1,
-                    _json_dumps(config.to_dict()),
+                    _json_dumps(_redact_config_secrets(config)),
                     _json_dumps(result.stats.to_dict()),
                     _json_dumps(result.warnings),
                     _json_dumps(result.errors),

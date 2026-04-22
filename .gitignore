@@ -36,6 +36,10 @@ node_modules/
 INST.md
 swiss_jobs/providers/jobs_ch/cookies/
 swiss_jobs/providers/jobup_ch/cookies/
+swiss_jobs/providers/linked_in/cookies/
+swiss_jobs/providers/linked_in/proxies/
+swiss_jobs/providers/linked_in/*.proxy
+swiss_jobs/providers/linked_in/proxy*.txt
 
 # Parser runtime and generated datasets
 runtime/

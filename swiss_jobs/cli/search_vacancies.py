@@ -12,6 +12,7 @@ DEFAULT_RUNTIME_DATABASES = [
     PROJECT_ROOT / "runtime" / "jobs_ch" / "main-config" / "jobs_ch.sqlite",
     PROJECT_ROOT / "runtime" / "jobscout24_ch" / "main-config" / "jobscout24_ch.sqlite",
     PROJECT_ROOT / "runtime" / "jobup_ch" / "main-config" / "jobup_ch.sqlite",
+    PROJECT_ROOT / "runtime" / "linked_in" / "main-config" / "linked_in.sqlite",
     PROJECT_ROOT / "runtime" / "swissdevjobs_ch" / "main-config" / "swissdevjobs_ch.sqlite",
 ]
 

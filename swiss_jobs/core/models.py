@@ -42,6 +42,12 @@ def _coerce_int(value: Any, field_name: str) -> int:
     return value
 
 
+def _coerce_float(value: Any, field_name: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ConfigValidationError(f"Field '{field_name}' must be a number")
+    return float(value)
+
+
 def _unique(values: Sequence[str]) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
@@ -330,6 +336,10 @@ class ClientConfig:
     show_progress: bool = True
     json_output: bool = False
     cookies_file: str | None = None
+    proxy_url: str | None = None
+    proxy_file: str | None = None
+    request_delay_min_seconds: float = 0.0
+    request_delay_max_seconds: float = 0.0
     database_path: str | None = None
     client_config_path: str | None = None
 
@@ -389,6 +399,10 @@ class ClientConfig:
             "show_progress",
             "json_output",
             "cookies_file",
+            "proxy_url",
+            "proxy_file",
+            "request_delay_min_seconds",
+            "request_delay_max_seconds",
             "database_path",
             "client_config_path",
         }
@@ -459,6 +473,24 @@ class ClientConfig:
                 if payload.get("cookies_file") not in (None, "")
                 else None
             ),
+            proxy_url=(
+                str(payload["proxy_url"]).strip()
+                if payload.get("proxy_url") not in (None, "")
+                else None
+            ),
+            proxy_file=(
+                str(Path(payload["proxy_file"]))
+                if payload.get("proxy_file") not in (None, "")
+                else None
+            ),
+            request_delay_min_seconds=_coerce_float(
+                payload.get("request_delay_min_seconds", 0.0),
+                "request_delay_min_seconds",
+            ),
+            request_delay_max_seconds=_coerce_float(
+                payload.get("request_delay_max_seconds", 0.0),
+                "request_delay_max_seconds",
+            ),
             database_path=(
                 str(Path(payload["database_path"]))
                 if payload.get("database_path") not in (None, "")
@@ -489,6 +521,22 @@ class ClientConfig:
         if self.cookies_file and not Path(self.cookies_file).is_file():
             raise ConfigValidationError(
                 f"Field 'cookies_file' in '{source}' must point to an existing file"
+            )
+        if self.proxy_file and not Path(self.proxy_file).is_file():
+            raise ConfigValidationError(
+                f"Field 'proxy_file' in '{source}' must point to an existing file"
+            )
+        if self.request_delay_min_seconds < 0:
+            raise ConfigValidationError(
+                f"Field 'request_delay_min_seconds' in '{source}' must be >= 0"
+            )
+        if self.request_delay_max_seconds < 0:
+            raise ConfigValidationError(
+                f"Field 'request_delay_max_seconds' in '{source}' must be >= 0"
+            )
+        if self.request_delay_max_seconds < self.request_delay_min_seconds:
+            raise ConfigValidationError(
+                f"Field 'request_delay_max_seconds' in '{source}' must be >= request_delay_min_seconds"
             )
 
         if self.mode == "search" and not self.effective_terms():
@@ -578,6 +626,10 @@ class ClientConfig:
             "show_progress": self.show_progress,
             "json_output": self.json_output,
             "cookies_file": self.cookies_file,
+            "proxy_url": self.proxy_url,
+            "proxy_file": self.proxy_file,
+            "request_delay_min_seconds": self.request_delay_min_seconds,
+            "request_delay_max_seconds": self.request_delay_max_seconds,
             "database_path": self.database_path,
             "client_config_path": self.client_config_path,
         }
