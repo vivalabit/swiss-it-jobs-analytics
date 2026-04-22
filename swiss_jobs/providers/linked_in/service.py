@@ -104,6 +104,10 @@ class LinkedInParserService:
         config = self._coerce_config(run_config)
         return self._run_config(config)
 
+    def open_login_session(self, run_config: ClientConfig | Mapping[str, Any]) -> None:
+        config = self._coerce_config(run_config)
+        self.http_client.open_login_session(config)
+
     def _coerce_config(self, run_config: ClientConfig | Mapping[str, Any]) -> ClientConfig:
         if isinstance(run_config, ClientConfig):
             payload = run_config.to_dict()

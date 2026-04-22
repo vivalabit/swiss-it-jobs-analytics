@@ -92,6 +92,43 @@ class LinkedInClientTests(unittest.TestCase):
         self.assertEqual(1, len(queries))
         self.assertEqual("Zurich, Switzerland", queries[0].location)
 
+    def test_config_accepts_persistent_browser_profile(self) -> None:
+        config = ClientConfig.from_dict(
+            {
+                "mode": "search",
+                "term": "software engineer",
+                "browser_profile_dir": "swiss_jobs/providers/linked_in/browser_profile/main",
+                "browser_headless": False,
+            },
+            source="<test>",
+        )
+
+        self.assertEqual(
+            "swiss_jobs/providers/linked_in/browser_profile/main",
+            config.browser_profile_dir,
+        )
+        self.assertFalse(config.browser_headless)
+
+    def test_browser_profile_ignores_cookie_file_runtime(self) -> None:
+        client = LinkedInHttpClient()
+        config = ClientConfig.from_dict(
+            {
+                "mode": "search",
+                "term": "software engineer",
+                "browser_profile_dir": "swiss_jobs/providers/linked_in/browser_profile/main",
+                "cookies_file": "pyproject.toml",
+            },
+            source="<test>",
+        )
+
+        client._configure_browser_runtime(config, show_progress=False)  # noqa: SLF001
+
+        self.assertEqual(
+            "swiss_jobs/providers/linked_in/browser_profile/main",
+            client._browser_profile_dir,  # noqa: SLF001
+        )
+        self.assertEqual([], client._browser_cookies)  # noqa: SLF001
+
     def test_legacy_linkedin_ids_are_namespaced(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "linked_in.sqlite"

@@ -75,6 +75,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="Netscape cookies.txt file for an authenticated LinkedIn session",
     )
     parser.add_argument(
+        "--browser-profile-dir",
+        default="",
+        help="Git-ignored persistent Playwright profile directory for LinkedIn authentication",
+    )
+    parser.add_argument(
+        "--browser-headed",
+        action="store_true",
+        help="Run Chromium with a visible window instead of headless mode",
+    )
+    parser.add_argument(
+        "--login-only",
+        action="store_true",
+        help="Open LinkedIn in the persistent browser profile for manual login, then exit",
+    )
+    parser.add_argument(
         "--proxy-url",
         default="",
         help="Optional proxy URL or hostname:port:login:password string. Prefer env SWISS_JOBS_LINKEDIN_PROXY.",
@@ -127,6 +142,8 @@ def _runtime_defaults(defaults: argparse.Namespace) -> dict[str, Any]:
         "exclude": list(defaults.exclude),
         "json": defaults.json,
         "cookies_file": defaults.cookies_file,
+        "browser_profile_dir": defaults.browser_profile_dir,
+        "browser_headless": True,
         "proxy_url": defaults.proxy_url,
         "proxy_file": defaults.proxy_file,
         "request_delay_min_seconds": defaults.request_delay_min_seconds,
@@ -151,13 +168,15 @@ def _collect_cli_overrides(
     args: argparse.Namespace,
     defaults: argparse.Namespace,
 ) -> dict[str, Any]:
-    excluded = {"config"}
+    excluded = {"config", "browser_headed", "login_only"}
     overrides: dict[str, Any] = {}
     for key, value in vars(args).items():
         if key in excluded:
             continue
         if value != getattr(defaults, key):
             overrides[key] = value
+    if args.browser_headed:
+        overrides["browser_headless"] = False
     return overrides
 
 
@@ -169,6 +188,8 @@ def _build_config(args: argparse.Namespace, defaults: argparse.Namespace) -> Cli
 
     payload.update(file_config)
     payload.update(_collect_cli_overrides(args, defaults))
+    if args.login_only and not payload.get("term") and not payload.get("terms"):
+        payload["mode"] = "new"
     payload.setdefault("database_path", _resolve_database_path(args))
     payload.setdefault("client_id", "main-config")
     payload.setdefault("name", "main-config")
@@ -252,6 +273,14 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[config error] {exc}", file=sys.stderr)
         return 2
 
+    if args.login_only:
+        try:
+            service.open_login_session(config)
+        except Exception as exc:
+            print(f"[error] {exc}", file=sys.stderr)
+            return 1
+        return 0
+
     if config.watch == 0:
         result = service.run(config)
         _report_result_issues(result)
@@ -264,4 +293,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -336,6 +336,8 @@ class ClientConfig:
     show_progress: bool = True
     json_output: bool = False
     cookies_file: str | None = None
+    browser_profile_dir: str | None = None
+    browser_headless: bool = True
     proxy_url: str | None = None
     proxy_file: str | None = None
     request_delay_min_seconds: float = 0.0
@@ -399,6 +401,8 @@ class ClientConfig:
             "show_progress",
             "json_output",
             "cookies_file",
+            "browser_profile_dir",
+            "browser_headless",
             "proxy_url",
             "proxy_file",
             "request_delay_min_seconds",
@@ -472,6 +476,15 @@ class ClientConfig:
                 str(Path(payload["cookies_file"]))
                 if payload.get("cookies_file") not in (None, "")
                 else None
+            ),
+            browser_profile_dir=(
+                str(Path(payload["browser_profile_dir"]))
+                if payload.get("browser_profile_dir") not in (None, "")
+                else None
+            ),
+            browser_headless=_coerce_bool(
+                payload.get("browser_headless", True),
+                "browser_headless",
             ),
             proxy_url=(
                 str(payload["proxy_url"]).strip()
@@ -626,6 +639,8 @@ class ClientConfig:
             "show_progress": self.show_progress,
             "json_output": self.json_output,
             "cookies_file": self.cookies_file,
+            "browser_profile_dir": self.browser_profile_dir,
+            "browser_headless": self.browser_headless,
             "proxy_url": self.proxy_url,
             "proxy_file": self.proxy_file,
             "request_delay_min_seconds": self.request_delay_min_seconds,

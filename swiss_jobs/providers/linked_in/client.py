@@ -47,6 +47,8 @@ class LinkedInHttpClient:
         self._base_cookies_file: str | None = None
         self._active_proxy_value: str = ""
         self._browser_cookies: list[dict[str, Any]] = []
+        self._browser_profile_dir: str = ""
+        self._browser_headless: bool = True
 
     def search(
         self,
@@ -57,12 +59,7 @@ class LinkedInHttpClient:
         all_jobs: list[VacancyFull] = []
         successful_queries = 0
 
-        self.configure_cookies(
-            cookies_file=config.cookies_file,
-            show_progress=config.show_progress,
-        )
-        proxy_value = self._resolve_proxy_value(config)
-        self._active_proxy_value = proxy_value
+        self._configure_browser_runtime(config, show_progress=config.show_progress)
 
         for idx, query in enumerate(queries):
             if idx > 0:
@@ -91,6 +88,33 @@ class LinkedInHttpClient:
                 warnings.append(f"{query.label} failed: {exc}")
 
         return _dedupe_vacancies(all_jobs), warnings, successful_queries
+
+    def open_login_session(
+        self,
+        config: ClientConfig,
+        *,
+        start_url: str = "https://www.linkedin.com/feed/",
+    ) -> None:
+        self._configure_browser_runtime(config, show_progress=config.show_progress)
+        if not self._browser_profile_dir:
+            raise RuntimeError("LinkedIn login session requires browser_profile_dir")
+
+        if config.show_progress:
+            print(
+                f"[progress] opening LinkedIn persistent browser profile at {self._browser_profile_dir}",
+                file=sys.stderr,
+            )
+
+        with self._browser_context(headless=False) as context:
+            page = context.pages[0] if context.pages else context.new_page()
+            page.goto(start_url, wait_until="domcontentloaded", timeout=self.timeout * 1000)
+            print(
+                "\nLinkedIn login browser is open. Log in, pass any checkpoint, "
+                "then press Enter here to close and save the browser profile.",
+                file=sys.stderr,
+            )
+            input()
+            page.wait_for_timeout(1000)
 
     def enrich_vacancies(
         self,
@@ -321,36 +345,77 @@ class LinkedInHttpClient:
         if show_progress:
             print(f"[progress] loaded {loaded} LinkedIn cookies", file=sys.stderr)
 
+    def _configure_browser_runtime(self, config: ClientConfig, *, show_progress: bool) -> None:
+        self._active_proxy_value = self._resolve_proxy_value(config)
+        self._browser_profile_dir = str(config.browser_profile_dir or "").strip()
+        self._browser_headless = bool(config.browser_headless)
+
+        if self._browser_profile_dir:
+            self._base_cookies_file = None
+            self._browser_cookies = []
+            if config.cookies_file and show_progress:
+                print(
+                    "[warn] ignoring cookies_file because browser_profile_dir uses a persistent LinkedIn session",
+                    file=sys.stderr,
+                )
+            return
+
+        self.configure_cookies(
+            cookies_file=config.cookies_file,
+            show_progress=show_progress,
+        )
+
     @contextmanager
     def _browser_context(
         self,
         *,
         extra_headers: dict[str, str] | None = None,
+        headless: bool | None = None,
     ) -> Iterator[Any]:
         try:
             from playwright.sync_api import sync_playwright
         except ImportError as exc:
             raise RuntimeError(f"Playwright is unavailable; install playwright browsers: {exc}") from exc
 
-        browser = None
         context = None
+        browser = None
         with sync_playwright() as playwright:
-            launch_kwargs: dict[str, Any] = {"headless": True}
+            effective_headless = self._browser_headless if headless is None else headless
+            browser_proxy = _build_browser_proxy(self._active_proxy_value)
+            context_kwargs: dict[str, Any] = {
+                "user_agent": self.headers.get("User-Agent"),
+                "locale": "ru-RU",
+                "timezone_id": "Europe/Zurich",
+                "viewport": {"width": 1440, "height": 1200},
+                "extra_http_headers": {
+                    "Accept-Language": self.headers.get("Accept-Language", "en-US,en;q=0.9"),
+                    **(extra_headers or {}),
+                },
+            }
+            if browser_proxy:
+                context_kwargs["proxy"] = browser_proxy
+
+            if self._browser_profile_dir:
+                Path(self._browser_profile_dir).mkdir(parents=True, exist_ok=True)
+                context = playwright.chromium.launch_persistent_context(
+                    self._browser_profile_dir,
+                    headless=effective_headless,
+                    **context_kwargs,
+                )
+                try:
+                    yield context
+                finally:
+                    if context is not None:
+                        context.close()
+                return
+
+            launch_kwargs: dict[str, Any] = {"headless": effective_headless}
             browser_proxy = _build_browser_proxy(self._active_proxy_value)
             if browser_proxy:
                 launch_kwargs["proxy"] = browser_proxy
 
             browser = playwright.chromium.launch(**launch_kwargs)
-            context = browser.new_context(
-                user_agent=self.headers.get("User-Agent"),
-                locale="ru-RU",
-                timezone_id="Europe/Zurich",
-                viewport={"width": 1440, "height": 1200},
-                extra_http_headers={
-                    "Accept-Language": self.headers.get("Accept-Language", "en-US,en;q=0.9"),
-                    **(extra_headers or {}),
-                },
-            )
+            context = browser.new_context(**context_kwargs)
             if self._browser_cookies:
                 context.add_cookies(self._browser_cookies)
             try:
