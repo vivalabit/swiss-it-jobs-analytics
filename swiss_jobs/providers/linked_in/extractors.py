@@ -3,8 +3,11 @@ from __future__ import annotations
 import html
 import json
 import re
+from calendar import monthrange
+from datetime import date, datetime, timedelta
 from typing import Any
 from urllib.parse import parse_qs, urljoin, urlparse
+from zoneinfo import ZoneInfo
 
 from scrapling.parser import Selector
 
@@ -420,10 +423,10 @@ def _extract_publication_date(card: Selector) -> str | None:
     if time_node is not None:
         datetime_value = _clean_text(time_node.attrib.get("datetime", ""))
         if datetime_value:
-            return datetime_value
+            return _normalize_posted_date(datetime_value) or datetime_value
         text_value = _node_label(time_node)
         if text_value:
-            return text_value
+            return _normalize_posted_date(text_value) or text_value
     return None
 
 
@@ -455,6 +458,107 @@ def _normalize_vacancy_id(linkedin_job_id: str) -> str:
 def _looks_new(value: str) -> bool:
     text = value.casefold()
     return "new" in text or "hour" in text or "minute" in text
+
+
+def normalize_linkedin_posted_date(value: str, *, today: date | None = None) -> str:
+    return _normalize_posted_date(value, today=today)
+
+
+def _normalize_posted_date(value: str, *, today: date | None = None) -> str:
+    text = _clean_text(value)
+    if not text:
+        return ""
+
+    absolute = _extract_absolute_date(text)
+    if absolute:
+        return absolute
+
+    current_date = today or datetime.now(ZoneInfo("Europe/Zurich")).date()
+    lowered = text.casefold()
+    if any(marker in lowered for marker in ("today", "just now", "new", "сегодня", "только что")):
+        return current_date.isoformat()
+    if any(marker in lowered for marker in ("yesterday", "вчера")):
+        return (current_date - timedelta(days=1)).isoformat()
+
+    quantity = _extract_relative_quantity(lowered)
+    if quantity is None and any(marker in lowered for marker in ("a ", "an ", "one ", "eine ", "ein ", "один ")):
+        quantity = 1
+    if quantity is None:
+        quantity = 1
+
+    if _contains_any(lowered, ("minute", " min", "hour", " hr", "минут", "мин.", "час", "ч.")):
+        return current_date.isoformat()
+    if _contains_any(lowered, ("day", " d ", "день", "дня", "дней", "дн.")):
+        return (current_date - timedelta(days=quantity)).isoformat()
+    if _contains_any(lowered, ("week", " wk", "недел", "нед.")):
+        return (current_date - timedelta(days=quantity * 7)).isoformat()
+    if _contains_any(lowered, ("month", " mo", "месяц", "мес.")):
+        return _subtract_months(current_date, quantity).isoformat()
+    if _contains_any(lowered, ("year", " yr", "год", "года", "лет", "г.")):
+        return _subtract_years(current_date, quantity).isoformat()
+    return ""
+
+
+def _extract_absolute_date(value: str) -> str:
+    match = re.search(r"\b(\d{4}-\d{2}-\d{2})\b", value)
+    if match:
+        return match.group(1)
+    match = re.search(r"\b(\d{1,2})[./](\d{1,2})[./](\d{4})\b", value)
+    if match:
+        day, month, year = (int(match.group(1)), int(match.group(2)), int(match.group(3)))
+        try:
+            return date(year, month, day).isoformat()
+        except ValueError:
+            return ""
+    return ""
+
+
+def _extract_relative_quantity(value: str) -> int | None:
+    match = re.search(r"\b(\d+)\b", value)
+    if match:
+        return int(match.group(1))
+    word_numbers = {
+        "one": 1,
+        "two": 2,
+        "three": 3,
+        "four": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "nine": 9,
+        "ten": 10,
+        "один": 1,
+        "одну": 1,
+        "два": 2,
+        "две": 2,
+        "три": 3,
+        "четыре": 4,
+        "пять": 5,
+    }
+    for word, number in word_numbers.items():
+        if re.search(rf"\b{re.escape(word)}\b", value):
+            return number
+    return None
+
+
+def _subtract_months(value: date, months: int) -> date:
+    month_index = value.year * 12 + value.month - 1 - months
+    year = month_index // 12
+    month = month_index % 12 + 1
+    day = min(value.day, monthrange(year, month)[1])
+    return date(year, month, day)
+
+
+def _subtract_years(value: date, years: int) -> date:
+    try:
+        return value.replace(year=value.year - years)
+    except ValueError:
+        return value.replace(year=value.year - years, day=28)
+
+
+def _contains_any(value: str, needles: tuple[str, ...]) -> bool:
+    return any(needle in value for needle in needles)
 
 
 def _clean_text(value: str) -> str:

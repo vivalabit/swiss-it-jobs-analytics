@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from datetime import date
 import unittest
 
+from swiss_jobs.core.models import VacancyFull
+from swiss_jobs.providers.linked_in.detail import apply_detail_payload
 from swiss_jobs.providers.linked_in.extractors import (
     extract_detail_payload,
+    normalize_linkedin_posted_date,
     parse_jobs_from_search_page,
 )
 
@@ -166,6 +170,47 @@ class LinkedInExtractorsTests(unittest.TestCase):
         self.assertEqual("1 day ago", payload["posted_at_text"])
         self.assertIn("Right panel description", payload["description_text"])
         self.assertEqual("Remote", payload["detail_attributes"]["workplace"])
+
+    def test_relative_posted_dates_are_normalized_to_absolute_dates(self) -> None:
+        today = date(2026, 4, 22)
+
+        self.assertEqual(
+            "2026-04-21",
+            normalize_linkedin_posted_date("1 day ago", today=today),
+        )
+        self.assertEqual(
+            "2026-04-15",
+            normalize_linkedin_posted_date("1 week ago", today=today),
+        )
+        self.assertEqual(
+            "2026-03-22",
+            normalize_linkedin_posted_date("1 month ago", today=today),
+        )
+        self.assertEqual(
+            "2026-04-22",
+            normalize_linkedin_posted_date("3 hours ago", today=today),
+        )
+
+    def test_apply_detail_payload_stores_absolute_publication_date(self) -> None:
+        vacancy = VacancyFull(
+            id="linkedin:4211112222",
+            title="Software Engineer",
+            publication_date="",
+            raw={},
+            source="linkedin.com",
+        )
+
+        apply_detail_payload(
+            vacancy,
+            {
+                "posted_at_text": "1 week ago",
+                "description_text": "Build systems.",
+                "description_html": "<p>Build systems.</p>",
+            },
+        )
+
+        self.assertRegex(vacancy.publication_date or "", r"^\d{4}-\d{2}-\d{2}$")
+        self.assertEqual("1 week ago", vacancy.raw["postedAtText"])
 
 
 if __name__ == "__main__":

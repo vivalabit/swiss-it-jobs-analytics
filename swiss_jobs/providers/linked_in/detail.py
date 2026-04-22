@@ -4,7 +4,7 @@ from typing import Any
 
 from swiss_jobs.core.models import VacancyFull
 
-from .extractors import extract_detail_payload
+from .extractors import extract_detail_payload, normalize_linkedin_posted_date
 
 
 def apply_detail_payload(
@@ -34,9 +34,12 @@ def apply_detail_payload(
             vacancy.raw["salaryText"] = salary_text.strip()
         posted_at_text = payload.get("posted_at_text")
         if isinstance(posted_at_text, str) and posted_at_text.strip():
-            vacancy.raw["postedAtText"] = posted_at_text.strip()
-            if not vacancy.publication_date:
-                vacancy.publication_date = posted_at_text.strip()
+            clean_posted_at = posted_at_text.strip()
+            vacancy.raw["postedAtText"] = clean_posted_at
+            normalized_posted_at = normalize_linkedin_posted_date(clean_posted_at)
+            if normalized_posted_at:
+                vacancy.publication_date = normalized_posted_at
+                vacancy.initial_publication_date = vacancy.initial_publication_date or normalized_posted_at
 
         schema = vacancy.job_posting_schema or {}
         date_posted = schema.get("datePosted")
