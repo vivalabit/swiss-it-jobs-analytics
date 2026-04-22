@@ -20,21 +20,30 @@ CARD_SELECTORS = (
     "li.jobs-search-results__list-item",
     "li.scaffold-layout__list-item",
     "li[data-occludable-job-id]",
+    "div[data-job-id]",
+    "div[data-view-name='job-card']",
     "div.job-card-container",
     "div.base-search-card",
 )
 
 TITLE_SELECTORS = (
-    ".job-card-list__title",
-    ".job-card-container__link",
+    "a.job-card-list__title--link strong",
+    "a.job-card-list__title--link",
+    "a.job-card-container__link",
+    "a[href*='/jobs/view/'] strong",
     ".base-search-card__title",
     ".job-search-card__title",
+    ".artdeco-entity-lockup__title a",
+    ".artdeco-entity-lockup__title",
+    ".job-card-list__title",
     "a[href*='/jobs/view/']",
 )
 
 COMPANY_SELECTORS = (
     ".job-card-container__primary-description",
+    ".job-card-container__company-name",
     ".artdeco-entity-lockup__subtitle",
+    ".artdeco-entity-lockup__subtitle span",
     ".base-search-card__subtitle",
     ".job-search-card__subtitle",
     "a[href*='/company/']",
@@ -42,7 +51,9 @@ COMPANY_SELECTORS = (
 
 LOCATION_SELECTORS = (
     ".job-card-container__metadata-item",
+    ".job-card-container__metadata-wrapper li",
     ".artdeco-entity-lockup__caption",
+    ".artdeco-entity-lockup__caption span",
     ".base-search-card__metadata",
     ".job-search-card__location",
 )
@@ -75,6 +86,7 @@ def parse_jobs_from_search_page(page_html: str, *, base_url: str) -> list[Vacanc
 
 def extract_detail_payload(page_html: str) -> dict[str, Any]:
     document = Selector(page_html)
+    detail_root = _detail_root(document)
     schema = _extract_job_posting_schema(page_html)
     description_html = ""
     if isinstance(schema, dict):
@@ -83,17 +95,25 @@ def extract_detail_payload(page_html: str) -> dict[str, Any]:
             description_html = raw_description.strip()
 
     if not description_html:
-        description_html = _extract_description_html(document)
+        description_html = _extract_description_html(detail_root) or _extract_description_html(document)
 
     raw: dict[str, Any] = {}
-    salary_text = _extract_salary_text(document)
+    salary_text = _extract_salary_text(detail_root)
     if salary_text:
         raw["salary_text"] = salary_text
+    posted_at_text = _extract_detail_posted_at(detail_root)
+    if posted_at_text:
+        raw["posted_at_text"] = posted_at_text
+    detail_attributes = _extract_detail_attributes(detail_root)
 
     return {
         "job_posting_schema": schema,
         "description_html": description_html,
         "description_text": html_to_text(description_html) if description_html else "",
+        "title": _extract_detail_title(detail_root),
+        "company": _extract_detail_company(detail_root),
+        "place": _extract_detail_location(detail_root),
+        "detail_attributes": detail_attributes,
         **raw,
     }
 
@@ -106,34 +126,50 @@ def _parse_job_card(card: Selector, *, base_url: str) -> VacancyFull | None:
         return None
 
     href = _clean_text(link.attrib.get("href", ""))
-    vacancy_id = (
+    linkedin_job_id = (
         _clean_text(card.attrib.get("data-occludable-job-id", ""))
         or _clean_text(card.attrib.get("data-job-id", ""))
+        or _clean_text(card.attrib.get("data-entity-urn", "")).rsplit(":", 1)[-1]
         or _extract_job_id(href)
     )
-    title = _node_label(link)
+    title = _clean_title(_node_label(link))
     if not title:
-        title = _first_text(card, TITLE_SELECTORS)
-    if not vacancy_id or not title:
+        title = _clean_title(_first_text(card, TITLE_SELECTORS))
+    if not linkedin_job_id or not title:
         return None
 
-    company = _first_text(card, COMPANY_SELECTORS)
-    place = _first_text(card, LOCATION_SELECTORS)
+    company = _clean_company(_first_text(card, COMPANY_SELECTORS))
+    place = _clean_location(_first_text(card, LOCATION_SELECTORS))
     publication_date = _extract_publication_date(card)
-    raw: dict[str, Any] = {}
+    raw: dict[str, Any] = {
+        "linkedinJobId": linkedin_job_id,
+        "cardText": _node_label(card),
+    }
+    entity_urn = _clean_text(card.attrib.get("data-entity-urn", ""))
+    if entity_urn:
+        raw["entityUrn"] = entity_urn
+    metadata_items = _extract_metadata_items(card)
+    if metadata_items:
+        raw["metadataItems"] = metadata_items
     listed_at = _first_text(card, (".job-card-container__listed-time", ".job-search-card__listdate"))
     if listed_at:
         raw["listedAtText"] = listed_at
+    if _contains_text(card, ("easy apply", "простая подача заявки")):
+        raw["easyApply"] = True
+    if _contains_text(card, ("promoted", "продвигается")):
+        raw["promoted"] = True
+    if _contains_text(card, ("actively reviewing", "активное рассмотрение")):
+        raw["activelyReviewing"] = True
 
     return VacancyFull(
-        id=vacancy_id,
+        id=_normalize_vacancy_id(linkedin_job_id),
         title=title,
         company=company,
         place=place,
         publication_date=publication_date,
         initial_publication_date=publication_date,
         is_new=_looks_new(listed_at or publication_date or ""),
-        url=_normalize_job_url(href, vacancy_id=vacancy_id, base_url=base_url),
+        url=_normalize_job_url(href, linkedin_job_id=linkedin_job_id, base_url=base_url),
         raw=raw,
         source="linkedin.com",
     )
@@ -141,15 +177,15 @@ def _parse_job_card(card: Selector, *, base_url: str) -> VacancyFull | None:
 
 def _parse_job_link(link: Selector, *, base_url: str) -> VacancyFull | None:
     href = _clean_text(link.attrib.get("href", ""))
-    vacancy_id = _extract_job_id(href)
-    title = _node_label(link)
-    if not vacancy_id or not title:
+    linkedin_job_id = _extract_job_id(href)
+    title = _clean_title(_node_label(link))
+    if not linkedin_job_id or not title:
         return None
     return VacancyFull(
-        id=vacancy_id,
+        id=_normalize_vacancy_id(linkedin_job_id),
         title=title,
-        url=_normalize_job_url(href, vacancy_id=vacancy_id, base_url=base_url),
-        raw={},
+        url=_normalize_job_url(href, linkedin_job_id=linkedin_job_id, base_url=base_url),
+        raw={"linkedinJobId": linkedin_job_id},
         source="linkedin.com",
     )
 
@@ -190,10 +226,30 @@ def _flatten_jsonld(value: Any) -> list[Any]:
     return []
 
 
+def _detail_root(document: Selector) -> Selector:
+    for selector in (
+        ".jobs-search__job-details--container",
+        ".scaffold-layout__detail",
+        ".jobs-details",
+        ".job-view-layout",
+        ".job-details-jobs-unified-top-card__container",
+        ".jobs-unified-top-card",
+    ):
+        node = document.css(selector).first
+        if node is not None:
+            return node
+    return document
+
+
 def _extract_description_html(document: Selector) -> str:
     for selector in (
         ".jobs-description__content",
         ".jobs-box__html-content",
+        ".jobs-description-content__text",
+        ".jobs-description-content__text--stretch",
+        ".jobs-description__container",
+        "article.jobs-description__container",
+        "#job-details",
         ".description__text",
         "section.description",
     ):
@@ -205,13 +261,131 @@ def _extract_description_html(document: Selector) -> str:
     return ""
 
 
+def _extract_detail_title(document: Selector) -> str:
+    return _first_text(
+        document,
+        (
+            ".job-details-jobs-unified-top-card__job-title h1",
+            ".jobs-unified-top-card__job-title",
+            ".job-details-jobs-unified-top-card__job-title",
+            ".jobs-details__main-content h1",
+            "h1",
+        ),
+    )
+
+
+def _extract_detail_company(document: Selector) -> str:
+    return _first_text(
+        document,
+        (
+            ".job-details-jobs-unified-top-card__company-name a",
+            ".jobs-unified-top-card__company-name",
+            ".job-details-jobs-unified-top-card__company-name",
+            ".jobs-unified-top-card__company-name a",
+            "a[href*='/company/']",
+        ),
+    )
+
+
+def _extract_detail_location(document: Selector) -> str:
+    text = _first_text(
+        document,
+        (
+            ".jobs-unified-top-card__primary-description-without-tagline",
+            ".job-details-jobs-unified-top-card__primary-description-container",
+            ".job-details-jobs-unified-top-card__primary-description",
+            ".jobs-unified-top-card__primary-description",
+            ".jobs-unified-top-card__bullet",
+        ),
+    )
+    if " · " in text:
+        parts = [part.strip() for part in text.split(" · ") if part.strip()]
+        company = _extract_detail_company(document).casefold()
+        for part in parts:
+            if company and part.casefold() == company:
+                continue
+            if not _looks_like_non_location_detail(part):
+                return _clean_location(part)
+        return _clean_location(parts[0]) if parts else ""
+    return _clean_location(text)
+
+
+def _extract_detail_attributes(document: Selector) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    insights = [
+        text
+        for node in document.css(
+            ".jobs-unified-top-card__job-insight, "
+            ".job-details-jobs-unified-top-card__job-insight, "
+            ".job-details-preferences-and-skills__pill, "
+            ".job-details-fit-level-preferences__pill, "
+            ".jobs-unified-top-card__workplace-type, "
+            ".jobs-unified-top-card__job-insight-view-model-secondary"
+        )
+        if (text := _node_label(node))
+    ]
+    if insights:
+        result["insights"] = insights
+
+    workplace = _first_matching(insights, ("remote", "hybrid", "on-site", "удаленная", "гибрид", "офис"))
+    if workplace:
+        result["workplace"] = workplace
+
+    applicant_count = _first_matching(insights, ("applicant", "candidate", "кандидат"))
+    if applicant_count:
+        result["applicantCountText"] = applicant_count
+
+    return result
+
+
 def _extract_salary_text(document: Selector) -> str:
-    for node in document.css(".jobs-unified-top-card__job-insight"):
+    for node in document.css(
+        ".jobs-unified-top-card__job-insight, .job-details-jobs-unified-top-card__job-insight"
+    ):
         text = _node_label(node)
         lowered = text.casefold()
         if "chf" in lowered or "salary" in lowered or "compensation" in lowered:
             return text
     return ""
+
+
+def _extract_detail_posted_at(document: Selector) -> str:
+    text = _first_text(
+        document,
+        (
+            ".jobs-unified-top-card__primary-description-without-tagline",
+            ".job-details-jobs-unified-top-card__primary-description-container",
+            ".job-details-jobs-unified-top-card__primary-description",
+            ".jobs-unified-top-card__primary-description",
+        ),
+    )
+    if not text:
+        return ""
+    parts = [part.strip() for part in text.split(" · ") if part.strip()]
+    for part in parts:
+        if _looks_like_posted_at(part):
+            return part
+    return ""
+
+
+def _extract_metadata_items(card: Selector) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    selectors = (
+        ".job-card-container__metadata-item",
+        ".job-card-container__footer-item",
+        ".job-card-container__listed-time",
+        ".job-card-list__footer-wrapper li",
+        ".artdeco-entity-lockup__caption",
+    )
+    for selector in selectors:
+        for node in card.css(selector):
+            text = _node_label(node)
+            if not text or text in seen:
+                continue
+            seen.add(text)
+            result.append(text)
+    return result
 
 
 def _first_element(node: Selector, selectors: tuple[str, ...]) -> Selector | None:
@@ -268,10 +442,14 @@ def _extract_job_id(href: str) -> str:
     return ""
 
 
-def _normalize_job_url(href: str, *, vacancy_id: str, base_url: str) -> str:
-    if vacancy_id:
-        return f"{base_url.rstrip('/')}/jobs/view/{vacancy_id}/"
+def _normalize_job_url(href: str, *, linkedin_job_id: str, base_url: str) -> str:
+    if linkedin_job_id:
+        return f"{base_url.rstrip('/')}/jobs/view/{linkedin_job_id}/"
     return urljoin(base_url, href)
+
+
+def _normalize_vacancy_id(linkedin_job_id: str) -> str:
+    return f"linkedin:{linkedin_job_id}"
 
 
 def _looks_new(value: str) -> bool:
@@ -284,3 +462,89 @@ def _clean_text(value: str) -> str:
     text = html.unescape(text.replace("&nbsp;", " "))
     text = re.sub(r"\s+", " ", text)
     return text.strip(" ,\n\t")
+
+
+def _clean_title(value: str) -> str:
+    title = _clean_text(value)
+    title = re.sub(r"\s+with verification$", "", title, flags=re.IGNORECASE)
+    return title.strip()
+
+
+def _clean_company(value: str) -> str:
+    company = _clean_text(value)
+    company = re.sub(r"\s+with verification$", "", company, flags=re.IGNORECASE)
+    return company.strip()
+
+
+def _clean_location(value: str) -> str:
+    location = _clean_text(value)
+    location = re.sub(r"\s+Actively Hiring\b.*$", "", location, flags=re.IGNORECASE)
+    location = re.sub(r"\s+Станьте\s+.*$", "", location, flags=re.IGNORECASE)
+    location = re.sub(r"\s+\d+\s+(minute|hour|day|week|month|year)s?\s+ago\b.*$", "", location, flags=re.IGNORECASE)
+    location = re.sub(
+        r"\s+\d+\s+(минут[а-я]*|час[а-я]*|дн[яеё][а-я]*|недел[яиюь][а-я]*|месяц[а-я]*|год[а-я]*)\s+назад\b.*$",
+        "",
+        location,
+        flags=re.IGNORECASE,
+    )
+    return location.strip(" ,")
+
+
+def _looks_like_non_location_detail(value: str) -> bool:
+    text = value.casefold()
+    markers = (
+        "ago",
+        "applicant",
+        "candidate",
+        "promoted",
+        "actively",
+        "day",
+        "week",
+        "month",
+        "year",
+        "день",
+        "дня",
+        "дней",
+        "месяц",
+        "кандидат",
+        "продвигается",
+        "активное",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _looks_like_posted_at(value: str) -> bool:
+    text = value.casefold()
+    markers = (
+        "ago",
+        "reposted",
+        "posted",
+        "hour",
+        "day",
+        "week",
+        "month",
+        "year",
+        "назад",
+        "размещ",
+        "день",
+        "дня",
+        "дней",
+        "недел",
+        "месяц",
+        "час",
+        "минут",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _contains_text(node: Selector, needles: tuple[str, ...]) -> bool:
+    text = _node_label(node).casefold()
+    return any(needle.casefold() in text for needle in needles)
+
+
+def _first_matching(values: list[str], needles: tuple[str, ...]) -> str:
+    for value in values:
+        lowered = value.casefold()
+        if any(needle.casefold() in lowered for needle in needles):
+            return value
+    return ""

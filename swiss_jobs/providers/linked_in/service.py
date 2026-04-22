@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sqlite3
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -12,7 +13,7 @@ from swiss_jobs.core.filters import (
     passes_text_filters,
 )
 from swiss_jobs.core.formatter import format_vacancies
-from swiss_jobs.core.models import ClientConfig, ClientRunResult, ParserStats, VacancyFull
+from swiss_jobs.core.models import ClientConfig, ClientRunResult, ParserStats, QuerySpec, VacancyFull
 from swiss_jobs.core.state import compute_new_ids
 
 from swiss_jobs.providers.jobs_ch.analytics import build_job_analytics
@@ -52,6 +53,37 @@ CANTON_TO_LOCATIONS = {
 def slugify_runtime_name(value: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
     return slug or "default"
+
+
+def build_linkedin_queries(config: ClientConfig) -> list[QuerySpec]:
+    if config.mode == "new":
+        return [QuerySpec(term="", location="", index=1, total=1)]
+
+    terms = config.effective_terms()
+    locations = _effective_linkedin_locations(config)
+    if config.canton and not locations:
+        locations = [item for item in CANTON_TO_LOCATIONS.get(config.canton, []) if item]
+    if not locations:
+        locations = ["Switzerland"]
+
+    pairs = [(term, location) for term in terms for location in locations]
+    total = len(pairs)
+    return [
+        QuerySpec(term=term, location=location, index=index, total=total)
+        for index, (term, location) in enumerate(pairs, start=1)
+    ]
+
+
+def _effective_linkedin_locations(config: ClientConfig) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for raw_value in [config.location, *config.locations]:
+        value = str(raw_value or "").strip()
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        result.append(value)
+    return result
 
 
 class LinkedInParserService:
@@ -103,7 +135,7 @@ class LinkedInParserService:
             stats=stats,
         )
         try:
-            queries = config.build_queries(CANTON_TO_LOCATIONS)
+            queries = build_linkedin_queries(config)
             stats.total_queries = len(queries)
 
             vacancies, warnings, successful_queries = self.http_client.search(config, queries)
@@ -206,6 +238,7 @@ class LinkedInParserService:
 
     def _persist(self, config: ClientConfig, result: ClientRunResult, *, seen_ids: Sequence[str]) -> None:
         database_path = self._resolve_database_path(config)
+        migrate_legacy_linkedin_ids(database_path)
         database = JobsDatabase(database_path)
         result.database_path = str(database_path)
         database.persist_result(config, result)
@@ -224,3 +257,92 @@ class LinkedInParserService:
 def run_linked_in_parser(run_config: ClientConfig | Mapping[str, Any]) -> ClientRunResult:
     return LinkedInParserService().run(run_config)
 
+
+def migrate_legacy_linkedin_ids(database_path: Path) -> None:
+    if not database_path.is_file():
+        return
+
+    connection = sqlite3.connect(database_path)
+    connection.row_factory = sqlite3.Row
+    try:
+        if not _table_exists(connection, "vacancies"):
+            return
+        rows = connection.execute(
+            """
+            SELECT vacancy_id
+            FROM vacancies
+            WHERE source = 'linkedin.com'
+              AND vacancy_id NOT LIKE 'linkedin:%'
+            """
+        ).fetchall()
+        for row in rows:
+            legacy_id = str(row["vacancy_id"])
+            if not legacy_id:
+                continue
+            new_id = f"linkedin:{legacy_id}"
+            _rename_vacancy_id(connection, legacy_id, new_id)
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def _rename_vacancy_id(connection: sqlite3.Connection, old_id: str, new_id: str) -> None:
+    existing = connection.execute(
+        "SELECT 1 FROM vacancies WHERE vacancy_id = ?",
+        (new_id,),
+    ).fetchone()
+    if existing:
+        _execute_if_table_exists(connection, "run_vacancies", "DELETE FROM run_vacancies WHERE vacancy_id = ?", old_id)
+        _execute_if_table_exists(
+            connection,
+            "client_seen_vacancies",
+            "DELETE FROM client_seen_vacancies WHERE vacancy_id = ?",
+            old_id,
+        )
+        _execute_if_table_exists(connection, "vacancy_terms", "DELETE FROM vacancy_terms WHERE vacancy_id = ?", old_id)
+        connection.execute("DELETE FROM vacancies WHERE vacancy_id = ?", (old_id,))
+        return
+
+    connection.execute(
+        "UPDATE vacancies SET vacancy_id = ? WHERE vacancy_id = ?",
+        (new_id, old_id),
+    )
+    _execute_if_table_exists(
+        connection,
+        "run_vacancies",
+        "UPDATE run_vacancies SET vacancy_id = ? WHERE vacancy_id = ?",
+        new_id,
+        old_id,
+    )
+    _execute_if_table_exists(
+        connection,
+        "client_seen_vacancies",
+        "UPDATE client_seen_vacancies SET vacancy_id = ? WHERE vacancy_id = ?",
+        new_id,
+        old_id,
+    )
+    _execute_if_table_exists(
+        connection,
+        "vacancy_terms",
+        "UPDATE vacancy_terms SET vacancy_id = ? WHERE vacancy_id = ?",
+        new_id,
+        old_id,
+    )
+
+
+def _table_exists(connection: sqlite3.Connection, table_name: str) -> bool:
+    row = connection.execute(
+        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+        (table_name,),
+    ).fetchone()
+    return row is not None
+
+
+def _execute_if_table_exists(
+    connection: sqlite3.Connection,
+    table_name: str,
+    sql: str,
+    *params: str,
+) -> None:
+    if _table_exists(connection, table_name):
+        connection.execute(sql, params)
