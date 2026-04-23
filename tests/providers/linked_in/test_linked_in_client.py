@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from swiss_jobs.core.models import ClientConfig
+from swiss_jobs.providers.linked_in.cli import build_parser, _build_config
 from swiss_jobs.providers.linked_in.client import (
     LinkedInHttpClient,
     parse_vacancies_from_csv,
@@ -154,6 +155,16 @@ class LinkedInClientTests(unittest.TestCase):
         self.assertEqual([], warnings)
         self.assertEqual("linkedin:1", jobs[0].id)
 
+    def test_cli_loads_bundled_role_keyword_defaults(self) -> None:
+        parser = build_parser()
+        defaults = parser.parse_args([])
+        args = parser.parse_args([])
+
+        config = _build_config(args, defaults)
+
+        self.assertIn("backend entwickler", config.role_keywords)
+        self.assertIn("softwareentwickler", config.role_keywords)
+
     def test_service_persists_csv_vacancy_with_analytics(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp_path = Path(tmpdir)
@@ -194,6 +205,95 @@ class LinkedInClientTests(unittest.TestCase):
         self.assertEqual("Full-time", row[1])
         self.assertIn("Python", row[2])
         self.assertIn("programming_languages", row[3])
+
+    def test_service_persists_json_seniority_into_analytics_terms(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            json_path = tmp_path / "linkedin.json"
+            database_path = tmp_path / "linked_in.sqlite"
+            json_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "job_posting_id": "4395046745",
+                            "job_title": "Backend Entwickler 80 - 100%",
+                            "company_name": "Fincons Group",
+                            "job_location": "Bern, Berne, Switzerland",
+                            "job_summary": "Mehrjährige Erfahrung in der Backend-Entwicklung mit Java, Spring Boot und PostgreSQL.",
+                            "job_seniority_level": "Mid-Senior level",
+                            "job_employment_type": "Full-time",
+                            "job_posted_date": "2026-04-02T08:40:30.428Z",
+                        }
+                    ],
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = LinkedInParserService(runtime_root=tmp_path).run(
+                {
+                    "mode": "search",
+                    "json_path": str(json_path),
+                    "database_path": str(database_path),
+                    "no_state": True,
+                    "output_format": "full",
+                }
+            )
+
+            self.assertTrue(result.success, result.errors)
+            connection = sqlite3.connect(database_path)
+            try:
+                analytics_row = connection.execute(
+                    "SELECT analytics_json FROM vacancies WHERE vacancy_id = 'linkedin:4395046745'"
+                ).fetchone()
+                term_rows = connection.execute(
+                    "SELECT term_type, term_value FROM vacancy_terms WHERE vacancy_id = 'linkedin:4395046745' ORDER BY term_type, term_value"
+                ).fetchall()
+            finally:
+                connection.close()
+
+        self.assertIsNotNone(analytics_row)
+        analytics = json.loads(analytics_row[0])
+        self.assertEqual(["mid", "senior"], analytics["seniority_labels"])
+        self.assertIn(("seniority", "mid"), term_rows)
+        self.assertIn(("seniority", "senior"), term_rows)
+        self.assertTrue(result.all_jobs_full[0].seniority_match)
+
+    def test_service_uses_bundled_role_keyword_defaults_for_json_import(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            json_path = tmp_path / "linkedin.json"
+            database_path = tmp_path / "linked_in.sqlite"
+            json_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "job_posting_id": "4395046745",
+                            "job_title": "Backend Entwickler 80 - 100%",
+                            "company_name": "Fincons Group",
+                            "job_location": "Bern, Berne, Switzerland",
+                            "job_summary": "Backend-Entwicklung mit Java und Spring Boot.",
+                        }
+                    ],
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = LinkedInParserService(runtime_root=tmp_path).run(
+                {
+                    "mode": "search",
+                    "json_path": str(json_path),
+                    "database_path": str(database_path),
+                    "no_state": True,
+                    "output_format": "full",
+                }
+            )
+
+        self.assertTrue(result.success, result.errors)
+        self.assertEqual(1, len(result.all_jobs_full))
+        self.assertTrue(result.all_jobs_full[0].role_match)
+        self.assertIn("backend entwickler", result.all_jobs_full[0].keywords_matched)
 
     def test_legacy_linkedin_ids_are_namespaced(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

@@ -12,6 +12,7 @@ from swiss_jobs.providers.linked_in.service import LinkedInParserService, slugif
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_RUNTIME_DIR = str(PROJECT_ROOT / "runtime" / "linked_in")
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().parent / "configs" / "config_info.json"
 SUMMARY_MARKER = "__SWISS_JOBS_RUN_SUMMARY__"
 
 
@@ -158,11 +159,17 @@ def _collect_cli_overrides(
 def _build_config(args: argparse.Namespace, defaults: argparse.Namespace) -> ClientConfig:
     payload = _runtime_defaults(defaults)
     file_config: dict[str, Any] = {}
+    if DEFAULT_CONFIG_PATH.is_file():
+        file_config.update(load_json_config(str(DEFAULT_CONFIG_PATH)))
     if args.config:
-        file_config = load_json_config(args.config)
+        file_config.update(load_json_config(args.config))
 
     payload.update(file_config)
     payload.update(_collect_cli_overrides(args, defaults))
+    if payload.get("csv_path") and not args.json_path:
+        payload["json_path"] = ""
+    if payload.get("json_path") and not args.csv_path:
+        payload["csv_path"] = ""
     payload.setdefault("database_path", _resolve_database_path(args))
     payload.setdefault("client_id", "main-config")
     payload.setdefault("name", "main-config")

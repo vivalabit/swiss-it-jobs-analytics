@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import sqlite3
 from pathlib import Path
@@ -20,6 +21,7 @@ from swiss_jobs.providers.jobs_ch.analytics import build_job_analytics
 
 from .client import LinkedInHttpClient
 
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().parent / "configs" / "config_info.json"
 CANTON_TO_LOCATIONS = {
     "ag": ["Aargau, Switzerland"],
     "ai": ["Appenzell Innerrhoden, Switzerland"],
@@ -86,6 +88,21 @@ def _effective_linkedin_locations(config: ClientConfig) -> list[str]:
     return result
 
 
+def _has_explicit_seniority_metadata(vacancy: VacancyFull) -> bool:
+    raw = vacancy.raw or {}
+    for key in ("seniority", "seniority_level", "job_seniority_level", "seniorityLevel"):
+        value = raw.get(key)
+        if isinstance(value, str) and value.strip():
+            return True
+
+    detail_attributes = raw.get("detailAttributes")
+    if isinstance(detail_attributes, Mapping):
+        value = detail_attributes.get("seniorityLevel")
+        if isinstance(value, str) and value.strip():
+            return True
+    return False
+
+
 class LinkedInParserService:
     def __init__(
         self,
@@ -113,6 +130,21 @@ class LinkedInParserService:
             payload = run_config.to_dict()
         else:
             payload = dict(run_config)
+        explicit_csv_path = bool(payload.get("csv_path"))
+        explicit_json_path = bool(payload.get("json_path"))
+
+        if DEFAULT_CONFIG_PATH.is_file():
+            defaults = json.loads(DEFAULT_CONFIG_PATH.read_text(encoding="utf-8"))
+            if isinstance(defaults, dict):
+                merged_payload = dict(defaults)
+                merged_payload.update(payload)
+                payload = merged_payload
+
+        if explicit_csv_path and not explicit_json_path:
+            payload["json_path"] = ""
+        if explicit_json_path and not explicit_csv_path:
+            payload["csv_path"] = ""
+
         payload.setdefault(
             "database_path",
             str(
@@ -217,6 +249,8 @@ class LinkedInParserService:
             )
             vacancy.role_match = decision.role_match
             vacancy.seniority_match = decision.seniority_match
+            if vacancy.seniority_match is None:
+                vacancy.seniority_match = _has_explicit_seniority_metadata(vacancy)
             vacancy.keywords_matched = list(decision.matched_keywords)
             if decision.passes:
                 result.append(vacancy)

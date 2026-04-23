@@ -48,6 +48,23 @@ def make_job_haystack(vacancy: VacancyFull) -> str:
         vacancy.description_text,
         vacancy.description_html,
     ]
+    employment_type = vacancy.employment_type
+    if employment_type:
+        parts.append(employment_type)
+
+    raw = vacancy.raw or {}
+    for key in ("seniority", "seniority_level", "job_seniority_level", "seniorityLevel"):
+        value = raw.get(key)
+        if isinstance(value, str) and value.strip():
+            parts.append(value)
+
+    detail_attributes = raw.get("detailAttributes")
+    if isinstance(detail_attributes, dict):
+        for key in ("seniorityLevel", "employmentTypeText", "workplace"):
+            value = detail_attributes.get(key)
+            if isinstance(value, str) and value.strip():
+                parts.append(value)
+
     return " ".join(parts).lower()
 
 
@@ -99,4 +116,3 @@ def evaluate_role_seniority_filters(
         seniority_match=seniority_match,
         matched_keywords=deduped_keywords,
     )
-

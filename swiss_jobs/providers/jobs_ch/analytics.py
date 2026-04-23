@@ -360,6 +360,21 @@ def _extract_employment_types(vacancy: VacancyFull, schema: Mapping[str, Any]) -
     return _dedupe_strings(employment_types)
 
 
+def _extract_explicit_seniority_labels(vacancy: VacancyFull) -> list[str]:
+    values: list[str] = []
+    detail_attributes = vacancy.raw.get("detailAttributes")
+    if isinstance(detail_attributes, Mapping):
+        values.extend(_coerce_strings(detail_attributes.get("seniorityLevel")))
+
+    for key in ("seniorityLevel", "job_seniority_level", "seniority_level", "seniority"):
+        values.extend(_coerce_strings(vacancy.raw.get(key)))
+
+    labels: list[str] = []
+    for value in values:
+        labels.extend(_collect_matches(value, SENIORITY_KEYWORDS))
+    return _dedupe_strings(labels)
+
+
 def _extract_workload(vacancy: VacancyFull) -> dict[str, int] | None:
     raw_grades = vacancy.raw.get("employmentGrades")
     values: list[int] = []
@@ -656,7 +671,12 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
 
     experience_years = _extract_experience_years(text)
     seniority_labels = _infer_seniority_labels(
-        _collect_matches(text, SENIORITY_KEYWORDS),
+        _dedupe_strings(
+            [
+                *_extract_explicit_seniority_labels(vacancy),
+                *_collect_matches(text, SENIORITY_KEYWORDS),
+            ]
+        ),
         experience_years,
     )
     confidence = "high"
