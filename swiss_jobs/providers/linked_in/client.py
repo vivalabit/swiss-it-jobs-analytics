@@ -1,32 +1,18 @@
 from __future__ import annotations
 
-import os
-import random
+import csv
+import hashlib
+import html
+import json
+import re
 import sys
-import time
-from contextlib import contextmanager
-from http.cookiejar import MozillaCookieJar
 from pathlib import Path
-from typing import Any, Iterator, Sequence
-from urllib.parse import quote, urlencode
+from typing import Any, Mapping, Sequence
 
 from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
-
-from .detail import apply_detail_payload
-from .extractors import ParseError, extract_detail_payload, parse_jobs_from_search_page
+from swiss_jobs.providers.jobs_ch.extractors import html_to_text
 
 BASE_URL = "https://www.linkedin.com"
-DEFAULT_SWITZERLAND_GEO_ID = "106693272"
-DEFAULT_SEARCH_DISTANCE = "25.0"
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/123.0 Safari/537.36"
-    ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9,de;q=0.8",
-}
 
 
 class LinkedInHttpClient:
@@ -37,84 +23,49 @@ class LinkedInHttpClient:
         headers: dict[str, str] | None = None,
         timeout: int = 45,
         default_max_pages: int = 1,
-        env_proxy_names: Sequence[str] = ("SWISS_JOBS_LINKEDIN_PROXY", "LINKEDIN_PROXY"),
+        env_proxy_names: Sequence[str] = (),
     ) -> None:
         self.base_url = base_url.rstrip("/")
-        self.headers = dict(headers or HEADERS)
+        self.headers = dict(headers or {})
         self.timeout = timeout
         self.default_max_pages = default_max_pages
         self.env_proxy_names = tuple(env_proxy_names)
-        self._base_cookies_file: str | None = None
-        self._active_proxy_value: str = ""
-        self._browser_cookies: list[dict[str, Any]] = []
-        self._browser_profile_dir: str = ""
-        self._browser_headless: bool = True
 
     def search(
         self,
         config: ClientConfig,
         queries: Sequence[QuerySpec],
     ) -> tuple[list[VacancyFull], list[str], int]:
-        warnings: list[str] = []
-        all_jobs: list[VacancyFull] = []
-        successful_queries = 0
-
-        self._configure_browser_runtime(config, show_progress=config.show_progress)
-
-        for idx, query in enumerate(queries):
-            if idx > 0:
-                self._sleep(
-                    config.request_delay_min_seconds,
-                    config.request_delay_max_seconds,
-                    show_progress=config.show_progress,
-                )
+        json_path = _resolve_json_path(config)
+        if json_path:
+            if not json_path.is_file():
+                raise RuntimeError(f"LinkedIn JSON file does not exist: {json_path}")
+            jobs, warnings = parse_vacancies_from_json(json_path, base_url=self.base_url)
             if config.show_progress:
-                print(f"[progress] start {query.label}", file=sys.stderr)
-            try:
-                jobs, query_warnings = self._fetch_query(
-                    mode=config.mode,
-                    term=query.term,
-                    location=query.location,
-                    max_pages=config.max_pages,
-                    delay_min=config.request_delay_min_seconds,
-                    delay_max=config.request_delay_max_seconds,
-                    show_progress=config.show_progress,
-                    query_label=query.label,
+                print(
+                    f"[progress] loaded {len(jobs)} LinkedIn JSON vacancies from {json_path}",
+                    file=sys.stderr,
                 )
-                all_jobs.extend(jobs)
-                warnings.extend(query_warnings)
-                successful_queries += 1
-            except (ParseError, RuntimeError) as exc:
-                warnings.append(f"{query.label} failed: {exc}")
+            return _dedupe_vacancies(jobs), warnings, 1
 
-        return _dedupe_vacancies(all_jobs), warnings, successful_queries
+        csv_path = _resolve_csv_path(config)
+        if not csv_path:
+            raise RuntimeError(
+                "LinkedIn import provider requires --json-path/json_path or --csv-path/csv_path"
+            )
+        if not csv_path.is_file():
+            raise RuntimeError(f"LinkedIn CSV file does not exist: {csv_path}")
 
-    def open_login_session(
-        self,
-        config: ClientConfig,
-        *,
-        start_url: str = "https://www.linkedin.com/feed/",
-    ) -> None:
-        self._configure_browser_runtime(config, show_progress=config.show_progress)
-        if not self._browser_profile_dir:
-            raise RuntimeError("LinkedIn login session requires browser_profile_dir")
-
+        jobs, warnings = parse_vacancies_from_csv(csv_path, base_url=self.base_url)
         if config.show_progress:
             print(
-                f"[progress] opening LinkedIn persistent browser profile at {self._browser_profile_dir}",
+                f"[progress] loaded {len(jobs)} LinkedIn CSV vacancies from {csv_path}",
                 file=sys.stderr,
             )
+        return _dedupe_vacancies(jobs), warnings, 1
 
-        with self._browser_context(headless=False) as context:
-            page = context.pages[0] if context.pages else context.new_page()
-            page.goto(start_url, wait_until="domcontentloaded", timeout=self.timeout * 1000)
-            print(
-                "\nLinkedIn login browser is open. Log in, pass any checkpoint, "
-                "then press Enter here to close and save the browser profile.",
-                file=sys.stderr,
-            )
-            input()
-            page.wait_for_timeout(1000)
+    def open_login_session(self, config: ClientConfig) -> None:
+        raise RuntimeError("LinkedIn provider now imports CSV vacancies and does not use browser login")
 
     def enrich_vacancies(
         self,
@@ -122,500 +73,335 @@ class LinkedInHttpClient:
         *,
         detail_limit: int | None,
         detail_workers: int,
-        detail_delay_min_seconds: float,
-        detail_delay_max_seconds: float,
         show_progress: bool,
+        **_: Any,
     ) -> tuple[int, int]:
-        if not vacancies:
-            return 0, 0
+        for vacancy in vacancies:
+            vacancy.detail_schema_skipped = False
+            vacancy.detail_schema_error = None
+        return len(vacancies), len(vacancies)
 
-        limit = len(vacancies) if not detail_limit else min(detail_limit, len(vacancies))
-        for idx, vacancy in enumerate(vacancies):
-            vacancy.detail_schema_skipped = idx >= limit
 
-        if limit == 0:
-            return 0, 0
+def parse_vacancies_from_csv(path: Path, *, base_url: str = BASE_URL) -> tuple[list[VacancyFull], list[str]]:
+    warnings: list[str] = []
+    jobs: list[VacancyFull] = []
 
-        if show_progress:
-            print(
-                f"[progress] fetching LinkedIn detail pages for {limit} vacancies...",
-                file=sys.stderr,
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = [str(name or "").strip() for name in (reader.fieldnames or [])]
+        if not fieldnames:
+            return [], [f"{path}: CSV header is empty"]
+
+        normalized_fields = {_normalize_key(name) for name in fieldnames}
+        if _looks_like_search_input_csv(normalized_fields):
+            warnings.append(
+                f"{path}: CSV looks like search-input rows, not vacancy rows; "
+                "expected columns such as title/job_title, company, url, location, description"
             )
+            return [], warnings
 
-        enriched = 0
-        try:
-            with self._browser_context() as context:
-                page = context.new_page()
-                for idx in range(limit):
-                    vacancy = vacancies[idx]
-                    try:
-                        detail_panel_url = self._build_detail_panel_url(vacancy)
-                        rendered_html, final_url = self._goto_and_capture(
-                            page,
-                            detail_panel_url,
-                            wait_selector=(
-                                ".jobs-description__content, .jobs-box__html-content, "
-                                ".jobs-unified-top-card__job-title, h1"
-                            ),
-                            scroll_results=False,
-                            scroll_detail=True,
-                            click_show_more=True,
-                            show_progress=show_progress,
-                            progress_label="LinkedIn detail panel",
-                        )
-                        if not rendered_html:
-                            raise RuntimeError("LinkedIn detail browser render returned empty HTML")
-                        if _looks_like_authwall(rendered_html):
-                            raise ParseError("LinkedIn returned an authentication or checkpoint page")
-                        payload = extract_detail_payload(rendered_html)
-                        if final_url:
-                            payload["detail_panel_url"] = final_url
-                        apply_detail_payload(vacancy, payload, None)
-                        if _payload_has_detail_data(payload):
-                            enriched += 1
-                    except Exception as exc:  # pragma: no cover
-                        apply_detail_payload(vacancy, None, str(exc))
-
-                    if show_progress and (idx + 1 == limit or (idx + 1) % 5 == 0):
-                        print(f"[progress] detail fetched: {idx + 1}/{limit}", file=sys.stderr)
-                    if idx + 1 < limit:
-                        self._sleep(
-                            detail_delay_min_seconds,
-                            detail_delay_max_seconds,
-                            show_progress=show_progress,
-                        )
-        except Exception as exc:  # pragma: no cover
-            for idx in range(limit):
-                if not vacancies[idx].detail_schema_error:
-                    apply_detail_payload(vacancies[idx], None, str(exc))
-        return limit, enriched
-
-    def _fetch_query(
-        self,
-        *,
-        mode: str,
-        term: str,
-        location: str,
-        max_pages: int,
-        delay_min: float,
-        delay_max: float,
-        show_progress: bool,
-        query_label: str,
-    ) -> tuple[list[VacancyFull], list[str]]:
-        all_jobs: list[VacancyFull] = []
-        warnings: list[str] = []
-        planned_pages = max_pages if max_pages > 0 else self.default_max_pages
-
-        with self._browser_context() as context:
-            browser_page = context.new_page()
-            for page in range(1, planned_pages + 1):
-                if page > 1:
-                    self._sleep(delay_min, delay_max, show_progress=show_progress)
-
-                params = self._build_query_params(
-                    mode=mode,
-                    term=term,
-                    location=location,
-                    page=page,
-                )
-                search_url = f"{self.base_url}/jobs/search/?{urlencode(params)}"
-                rendered_html, rendered_url = self._goto_and_capture(
-                    browser_page,
-                    search_url,
-                    wait_selector="div.job-card-container, li.jobs-search-results__list-item, a[href*='/jobs/']",
-                    scroll_results=True,
-                    scroll_detail=False,
-                    click_show_more=False,
-                    show_progress=show_progress,
-                    progress_label="LinkedIn search page",
-                )
-
-                if _looks_like_authwall(rendered_html):
-                    raise ParseError("LinkedIn returned an authentication or checkpoint page")
-
-                jobs = parse_jobs_from_search_page(rendered_html, base_url=self.base_url)
-                if not jobs:
-                    warning = (
-                        f"{query_label}: no parseable LinkedIn job cards on page {page} "
-                        f"at {rendered_url or search_url}"
-                    )
-                    warnings.append(warning)
-                    if show_progress:
-                        print(f"[warn] {warning}", file=sys.stderr)
-                    break
-
-                for job in jobs:
-                    self._attach_search_context(job, search_url=rendered_url or search_url, params=params)
-                all_jobs.extend(jobs)
-
-                if show_progress:
-                    print(
-                        f"[progress] {query_label}: page {page}/{planned_pages}, got {len(jobs)}, total {len(all_jobs)}",
-                        file=sys.stderr,
-                    )
-
-        return _dedupe_vacancies(all_jobs), warnings
-
-    def _attach_search_context(
-        self,
-        vacancy: VacancyFull,
-        *,
-        search_url: str,
-        params: dict[str, str],
-    ) -> None:
-        vacancy.raw.setdefault("search_url", search_url)
-        vacancy.raw.setdefault("search_params", dict(params))
-        vacancy.raw["detail_panel_url"] = self._build_detail_panel_url(vacancy)
-
-    def _build_query_params(
-        self,
-        *,
-        mode: str,
-        term: str,
-        location: str,
-        page: int,
-    ) -> dict[str, str]:
-        params: dict[str, str] = {
-            "distance": DEFAULT_SEARCH_DISTANCE,
-            "geoId": DEFAULT_SWITZERLAND_GEO_ID,
-            "origin": "JOBS_HOME_KEYWORD_HISTORY",
-        }
-        clean_location = location.strip() or "Switzerland"
-        if clean_location and not _looks_like_swiss_location(clean_location):
-            params["location"] = clean_location
-        if clean_location.casefold() == "switzerland":
-            params["geoId"] = DEFAULT_SWITZERLAND_GEO_ID
-        if term.strip():
-            params["keywords"] = term.strip()
-        if mode == "new":
-            params["f_TPR"] = "r86400"
-        if page > 1:
-            params["start"] = str((page - 1) * 25)
-        return params
-
-    def _build_detail_panel_url(self, vacancy: VacancyFull) -> str:
-        linkedin_job_id = str(vacancy.raw.get("linkedinJobId") or "").strip()
-        if not linkedin_job_id and vacancy.id.startswith("linkedin:"):
-            linkedin_job_id = vacancy.id.split(":", 1)[1]
-
-        params = {}
-        raw_params = vacancy.raw.get("search_params")
-        if isinstance(raw_params, dict):
-            params.update({str(key): str(value) for key, value in raw_params.items() if value is not None})
-        params.setdefault("distance", DEFAULT_SEARCH_DISTANCE)
-        params.setdefault("geoId", DEFAULT_SWITZERLAND_GEO_ID)
-        params.setdefault("origin", "JOBS_HOME_KEYWORD_HISTORY")
-        if linkedin_job_id:
-            params["currentJobId"] = linkedin_job_id
-        return f"{self.base_url}/jobs/search/?{urlencode(params)}"
-
-    def configure_cookies(
-        self,
-        *,
-        cookies_file: str | None,
-        show_progress: bool,
-    ) -> None:
-        normalized = cookies_file.strip() if isinstance(cookies_file, str) else ""
-        if not normalized:
-            self._base_cookies_file = None
-            self._browser_cookies = []
-            return
-        if normalized == self._base_cookies_file and self._browser_cookies:
-            return
-
-        cookie_jar = MozillaCookieJar(normalized)
-        cookie_jar.load(ignore_discard=True, ignore_expires=True)
-
-        browser_cookies: list[dict[str, Any]] = []
-        loaded = 0
-        for cookie in cookie_jar:
-            browser_cookie: dict[str, Any] = {
-                "name": cookie.name,
-                "value": cookie.value,
-                "domain": cookie.domain,
-                "path": cookie.path or "/",
-                "secure": bool(cookie.secure),
-                "httpOnly": bool(
-                    getattr(cookie, "_rest", {}).get("HttpOnly")
-                    or getattr(cookie, "_rest", {}).get("httponly")
-                ),
-            }
-            if cookie.expires is not None:
-                browser_cookie["expires"] = cookie.expires
-            browser_cookies.append(browser_cookie)
-            loaded += 1
-
-        self._base_cookies_file = normalized
-        self._browser_cookies = browser_cookies
-
-        if show_progress:
-            print(f"[progress] loaded {loaded} LinkedIn cookies", file=sys.stderr)
-
-    def _configure_browser_runtime(self, config: ClientConfig, *, show_progress: bool) -> None:
-        self._active_proxy_value = self._resolve_proxy_value(config)
-        self._browser_profile_dir = str(config.browser_profile_dir or "").strip()
-        self._browser_headless = bool(config.browser_headless)
-
-        if self._browser_profile_dir:
-            self._base_cookies_file = None
-            self._browser_cookies = []
-            if config.cookies_file and show_progress:
-                print(
-                    "[warn] ignoring cookies_file because browser_profile_dir uses a persistent LinkedIn session",
-                    file=sys.stderr,
-                )
-            return
-
-        self.configure_cookies(
-            cookies_file=config.cookies_file,
-            show_progress=show_progress,
-        )
-
-    @contextmanager
-    def _browser_context(
-        self,
-        *,
-        extra_headers: dict[str, str] | None = None,
-        headless: bool | None = None,
-    ) -> Iterator[Any]:
-        try:
-            from playwright.sync_api import sync_playwright
-        except ImportError as exc:
-            raise RuntimeError(f"Playwright is unavailable; install playwright browsers: {exc}") from exc
-
-        context = None
-        browser = None
-        with sync_playwright() as playwright:
-            effective_headless = self._browser_headless if headless is None else headless
-            browser_proxy = _build_browser_proxy(self._active_proxy_value)
-            context_kwargs: dict[str, Any] = {
-                "user_agent": self.headers.get("User-Agent"),
-                "locale": "ru-RU",
-                "timezone_id": "Europe/Zurich",
-                "viewport": {"width": 1440, "height": 1200},
-                "extra_http_headers": {
-                    "Accept-Language": self.headers.get("Accept-Language", "en-US,en;q=0.9"),
-                    **(extra_headers or {}),
-                },
-            }
-            if browser_proxy:
-                context_kwargs["proxy"] = browser_proxy
-
-            if self._browser_profile_dir:
-                Path(self._browser_profile_dir).mkdir(parents=True, exist_ok=True)
-                context = playwright.chromium.launch_persistent_context(
-                    self._browser_profile_dir,
-                    headless=effective_headless,
-                    **context_kwargs,
-                )
-                try:
-                    yield context
-                finally:
-                    if context is not None:
-                        context.close()
-                return
-
-            launch_kwargs: dict[str, Any] = {"headless": effective_headless}
-            browser_proxy = _build_browser_proxy(self._active_proxy_value)
-            if browser_proxy:
-                launch_kwargs["proxy"] = browser_proxy
-
-            browser = playwright.chromium.launch(**launch_kwargs)
-            context = browser.new_context(**context_kwargs)
-            if self._browser_cookies:
-                context.add_cookies(self._browser_cookies)
-            try:
-                yield context
-            finally:
-                if context is not None:
-                    context.close()
-                if browser is not None:
-                    browser.close()
-
-    def _goto_and_capture(
-        self,
-        page: Any,
-        url: str,
-        *,
-        wait_selector: str,
-        scroll_results: bool,
-        scroll_detail: bool,
-        click_show_more: bool,
-        show_progress: bool,
-        progress_label: str,
-    ) -> tuple[str, str]:
-        try:
-            from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
-        except ImportError as exc:
-            raise RuntimeError(f"Playwright is unavailable; install playwright browsers: {exc}") from exc
-
-        if show_progress:
-            print(f"[progress] rendering {progress_label} with Chromium", file=sys.stderr)
-
-        page.goto(url, wait_until="domcontentloaded", timeout=self.timeout * 1000)
-        try:
-            page.wait_for_selector(wait_selector, timeout=12000)
-        except PlaywrightTimeoutError:
-            pass
-        page.wait_for_timeout(random.randint(600, 1200))
-        if scroll_results:
-            self._scroll_linkedin_results(page)
-        if scroll_detail:
-            self._scroll_linkedin_detail(page)
-        if click_show_more:
-            self._click_linkedin_show_more(page)
-            self._scroll_linkedin_detail(page)
-        page.wait_for_timeout(random.randint(700, 1400))
-        return page.content(), page.url
-
-    def _scroll_linkedin_results(self, page: Any) -> None:
-        for _ in range(2):
-            page.evaluate(
-                """
-                () => {
-                  const containers = [
-                    document.querySelector('.jobs-search-results-list'),
-                    document.querySelector('.scaffold-layout__list'),
-                    document.querySelector('[aria-label*="Search results"]'),
-                    document.scrollingElement
-                  ].filter(Boolean);
-                  const target = containers[0];
-                  target.scrollTop = target.scrollHeight;
-                }
-                """
-            )
-            page.wait_for_timeout(700)
-
-    def _scroll_linkedin_detail(self, page: Any) -> None:
-        for _ in range(2):
-            page.evaluate(
-                """
-                () => {
-                  const containers = [
-                    document.querySelector('.jobs-search__job-details--container'),
-                    document.querySelector('.jobs-details'),
-                    document.querySelector('.scaffold-layout__detail'),
-                    document.scrollingElement
-                  ].filter(Boolean);
-                  const target = containers[0];
-                  target.scrollTop = Math.min(target.scrollHeight, target.scrollTop + 900);
-                }
-                """
-            )
-            page.wait_for_timeout(500)
-
-    def _click_linkedin_show_more(self, page: Any) -> None:
-        for text in ("Show more", "See more", "Показать ещё", "Показать еще", "Ещё", "Еще"):
-            try:
-                locator = page.get_by_text(text, exact=False).first
-                if locator.count() > 0 and locator.is_visible(timeout=800):
-                    locator.click(timeout=1500)
-                    page.wait_for_timeout(600)
-                    return
-            except Exception:
+        for row_number, raw_row in enumerate(reader, start=2):
+            row = _normalize_row(raw_row)
+            vacancy = _vacancy_from_csv_row(row, row_number=row_number, base_url=base_url)
+            if vacancy is None:
+                warnings.append(f"{path}: row {row_number} skipped; missing title/job_title")
                 continue
-        for selector in (
-            "button.jobs-description__footer-button",
-            "button[aria-label*='Show more']",
-            "button[aria-label*='Показать']",
-            ".jobs-description button",
-        ):
-            try:
-                locator = page.locator(selector).first
-                if locator.count() > 0 and locator.is_visible(timeout=800):
-                    locator.click(timeout=1500)
-                    page.wait_for_timeout(600)
-                    return
-            except Exception:
+            jobs.append(vacancy)
+
+    return jobs, warnings
+
+
+def parse_vacancies_from_json(path: Path, *, base_url: str = BASE_URL) -> tuple[list[VacancyFull], list[str]]:
+    warnings: list[str] = []
+    jobs: list[VacancyFull] = []
+    payload = _load_json_payload(path)
+    records = _extract_json_records(payload)
+    if not records:
+        return [], [f"{path}: JSON does not contain vacancy records"]
+
+    for index, record in enumerate(records, start=1):
+        vacancy = _vacancy_from_mapping(record, row_number=index, base_url=base_url, row_source="json")
+        if vacancy is None:
+            warnings.append(f"{path}: record {index} skipped; missing job_title/title")
+            continue
+        jobs.append(vacancy)
+    return jobs, warnings
+
+
+def _load_json_payload(path: Path) -> Any:
+    text = path.read_text(encoding="utf-8-sig").strip()
+    if not text:
+        return []
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        records = []
+        for line in text.splitlines():
+            line = line.strip()
+            if not line:
                 continue
-
-    def _resolve_proxy_value(self, config: ClientConfig) -> str:
-        return config.proxy_url or self._read_proxy_file(config.proxy_file) or self._read_env_proxy()
-
-    def _read_env_proxy(self) -> str:
-        for name in self.env_proxy_names:
-            value = os.environ.get(name, "").strip()
-            if value:
-                return value
-        return ""
-
-    def _read_proxy_file(self, proxy_file: str | None) -> str:
-        if not proxy_file:
-            return ""
-        try:
-            return Path(proxy_file).read_text(encoding="utf-8").strip()
-        except OSError:
-            return ""
-
-    def _sleep(self, minimum: float, maximum: float, *, show_progress: bool) -> None:
-        upper = max(minimum, maximum)
-        if upper <= 0:
-            return
-        duration = random.uniform(minimum, upper)
-        if show_progress:
-            print(f"[progress] LinkedIn throttle sleep {duration:.1f}s", file=sys.stderr)
-        time.sleep(duration)
+            records.append(json.loads(line))
+        return records
 
 
-def _normalize_proxy_url(raw_value: str) -> str:
-    value = raw_value.strip()
-    if "://" in value:
-        return value
-
-    parts = value.split(":", 3)
-    if len(parts) == 4:
-        host, port, username, password = parts
-        return f"http://{quote(username)}:{quote(password)}@{host}:{port}"
-    if len(parts) == 2:
-        host, port = parts
-        return f"http://{host}:{port}"
-    return value
+def _extract_json_records(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return [dict(item) for item in payload if isinstance(item, Mapping)]
+    if isinstance(payload, Mapping):
+        for key in ("data", "records", "results", "items"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                return [dict(item) for item in value if isinstance(item, Mapping)]
+        if any(key in payload for key in ("job_title", "title", "job_posting_id", "url")):
+            return [dict(payload)]
+    return []
 
 
-def _build_browser_proxy(raw_value: str) -> dict[str, str] | None:
-    value = raw_value.strip()
+def _resolve_csv_path(config: ClientConfig) -> Path | None:
+    value = getattr(config, "csv_path", None)
     if not value:
         return None
-
-    if "://" in value:
-        return {"server": value}
-
-    parts = value.split(":", 3)
-    if len(parts) == 4:
-        host, port, username, password = parts
-        return {
-            "server": f"http://{host}:{port}",
-            "username": username,
-            "password": password,
-        }
-    if len(parts) == 2:
-        host, port = parts
-        return {"server": f"http://{host}:{port}"}
-    return {"server": value}
+    return Path(str(value)).expanduser()
 
 
-def _looks_like_swiss_location(value: str) -> bool:
-    normalized = value.casefold()
-    swiss_markers = (
-        "switzerland",
-        "swiss",
-        "schweiz",
-        "suisse",
-        "svizzera",
-        "zurich",
-        "zürich",
-        "geneva",
-        "genève",
-        "lausanne",
-        "basel",
-        "bern",
-        "winterthur",
-        "zug",
-        "lucerne",
-        "st. gallen",
-        "st gallen",
+def _resolve_json_path(config: ClientConfig) -> Path | None:
+    value = getattr(config, "json_path", None)
+    if not value:
+        return None
+    return Path(str(value)).expanduser()
+
+
+def _looks_like_search_input_csv(normalized_fields: set[str]) -> bool:
+    search_fields = {"keyword", "location", "country", "time_range", "job_type", "experience_level"}
+    vacancy_fields = {"title", "job_title", "url", "job_url", "company", "company_name", "description"}
+    return bool(search_fields & normalized_fields) and not bool(vacancy_fields & normalized_fields)
+
+
+def _vacancy_from_csv_row(row: Mapping[str, str], *, row_number: int, base_url: str) -> VacancyFull | None:
+    return _vacancy_from_mapping(row, row_number=row_number, base_url=base_url, row_source="csv")
+
+
+def _vacancy_from_mapping(
+    row: Mapping[str, Any],
+    *,
+    row_number: int,
+    base_url: str,
+    row_source: str,
+) -> VacancyFull | None:
+    title = _first_value(row, "title", "job_title", "position", "name")
+    if not title:
+        return None
+
+    url = _first_value(row, "url", "job_url", "linkedin_url", "job_link", "link")
+    linkedin_id = (
+        _first_value(row, "linkedin_job_id", "job_posting_id", "job_id", "id", "vacancy_id")
+        or _extract_linkedin_job_id(url)
+        or _stable_row_id(row, row_number=row_number)
     )
-    return any(marker in normalized for marker in swiss_markers)
+    if url and not url.startswith(("http://", "https://")):
+        url = f"{base_url.rstrip('/')}/{url.lstrip('/')}"
+    if not url and linkedin_id:
+        url = f"{base_url.rstrip('/')}/jobs/view/{linkedin_id}/"
+
+    company = _first_value(row, "company", "company_name", "organization", "hiring_organization")
+    place = _first_value(row, "location", "job_location", "place", "city")
+    publication_date = _normalize_date(
+        _first_value(row, "publication_date", "posted_at", "date_posted", "job_posted_date")
+    )
+    employment_type = _first_value(row, "employment_type", "job_employment_type", "job_type")
+    workplace = _first_value(row, "workplace", "remote", "work_mode", "workplace_type")
+    seniority = _first_value(row, "seniority", "job_seniority_level", "seniority_level")
+    applicants = _first_value(row, "job_num_applicants", "num_applicants")
+    description_html = _first_value(row, "description_html", "job_description_formatted")
+    description_text = _first_value(
+        row,
+        "description_text",
+        "description",
+        "job_description",
+        "job_summary",
+        "summary",
+    )
+    if description_html and not description_text:
+        description_text = html_to_text(description_html)
+    if description_text and not description_html:
+        description_html = html.escape(description_text)
+
+    raw = dict(row)
+    raw[f"{row_source}RowNumber"] = row_number
+    raw["linkedinJobId"] = linkedin_id
+    if employment_type:
+        raw["employmentType"] = employment_type
+        raw["jobType"] = employment_type
+    if workplace:
+        raw["workplace"] = workplace
+    detail_attributes: dict[str, Any] = {}
+    if employment_type:
+        detail_attributes["employmentTypeText"] = employment_type
+    if workplace:
+        detail_attributes["workplace"] = workplace
+    if seniority:
+        detail_attributes["seniorityLevel"] = seniority
+    if applicants:
+        detail_attributes["applicantCountText"] = applicants
+    industries = _coerce_string_list(_value_for_keys(row, "job_industries", "industry", "industries"))
+    if industries:
+        detail_attributes["industries"] = industries
+    if detail_attributes:
+        raw["detailAttributes"] = detail_attributes
+
+    schema = _build_schema(
+        row,
+        title=title,
+        company=company,
+        place=place,
+        url=url,
+        description_html=description_html,
+        publication_date=publication_date,
+        employment_type=employment_type,
+        industries=industries,
+    )
+
+    return VacancyFull(
+        id=f"linkedin:{linkedin_id}",
+        title=title,
+        company=company,
+        place=place,
+        publication_date=publication_date or None,
+        initial_publication_date=publication_date or None,
+        is_new=_looks_new(_first_value(row, "posted_at", "job_posted_time", "date_posted")),
+        url=url,
+        raw=raw,
+        description_html=description_html,
+        description_text=description_text,
+        job_posting_schema=schema,
+        detail_schema_error=None,
+        detail_schema_skipped=False,
+        source="linkedin.com",
+    )
+
+
+def _build_schema(
+    row: Mapping[str, Any],
+    *,
+    title: str,
+    company: str,
+    place: str,
+    url: str,
+    description_html: str,
+    publication_date: str,
+    employment_type: str,
+    industries: list[str] | None = None,
+) -> dict[str, Any]:
+    schema: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": title,
+        "description": description_html,
+        "url": url,
+    }
+    if publication_date:
+        schema["datePosted"] = publication_date
+    if employment_type:
+        schema["employmentType"] = employment_type
+    industry_values = industries or _coerce_string_list(_value_for_keys(row, "industry", "industries"))
+    if industry_values:
+        schema["industry"] = industry_values
+    if company:
+        organization: dict[str, Any] = {"@type": "Organization", "name": company}
+        company_url = _first_value(row, "company_url", "company_link")
+        company_logo = _first_value(row, "company_logo", "company_logo_url")
+        if company_url:
+            organization["sameAs"] = company_url
+        if company_logo:
+            organization["logo"] = company_logo
+        schema["hiringOrganization"] = organization
+    if place:
+        schema["jobLocation"] = {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": place,
+                "addressCountry": _first_value(row, "country_code", "country") or "CH",
+            },
+        }
+    salary = _value_for_keys(row, "base_salary", "salary", "salary_standards")
+    if salary not in (None, "", [], {}):
+        schema["baseSalary"] = salary
+    return schema
+
+
+def _normalize_row(row: Mapping[str, Any]) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for key, value in row.items():
+        normalized_key = _normalize_key(str(key or ""))
+        if not normalized_key:
+            continue
+        result[normalized_key] = str(value or "").strip()
+    return result
+
+
+def _normalize_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", value.strip().casefold()).strip("_")
+
+
+def _first_value(row: Mapping[str, Any], *keys: str) -> str:
+    for key in keys:
+        value = _value_for_keys(row, key)
+        if value is None:
+            continue
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+        if isinstance(value, (int, float)):
+            return str(value)
+    return ""
+
+
+def _value_for_keys(row: Mapping[str, Any], *keys: str) -> Any:
+    normalized_lookup = {_normalize_key(str(key)): value for key, value in row.items()}
+    for key in keys:
+        normalized = _normalize_key(key)
+        if normalized in normalized_lookup:
+            return normalized_lookup[normalized]
+    return None
+
+
+def _coerce_string_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [part.strip() for part in re.split(r"[,;|]", value) if part.strip()]
+    if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray)):
+        return [str(item).strip() for item in value if str(item).strip()]
+    return [str(value).strip()] if str(value).strip() else []
+
+
+def _extract_linkedin_job_id(url: str) -> str:
+    match = re.search(r"/jobs/view/(?:[^/?#-]+-)?(?P<id>\d+)", url or "")
+    return match.group("id") if match else ""
+
+
+def _stable_row_id(row: Mapping[str, str], *, row_number: int) -> str:
+    parts = [row.get(key, "") for key in ("title", "company", "company_name", "location", "url")]
+    digest = hashlib.sha1("|".join(parts).encode("utf-8")).hexdigest()[:16]
+    return f"csv-{row_number}-{digest}"
+
+
+def _normalize_date(value: str) -> str:
+    if not value:
+        return ""
+    match = re.search(r"\b(\d{4}-\d{2}-\d{2})", value)
+    if match:
+        return match.group(1)
+    match = re.search(r"\b(\d{1,2})[./](\d{1,2})[./](\d{4})\b", value)
+    if match:
+        day, month, year = match.groups()
+        return f"{int(year):04d}-{int(month):02d}-{int(day):02d}"
+    return value.strip()
+
+
+def _looks_new(value: str) -> bool:
+    lowered = value.casefold()
+    return any(marker in lowered for marker in ("new", "today", "hour", "minute", "just now"))
 
 
 def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:
@@ -627,30 +413,3 @@ def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:
         seen.add(vacancy.id)
         result.append(vacancy)
     return result
-
-
-def _payload_has_detail_data(payload: dict[str, Any]) -> bool:
-    if payload.get("job_posting_schema"):
-        return True
-    for key in ("description_text", "description_html"):
-        value = payload.get(key)
-        if isinstance(value, str) and value.strip():
-            return True
-    detail_attributes = payload.get("detail_attributes")
-    if isinstance(detail_attributes, dict) and detail_attributes:
-        return True
-    return False
-
-
-def _looks_like_authwall(page_html: str) -> bool:
-    lowered = page_html.casefold()
-    markers = (
-        "authwall",
-        "checkpoint/challenge",
-        "uas/login",
-        "sign in to linkedin",
-        "join linkedin",
-        "войти или зарегистрироваться",
-        "присоединиться к linkedin",
-    )
-    return any(marker in lowered for marker in markers)

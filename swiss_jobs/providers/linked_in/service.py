@@ -147,7 +147,7 @@ class LinkedInParserService:
             stats.successful_queries = successful_queries
             if not vacancies and successful_queries == 0:
                 raise RuntimeError(
-                    "LinkedIn is unreachable for all queries (network/proxy/authentication or temporary blocking)."
+                    "LinkedIn CSV provider did not load any vacancy rows."
                 )
 
             stats.total_fetched = len(vacancies)
@@ -167,8 +167,6 @@ class LinkedInParserService:
                     text_filtered,
                     detail_limit=config.detail_limit,
                     detail_workers=config.detail_workers,
-                    detail_delay_min_seconds=config.detail_delay_min_seconds,
-                    detail_delay_max_seconds=config.detail_delay_max_seconds,
                     show_progress=config.show_progress,
                 )
                 stats.detail_attempted = attempted

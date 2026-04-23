@@ -342,8 +342,8 @@ class ClientConfig:
     proxy_file: str | None = None
     request_delay_min_seconds: float = 0.0
     request_delay_max_seconds: float = 0.0
-    detail_delay_min_seconds: float = 2.0
-    detail_delay_max_seconds: float = 4.0
+    csv_path: str | None = None
+    json_path: str | None = None
     database_path: str | None = None
     client_config_path: str | None = None
 
@@ -409,8 +409,8 @@ class ClientConfig:
             "proxy_file",
             "request_delay_min_seconds",
             "request_delay_max_seconds",
-            "detail_delay_min_seconds",
-            "detail_delay_max_seconds",
+            "csv_path",
+            "json_path",
             "database_path",
             "client_config_path",
         }
@@ -508,13 +508,15 @@ class ClientConfig:
                 payload.get("request_delay_max_seconds", 0.0),
                 "request_delay_max_seconds",
             ),
-            detail_delay_min_seconds=_coerce_float(
-                payload.get("detail_delay_min_seconds", 2.0),
-                "detail_delay_min_seconds",
+            csv_path=(
+                str(Path(payload["csv_path"]))
+                if payload.get("csv_path") not in (None, "")
+                else None
             ),
-            detail_delay_max_seconds=_coerce_float(
-                payload.get("detail_delay_max_seconds", 4.0),
-                "detail_delay_max_seconds",
+            json_path=(
+                str(Path(payload["json_path"]))
+                if payload.get("json_path") not in (None, "")
+                else None
             ),
             database_path=(
                 str(Path(payload["database_path"]))
@@ -563,22 +565,10 @@ class ClientConfig:
             raise ConfigValidationError(
                 f"Field 'request_delay_max_seconds' in '{source}' must be >= request_delay_min_seconds"
             )
-        if self.detail_delay_min_seconds < 0:
-            raise ConfigValidationError(
-                f"Field 'detail_delay_min_seconds' in '{source}' must be >= 0"
-            )
-        if self.detail_delay_max_seconds < 0:
-            raise ConfigValidationError(
-                f"Field 'detail_delay_max_seconds' in '{source}' must be >= 0"
-            )
-        if self.detail_delay_max_seconds < self.detail_delay_min_seconds:
-            raise ConfigValidationError(
-                f"Field 'detail_delay_max_seconds' in '{source}' must be >= detail_delay_min_seconds"
-            )
 
-        if self.mode == "search" and not self.effective_terms():
+        if self.mode == "search" and not self.effective_terms() and not self.csv_path and not self.json_path:
             raise ConfigValidationError(
-                f"Config '{source}' uses mode='search' but has no term/terms"
+                f"Config '{source}' uses mode='search' but has no term/terms, csv_path, or json_path"
             )
 
         if self.mode == "new":
@@ -669,8 +659,8 @@ class ClientConfig:
             "proxy_file": self.proxy_file,
             "request_delay_min_seconds": self.request_delay_min_seconds,
             "request_delay_max_seconds": self.request_delay_max_seconds,
-            "detail_delay_min_seconds": self.detail_delay_min_seconds,
-            "detail_delay_max_seconds": self.detail_delay_max_seconds,
+            "csv_path": self.csv_path,
+            "json_path": self.json_path,
             "database_path": self.database_path,
             "client_config_path": self.client_config_path,
         }

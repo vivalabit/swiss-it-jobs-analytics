@@ -33,7 +33,7 @@ def load_json_config(path: str) -> dict[str, Any]:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Parse LinkedIn vacancies into a local SQLite database."
+        description="Import LinkedIn vacancies from CSV into a local SQLite database."
     )
     parser.add_argument("--config", default="", help="JSON config path for a single run profile")
     parser.add_argument(
@@ -70,34 +70,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--no-state", action="store_true", help="Disable seen-ID tracking")
     parser.add_argument("--database-path", default="", help="SQLite database path for run storage")
     parser.add_argument(
-        "--cookies-file",
+        "--csv-path",
         default="",
-        help="Netscape cookies.txt file for an authenticated LinkedIn session",
+        help="CSV file containing vacancy rows to import",
     )
     parser.add_argument(
-        "--browser-profile-dir",
+        "--json-path",
         default="",
-        help="Git-ignored persistent Playwright profile directory for LinkedIn authentication",
-    )
-    parser.add_argument(
-        "--browser-headed",
-        action="store_true",
-        help="Run Chromium with a visible window instead of headless mode",
-    )
-    parser.add_argument(
-        "--login-only",
-        action="store_true",
-        help="Open LinkedIn in the persistent browser profile for manual login, then exit",
-    )
-    parser.add_argument(
-        "--proxy-url",
-        default="",
-        help="Optional proxy URL or hostname:port:login:password string. Prefer env SWISS_JOBS_LINKEDIN_PROXY.",
-    )
-    parser.add_argument(
-        "--proxy-file",
-        default="",
-        help="Optional ignored file containing proxy URL or hostname:port:login:password.",
+        help="JSON or JSONL file containing LinkedIn vacancy rows to import",
     )
     parser.add_argument(
         "--request-delay-min-seconds",
@@ -110,18 +90,6 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=4.0,
         help="Maximum delay between LinkedIn search page requests",
-    )
-    parser.add_argument(
-        "--detail-delay-min-seconds",
-        type=float,
-        default=2.0,
-        help="Minimum delay between LinkedIn detail page requests",
-    )
-    parser.add_argument(
-        "--detail-delay-max-seconds",
-        type=float,
-        default=4.0,
-        help="Maximum delay between LinkedIn detail page requests",
     )
     parser.add_argument("--bootstrap", action="store_true", help="Save current results into state")
     parser.add_argument("--watch", type=int, default=0, help="Polling interval in seconds. 0 = run once")
@@ -153,15 +121,10 @@ def _runtime_defaults(defaults: argparse.Namespace) -> dict[str, Any]:
         "include": list(defaults.include),
         "exclude": list(defaults.exclude),
         "json": defaults.json,
-        "cookies_file": defaults.cookies_file,
-        "browser_profile_dir": defaults.browser_profile_dir,
-        "browser_headless": True,
-        "proxy_url": defaults.proxy_url,
-        "proxy_file": defaults.proxy_file,
+        "csv_path": defaults.csv_path,
+        "json_path": defaults.json_path,
         "request_delay_min_seconds": defaults.request_delay_min_seconds,
         "request_delay_max_seconds": defaults.request_delay_max_seconds,
-        "detail_delay_min_seconds": defaults.detail_delay_min_seconds,
-        "detail_delay_max_seconds": defaults.detail_delay_max_seconds,
         "database_path": defaults.database_path,
         "bootstrap": defaults.bootstrap,
         "watch": defaults.watch,
@@ -182,15 +145,13 @@ def _collect_cli_overrides(
     args: argparse.Namespace,
     defaults: argparse.Namespace,
 ) -> dict[str, Any]:
-    excluded = {"config", "browser_headed", "login_only"}
+    excluded = {"config"}
     overrides: dict[str, Any] = {}
     for key, value in vars(args).items():
         if key in excluded:
             continue
         if value != getattr(defaults, key):
             overrides[key] = value
-    if args.browser_headed:
-        overrides["browser_headless"] = False
     return overrides
 
 
@@ -202,8 +163,6 @@ def _build_config(args: argparse.Namespace, defaults: argparse.Namespace) -> Cli
 
     payload.update(file_config)
     payload.update(_collect_cli_overrides(args, defaults))
-    if args.login_only and not payload.get("term") and not payload.get("terms"):
-        payload["mode"] = "new"
     payload.setdefault("database_path", _resolve_database_path(args))
     payload.setdefault("client_id", "main-config")
     payload.setdefault("name", "main-config")
@@ -286,14 +245,6 @@ def main(argv: list[str] | None = None) -> int:
     except (ValueError, ConfigValidationError) as exc:
         print(f"[config error] {exc}", file=sys.stderr)
         return 2
-
-    if args.login_only:
-        try:
-            service.open_login_session(config)
-        except Exception as exc:
-            print(f"[error] {exc}", file=sys.stderr)
-            return 1
-        return 0
 
     if config.watch == 0:
         result = service.run(config)
