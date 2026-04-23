@@ -102,14 +102,26 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--request-delay-min-seconds",
         type=float,
-        default=4.0,
+        default=2.0,
         help="Minimum delay between LinkedIn search page requests",
     )
     parser.add_argument(
         "--request-delay-max-seconds",
         type=float,
-        default=9.0,
+        default=4.0,
         help="Maximum delay between LinkedIn search page requests",
+    )
+    parser.add_argument(
+        "--detail-delay-min-seconds",
+        type=float,
+        default=2.0,
+        help="Minimum delay between LinkedIn detail page requests",
+    )
+    parser.add_argument(
+        "--detail-delay-max-seconds",
+        type=float,
+        default=4.0,
+        help="Maximum delay between LinkedIn detail page requests",
     )
     parser.add_argument("--bootstrap", action="store_true", help="Save current results into state")
     parser.add_argument("--watch", type=int, default=0, help="Polling interval in seconds. 0 = run once")
@@ -148,6 +160,8 @@ def _runtime_defaults(defaults: argparse.Namespace) -> dict[str, Any]:
         "proxy_file": defaults.proxy_file,
         "request_delay_min_seconds": defaults.request_delay_min_seconds,
         "request_delay_max_seconds": defaults.request_delay_max_seconds,
+        "detail_delay_min_seconds": defaults.detail_delay_min_seconds,
+        "detail_delay_max_seconds": defaults.detail_delay_max_seconds,
         "database_path": defaults.database_path,
         "bootstrap": defaults.bootstrap,
         "watch": defaults.watch,

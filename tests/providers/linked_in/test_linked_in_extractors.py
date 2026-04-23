@@ -64,8 +64,11 @@ DETAIL_HTML = """
     <div class="jobs-unified-top-card__primary-description-without-tagline">
       Acme AG · Zurich, Switzerland · 2 days ago
     </div>
+    <a href="/jobs/view/4211112222/">
+      <span>Hybrid</span>
+      <span><span>Full-time</span></span>
+    </a>
     <div class="jobs-unified-top-card__job-insight">100 applicants</div>
-    <div class="jobs-unified-top-card__job-insight">Hybrid</div>
     <div class="jobs-description__content">
       <p>Build services with Python and PostgreSQL.</p>
     </div>
@@ -128,6 +131,7 @@ class LinkedInExtractorsTests(unittest.TestCase):
         self.assertEqual("Acme AG", payload["company"])
         self.assertEqual("Zurich, Switzerland", payload["place"])
         self.assertEqual("Hybrid", payload["detail_attributes"]["workplace"])
+        self.assertEqual("Full-time", payload["detail_attributes"]["employmentTypeText"])
         self.assertEqual("100 applicants", payload["detail_attributes"]["applicantCountText"])
         self.assertEqual("2 days ago", payload["posted_at_text"])
 
@@ -211,6 +215,27 @@ class LinkedInExtractorsTests(unittest.TestCase):
 
         self.assertRegex(vacancy.publication_date or "", r"^\d{4}-\d{2}-\d{2}$")
         self.assertEqual("1 week ago", vacancy.raw["postedAtText"])
+
+    def test_apply_detail_payload_stores_employment_type_from_detail_attributes(self) -> None:
+        vacancy = VacancyFull(
+            id="linkedin:4211112222",
+            title="Software Engineer",
+            raw={},
+            source="linkedin.com",
+        )
+
+        apply_detail_payload(
+            vacancy,
+            {
+                "description_text": "Build systems.",
+                "description_html": "<p>Build systems.</p>",
+                "detail_attributes": {"employmentTypeText": "Full-time"},
+            },
+        )
+
+        self.assertEqual("Full-time", vacancy.raw["employmentType"])
+        self.assertEqual("Full-time", vacancy.raw["jobType"])
+        self.assertEqual("Full-time", vacancy.employment_type)
 
 
 if __name__ == "__main__":

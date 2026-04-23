@@ -61,6 +61,58 @@ LOCATION_SELECTORS = (
     ".job-search-card__location",
 )
 
+EMPLOYMENT_TYPE_PATTERNS = (
+    (re.compile(r"\bfull[-_\s]?time\b", re.IGNORECASE), "Full-time"),
+    (re.compile(r"\bpart[-_\s]?time\b", re.IGNORECASE), "Part-time"),
+    (re.compile(r"\bcontract\b", re.IGNORECASE), "Contract"),
+    (re.compile(r"\btemporary\b", re.IGNORECASE), "Temporary"),
+    (re.compile(r"\binternship\b", re.IGNORECASE), "Internship"),
+    (re.compile(r"\bapprenticeship\b", re.IGNORECASE), "Apprenticeship"),
+    (re.compile(r"\bself[-_\s]?employed\b", re.IGNORECASE), "Self-employed"),
+    (re.compile(r"\bfreelance\b", re.IGNORECASE), "Freelance"),
+    (re.compile(r"\bseasonal\b", re.IGNORECASE), "Seasonal"),
+    (re.compile(r"\bvolunteer\b", re.IGNORECASE), "Volunteer"),
+    (re.compile(r"\bother\b", re.IGNORECASE), "Other"),
+    (re.compile(r"\bvollzeit\b", re.IGNORECASE), "Vollzeit"),
+    (re.compile(r"\bteilzeit\b", re.IGNORECASE), "Teilzeit"),
+    (re.compile(r"\btemps\s+plein\b", re.IGNORECASE), "Temps plein"),
+    (re.compile(r"\btemps\s+partiel\b", re.IGNORECASE), "Temps partiel"),
+    (
+        re.compile(
+            "\\b"
+            "\u043f\u043e\u043b\u043d\u0430\u044f"
+            "\\s+"
+            "\u0437\u0430\u043d\u044f\u0442\u043e\u0441\u0442\u044c"
+            "\\b",
+            re.IGNORECASE,
+        ),
+        "\u041f\u043e\u043b\u043d\u0430\u044f \u0437\u0430\u043d\u044f\u0442\u043e\u0441\u0442\u044c",
+    ),
+    (
+        re.compile(
+            "\\b"
+            "\u043d\u0435\u043f\u043e\u043b\u043d\u0430\u044f"
+            "\\s+"
+            "\u0437\u0430\u043d\u044f\u0442\u043e\u0441\u0442\u044c"
+            "\\b",
+            re.IGNORECASE,
+        ),
+        "\u041d\u0435\u043f\u043e\u043b\u043d\u0430\u044f \u0437\u0430\u043d\u044f\u0442\u043e\u0441\u0442\u044c",
+    ),
+)
+
+_DETAIL_ATTRIBUTE_SELECTORS = (
+    ".jobs-unified-top-card__job-insight",
+    ".job-details-jobs-unified-top-card__job-insight",
+    ".job-details-preferences-and-skills__pill",
+    ".job-details-fit-level-preferences__pill",
+    ".jobs-unified-top-card__workplace-type",
+    ".jobs-unified-top-card__job-insight-view-model-secondary",
+    "a[href*='/jobs/view/'] span",
+    ".jobs-unified-top-card a[href*='/jobs/view/'] span",
+    ".job-details-jobs-unified-top-card__container a[href*='/jobs/view/'] span",
+)
+
 
 def parse_jobs_from_search_page(page_html: str, *, base_url: str) -> list[VacancyFull]:
     document = Selector(page_html, url=base_url)
@@ -317,14 +369,7 @@ def _extract_detail_attributes(document: Selector) -> dict[str, Any]:
     result: dict[str, Any] = {}
     insights = [
         text
-        for node in document.css(
-            ".jobs-unified-top-card__job-insight, "
-            ".job-details-jobs-unified-top-card__job-insight, "
-            ".job-details-preferences-and-skills__pill, "
-            ".job-details-fit-level-preferences__pill, "
-            ".jobs-unified-top-card__workplace-type, "
-            ".jobs-unified-top-card__job-insight-view-model-secondary"
-        )
+        for node in document.css(", ".join(_DETAIL_ATTRIBUTE_SELECTORS))
         if (text := _node_label(node))
     ]
     if insights:
@@ -337,6 +382,10 @@ def _extract_detail_attributes(document: Selector) -> dict[str, Any]:
     applicant_count = _first_matching(insights, ("applicant", "candidate", "кандидат"))
     if applicant_count:
         result["applicantCountText"] = applicant_count
+
+    employment_type = _extract_employment_type_text(insights)
+    if employment_type:
+        result["employmentTypeText"] = employment_type
 
     return result
 
@@ -651,4 +700,30 @@ def _first_matching(values: list[str], needles: tuple[str, ...]) -> str:
         lowered = value.casefold()
         if any(needle.casefold() in lowered for needle in needles):
             return value
+    return ""
+
+
+def _extract_employment_type_text(values: list[str]) -> str:
+    for value in values:
+        text = _clean_text(value)
+        if not text:
+            continue
+        for part in _split_attribute_text(text):
+            employment_type = _match_employment_type(part)
+            if employment_type:
+                return employment_type
+        employment_type = _match_employment_type(text)
+        if employment_type:
+            return employment_type
+    return ""
+
+
+def _split_attribute_text(value: str) -> list[str]:
+    return [part.strip() for part in re.split(r"\s*[·•|,/]\s*|\s{2,}", value) if part.strip()]
+
+
+def _match_employment_type(value: str) -> str:
+    for pattern, display_value in EMPLOYMENT_TYPE_PATTERNS:
+        if pattern.search(value):
+            return display_value
     return ""

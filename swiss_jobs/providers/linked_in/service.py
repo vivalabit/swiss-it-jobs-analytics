@@ -167,6 +167,8 @@ class LinkedInParserService:
                     text_filtered,
                     detail_limit=config.detail_limit,
                     detail_workers=config.detail_workers,
+                    detail_delay_min_seconds=config.detail_delay_min_seconds,
+                    detail_delay_max_seconds=config.detail_delay_max_seconds,
                     show_progress=config.show_progress,
                 )
                 stats.detail_attempted = attempted

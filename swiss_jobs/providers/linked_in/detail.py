@@ -29,6 +29,10 @@ def apply_detail_payload(
         detail_attributes = payload.get("detail_attributes")
         if isinstance(detail_attributes, dict) and detail_attributes:
             vacancy.raw["detailAttributes"] = detail_attributes
+            employment_text = detail_attributes.get("employmentTypeText")
+            if isinstance(employment_text, str) and employment_text.strip():
+                vacancy.raw["employmentType"] = employment_text.strip()
+                vacancy.raw.setdefault("jobType", employment_text.strip())
         salary_text = payload.get("salary_text")
         if isinstance(salary_text, str) and salary_text.strip():
             vacancy.raw["salaryText"] = salary_text.strip()

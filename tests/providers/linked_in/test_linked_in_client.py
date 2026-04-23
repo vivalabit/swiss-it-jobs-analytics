@@ -109,6 +109,24 @@ class LinkedInClientTests(unittest.TestCase):
         )
         self.assertFalse(config.browser_headless)
 
+    def test_config_accepts_linkedin_detail_delay_overrides(self) -> None:
+        config = ClientConfig.from_dict(
+            {
+                "mode": "search",
+                "term": "software engineer",
+                "request_delay_min_seconds": 0.5,
+                "request_delay_max_seconds": 1.5,
+                "detail_delay_min_seconds": 0.5,
+                "detail_delay_max_seconds": 1.5,
+            },
+            source="<test>",
+        )
+
+        self.assertEqual(0.5, config.request_delay_min_seconds)
+        self.assertEqual(1.5, config.request_delay_max_seconds)
+        self.assertEqual(0.5, config.detail_delay_min_seconds)
+        self.assertEqual(1.5, config.detail_delay_max_seconds)
+
     def test_browser_profile_ignores_cookie_file_runtime(self) -> None:
         client = LinkedInHttpClient()
         config = ClientConfig.from_dict(

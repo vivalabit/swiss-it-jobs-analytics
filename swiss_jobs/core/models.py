@@ -342,6 +342,8 @@ class ClientConfig:
     proxy_file: str | None = None
     request_delay_min_seconds: float = 0.0
     request_delay_max_seconds: float = 0.0
+    detail_delay_min_seconds: float = 2.0
+    detail_delay_max_seconds: float = 4.0
     database_path: str | None = None
     client_config_path: str | None = None
 
@@ -407,6 +409,8 @@ class ClientConfig:
             "proxy_file",
             "request_delay_min_seconds",
             "request_delay_max_seconds",
+            "detail_delay_min_seconds",
+            "detail_delay_max_seconds",
             "database_path",
             "client_config_path",
         }
@@ -504,6 +508,14 @@ class ClientConfig:
                 payload.get("request_delay_max_seconds", 0.0),
                 "request_delay_max_seconds",
             ),
+            detail_delay_min_seconds=_coerce_float(
+                payload.get("detail_delay_min_seconds", 2.0),
+                "detail_delay_min_seconds",
+            ),
+            detail_delay_max_seconds=_coerce_float(
+                payload.get("detail_delay_max_seconds", 4.0),
+                "detail_delay_max_seconds",
+            ),
             database_path=(
                 str(Path(payload["database_path"]))
                 if payload.get("database_path") not in (None, "")
@@ -550,6 +562,18 @@ class ClientConfig:
         if self.request_delay_max_seconds < self.request_delay_min_seconds:
             raise ConfigValidationError(
                 f"Field 'request_delay_max_seconds' in '{source}' must be >= request_delay_min_seconds"
+            )
+        if self.detail_delay_min_seconds < 0:
+            raise ConfigValidationError(
+                f"Field 'detail_delay_min_seconds' in '{source}' must be >= 0"
+            )
+        if self.detail_delay_max_seconds < 0:
+            raise ConfigValidationError(
+                f"Field 'detail_delay_max_seconds' in '{source}' must be >= 0"
+            )
+        if self.detail_delay_max_seconds < self.detail_delay_min_seconds:
+            raise ConfigValidationError(
+                f"Field 'detail_delay_max_seconds' in '{source}' must be >= detail_delay_min_seconds"
             )
 
         if self.mode == "search" and not self.effective_terms():
@@ -645,6 +669,8 @@ class ClientConfig:
             "proxy_file": self.proxy_file,
             "request_delay_min_seconds": self.request_delay_min_seconds,
             "request_delay_max_seconds": self.request_delay_max_seconds,
+            "detail_delay_min_seconds": self.detail_delay_min_seconds,
+            "detail_delay_max_seconds": self.detail_delay_max_seconds,
             "database_path": self.database_path,
             "client_config_path": self.client_config_path,
         }

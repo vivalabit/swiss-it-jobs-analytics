@@ -122,6 +122,8 @@ class LinkedInHttpClient:
         *,
         detail_limit: int | None,
         detail_workers: int,
+        detail_delay_min_seconds: float,
+        detail_delay_max_seconds: float,
         show_progress: bool,
     ) -> tuple[int, int]:
         if not vacancies:
@@ -136,7 +138,7 @@ class LinkedInHttpClient:
 
         if show_progress:
             print(
-                f"[progress] fetching LinkedIn detail pages slowly for {limit} vacancies...",
+                f"[progress] fetching LinkedIn detail pages for {limit} vacancies...",
                 file=sys.stderr,
             )
 
@@ -177,7 +179,11 @@ class LinkedInHttpClient:
                     if show_progress and (idx + 1 == limit or (idx + 1) % 5 == 0):
                         print(f"[progress] detail fetched: {idx + 1}/{limit}", file=sys.stderr)
                     if idx + 1 < limit:
-                        self._sleep(6.0, 12.0, show_progress=show_progress)
+                        self._sleep(
+                            detail_delay_min_seconds,
+                            detail_delay_max_seconds,
+                            show_progress=show_progress,
+                        )
         except Exception as exc:  # pragma: no cover
             for idx in range(limit):
                 if not vacancies[idx].detail_schema_error:
@@ -448,10 +454,10 @@ class LinkedInHttpClient:
 
         page.goto(url, wait_until="domcontentloaded", timeout=self.timeout * 1000)
         try:
-            page.wait_for_selector(wait_selector, timeout=20000)
+            page.wait_for_selector(wait_selector, timeout=12000)
         except PlaywrightTimeoutError:
             pass
-        page.wait_for_timeout(random.randint(1200, 2600))
+        page.wait_for_timeout(random.randint(600, 1200))
         if scroll_results:
             self._scroll_linkedin_results(page)
         if scroll_detail:
@@ -459,11 +465,11 @@ class LinkedInHttpClient:
         if click_show_more:
             self._click_linkedin_show_more(page)
             self._scroll_linkedin_detail(page)
-        page.wait_for_timeout(random.randint(1800, 3200))
+        page.wait_for_timeout(random.randint(700, 1400))
         return page.content(), page.url
 
     def _scroll_linkedin_results(self, page: Any) -> None:
-        for _ in range(3):
+        for _ in range(2):
             page.evaluate(
                 """
                 () => {
@@ -478,10 +484,10 @@ class LinkedInHttpClient:
                 }
                 """
             )
-            page.wait_for_timeout(1200)
+            page.wait_for_timeout(700)
 
     def _scroll_linkedin_detail(self, page: Any) -> None:
-        for _ in range(3):
+        for _ in range(2):
             page.evaluate(
                 """
                 () => {
@@ -496,7 +502,7 @@ class LinkedInHttpClient:
                 }
                 """
             )
-            page.wait_for_timeout(1000)
+            page.wait_for_timeout(500)
 
     def _click_linkedin_show_more(self, page: Any) -> None:
         for text in ("Show more", "See more", "Показать ещё", "Показать еще", "Ещё", "Еще"):
@@ -504,7 +510,7 @@ class LinkedInHttpClient:
                 locator = page.get_by_text(text, exact=False).first
                 if locator.count() > 0 and locator.is_visible(timeout=800):
                     locator.click(timeout=1500)
-                    page.wait_for_timeout(1000)
+                    page.wait_for_timeout(600)
                     return
             except Exception:
                 continue
@@ -518,7 +524,7 @@ class LinkedInHttpClient:
                 locator = page.locator(selector).first
                 if locator.count() > 0 and locator.is_visible(timeout=800):
                     locator.click(timeout=1500)
-                    page.wait_for_timeout(1000)
+                    page.wait_for_timeout(600)
                     return
             except Exception:
                 continue
