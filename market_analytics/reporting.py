@@ -6,6 +6,7 @@ from typing import Mapping
 import pandas as pd
 
 from .analytics import (
+    exclude_staffing_agencies,
     calculate_education_requirements_summary,
     calculate_experience_by_seniority,
     calculate_experience_requirements_summary,
@@ -31,6 +32,7 @@ def build_analytics_outputs(
     top_skills_limit: int = 20,
     top_skill_pairs_limit: int = 50,
 ) -> dict[str, pd.DataFrame]:
+    dataset = exclude_staffing_agencies(dataset).reset_index(drop=True)
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),
         "education_requirements_summary": calculate_education_requirements_summary(dataset),

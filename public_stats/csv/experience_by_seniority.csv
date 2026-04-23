@@ -1,7 +1,7 @@
 seniority,vacancy_count,share,experience_years_count,average_min_experience_years,median_min_experience_years,average_experience_years,median_experience_years,rank
-Unknown,4042,0.3917,524,5.65,4.0,5.81,4.0,1
-senior,3723,0.3608,1544,4.96,5.0,5.08,5.0,2
-manager,1594,0.1545,441,5.12,5.0,5.33,5.0,3
-junior,657,0.0637,167,2.75,2.0,2.99,2.0,4
-mid,161,0.0156,145,3.09,3.0,3.31,3.0,5
-intern,141,0.0137,2,8.0,8.0,8.0,8.0,6
+senior,2882,0.4015,1262,4.85,5.0,4.97,5.0,1
+Unknown,2242,0.3123,309,4.37,5.0,4.56,5.0,2
+manager,1367,0.1904,394,5.12,5.0,5.32,5.0,3
+junior,458,0.0638,101,2.27,2.0,2.51,2.0,4
+intern,140,0.0195,2,8.0,8.0,8.0,8.0,5
+mid,89,0.0124,76,3.08,3.0,3.37,3.0,6

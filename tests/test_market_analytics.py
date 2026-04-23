@@ -12,6 +12,7 @@ from market_analytics.io import (
     load_and_validate_datasets,
     validate_and_standardize_dataset,
 )
+from market_analytics.analytics import exclude_staffing_agencies
 from market_analytics.reporting import build_analytics_outputs, save_analytics_outputs
 
 
@@ -152,7 +153,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         self.assertEqual(29, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
-        self.assertEqual(4, overview["total_vacancies"])
+        self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
         self.assertEqual(1.5, overview["average_vacancies_per_company"])
         self.assertEqual("Acme", outputs["distribution_company"].iloc[0]["company"])
@@ -160,21 +161,21 @@ class MarketAnalyticsTests(unittest.TestCase):
         education_summary = outputs["education_requirements_summary"].set_index("metric")[
             "value"
         ].to_dict()
-        self.assertEqual(4, education_summary["total_vacancies"])
-        self.assertEqual(3, education_summary["higher_education_vacancy_count"])
-        self.assertEqual(0.75, education_summary["higher_education_vacancy_share"])
+        self.assertEqual(3, education_summary["total_vacancies"])
+        self.assertEqual(2, education_summary["higher_education_vacancy_count"])
+        self.assertEqual(0.6667, education_summary["higher_education_vacancy_share"])
         experience_summary = outputs["experience_requirements_summary"].set_index("metric")[
             "value"
         ].to_dict()
-        self.assertEqual(4, experience_summary["seniority_known_count"])
+        self.assertEqual(3, experience_summary["seniority_known_count"])
         self.assertEqual(1, experience_summary["experience_years_mentioned_count"])
         self.assertEqual(3.0, experience_summary["average_min_experience_years"])
         experience_by_seniority = outputs["experience_by_seniority"].set_index("seniority")
         self.assertEqual(1, experience_by_seniority.loc["mid", "experience_years_count"])
         trend_summary = outputs["vacancy_trends_summary"].set_index("metric")["value"].to_dict()
-        self.assertEqual(4, trend_summary["published_total"])
+        self.assertEqual(3, trend_summary["published_total"])
         self.assertEqual(1, trend_summary["closed_total"])
-        self.assertEqual(3, trend_summary["published_30d"])
+        self.assertEqual(2, trend_summary["published_30d"])
         self.assertEqual(1, trend_summary["published_previous_30d"])
         self.assertIn("vacancy_trends_daily", outputs)
         self.assertIn("vacancy_trends_weekly", outputs)
@@ -206,6 +207,29 @@ class MarketAnalyticsTests(unittest.TestCase):
             outputs["salary_by_role_category"].iloc[0]["role_category"],
         )
         self.assertEqual("junior", outputs["salary_by_seniority"].iloc[0]["seniority"])
+        self.assertNotIn("Rocken®", set(outputs["distribution_company"]["company"]))
+
+    def test_exclude_staffing_agencies_removes_normalized_agency_names(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "company": [
+                    "Acme AG",
+                    "Rocken®",
+                    "The Adecco Group",
+                    "Approach People Recruitment SA",
+                ],
+                "role_category": ["software_engineering"] * 4,
+                "city": ["Zürich"] * 4,
+                "canton": ["ZH"] * 4,
+                "seniority": ["mid"] * 4,
+                "work_mode": ["hybrid"] * 4,
+                "skills": [["python"]] * 4,
+            }
+        )
+
+        filtered = exclude_staffing_agencies(validate_and_standardize_dataset(dataset))
+
+        self.assertEqual(["Acme AG"], filtered["company"].tolist())
 
     def test_load_and_save_outputs_round_trip_csv(self) -> None:
         dataset = pd.DataFrame(

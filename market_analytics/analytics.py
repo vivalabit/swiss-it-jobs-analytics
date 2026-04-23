@@ -46,10 +46,9 @@ EXPERIENCE_CONTEXT_REJECT_PATTERN = re.compile(
 
 def calculate_overview_metrics(dataset: pd.DataFrame) -> pd.DataFrame:
     total_vacancies = int(len(dataset))
-    direct_employer_dataset = _exclude_staffing_agencies(dataset)
-    total_companies = int(direct_employer_dataset["company"].dropna().nunique())
+    total_companies = int(dataset["company"].dropna().nunique())
     average_vacancies_per_company = (
-        len(direct_employer_dataset) / total_companies if total_companies else 0.0
+        len(dataset) / total_companies if total_companies else 0.0
     )
 
     return pd.DataFrame(
@@ -599,7 +598,7 @@ def _normalize_search_text(value: str) -> str:
     return without_marks.casefold()
 
 
-def _exclude_staffing_agencies(dataset: pd.DataFrame) -> pd.DataFrame:
+def exclude_staffing_agencies(dataset: pd.DataFrame) -> pd.DataFrame:
     company_names = dataset["company"].map(_normalize_company_name)
     return dataset.loc[~company_names.isin(NORMALIZED_STAFFING_AGENCY_COMPANY_NAMES)]
 

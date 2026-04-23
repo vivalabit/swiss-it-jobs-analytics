@@ -1,157 +1,151 @@
 {
-  "generated_at": "2026-04-23T10:13:54Z",
+  "generated_at": "2026-04-23T19:21:56Z",
   "available": true,
   "dimension": "canton",
   "items": [
     {
       "key": "ZH",
       "label": "ZH",
-      "vacancy_count": 3817,
-      "share": 0.3699
-    },
-    {
-      "key": "Unknown",
-      "label": "Unknown",
-      "vacancy_count": 1317,
-      "share": 0.1276
+      "vacancy_count": 2549,
+      "share": 0.3551
     },
     {
       "key": "BE",
       "label": "BE",
-      "vacancy_count": 949,
-      "share": 0.092
+      "vacancy_count": 733,
+      "share": 0.1021
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "vacancy_count": 732,
+      "share": 0.102
     },
     {
       "key": "GE",
       "label": "GE",
-      "vacancy_count": 649,
-      "share": 0.0629
+      "vacancy_count": 585,
+      "share": 0.0815
     },
     {
       "key": "BS",
       "label": "BS",
-      "vacancy_count": 536,
-      "share": 0.0519
+      "vacancy_count": 388,
+      "share": 0.0541
     },
     {
       "key": "AG",
       "label": "AG",
-      "vacancy_count": 514,
-      "share": 0.0498
-    },
-    {
-      "key": "LU",
-      "label": "LU",
-      "vacancy_count": 499,
-      "share": 0.0484
-    },
-    {
-      "key": "SG",
-      "label": "SG",
-      "vacancy_count": 412,
-      "share": 0.0399
-    },
-    {
-      "key": "ZG",
-      "label": "ZG",
-      "vacancy_count": 366,
-      "share": 0.0355
+      "vacancy_count": 364,
+      "share": 0.0507
     },
     {
       "key": "VD",
       "label": "VD",
-      "vacancy_count": 341,
-      "share": 0.033
+      "vacancy_count": 329,
+      "share": 0.0458
+    },
+    {
+      "key": "LU",
+      "label": "LU",
+      "vacancy_count": 292,
+      "share": 0.0407
+    },
+    {
+      "key": "SG",
+      "label": "SG",
+      "vacancy_count": 271,
+      "share": 0.0378
+    },
+    {
+      "key": "ZG",
+      "label": "ZG",
+      "vacancy_count": 204,
+      "share": 0.0284
     },
     {
       "key": "SO",
       "label": "SO",
-      "vacancy_count": 191,
-      "share": 0.0185
-    },
-    {
-      "key": "TG",
-      "label": "TG",
-      "vacancy_count": 109,
-      "share": 0.0106
+      "vacancy_count": 106,
+      "share": 0.0148
     },
     {
       "key": "TI",
       "label": "TI",
-      "vacancy_count": 105,
-      "share": 0.0102
+      "vacancy_count": 104,
+      "share": 0.0145
     },
     {
       "key": "NE",
       "label": "NE",
-      "vacancy_count": 92,
-      "share": 0.0089
+      "vacancy_count": 88,
+      "share": 0.0123
+    },
+    {
+      "key": "TG",
+      "label": "TG",
+      "vacancy_count": 80,
+      "share": 0.0111
     },
     {
       "key": "BL",
       "label": "BL",
-      "vacancy_count": 85,
-      "share": 0.0082
+      "vacancy_count": 75,
+      "share": 0.0104
     },
     {
       "key": "GR",
       "label": "GR",
-      "vacancy_count": 82,
-      "share": 0.0079
+      "vacancy_count": 75,
+      "share": 0.0104
     },
     {
       "key": "FR",
       "label": "FR",
-      "vacancy_count": 64,
-      "share": 0.0062
+      "vacancy_count": 58,
+      "share": 0.0081
     },
     {
       "key": "SZ",
       "label": "SZ",
-      "vacancy_count": 62,
-      "share": 0.006
+      "vacancy_count": 45,
+      "share": 0.0063
     },
     {
       "key": "SH",
       "label": "SH",
-      "vacancy_count": 51,
-      "share": 0.0049
+      "vacancy_count": 39,
+      "share": 0.0054
     },
     {
       "key": "VS",
       "label": "VS",
-      "vacancy_count": 38,
-      "share": 0.0037
+      "vacancy_count": 34,
+      "share": 0.0047
     },
     {
       "key": "AR",
       "label": "AR",
-      "vacancy_count": 22,
-      "share": 0.0021
-    },
-    {
-      "key": "GL",
-      "label": "GL",
-      "vacancy_count": 6,
-      "share": 0.0006
+      "vacancy_count": 19,
+      "share": 0.0026
     },
     {
       "key": "UR",
       "label": "UR",
       "vacancy_count": 5,
-      "share": 0.0005
-    },
-    {
-      "key": "NW",
-      "label": "NW",
-      "vacancy_count": 3,
-      "share": 0.0003
+      "share": 0.0007
     },
     {
       "key": "AI",
       "label": "AI",
-      "vacancy_count": 2,
-      "share": 0.0002
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "GL",
+      "label": "GL",
+      "vacancy_count": 1,
+      "share": 0.0001
     },
     {
       "key": "OW",

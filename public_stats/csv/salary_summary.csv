@@ -1,11 +1,11 @@
 metric,value
-salary_count,787
-salary_coverage,0.0763
-average_salary,101276.0
+salary_count,405
+salary_coverage,0.0564
+average_salary,102145.0
 median_salary,100000.0
-p25_salary,91885.0
-p75_salary,112500.0
+p25_salary,94530.0
+p75_salary,115000.0
 min_salary,40000.0
-max_salary,161000.0
+max_salary,160000.0
 currency,CHF
 unit,YEAR
