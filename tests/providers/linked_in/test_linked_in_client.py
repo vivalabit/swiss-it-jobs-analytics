@@ -14,6 +14,7 @@ from swiss_jobs.providers.linked_in.client import (
     parse_vacancies_from_json,
 )
 from swiss_jobs.providers.linked_in.service import LinkedInParserService, migrate_legacy_linkedin_ids
+from swiss_jobs.providers.linked_in.statistics import rebuild_runtime_statistics
 
 
 class LinkedInClientTests(unittest.TestCase):
@@ -135,7 +136,7 @@ class LinkedInClientTests(unittest.TestCase):
         self.assertEqual(1, successful)
         self.assertEqual([], warnings)
         self.assertEqual(1, len(jobs))
-        self.assertTrue(jobs[0].id.startswith("linkedin:csv-2-"))
+        self.assertTrue(jobs[0].id.startswith("linkedin:fallback-"))
 
     def test_client_prefers_json_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -338,6 +339,183 @@ class LinkedInClientTests(unittest.TestCase):
                 )
             finally:
                 connection.close()
+
+    def test_idless_json_rows_keep_stable_ids_across_reimports(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            json_path = tmp_path / "linkedin.json"
+            database_path = tmp_path / "linked_in.sqlite"
+
+            first_payload = [
+                {
+                    "job_title": "Platform Engineer",
+                    "company_name": "Acme AG",
+                    "job_location": "Zurich, Switzerland",
+                    "url": "https://www.linkedin.com/jobs/view/platform-engineer-at-acme-ag",
+                    "job_posted_date": "2026-04-20",
+                    "job_summary": "Build platform tooling with Python.",
+                }
+            ]
+            second_payload = [
+                {
+                    "job_posting_id": "4400000001",
+                    "job_title": "Backend Engineer",
+                    "company_name": "Beta AG",
+                    "job_location": "Bern, Switzerland",
+                    "job_posted_date": "2026-04-21",
+                    "job_summary": "Build backend services with Java.",
+                },
+                first_payload[0],
+            ]
+
+            json_path.write_text(json.dumps(first_payload, ensure_ascii=False), encoding="utf-8")
+            first_result = LinkedInParserService(runtime_root=tmp_path).run(
+                {
+                    "mode": "search",
+                    "json_path": str(json_path),
+                    "database_path": str(database_path),
+                    "output_format": "full",
+                }
+            )
+
+            json_path.write_text(json.dumps(second_payload, ensure_ascii=False), encoding="utf-8")
+            second_result = LinkedInParserService(runtime_root=tmp_path).run(
+                {
+                    "mode": "search",
+                    "json_path": str(json_path),
+                    "database_path": str(database_path),
+                    "output_format": "full",
+                }
+            )
+
+            self.assertTrue(first_result.success, first_result.errors)
+            self.assertTrue(second_result.success, second_result.errors)
+
+            connection = sqlite3.connect(database_path)
+            try:
+                stored_ids = {
+                    row[0] for row in connection.execute("SELECT vacancy_id FROM vacancies").fetchall()
+                }
+            finally:
+                connection.close()
+
+        self.assertEqual(2, len(stored_ids))
+        self.assertIn("linkedin:4400000001", stored_ids)
+        fallback_ids = [vacancy_id for vacancy_id in stored_ids if vacancy_id.startswith("linkedin:fallback-")]
+        self.assertEqual(1, len(fallback_ids))
+
+    def test_rebuild_runtime_statistics_dedupes_runtime_datasets(self) -> None:
+        analytics_json = json.dumps(
+            {
+                "role_family_primary": "software_engineering",
+                "seniority_labels": ["mid"],
+                "remote_mode": "hybrid",
+                "job_location": {"locality": "Zurich", "region": "ZH"},
+                "programming_languages": ["python"],
+                "frameworks_libraries": ["fastapi"],
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            database_a = tmp_path / "linked_in_a.sqlite"
+            database_b = tmp_path / "linked_in_b.sqlite"
+            analytics_output = tmp_path / "analytics_output"
+            public_data = tmp_path / "public_stats" / "data"
+            public_csv = tmp_path / "public_stats" / "csv"
+
+            database_rows = {
+                database_a: [("linkedin:1", "linkedin.com", "Python Engineer")],
+                database_b: [
+                    ("linkedin:1", "linkedin.com", "Python Engineer"),
+                    ("jobs:2", "jobs.ch", "Java Engineer"),
+                ],
+            }
+
+            for database_path, rows in database_rows.items():
+                connection = sqlite3.connect(database_path)
+                try:
+                    connection.execute(
+                        """
+                        CREATE TABLE vacancies (
+                            vacancy_id TEXT PRIMARY KEY,
+                            source TEXT,
+                            title TEXT,
+                            company TEXT,
+                            place TEXT,
+                            publication_date TEXT,
+                            first_seen_at TEXT,
+                            last_seen_at TEXT,
+                            description_text TEXT,
+                            analytics_json TEXT,
+                            salary_min INTEGER,
+                            salary_max INTEGER,
+                            salary_currency TEXT,
+                            salary_unit TEXT,
+                            salary_text TEXT
+                        )
+                        """
+                    )
+                    connection.executemany(
+                        """
+                        INSERT INTO vacancies (
+                            vacancy_id,
+                            source,
+                            title,
+                            company,
+                            place,
+                            publication_date,
+                            first_seen_at,
+                            last_seen_at,
+                            description_text,
+                            analytics_json,
+                            salary_min,
+                            salary_max,
+                            salary_currency,
+                            salary_unit,
+                            salary_text
+                        )
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """,
+                        [
+                            (
+                                vacancy_id,
+                                source,
+                                title,
+                                "Acme AG",
+                                "Zurich, Switzerland",
+                                "2026-04-21",
+                                "2026-04-21T08:00:00+00:00",
+                                "2026-04-21T08:00:00+00:00",
+                                "Build APIs with Python and FastAPI.",
+                                analytics_json,
+                                100000,
+                                120000,
+                                "CHF",
+                                "YEAR",
+                                "CHF 100000-120000 / year",
+                            )
+                            for vacancy_id, source, title in rows
+                        ],
+                    )
+                    connection.commit()
+                finally:
+                    connection.close()
+
+            _, analytics_paths, public_paths = rebuild_runtime_statistics(
+                dataset_paths=[database_a, database_b],
+                analytics_output_dir=analytics_output,
+                public_stats_dir=public_data,
+                public_csv_dir=public_csv,
+                top_skills_limit=5,
+                top_skill_pairs_limit=5,
+            )
+
+            overview = json.loads((public_data / "overview.json").read_text(encoding="utf-8"))
+
+        self.assertTrue(analytics_paths)
+        self.assertTrue(public_paths)
+        self.assertEqual(2, overview["metrics"]["total_vacancies"])
 
 
 if __name__ == "__main__":

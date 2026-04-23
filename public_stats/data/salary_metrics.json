@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-04-21T10:17:20Z",
+  "generated_at": "2026-04-23T10:13:54Z",
   "available": true,
   "summary": {
     "salary_count": 787,
-    "salary_coverage": 0.0972,
+    "salary_coverage": 0.0763,
     "average_salary": 101276,
     "median_salary": 100000,
     "p25_salary": 91885,

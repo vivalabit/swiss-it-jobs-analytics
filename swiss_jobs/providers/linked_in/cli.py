@@ -9,6 +9,7 @@ from typing import Any
 
 from swiss_jobs.core.models import ClientConfig, ClientRunResult, ConfigValidationError
 from swiss_jobs.providers.linked_in.service import LinkedInParserService, slugify_runtime_name
+from swiss_jobs.providers.linked_in.statistics import rebuild_runtime_statistics
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_RUNTIME_DIR = str(PROJECT_ROOT / "runtime" / "linked_in")
@@ -107,6 +108,44 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--no-archive", action="store_true", help="Disable archive-style vacancy storage")
     parser.add_argument("--no-new-jobs", action="store_true", help="Disable new-job markers")
+    parser.add_argument(
+        "--sync-statistics",
+        action="store_true",
+        help="Rebuild analytics_output and public_stats from runtime SQLite datasets after a successful import.",
+    )
+    parser.add_argument(
+        "--stats-database-path",
+        action="append",
+        default=[],
+        help="SQLite dataset path to include in statistics rebuild. Can be repeated. Defaults to existing runtime/*/main-config/*.sqlite files.",
+    )
+    parser.add_argument(
+        "--analytics-output-dir",
+        default="analytics_output",
+        help="Directory where analytics CSV files will be written during statistics rebuild.",
+    )
+    parser.add_argument(
+        "--public-stats-output-dir",
+        default="public_stats/data",
+        help="Directory where public JSON snapshots will be written during statistics rebuild.",
+    )
+    parser.add_argument(
+        "--public-csv-dir",
+        default="public_stats/csv",
+        help="Directory where copied public CSV files will be written during statistics rebuild.",
+    )
+    parser.add_argument(
+        "--top-skills",
+        type=int,
+        default=20,
+        help="Top skills limit for statistics rebuild.",
+    )
+    parser.add_argument(
+        "--top-pairs",
+        type=int,
+        default=50,
+        help="Top skill pair limit for statistics rebuild.",
+    )
     return parser
 
 
@@ -146,7 +185,16 @@ def _collect_cli_overrides(
     args: argparse.Namespace,
     defaults: argparse.Namespace,
 ) -> dict[str, Any]:
-    excluded = {"config"}
+    excluded = {
+        "config",
+        "sync_statistics",
+        "stats_database_path",
+        "analytics_output_dir",
+        "public_stats_output_dir",
+        "public_csv_dir",
+        "top_skills",
+        "top_pairs",
+    }
     overrides: dict[str, Any] = {}
     for key, value in vars(args).items():
         if key in excluded:
@@ -240,6 +288,26 @@ def _run_with_watch(service: LinkedInParserService, config: ClientConfig) -> int
         time.sleep(config.watch)
 
 
+def _sync_statistics(args: argparse.Namespace) -> None:
+    dataset_paths = list(args.stats_database_path) or None
+    resolved_paths, analytics_paths, public_paths = rebuild_runtime_statistics(
+        dataset_paths=dataset_paths,
+        analytics_output_dir=args.analytics_output_dir,
+        public_stats_dir=args.public_stats_output_dir,
+        public_csv_dir=args.public_csv_dir,
+        top_skills_limit=args.top_skills,
+        top_skill_pairs_limit=args.top_pairs,
+    )
+    print(
+        (
+            "[stats] rebuilt analytics from "
+            f"{len(resolved_paths)} dataset(s); "
+            f"saved {len(analytics_paths)} analytics CSV files and {len(public_paths)} public snapshots"
+        ),
+        file=sys.stderr,
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     defaults = parser.parse_args([])
@@ -258,6 +326,8 @@ def main(argv: list[str] | None = None) -> int:
         _report_result_issues(result)
         _emit_summary_marker(result)
         _print_single_result(result, as_json=config.json_output)
+        if result.success and args.sync_statistics:
+            _sync_statistics(args)
         return 0 if result.success else 1
 
     return _run_with_watch(service, config)

@@ -1,67 +1,67 @@
 {
-  "generated_at": "2026-04-21T10:17:20Z",
+  "generated_at": "2026-04-23T10:13:54Z",
   "available": true,
   "dimension": "role_category",
   "items": [
     {
-      "key": "devops_cloud_platform",
-      "label": "devops_cloud_platform",
-      "vacancy_count": 2124,
-      "share": 0.2623
-    },
-    {
       "key": "software_engineering",
       "label": "software_engineering",
-      "vacancy_count": 1982,
-      "share": 0.2448
+      "vacancy_count": 2652,
+      "share": 0.257
+    },
+    {
+      "key": "devops_cloud_platform",
+      "label": "devops_cloud_platform",
+      "vacancy_count": 2615,
+      "share": 0.2534
     },
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 1047,
-      "share": 0.1293
-    },
-    {
-      "key": "support_operations",
-      "label": "support_operations",
-      "vacancy_count": 791,
-      "share": 0.0977
+      "vacancy_count": 1313,
+      "share": 0.1273
     },
     {
       "key": "product_project_analysis",
       "label": "product_project_analysis",
-      "vacancy_count": 748,
-      "share": 0.0924
+      "vacancy_count": 1002,
+      "share": 0.0971
+    },
+    {
+      "key": "support_operations",
+      "label": "support_operations",
+      "vacancy_count": 831,
+      "share": 0.0805
     },
     {
       "key": "security",
       "label": "security",
-      "vacancy_count": 642,
-      "share": 0.0793
+      "vacancy_count": 790,
+      "share": 0.0766
     },
     {
       "key": "data_ai",
       "label": "data_ai",
-      "vacancy_count": 498,
-      "share": 0.0615
+      "vacancy_count": 760,
+      "share": 0.0737
     },
     {
       "key": "qa_testing",
       "label": "qa_testing",
-      "vacancy_count": 140,
-      "share": 0.0173
+      "vacancy_count": 212,
+      "share": 0.0205
     },
     {
       "key": "erp_business_systems",
       "label": "erp_business_systems",
-      "vacancy_count": 106,
-      "share": 0.0131
+      "vacancy_count": 121,
+      "share": 0.0117
     },
     {
       "key": "ux_ui_design",
       "label": "ux_ui_design",
-      "vacancy_count": 19,
-      "share": 0.0023
+      "vacancy_count": 22,
+      "share": 0.0021
     }
   ]
 }

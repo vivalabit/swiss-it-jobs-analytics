@@ -8,6 +8,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+from urllib.parse import urlsplit, urlunsplit
 
 from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
 from swiss_jobs.providers.jobs_ch.extractors import html_to_text
@@ -196,7 +197,7 @@ def _vacancy_from_mapping(
     linkedin_id = (
         _first_value(row, "linkedin_job_id", "job_posting_id", "job_id", "id", "vacancy_id")
         or _extract_linkedin_job_id(url)
-        or _stable_row_id(row, row_number=row_number)
+        or _stable_row_id(row)
     )
     if url and not url.startswith(("http://", "https://")):
         url = f"{base_url.rstrip('/')}/{url.lstrip('/')}"
@@ -380,10 +381,71 @@ def _extract_linkedin_job_id(url: str) -> str:
     return match.group("id") if match else ""
 
 
-def _stable_row_id(row: Mapping[str, str], *, row_number: int) -> str:
-    parts = [row.get(key, "") for key in ("title", "company", "company_name", "location", "url")]
-    digest = hashlib.sha1("|".join(parts).encode("utf-8")).hexdigest()[:16]
-    return f"csv-{row_number}-{digest}"
+def _stable_row_id(row: Mapping[str, Any]) -> str:
+    identity_parts = [
+        _normalize_identity_value(_first_value(row, "title", "job_title", "position", "name")),
+        _normalize_identity_value(
+            _first_value(row, "company", "company_name", "organization", "hiring_organization")
+        ),
+        _normalize_identity_value(
+            _first_value(row, "location", "job_location", "place", "city")
+        ),
+        _normalize_identity_value(
+            _canonicalize_url(
+                _first_value(row, "url", "job_url", "linkedin_url", "job_link", "link")
+            )
+        ),
+        _normalize_identity_value(
+            _normalize_date(
+                _first_value(
+                    row,
+                    "publication_date",
+                    "posted_at",
+                    "date_posted",
+                    "job_posted_date",
+                )
+            )
+        ),
+    ]
+    digest = hashlib.sha1("|".join(identity_parts).encode("utf-8")).hexdigest()[:20]
+    return f"fallback-{digest}"
+
+
+def _normalize_identity_value(value: str) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip().casefold())
+
+
+def _canonicalize_url(url: str) -> str:
+    if not url:
+        return ""
+    parsed = urlsplit(url.strip())
+    scheme = parsed.scheme.casefold()
+    netloc = parsed.netloc.casefold()
+    path = re.sub(r"/+", "/", parsed.path.rstrip("/"))
+    return urlunsplit((scheme, netloc, path, "", ""))
+
+
+def _vacancy_identity_key(vacancy: VacancyFull) -> str:
+    canonical_url = _canonicalize_url(vacancy.url)
+    if canonical_url:
+        return f"url:{canonical_url}"
+
+    raw = vacancy.raw or {}
+    linkedin_job_id = str(raw.get("linkedinJobId") or "").strip()
+    if linkedin_job_id:
+        return f"linkedin:{linkedin_job_id}"
+
+    digest_source = "|".join(
+        [
+            _normalize_identity_value(vacancy.title),
+            _normalize_identity_value(vacancy.company),
+            _normalize_identity_value(vacancy.place),
+            _normalize_identity_value(vacancy.publication_date),
+            _normalize_identity_value(vacancy.id),
+        ]
+    )
+    digest = hashlib.sha1(digest_source.encode("utf-8")).hexdigest()[:20]
+    return f"fingerprint:{digest}"
 
 
 def _normalize_date(value: str) -> str:
@@ -408,8 +470,9 @@ def _dedupe_vacancies(vacancies: Sequence[VacancyFull]) -> list[VacancyFull]:
     seen: set[str] = set()
     result: list[VacancyFull] = []
     for vacancy in vacancies:
-        if vacancy.id in seen:
+        dedupe_key = _vacancy_identity_key(vacancy)
+        if dedupe_key in seen:
             continue
-        seen.add(vacancy.id)
+        seen.add(dedupe_key)
         result.append(vacancy)
     return result
