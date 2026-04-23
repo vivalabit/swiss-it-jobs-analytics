@@ -6,6 +6,7 @@ See right now - https://vivalabit.github.io/swiss-it-jobs-analytics/
 
 Current sources:
 
+- `LinkedIn`
 - `jobs.ch`
 - `jobscout24.ch`
 - `jobup.ch`
