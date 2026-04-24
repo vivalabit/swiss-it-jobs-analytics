@@ -10,6 +10,8 @@ from typing import Any, Iterable
 
 import pandas as pd
 
+from swiss_jobs.core.database import merge_analytics_payloads
+
 from .constants import (
     CANONICAL_COLUMN_ALIASES,
     MISSING_TEXT_VALUES,
@@ -468,6 +470,7 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             {last_seen_at_select},
             {description_text_select},
             analytics_json,
+            {llm_analysis_json_select},
             {salary_min},
             {salary_max},
             {salary_currency},
@@ -481,6 +484,9 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
             publication_date_select=publication_date_select,
             first_seen_at_select=first_seen_at_select,
             last_seen_at_select=last_seen_at_select,
+            llm_analysis_json_select=(
+                "llm_analysis_json" if "llm_analysis_json" in columns else "NULL AS llm_analysis_json"
+            ),
             **salary_selects,
         )
         dataset = pd.read_sql_query(query, connection)
@@ -491,9 +497,15 @@ def _load_dataset_from_sqlite(path: Path) -> pd.DataFrame:
         return dataset
 
     analytics_payloads = dataset["analytics_json"].map(_parse_json_object)
+    llm_payloads = dataset["llm_analysis_json"].map(_parse_json_object)
     records = [
-        _build_record_from_sqlite_row(row, analytics)
-        for (_, row), analytics in zip(dataset.iterrows(), analytics_payloads, strict=False)
+        _build_record_from_sqlite_row(row, merge_analytics_payloads(analytics, llm_analysis))
+        for (_, row), analytics, llm_analysis in zip(
+            dataset.iterrows(),
+            analytics_payloads,
+            llm_payloads,
+            strict=False,
+        )
     ]
     return pd.DataFrame.from_records(records)
 

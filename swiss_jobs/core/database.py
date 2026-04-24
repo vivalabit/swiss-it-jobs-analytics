@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from contextlib import contextmanager
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
@@ -59,6 +60,9 @@ CREATE TABLE IF NOT EXISTS vacancies (
     detail_schema_error TEXT,
     detail_schema_skipped INTEGER NOT NULL,
     analytics_json TEXT NOT NULL,
+    llm_analysis_json TEXT,
+    llm_model TEXT,
+    llm_analyzed_at TEXT,
     first_seen_at TEXT NOT NULL,
     last_seen_at TEXT NOT NULL,
     first_run_id TEXT NOT NULL,
@@ -129,6 +133,39 @@ TERM_FIELDS = {
     "listing_tags": "listing_tag",
 }
 
+LLM_OVERRIDE_FIELDS = (
+    "normalized_title",
+    "role_family_primary",
+    "role_family_matches",
+    "seniority_labels",
+    "programming_languages",
+    "frameworks_libraries",
+    "cloud_platforms",
+    "data_platforms",
+    "databases",
+    "platforms",
+    "tools",
+    "vendors",
+    "protocols_standards",
+    "methodologies",
+    "spoken_languages",
+    "employment_types",
+    "occupational_categories",
+    "listing_tags",
+    "remote_mode",
+    "job_location",
+    "experience_years",
+    "confidence",
+    "confidence_reasons",
+)
+
+
+@dataclass(slots=True)
+class StoredVacancyRecord:
+    vacancy: VacancyFull
+    analytics: dict[str, Any]
+    llm_analysis: dict[str, Any]
+
 
 def _json_dumps(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True)
@@ -155,11 +192,7 @@ def _coerce_term_values(value: Any) -> list[str]:
     return []
 
 
-def extract_term_rows(vacancy: VacancyFull) -> list[tuple[str, str]]:
-    analytics = vacancy.extra.get("analytics")
-    if not isinstance(analytics, dict):
-        return []
-
+def extract_term_rows_from_analytics(analytics: dict[str, Any]) -> list[tuple[str, str]]:
     rows: list[tuple[str, str]] = []
     seen: set[tuple[str, str]] = set()
     for field_name, term_type in TERM_FIELDS.items():
@@ -172,9 +205,231 @@ def extract_term_rows(vacancy: VacancyFull) -> list[tuple[str, str]]:
     return rows
 
 
+def extract_term_rows(vacancy: VacancyFull) -> list[tuple[str, str]]:
+    analytics = vacancy.extra.get("analytics")
+    if not isinstance(analytics, dict):
+        return []
+    return extract_term_rows_from_analytics(analytics)
+
+
+def merge_analytics_payloads(
+    analytics: dict[str, Any] | None,
+    llm_analysis: dict[str, Any] | None,
+) -> dict[str, Any]:
+    base = dict(analytics or {})
+    llm = dict(llm_analysis or {})
+    if not llm:
+        return base
+
+    merged = dict(base)
+    for field_name in LLM_OVERRIDE_FIELDS:
+        value = llm.get(field_name)
+        if value in (None, "", [], {}):
+            continue
+        if field_name == "job_location":
+            merged[field_name] = {
+                **(base.get(field_name) if isinstance(base.get(field_name), dict) else {}),
+                **(value if isinstance(value, dict) else {}),
+            }
+            continue
+        merged[field_name] = value
+    return merged
+
+
+def _loads_json_object(value: Any) -> dict[str, Any]:
+    if not value:
+        return {}
+    try:
+        payload = json.loads(value)
+    except (TypeError, json.JSONDecodeError):
+        return {}
+    return dict(payload) if isinstance(payload, dict) else {}
+
+
+def _loads_json_list(value: Any) -> list[str]:
+    if not value:
+        return []
+    try:
+        payload = json.loads(value)
+    except (TypeError, json.JSONDecodeError):
+        return []
+    if not isinstance(payload, list):
+        return []
+    return [str(item) for item in payload if item is not None]
+
+
+def _deserialize_optional_bool(value: Any) -> bool | None:
+    if value is None:
+        return None
+    return bool(value)
+
+
+def _row_to_vacancy(row: sqlite3.Row) -> VacancyFull:
+    return VacancyFull(
+        id=str(row["vacancy_id"] or ""),
+        title=str(row["title"] or ""),
+        company=str(row["company"] or ""),
+        place=str(row["place"] or ""),
+        publication_date=row["publication_date"],
+        initial_publication_date=row["initial_publication_date"],
+        is_new=bool(row["is_new"]),
+        url=str(row["url"] or ""),
+        raw=_loads_json_object(row["raw_json"]),
+        description_html=str(row["description_html"] or ""),
+        description_text=str(row["description_text"] or ""),
+        job_posting_schema=_loads_json_object(row["job_posting_schema_json"]),
+        detail_schema_error=row["detail_schema_error"],
+        detail_schema_skipped=bool(row["detail_schema_skipped"]),
+        role_match=_deserialize_optional_bool(row["role_match"]),
+        seniority_match=_deserialize_optional_bool(row["seniority_match"]),
+        keywords_matched=_loads_json_list(row["keywords_matched_json"]),
+        source=str(row["source"] or ""),
+    )
+
+
 class JobsDatabase:
     def __init__(self, path: str | Path) -> None:
         self.path = Path(path)
+
+    def fetch_vacancies_for_llm(
+        self,
+        *,
+        source: str | None = None,
+        limit: int | None = None,
+        offset: int = 0,
+        only_missing: bool = False,
+    ) -> list[StoredVacancyRecord]:
+        query = """
+            SELECT
+                vacancy_id,
+                source,
+                title,
+                company,
+                place,
+                publication_date,
+                initial_publication_date,
+                is_new,
+                url,
+                role_match,
+                seniority_match,
+                keywords_matched_json,
+                raw_json,
+                description_html,
+                description_text,
+                job_posting_schema_json,
+                detail_schema_error,
+                detail_schema_skipped,
+                analytics_json,
+                llm_analysis_json
+            FROM vacancies
+        """
+        conditions: list[str] = []
+        params: list[Any] = []
+        if source:
+            conditions.append("source = ?")
+            params.append(source)
+        if only_missing:
+            conditions.append(
+                "(llm_analysis_json IS NULL OR trim(llm_analysis_json) = '' OR trim(llm_analysis_json) = '{}')"
+            )
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+        query += """
+            ORDER BY
+                COALESCE(publication_date, first_seen_at, last_seen_at) DESC,
+                vacancy_id ASC
+        """
+        if limit is not None:
+            query += " LIMIT ?"
+            params.append(limit)
+        if offset:
+            if limit is None:
+                query += " LIMIT -1"
+            query += " OFFSET ?"
+            params.append(offset)
+
+        with self._connection() as connection:
+            rows = connection.execute(query, params).fetchall()
+        return [
+            StoredVacancyRecord(
+                vacancy=_row_to_vacancy(row),
+                analytics=_loads_json_object(row["analytics_json"]),
+                llm_analysis=_loads_json_object(row["llm_analysis_json"]),
+            )
+            for row in rows
+        ]
+
+    def count_vacancies_for_llm(
+        self,
+        *,
+        source: str | None = None,
+        only_missing: bool = False,
+    ) -> int:
+        query = "SELECT COUNT(*) AS vacancy_count FROM vacancies"
+        conditions: list[str] = []
+        params: list[Any] = []
+        if source:
+            conditions.append("source = ?")
+            params.append(source)
+        if only_missing:
+            conditions.append(
+                "(llm_analysis_json IS NULL OR trim(llm_analysis_json) = '' OR trim(llm_analysis_json) = '{}')"
+            )
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+        with self._connection() as connection:
+            row = connection.execute(query, params).fetchone()
+        return int(row["vacancy_count"] if row and row["vacancy_count"] is not None else 0)
+
+    def save_llm_analysis(
+        self,
+        vacancy_id: str,
+        *,
+        llm_analysis: dict[str, Any],
+        model: str,
+        analyzed_at: str,
+    ) -> None:
+        with self._connection() as connection:
+            row = connection.execute(
+                """
+                SELECT analytics_json
+                FROM vacancies
+                WHERE vacancy_id = ?
+                """,
+                (vacancy_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(f"Vacancy '{vacancy_id}' not found in database {self.path}")
+
+            analytics = _loads_json_object(row["analytics_json"])
+            merged = merge_analytics_payloads(analytics, llm_analysis)
+            connection.execute(
+                """
+                UPDATE vacancies
+                SET
+                    llm_analysis_json = ?,
+                    llm_model = ?,
+                    llm_analyzed_at = ?
+                WHERE vacancy_id = ?
+                """,
+                (
+                    _json_dumps(llm_analysis),
+                    model,
+                    analyzed_at,
+                    vacancy_id,
+                ),
+            )
+            connection.execute("DELETE FROM vacancy_terms WHERE vacancy_id = ?", (vacancy_id,))
+            connection.executemany(
+                """
+                INSERT INTO vacancy_terms (vacancy_id, term_type, term_value)
+                VALUES (?, ?, ?)
+                """,
+                [
+                    (vacancy_id, term_type, term_value)
+                    for term_type, term_value in extract_term_rows_from_analytics(merged)
+                ],
+            )
 
     def load_seen_ids(self, client_id: str) -> list[str]:
         with self._connection() as connection:
@@ -366,12 +621,15 @@ class JobsDatabase:
                 detail_schema_error,
                 detail_schema_skipped,
                 analytics_json,
+                llm_analysis_json,
+                llm_model,
+                llm_analyzed_at,
                 first_seen_at,
                 last_seen_at,
                 first_run_id,
                 last_run_id
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(vacancy_id) DO UPDATE SET
                 source = excluded.source,
                 title = excluded.title,
@@ -397,6 +655,9 @@ class JobsDatabase:
                 detail_schema_error = excluded.detail_schema_error,
                 detail_schema_skipped = excluded.detail_schema_skipped,
                 analytics_json = excluded.analytics_json,
+                llm_analysis_json = COALESCE(vacancies.llm_analysis_json, excluded.llm_analysis_json),
+                llm_model = COALESCE(vacancies.llm_model, excluded.llm_model),
+                llm_analyzed_at = COALESCE(vacancies.llm_analyzed_at, excluded.llm_analyzed_at),
                 last_seen_at = excluded.last_seen_at,
                 last_run_id = excluded.last_run_id
             """,
@@ -426,6 +687,9 @@ class JobsDatabase:
                 vacancy.detail_schema_error,
                 1 if vacancy.detail_schema_skipped else 0,
                 _json_dumps(vacancy.extra.get("analytics", {})),
+                None,
+                None,
+                None,
                 first_seen_at,
                 result.timestamp,
                 first_run_id,
@@ -467,6 +731,9 @@ def _ensure_vacancy_columns(connection: sqlite3.Connection) -> None:
         ("salary_currency", "TEXT"),
         ("salary_unit", "TEXT"),
         ("salary_text", "TEXT"),
+        ("llm_analysis_json", "TEXT"),
+        ("llm_model", "TEXT"),
+        ("llm_analyzed_at", "TEXT"),
     ):
         if column_name not in existing:
             connection.execute(f"ALTER TABLE vacancies ADD COLUMN {column_name} {column_type}")
