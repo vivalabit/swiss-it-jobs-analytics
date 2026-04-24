@@ -28,4 +28,13 @@ This project is designed to answer practical, data-driven questions about the jo
 - How comparable salary ranges differ across role categories
 - Which skills the market is actually valued by employers
 
-**The statistics cover vacancies published from March 2026 onward.**
+**The statistics cover vacancies published from 2026 onward.** 
+**Staffing agencies are excluded**
+
+## Metodology
+
+We collect job postings from several sources (LinkedIn, jobs.ch, jobscout24.ch, jobup.ch, swissdevjobs.ch), store them in local SQLite databases for each provider, then map them to a common schema and generate aggregated statistics based on the combined dataset. During the consolidation phase, we use deduplication based on job identity within each source to prevent duplicate imports from inflating the statistics.
+
+Next, each job posting is normalized: the company, location, canton, seniority, work mode, and salary fields are standardized, while role category, skills, programming languages, frameworks/libraries, and other analytical attributes are extracted from the text and structured fields. Salaries, if available, are converted to a comparable annual format in CHF so that we can calculate summaries and breakdowns by role and seniority.
+
+After that, agencies and recruitment intermediaries are excluded from the overall sample. This is important: in our public statistics, we strive to track the direct job market specifically, rather than the activity of intermediaries, who may repost similar positions multiple times and distort the picture of demand. Exceptions are made based on a normalized list of known staffing/recruitment companies and their aliases.
