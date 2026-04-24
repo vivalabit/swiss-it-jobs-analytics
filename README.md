@@ -32,7 +32,9 @@ This project is designed to answer practical, data-driven questions about the jo
 - Which skills the market is actually valued by employers
 
 **The statistics cover vacancies published from 2026 onward.** 
-**Staffing agencies are excluded**
+
+
+***Staffing agencies are excluded.***
 
 ## Metodology
 

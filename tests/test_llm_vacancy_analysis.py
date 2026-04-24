@@ -91,6 +91,10 @@ def _persist_sample_vacancy(
 
 
 class LlmVacancyAnalysisTests(unittest.TestCase):
+    def test_analyzer_strips_api_key_whitespace(self) -> None:
+        analyzer = OpenAIVacancyAnalyzer(api_key=" test-key\n")
+        self.assertEqual("test-key", analyzer.api_key)
+
     def test_requests_transport_retries_transient_520(self) -> None:
         class FakeResponse:
             def __init__(self, status_code: int, payload: dict | None = None, text: str = "") -> None:

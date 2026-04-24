@@ -138,7 +138,7 @@ class OpenAIVacancyAnalyzer:
         transport: OpenAIResponsesTransport | None = None,
     ) -> None:
         self.model = model
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY") or ""
+        self.api_key = (api_key or os.getenv("OPENAI_API_KEY") or "").strip()
         self.timeout_seconds = timeout_seconds
         self.transport = transport or RequestsOpenAIResponsesTransport()
 
