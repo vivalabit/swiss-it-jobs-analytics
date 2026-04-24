@@ -13,6 +13,10 @@ from market_analytics.io import (
     validate_and_standardize_dataset,
 )
 from market_analytics.analytics import exclude_staffing_agencies
+from market_analytics.deduplication import (
+    build_cross_source_dedup_report,
+    deduplicate_cross_source_vacancies,
+)
 from market_analytics.reporting import build_analytics_outputs, save_analytics_outputs
 
 
@@ -230,6 +234,117 @@ class MarketAnalyticsTests(unittest.TestCase):
         filtered = exclude_staffing_agencies(validate_and_standardize_dataset(dataset))
 
         self.assertEqual(["Acme AG"], filtered["company"].tolist())
+
+    def test_cross_source_deduplication_merges_same_vacancy(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "vacancy_id": ["jobs-1", "linkedin-1"],
+                "source": ["jobs.ch", "linkedin.com"],
+                "company": ["Acme AG", "Acme"],
+                "title": ["Senior Python Engineer", "Senior Python Engineer"],
+                "description_text": [
+                    "Build data platforms with Python, Airflow, and AWS for internal analytics.",
+                    "Build data platforms with Python and AWS for internal analytics teams.",
+                ],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2026-04-22T09:00:00+02:00",
+                ],
+                "role_category": ["data_ai", "data_ai"],
+                "city": ["Zürich", "Zurich"],
+                "canton": ["ZH", "ZH"],
+                "seniority": ["senior", "senior"],
+                "work_mode": ["hybrid", "hybrid"],
+                "skills": [["python", "airflow"], ["python", "aws"]],
+                "programming_languages": [["python"], ["python"]],
+                "frameworks_libraries": [["airflow"], ["pandas"]],
+            }
+        )
+
+        standardized = validate_and_standardize_dataset(dataset)
+        deduped = deduplicate_cross_source_vacancies(standardized)
+
+        self.assertEqual(1, len(deduped))
+        self.assertTrue(deduped.loc[0, "is_cross_source_duplicate"])
+        self.assertEqual(2, deduped.loc[0, "duplicate_source_count"])
+        self.assertEqual(["jobs.ch", "linkedin.com"], deduped.loc[0, "duplicate_sources"])
+        self.assertEqual(
+            {"python", "airflow", "aws"},
+            set(deduped.loc[0, "skills_list"]),
+        )
+        self.assertEqual(
+            {"airflow", "pandas"},
+            set(deduped.loc[0, "frameworks_libraries_list"]),
+        )
+
+    def test_cross_source_deduplication_keeps_distinct_roles(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "vacancy_id": ["jobs-1", "linkedin-1"],
+                "source": ["jobs.ch", "linkedin.com"],
+                "company": ["Acme AG", "Acme"],
+                "title": ["Senior Python Engineer", "Senior Data Analyst"],
+                "description_text": [
+                    "Build backend services and data platforms with Python and AWS.",
+                    "Analyze business metrics in SQL and build dashboards for finance.",
+                ],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2026-04-22T09:00:00+02:00",
+                ],
+                "role_category": ["software_engineering", "data_ai"],
+                "city": ["Zürich", "Zurich"],
+                "canton": ["ZH", "ZH"],
+                "seniority": ["senior", "senior"],
+                "work_mode": ["hybrid", "hybrid"],
+                "skills": [["python", "aws"], ["sql", "tableau"]],
+            }
+        )
+
+        standardized = validate_and_standardize_dataset(dataset)
+        deduped = deduplicate_cross_source_vacancies(standardized)
+
+        self.assertEqual(2, len(deduped))
+        self.assertFalse(deduped["is_cross_source_duplicate"].any())
+
+    def test_cross_source_dedup_report_lists_original_rows(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "vacancy_id": ["jobs-1", "linkedin-1", "jobup-1"],
+                "source": ["jobs.ch", "linkedin.com", "jobup.ch"],
+                "company": ["Acme AG", "Acme", "Beta AG"],
+                "title": [
+                    "Senior Python Engineer",
+                    "Senior Python Engineer",
+                    "Platform Engineer",
+                ],
+                "description_text": [
+                    "Build data platforms with Python and AWS.",
+                    "Build data platforms with Python and AWS for analytics.",
+                    "Operate Kubernetes clusters and CI pipelines.",
+                ],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2026-04-22T09:00:00+02:00",
+                    "2026-04-22T09:00:00+02:00",
+                ],
+                "role_category": ["software_engineering", "software_engineering", "devops_cloud"],
+                "city": ["Zürich", "Zurich", "Bern"],
+                "canton": ["ZH", "ZH", "BE"],
+                "seniority": ["senior", "senior", "mid"],
+                "work_mode": ["hybrid", "hybrid", "hybrid"],
+                "skills": [["python", "aws"], ["python", "aws"], ["kubernetes"]],
+            }
+        )
+
+        standardized = validate_and_standardize_dataset(dataset)
+        report = build_cross_source_dedup_report(standardized)
+
+        self.assertEqual(2, len(report))
+        self.assertEqual(1, report["duplicate_group_id"].nunique())
+        self.assertEqual(1, int(report["is_canonical"].sum()))
+        self.assertEqual({"jobs.ch", "linkedin.com"}, set(report["source"]))
+        self.assertEqual(2, int(report["duplicate_vacancy_count"].max()))
 
     def test_load_and_save_outputs_round_trip_csv(self) -> None:
         dataset = pd.DataFrame(

@@ -113,6 +113,7 @@ STAFFING_AGENCY_COMPANY_NAMES: frozenset[str] = frozenset(
         "ictjobs (Stellenmarkt)",
         "IQ Plus AG",
         "Job Impuls AG",
+        "Jobgether",
         "JobTalente GmbH",
         "Joker Personal AG",
         "KeyCon Personal Consulting Kost",

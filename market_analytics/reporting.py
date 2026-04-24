@@ -18,6 +18,7 @@ from .analytics import (
     calculate_salary_summary,
     calculate_vacancy_trend_outputs,
 )
+from .deduplication import deduplicate_cross_source_vacancies
 from .skills import (
     calculate_list_summary,
     calculate_skill_cooccurrence_pairs,
@@ -32,6 +33,7 @@ def build_analytics_outputs(
     top_skills_limit: int = 20,
     top_skill_pairs_limit: int = 50,
 ) -> dict[str, pd.DataFrame]:
+    dataset = deduplicate_cross_source_vacancies(dataset).reset_index(drop=True)
     dataset = exclude_staffing_agencies(dataset).reset_index(drop=True)
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),

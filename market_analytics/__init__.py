@@ -11,6 +11,8 @@ from .analytics import (
     calculate_salary_by_seniority,
     calculate_salary_summary,
 )
+from .deduplication import deduplicate_cross_source_vacancies
+from .deduplication import build_cross_source_dedup_report
 from .io import (
     load_and_validate_dataset,
     load_and_validate_datasets,
@@ -37,6 +39,8 @@ __all__ = [
     "calculate_experience_by_seniority",
     "calculate_experience_requirements_summary",
     "calculate_list_summary",
+    "build_cross_source_dedup_report",
+    "deduplicate_cross_source_vacancies",
     "calculate_overview_metrics",
     "calculate_salary_by_dimension",
     "calculate_salary_by_role_category",

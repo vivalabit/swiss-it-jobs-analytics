@@ -12,6 +12,9 @@ Current sources:
 - `jobup.ch`
 - `swissdevjobs.ch`
 
+The dataset is deduplicated across sources at the vacancy level.
+When the same job is posted on multiple job boards, it is counted once in the public statistics.
+
 The project is still in progress, so statistics and structure may change.
 
 The public site publishes aggregated snapshots of the Swiss IT job market built from processed vacancy datasets across multiple job boards. It highlights broad signals such as vacancy volume, employer activity, skill demand, salary ranges, geographic concentration, seniority mix, and work mode distribution.
