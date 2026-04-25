@@ -1345,14 +1345,19 @@ function VacancyTrendsPanel({ trends }) {
 
 function TrendLineChart({ chartData, granularity }) {
   const [hoverIndex, setHoverIndex] = useState(null);
-  const width = 1040;
+  const width = getTrendChartWidth(chartData.labels.length, granularity);
   const height = 430;
-  const margin = { top: 24, right: 24, bottom: 58, left: 66 };
+  const margin = {
+    top: 24,
+    right: granularity === "daily" ? 40 : 24,
+    bottom: granularity === "daily" ? 76 : 58,
+    left: 66,
+  };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const maxValue = Math.max(chartData.maxValue, 1);
   const yTicks = buildYAxisTicks(maxValue);
-  const xTickStep = Math.max(Math.ceil(chartData.labels.length / 9), 1);
+  const xTickStep = buildTrendXAxisStep(chartData.labels.length, innerWidth, granularity);
   const activeHoverIndex =
     typeof hoverIndex === "number" && chartData.labels[hoverIndex] ? hoverIndex : null;
   const tooltipRows =
@@ -2211,6 +2216,22 @@ function projectTrendX(index, count, width) {
     return 0;
   }
   return (index / (count - 1)) * width;
+}
+
+function getTrendChartWidth(labelCount, granularity) {
+  if (granularity !== "daily") {
+    return 1040;
+  }
+  return Math.max(1040, labelCount * 18);
+}
+
+function buildTrendXAxisStep(labelCount, innerWidth, granularity) {
+  if (labelCount <= 1) {
+    return 1;
+  }
+  const minLabelSpacing = granularity === "daily" ? 84 : 112;
+  const tickCapacity = Math.max(Math.floor(innerWidth / minLabelSpacing), 1);
+  return Math.max(Math.ceil(labelCount / tickCapacity), 1);
 }
 
 function formatTrendAxisLabel(value, granularity) {

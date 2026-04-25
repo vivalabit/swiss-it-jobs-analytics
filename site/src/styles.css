@@ -1265,16 +1265,17 @@ img {
 
 .cy-trend-line-chart-shell {
   overflow-x: auto;
+  overflow-y: hidden;
   margin-top: 18px;
   border: 1px solid var(--border);
   background: #fff;
-  padding: 10px 8px 4px;
+  padding: 10px 14px 4px 8px;
 }
 
 .cy-trend-line-chart {
   display: block;
-  width: 100%;
-  min-width: 760px;
+  width: auto;
+  min-width: 100%;
   height: auto;
 }
 
