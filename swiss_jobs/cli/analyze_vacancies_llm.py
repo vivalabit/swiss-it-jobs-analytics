@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from swiss_jobs.core.llm_analysis import (
@@ -86,6 +87,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Only estimate token usage and cost for the selected vacancy set.",
     )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Disable progress logging in stderr.",
+    )
     return parser
 
 
@@ -97,7 +103,10 @@ def main(argv: list[str] | None = None) -> int:
     source_value = SOURCE_TO_DB_VALUE[args.source]
     limit = None if args.all else max(args.limit, 0)
 
-    analyzer = OpenAIVacancyAnalyzer(model=args.model)
+    analyzer = OpenAIVacancyAnalyzer(
+        model=args.model,
+        progress_logger=None if args.quiet else _progress_logger,
+    )
 
     if args.estimate_cost:
         estimate = analyzer.estimate_cost(
@@ -141,6 +150,10 @@ def main(argv: list[str] | None = None) -> int:
     }
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     return 0
+
+
+def _progress_logger(message: str) -> None:
+    print(message, file=sys.stderr, flush=True)
 
 
 if __name__ == "__main__":

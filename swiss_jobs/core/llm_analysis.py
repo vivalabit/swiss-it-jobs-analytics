@@ -3,9 +3,10 @@ from __future__ import annotations
 import json
 import math
 import os
+import sys
 import time
 from dataclasses import dataclass
-from typing import Any, Mapping, Protocol
+from typing import Any, Callable, Mapping, Protocol
 
 import requests
 
@@ -24,6 +25,7 @@ OPENAI_RESPONSES_API_URL = "https://api.openai.com/v1/responses"
 MODEL_PRICING_USD_PER_1M_TOKENS: dict[str, dict[str, float]] = {
     "gpt-5-nano": {"input": 0.05, "output": 0.40},
 }
+DEFAULT_PROGRESS_LOGGER = object()
 
 LIST_FIELDS = (
     "role_family_matches",
@@ -79,9 +81,14 @@ class RequestsOpenAIResponsesTransport:
         *,
         max_attempts: int = 5,
         initial_backoff_seconds: float = 1.0,
+        logger: Callable[[str], None] | None = None,
     ) -> None:
         self.max_attempts = max_attempts
         self.initial_backoff_seconds = initial_backoff_seconds
+        self.logger = logger
+
+    def set_logger(self, logger: Callable[[str], None] | None) -> None:
+        self.logger = logger
 
     def create_response(
         self,
@@ -116,16 +123,28 @@ class RequestsOpenAIResponsesTransport:
                 last_error = exc
                 if attempt >= self.max_attempts or not _is_retryable_request_exception(exc):
                     raise RuntimeError(_format_transport_error(exc)) from exc
+                self._log_retry(attempt, self.max_attempts, _format_transport_error(exc))
             except RuntimeError as exc:
                 last_error = exc
                 if attempt >= self.max_attempts or not _is_retryable_runtime_error(exc):
                     raise
+                self._log_retry(attempt, self.max_attempts, str(exc))
 
             time.sleep(self.initial_backoff_seconds * (2 ** (attempt - 1)))
 
         if last_error is not None:
             raise RuntimeError(str(last_error)) from last_error
         raise RuntimeError("OpenAI API request failed without an explicit error.")
+
+    def _log_retry(self, attempt: int, max_attempts: int, message: str) -> None:
+        if self.logger is None:
+            return
+        next_attempt = attempt + 1
+        if next_attempt > max_attempts:
+            return
+        self.logger(
+            f"[retry {next_attempt}/{max_attempts}] {message}"
+        )
 
 
 class OpenAIVacancyAnalyzer:
@@ -136,11 +155,19 @@ class OpenAIVacancyAnalyzer:
         api_key: str | None = None,
         timeout_seconds: float = 60.0,
         transport: OpenAIResponsesTransport | None = None,
+        progress_logger: Callable[[str], None] | None | object = DEFAULT_PROGRESS_LOGGER,
     ) -> None:
         self.model = model
         self.api_key = (api_key or os.getenv("OPENAI_API_KEY") or "").strip()
         self.timeout_seconds = timeout_seconds
-        self.transport = transport or RequestsOpenAIResponsesTransport()
+        self.progress_logger = (
+            _default_progress_logger
+            if progress_logger is DEFAULT_PROGRESS_LOGGER
+            else progress_logger
+        )
+        self.transport = transport or RequestsOpenAIResponsesTransport(logger=self._log)
+        if isinstance(self.transport, RequestsOpenAIResponsesTransport):
+            self.transport.set_logger(self._log)
 
     def analyze_database(
         self,
@@ -165,12 +192,26 @@ class OpenAIVacancyAnalyzer:
         stats = VacancyAnalysisRunStats()
         previews: list[dict[str, Any]] = []
         failures: list[dict[str, Any]] = []
+        total_records = len(records)
 
-        for record in records:
+        self._log(
+            "Starting OpenAI vacancy analysis "
+            f"for {total_records} vacancies from {database_path} "
+            f"(model={self.model}, dry_run={dry_run}, only_missing={only_missing})"
+        )
+
+        for index, record in enumerate(records, start=1):
+            self._log(
+                f"[{index}/{total_records}] analyzing {record.vacancy.id} "
+                f"| {record.vacancy.company} | {record.vacancy.title}"
+            )
             try:
                 result = self.analyze_record(record)
             except Exception as exc:
                 stats.failed += 1
+                self._log(
+                    f"[{index}/{total_records}] failed {record.vacancy.id}: {exc}"
+                )
                 failures.append(
                     {
                         "vacancy_id": record.vacancy.id,
@@ -198,6 +239,11 @@ class OpenAIVacancyAnalyzer:
                 }
             )
             if dry_run:
+                self._log(
+                    f"[{index}/{total_records}] analyzed {record.vacancy.id} "
+                    f"(dry-run, input_tokens={result['usage']['input_tokens']}, "
+                    f"output_tokens={result['usage']['output_tokens']})"
+                )
                 continue
 
             database.save_llm_analysis(
@@ -207,9 +253,20 @@ class OpenAIVacancyAnalyzer:
                 analyzed_at=utc_now_iso(),
             )
             stats.updated += 1
+            self._log(
+                f"[{index}/{total_records}] saved {record.vacancy.id} "
+                f"(input_tokens={result['usage']['input_tokens']}, "
+                f"output_tokens={result['usage']['output_tokens']})"
+            )
 
         if failures:
             previews.append({"failures": failures})
+        self._log(
+            "Completed OpenAI vacancy analysis "
+            f"(processed={stats.processed}, updated={stats.updated}, failed={stats.failed}, "
+            f"input_tokens={stats.input_tokens}, output_tokens={stats.output_tokens}, "
+            f"estimated_cost_usd={round(stats.total_cost_usd, 6)})"
+        )
         return stats, previews
 
     def analyze_record(self, record: StoredVacancyRecord) -> dict[str, Any]:
@@ -323,6 +380,11 @@ class OpenAIVacancyAnalyzer:
                 },
             ],
         }
+
+    def _log(self, message: str) -> None:
+        if self.progress_logger is None:
+            return
+        self.progress_logger(message)
 
 
 def build_system_instructions() -> str:
@@ -600,6 +662,10 @@ def _format_transport_error(exc: requests.RequestException) -> str:
             f"(status={response.status_code}, body={_safe_response_text(response)!r})"
         )
     return f"OpenAI API request failed: {exc}"
+
+
+def _default_progress_logger(message: str) -> None:
+    print(message, file=sys.stderr, flush=True)
 
 
 def _normalize_string_list(value: Any) -> list[str]:

@@ -95,6 +95,63 @@ class LlmVacancyAnalysisTests(unittest.TestCase):
         analyzer = OpenAIVacancyAnalyzer(api_key=" test-key\n")
         self.assertEqual("test-key", analyzer.api_key)
 
+    def test_analyzer_emits_progress_logs(self) -> None:
+        fake_transport = FakeOpenAITransport(
+            [
+                {
+                    "output_text": json.dumps(
+                        {
+                            "normalized_title": "Senior Platform Engineer",
+                            "role_family_primary": "devops_cloud_platform",
+                            "role_family_matches": ["devops_cloud_platform"],
+                            "seniority_labels": ["senior"],
+                            "remote_mode": "hybrid",
+                            "job_location": {
+                                "locality": "Bern",
+                                "region": "BE",
+                                "country": "CH",
+                            },
+                            "employment_types": ["full-time"],
+                            "programming_languages": ["python"],
+                            "frameworks_libraries": [],
+                            "cloud_platforms": [],
+                            "data_platforms": [],
+                            "databases": [],
+                            "platforms": [],
+                            "tools": [],
+                            "vendors": [],
+                            "protocols_standards": [],
+                            "methodologies": [],
+                            "spoken_languages": ["english"],
+                            "confidence": "high",
+                            "confidence_reasons": ["explicit_senior_scope"],
+                        }
+                    ),
+                    "usage": {"input_tokens": 1000, "output_tokens": 200},
+                }
+            ]
+        )
+        logs: list[str] = []
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "swissdevjobs.sqlite"
+            _persist_sample_vacancy(database_path)
+            analyzer = OpenAIVacancyAnalyzer(
+                api_key="test-key",
+                transport=fake_transport,
+                progress_logger=logs.append,
+            )
+            analyzer.analyze_database(str(database_path), limit=1, dry_run=True)
+
+        self.assertTrue(any("Starting OpenAI vacancy analysis" in log for log in logs))
+        self.assertTrue(any("[1/1] analyzing" in log for log in logs))
+        self.assertTrue(any("[1/1] analyzed" in log for log in logs))
+        self.assertTrue(any("Completed OpenAI vacancy analysis" in log for log in logs))
+
+    def test_analyzer_can_disable_progress_logs(self) -> None:
+        analyzer = OpenAIVacancyAnalyzer(api_key="test-key", progress_logger=None)
+        self.assertIsNone(analyzer.progress_logger)
+
     def test_requests_transport_retries_transient_520(self) -> None:
         class FakeResponse:
             def __init__(self, status_code: int, payload: dict | None = None, text: str = "") -> None:
