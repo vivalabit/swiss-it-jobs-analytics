@@ -543,6 +543,11 @@ function App() {
           items: salaryRoleItems,
           groupKey: "role_category",
         };
+  const topCity = cityItems[0] ?? null;
+  const topProgrammingLanguage = topProgrammingLanguages[0] ?? null;
+  const topPayingTrack = getTopSalaryGroup(salaryRoleGroups, 10);
+  const fastestGrowingRoles = getFastestGrowingTrendRoles(vacancyTrends, 30, "weekly", 3, 25);
+  const fastestGrowingRole = fastestGrowingRoles[0] ?? null;
   const topRoleGroups = selectTopItems(
     (topSkills.by_role_category ?? []).filter((group) => group.group !== "Unknown"),
     3,
@@ -562,7 +567,51 @@ function App() {
                 <h1 className="cy-heading cy-hero-title">
                   <span className="cy-hero-title-accent">Swiss</span> IT jobs analytics
                 </h1>
-                <div className="cy-button-row">
+                <p className="cy-copy cy-hero-text">
+                  Live product-style view of the Swiss tech hiring market with salary signals,
+                  demand spikes and city-level hotspots from the latest public snapshot.
+                </p>
+                <div className="cy-kpi-grid">
+                  <ProductKpiCard
+                    label="Median salary"
+                    value={formatCurrency(salarySummary.median_salary)}
+                    trendValue={getRelativeDelta(salarySummary.p75_salary, salarySummary.median_salary)}
+                    trendText={
+                      salarySummary.p75_salary
+                        ? `upper quartile ${formatCurrency(salarySummary.p75_salary)}`
+                        : "salary benchmark"
+                    }
+                  />
+                  <ProductKpiCard
+                    label="Top city"
+                    value={prettifyLabel(topCity?.label)}
+                    trendValue={topCity?.share}
+                    trendText={
+                      topCity ? `${formatInteger(topCity.vacancy_count)} active vacancies` : "city demand"
+                    }
+                  />
+                  <ProductKpiCard
+                    label="Most in-demand"
+                    value={prettifyLabel(topProgrammingLanguage?.programming_language)}
+                    trendValue={topProgrammingLanguage?.share}
+                    trendText={
+                      topProgrammingLanguage
+                        ? `${formatInteger(topProgrammingLanguage.vacancy_count)} vacancy mentions`
+                        : "technology demand"
+                    }
+                  />
+                  <ProductKpiCard
+                    label="Fastest growth"
+                    value={prettifyLabel(fastestGrowingRole?.role)}
+                    trendValue={
+                      fastestGrowingRole?.growth ?? vacancyTrends.summary?.growth_30d ?? null
+                    }
+                    trendText={
+                      fastestGrowingRole
+                        ? "vs previous 30 days"
+                        : "market growth vs previous 30 days"
+                    }
+                  />
                 </div>
               </div>
 
@@ -584,20 +633,49 @@ function App() {
                   />
 
                   <div className="cy-hero-dashboard">
-                    <div className="cy-hero-stat-grid">
-                      <div className="cy-card cy-hero-stat-card">
-                        <p className="cy-hero-stat-label">Vacancies</p>
-                        <p className="cy-hero-stat-value cy-hero-stat-value-accent">
-                          {formatInteger(overviewMetrics.total_vacancies)}
-                        </p>
+                    <article className="cy-card cy-hero-pulse-card">
+                      <div className="cy-hero-pulse-head">
+                        <div>
+                          <h2>What stands out right now</h2>
+                        </div>
+                        <span className="cy-live-pill">Updated {formatShortDate(lastUpdated)}</span>
                       </div>
-                      <div className="cy-card cy-hero-stat-card">
-                        <p className="cy-hero-stat-label">Snapshot Date</p>
-                        <p className="cy-hero-stat-value cy-hero-stat-value-accent">
-                          {formatShortDate(lastUpdated)}
-                        </p>
+
+                      <div className="cy-hero-highlight-grid">
+                        <ProductHighlightCard
+                          label="Top-paying track"
+                          value={prettifyLabel(topPayingTrack?.role_category)}
+                          meta={
+                            topPayingTrack
+                              ? `${formatCurrency(topPayingTrack.median_salary)} median`
+                              : "Salary data unavailable"
+                          }
+                          description={null}
+                        />
+                        <ProductHighlightCard
+                          label="Fastest-growing role"
+                          value={prettifyLabel(fastestGrowingRole?.role)}
+                          meta={
+                            fastestGrowingRole
+                              ? `${formatSignedPercent(fastestGrowingRole.growth)} vs prev 30d`
+                              : "Growth signal unavailable"
+                          }
+                          description={null}
+                        />
+                        <ProductHighlightCard
+                          label="Fresh vacancies"
+                          value={formatInteger(vacancyTrends.summary?.published_30d)}
+                          meta={
+                            vacancyTrends.summary?.published_previous_30d
+                              ? `${formatInteger(
+                                  vacancyTrends.summary?.published_previous_30d,
+                                )} in previous 30d`
+                              : "Rolling 30-day volume"
+                          }
+                          description={null}
+                        />
                       </div>
-                    </div>
+                    </article>
                   </div>
                 </div>
               </div>
@@ -608,24 +686,26 @@ function App() {
 
       <section className="cy-section cy-surface-section">
         <div className="cy-container">
-          <div className="cy-metrics-grid cy-metrics-grid-compact">
+          <div className="cy-metrics-grid cy-product-summary-grid">
             <MetricCard
+              label="Vacancies tracked"
               value={formatInteger(overviewMetrics.total_vacancies)}
-              description="Total vacancies in the current public export."
+              description="Current public export size across the Swiss tech market."
             />
             <MetricCard
+              label="Direct employers"
               value={formatInteger(overviewMetrics.total_companies)}
-              description="Distinct direct employers represented in the dataset."
+              description="Distinct hiring companies after excluding recruiting agencies."
             />
             <MetricCard
-              value={formatDecimal(overviewMetrics.average_vacancies_per_company)}
-              description="Average vacancy volume per direct employer."
+              label="Published in 30d"
+              value={formatInteger(vacancyTrends.summary?.published_30d)}
+              description="Latest rolling-month intake of newly published vacancies."
             />
             <MetricCard
-              value={formatPercent(educationSummary.higher_education_vacancy_share)}
-              description={`${formatInteger(
-                educationSummary.higher_education_vacancy_count,
-              )} vacancies explicitly mention higher education.`}
+              label="Salary coverage"
+              value={formatPercent(salarySummary.salary_coverage)}
+              description={`${formatInteger(salarySummary.salary_count)} vacancies with normalized yearly salary data.`}
             />
           </div>
         </div>
@@ -1104,9 +1184,40 @@ function SectionDivider() {
   );
 }
 
-function MetricCard({ value, description }) {
+function ProductKpiCard({ label, value, trendValue, trendText }) {
+  const direction = typeof trendValue === "number" ? (trendValue < 0 ? "down" : "up") : "flat";
+  const trendArrow = direction === "down" ? "↓" : direction === "up" ? "↑" : "•";
+
+  return (
+    <article className="cy-card cy-kpi-card">
+      <p className="cy-kpi-label">{label}</p>
+      <div className="cy-kpi-value">{value}</div>
+      <div className={`cy-kpi-trend cy-kpi-trend-${direction}`}>
+        <span className="cy-kpi-trend-arrow" aria-hidden="true">
+          {trendArrow}
+        </span>
+        <strong>{typeof trendValue === "number" ? formatSignedPercent(trendValue) : "Live"}</strong>
+        <span>{trendText}</span>
+      </div>
+    </article>
+  );
+}
+
+function ProductHighlightCard({ label, value, meta, description }) {
+  return (
+    <article className="cy-hero-highlight-card">
+      <p className="cy-hero-highlight-label">{label}</p>
+      <strong className="cy-hero-highlight-value">{value}</strong>
+      <p className="cy-hero-highlight-meta">{meta}</p>
+      {description ? <p className="cy-copy">{description}</p> : null}
+    </article>
+  );
+}
+
+function MetricCard({ label, value, description }) {
   return (
     <article className="cy-card cy-metric-card">
+      <p className="cy-kpi-label">{label}</p>
       <div className="cy-metric-value">{value}</div>
       <p className="cy-copy">{description}</p>
     </article>
@@ -2393,6 +2504,72 @@ function normalizeCompanyName(value) {
 
 function selectTopItems(items, limit) {
   return [...items].slice(0, limit);
+}
+
+function getTopSalaryGroup(items, minimumSampleSize = 10) {
+  const eligibleItems = (items ?? []).filter((item) => (item.salary_count ?? 0) >= minimumSampleSize);
+  const pool = eligibleItems.length ? eligibleItems : items ?? [];
+
+  return [...pool].sort((first, second) => {
+    const firstValue = first.median_salary ?? first.average_salary ?? 0;
+    const secondValue = second.median_salary ?? second.average_salary ?? 0;
+    if (firstValue !== secondValue) {
+      return secondValue - firstValue;
+    }
+    return (second.salary_count ?? 0) - (first.salary_count ?? 0);
+  })[0] ?? null;
+}
+
+function getRoleGroupSkillHighlights(groups, roleKey, limit = 3) {
+  if (!roleKey) {
+    return [];
+  }
+
+  const group = (groups ?? []).find((item) => item.group === roleKey);
+  return selectTopItems(group?.items ?? [], limit).map((item) => item.skill).filter(Boolean);
+}
+
+function getFastestGrowingTrendRoles(
+  trends,
+  periodDays = 30,
+  granularity = "weekly",
+  limit = 3,
+  minimumCurrentCount = 25,
+) {
+  const segments = getTrendSegments(trends, granularity);
+  const periodSegments = filterTrendItemsByPeriod(segments, periodDays, granularity);
+  const roles = [...new Set((segments ?? []).map((item) => item.role_category).filter(isKnownTrendValue))];
+
+  return roles
+    .map((role) => {
+      const roleSegments = filterTrendSegmentsByRoles(segments, [role]);
+      const currentCount = filterTrendSegmentsByRoles(periodSegments, [role]).reduce(
+        (sum, item) => sum + (item.published_count ?? 0),
+        0,
+      );
+      return {
+        role,
+        growth: calculateSegmentTrendGrowth(roleSegments, periodDays, granularity),
+        currentCount,
+      };
+    })
+    .filter(
+      (item) => typeof item.growth === "number" && Number.isFinite(item.growth) && item.currentCount >= minimumCurrentCount,
+    )
+    .sort((first, second) => {
+      if (first.growth !== second.growth) {
+        return second.growth - first.growth;
+      }
+      return second.currentCount - first.currentCount;
+    })
+    .slice(0, limit);
+}
+
+function getRelativeDelta(value, baseline) {
+  if (typeof value !== "number" || typeof baseline !== "number" || baseline === 0) {
+    return null;
+  }
+  return (value - baseline) / baseline;
 }
 
 function compareExperienceRequirements(first, second) {
