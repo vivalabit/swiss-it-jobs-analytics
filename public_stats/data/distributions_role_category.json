@@ -1,67 +1,67 @@
 {
-  "generated_at": "2026-04-24T07:38:13Z",
+  "generated_at": "2026-04-27T09:24:25Z",
   "available": true,
   "dimension": "role_category",
   "items": [
     {
       "key": "software_engineering",
       "label": "software_engineering",
-      "vacancy_count": 1276,
-      "share": 0.2523
+      "vacancy_count": 1896,
+      "share": 0.3483
     },
     {
       "key": "devops_cloud_platform",
       "label": "devops_cloud_platform",
-      "vacancy_count": 1007,
-      "share": 0.1991
-    },
-    {
-      "key": "Unknown",
-      "label": "Unknown",
-      "vacancy_count": 819,
-      "share": 0.162
+      "vacancy_count": 1078,
+      "share": 0.198
     },
     {
       "key": "product_project_analysis",
       "label": "product_project_analysis",
-      "vacancy_count": 520,
-      "share": 0.1028
+      "vacancy_count": 662,
+      "share": 0.1216
     },
     {
       "key": "security",
       "label": "security",
-      "vacancy_count": 473,
-      "share": 0.0935
+      "vacancy_count": 531,
+      "share": 0.0975
     },
     {
       "key": "data_ai",
       "label": "data_ai",
-      "vacancy_count": 452,
-      "share": 0.0894
+      "vacancy_count": 521,
+      "share": 0.0957
     },
     {
       "key": "support_operations",
       "label": "support_operations",
-      "vacancy_count": 320,
-      "share": 0.0633
+      "vacancy_count": 385,
+      "share": 0.0707
     },
     {
       "key": "qa_testing",
       "label": "qa_testing",
-      "vacancy_count": 126,
-      "share": 0.0249
+      "vacancy_count": 213,
+      "share": 0.0391
     },
     {
       "key": "erp_business_systems",
       "label": "erp_business_systems",
-      "vacancy_count": 49,
-      "share": 0.0097
+      "vacancy_count": 128,
+      "share": 0.0235
     },
     {
       "key": "ux_ui_design",
       "label": "ux_ui_design",
-      "vacancy_count": 15,
-      "share": 0.003
+      "vacancy_count": 29,
+      "share": 0.0053
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "vacancy_count": 1,
+      "share": 0.0002
     }
   ]
 }

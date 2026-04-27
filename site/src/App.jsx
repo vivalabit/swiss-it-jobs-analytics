@@ -480,6 +480,7 @@ function App() {
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
+  const allKnownSeniorityItems = filterUnknown(seniorityDistribution.items ?? []);
   const workModeItems = selectTopItems(filterUnknown(workModeDistribution.items ?? []), 4);
   const salaryRoleGroups = (salaryMetrics.by_role_category ?? []).filter(
     (item) => item.role_category && item.role_category !== "Unknown",
@@ -712,6 +713,7 @@ function App() {
             summary={experienceSummary}
             bySeniority={experienceBySeniority}
           />
+          <SeniorityDistributionPanel items={allKnownSeniorityItems} />
         </div>
       </section>
 
@@ -1086,23 +1088,39 @@ function SalaryStat({ value, label }) {
 }
 
 function ExperienceRequirementsPanel({ summary, bySeniority }) {
-  const topSeniorityItems = selectTopItems(bySeniority, 5);
-  const maxVacancyCount = Math.max(...topSeniorityItems.map((item) => item.vacancy_count ?? 0), 1);
+  const topSeniorityItems = selectTopItems(
+    bySeniority.filter((item) => (item.experience_years_count ?? 0) > 0),
+    5,
+  );
+  const maxMentionCount = Math.max(
+    ...topSeniorityItems.map((item) => item.experience_years_count ?? 0),
+    1,
+  );
+  const totalMentionCount = Number(summary.experience_years_mentioned_count ?? 0);
+  const knownSeniorityMentionCount = topSeniorityItems.reduce(
+    (sum, item) => sum + (item.experience_years_count ?? 0),
+    0,
+  );
+  const knownSeniorityMentionShare = totalMentionCount
+    ? knownSeniorityMentionCount / totalMentionCount
+    : 0;
 
   return (
     <article className="cy-card cy-data-panel cy-experience-panel">
       <div className="cy-data-panel-head">
         <h3>Experience requirements</h3>
         <p className="cy-copy">
-          Seniority labels and explicit years of experience requested in vacancy text.
+          Explicit years of experience requested in vacancy text, grouped by inferred seniority.
           Averages by seniority require at least {EXPERIENCE_MIN_SAMPLE_SIZE} year mentions.
         </p>
       </div>
 
       <div className="cy-experience-stat-grid">
         <SalaryStat
-          value={formatPercent(summary.seniority_known_share)}
-          label={`${formatInteger(summary.seniority_known_count)} vacancies with seniority`}
+          value={formatPercent(knownSeniorityMentionShare)}
+          label={`${formatInteger(
+            knownSeniorityMentionCount,
+          )} year mentions with seniority`}
         />
         <SalaryStat
           value={formatPercent(summary.experience_years_mentioned_share)}
@@ -1127,13 +1145,21 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
               <div className="cy-experience-row-head">
                 <strong>{prettifyLabel(item.seniority)}</strong>
                 <span>
-                  {formatInteger(item.vacancy_count)} · {formatPercent(item.share)}
+                  {formatInteger(item.experience_years_count)} ·{" "}
+                  {formatPercent(
+                    totalMentionCount
+                      ? (item.experience_years_count ?? 0) / totalMentionCount
+                      : 0,
+                  )}
                 </span>
               </div>
               <div className="cy-experience-track">
                 <span
                   style={{
-                    width: `${Math.max(((item.vacancy_count ?? 0) / maxVacancyCount) * 100, 8)}%`,
+                    width: `${Math.max(
+                      ((item.experience_years_count ?? 0) / maxMentionCount) * 100,
+                      8,
+                    )}%`,
                   }}
                 />
               </div>
@@ -1142,6 +1168,9 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
         </div>
 
         <div className="cy-table-shell cy-experience-table-shell">
+          <div className="cy-data-panel-head cy-experience-table-head">
+            <h4>Experience mentions by seniority</h4>
+          </div>
           <table className="cy-data-table">
             <thead>
               <tr>
@@ -1165,6 +1194,40 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
             </tbody>
           </table>
         </div>
+      </div>
+    </article>
+  );
+}
+
+function SeniorityDistributionPanel({ items }) {
+  return (
+    <article className="cy-card cy-data-panel cy-seniority-distribution-panel">
+      <div className="cy-data-panel-head">
+        <h3>Seniority distribution</h3>
+        <p className="cy-copy">
+          Overall inferred seniority mix across vacancies, independent of explicit experience mentions.
+        </p>
+      </div>
+
+      <div className="cy-table-shell cy-seniority-distribution-table-shell">
+        <table className="cy-data-table">
+          <thead>
+            <tr>
+              <th>Seniority</th>
+              <th>Vacancies</th>
+              <th>Share</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={`${item.key ?? item.label}-distribution`}>
+                <td>{prettifyLabel(item.label ?? item.key)}</td>
+                <td>{formatInteger(item.vacancy_count)}</td>
+                <td>{formatPercent(item.share)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </article>
   );
