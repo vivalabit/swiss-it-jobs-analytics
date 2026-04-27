@@ -49,18 +49,53 @@ const SWISS_MAP = {
 
 const MAP_LABEL_OFFSETS = {
   zurich: [10, -18],
-  bern: [-10, 22],
+  bern: [-26, 12],
   geneva: [-16, 20],
   basel: [12, -14],
   lausanne: [12, 16],
-  luzern: [12, 20],
+  luzern: [16, 34],
   winterthur: [12, -4],
-  zug: [14, 4],
+  zug: [16, 18],
   "st-gallen": [12, -10],
   aarau: [-10, -18],
   baden: [10, -16],
   wallisellen: [10, 18],
+  appenzell: [16, 4],
+  chur: [14, 10],
+  fribourg: [-34, 30],
+  frauenfeld: [14, -18],
+  herisau: [12, -12],
+  liestal: [10, -12],
+  neuchatel: [-12, -18],
+  schaffhausen: [14, -18],
+  schwyz: [16, -10],
+  sion: [12, 18],
+  solothurn: [-12, -18],
+  stans: [18, 22],
 };
+
+const CANTON_CAPITAL_CITY_KEYS = new Set([
+  "aarau",
+  "appenzell",
+  "basel",
+  "bern",
+  "chur",
+  "frauenfeld",
+  "fribourg",
+  "geneva",
+  "herisau",
+  "lausanne",
+  "liestal",
+  "luzern",
+  "neuchatel",
+  "schaffhausen",
+  "schwyz",
+  "sion",
+  "solothurn",
+  "stans",
+  "zug",
+  "zurich",
+]);
 
 const CITY_LOCATIONS = [
   cityLocation("zurich", "Zürich", 47.3769, 8.5417, [
@@ -1616,7 +1651,7 @@ function SwissVacancyMap({ items }) {
   const maxValue = Math.max(...items.map((item) => item.vacancy_count), 1);
   const mappedVacancies = items.reduce((sum, item) => sum + item.vacancy_count, 0);
   const markerItems = [...items].sort((a, b) => a.vacancy_count - b.vacancy_count);
-  const labelItems = items.slice(0, 12);
+  const labelItems = items.filter((item) => CANTON_CAPITAL_CITY_KEYS.has(item.key));
   const legendValues = [
     maxValue,
     Math.max(Math.round(maxValue * 0.35), 1),
