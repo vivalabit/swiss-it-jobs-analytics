@@ -25,6 +25,19 @@ const SNAPSHOT_FILES = {
   workModeDistribution: "distributions_work_mode.json",
 };
 
+const PAGE_SECTION_LINKS = [
+  { id: "overview", label: "Overview" },
+  { id: "snapshot", label: "Snapshot" },
+  { id: "findings", label: "Findings" },
+  { id: "vacancy-trends", label: "Trends" },
+  { id: "vacancy-map", label: "Map" },
+  { id: "charts", label: "Charts" },
+  { id: "experience", label: "Experience" },
+  { id: "salary", label: "Salary" },
+  { id: "skills", label: "Skills" },
+  { id: "metadata", label: "Methodology" },
+];
+
 const SWISS_MAP = {
   width: 1300,
   height: 1300,
@@ -410,6 +423,7 @@ function App() {
   const [salaryBreakdown, setSalaryBreakdown] = useState("role_category");
   const [showAllSalaryGroups, setShowAllSalaryGroups] = useState(false);
   const [showMoreCompanyItems, setShowMoreCompanyItems] = useState(false);
+  const [activeSectionId, setActiveSectionId] = useState(PAGE_SECTION_LINKS[0].id);
 
   useEffect(() => {
     let cancelled = false;
@@ -449,6 +463,57 @@ function App() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (state.status !== "ready" || !state.data) {
+      return undefined;
+    }
+
+    const sectionElements = PAGE_SECTION_LINKS.map(({ id }) => document.getElementById(id)).filter(
+      Boolean,
+    );
+
+    if (!sectionElements.length) {
+      return undefined;
+    }
+
+    const updateActiveSection = () => {
+      let currentSectionId = sectionElements[0].id;
+
+      for (const element of sectionElements) {
+        if (element.getBoundingClientRect().top <= 180) {
+          currentSectionId = element.id;
+        }
+      }
+
+      setActiveSectionId(currentSectionId);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
+
+        if (visibleEntries[0]?.target.id) {
+          setActiveSectionId(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-18% 0px -58% 0px",
+        threshold: [0.2, 0.35, 0.55],
+      },
+    );
+
+    sectionElements.forEach((element) => observer.observe(element));
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", updateActiveSection);
+    };
+  }, [state.data, state.status]);
 
   if (state.status === "loading") {
     return (
@@ -641,617 +706,635 @@ function App() {
         </div>
       </section>
 
-      <section className="cy-section cy-trust-section" aria-labelledby="snapshot-context">
-        <div className="cy-container">
-          <article className="cy-card cy-trust-panel">
-            <div className="cy-data-panel-head cy-trust-panel-head">
-              <div>
-                <p className="cy-kicker">Snapshot context</p>
-                <h2 id="snapshot-context">What this page is built on</h2>
-              </div>
-              <p className="cy-copy">
-                Quick context on freshness, sample size, coverage, and what the public export
-                does not claim to measure.
-              </p>
-            </div>
+      <div className="cy-page-shell">
+        <div className="cy-page-shell-inner">
+          <SectionRail sections={PAGE_SECTION_LINKS} activeSectionId={activeSectionId} />
 
-            <div className="cy-trust-grid">
-              <TrustInfoCard
-                label="Sources"
-                title={`${PUBLIC_SNAPSHOT_SOURCES.length} public job boards`}
-              >
-                <div className="cy-chip-list cy-trust-chip-list">
-                  {PUBLIC_SNAPSHOT_SOURCES.map((source) => (
-                    <span key={source} className="cy-chip">
-                      {source}
-                    </span>
-                  ))}
-                </div>
-                <p className="cy-copy">
-                  Deduplicated at vacancy level before the public aggregate is published.
-                </p>
-              </TrustInfoCard>
-
-              <TrustInfoCard label="Updated" title={formatShortDate(metadata.generated_at)}>
-                <p className="cy-copy">{formatDateTime(metadata.generated_at)}</p>
-              </TrustInfoCard>
-
-              <TrustInfoCard label="Sample size" title={formatInteger(overviewMetrics.total_vacancies)}>
-                <p className="cy-copy">
-                  {formatInteger(overviewMetrics.total_companies)} direct employers after agency
-                  filtering.
-                </p>
-              </TrustInfoCard>
-
-              <TrustInfoCard label="Salary coverage" title={formatPercent(salarySummary.salary_coverage)}>
-                <p className="cy-copy">
-                  {formatInteger(salarySummary.salary_count)} listings with normalized CHF yearly
-                  salary data.
-                </p>
-              </TrustInfoCard>
-
-              <TrustInfoCard label="Snapshot includes" title="Core market signals">
-                <div className="cy-chip-list cy-trust-chip-list">
-                  {SNAPSHOT_SCOPE_ITEMS.map((item) => (
-                    <span key={item} className="cy-chip">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </TrustInfoCard>
-
-              <TrustInfoCard label="Main limitations" title="Read before comparing numbers">
-                <div className="cy-trust-note-list">
-                  {trustLimitations.map((item) => (
-                    <p key={item} className="cy-copy">
-                      {item}
-                    </p>
-                  ))}
-                </div>
-              </TrustInfoCard>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="cy-section cy-findings-section" aria-labelledby="key-findings">
-        <div className="cy-container">
-          <article className="cy-card cy-findings-panel">
-            <div className="cy-data-panel-head cy-findings-head">
-              <div>
-                <p className="cy-kicker">Key findings</p>
-                <h2 id="key-findings">What stands out right now</h2>
-              </div>
-            </div>
-
-            <div className="cy-findings-grid">
-              {keyFindings.map((item) => (
-                <KeyFindingCard
-                  key={item.title}
-                  label={item.label}
-                  title={item.title}
-                  description={item.description}
-                />
-              ))}
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="cy-section cy-surface-section">
-        <div className="cy-container">
-          <div className="cy-metrics-grid cy-product-summary-grid">
-            <MetricCard
-              label="Vacancies tracked"
-              value={formatInteger(overviewMetrics.total_vacancies)}
-              description="Current public export size across the Swiss tech market."
-            />
-            <MetricCard
-              label="Direct employers"
-              value={formatInteger(overviewMetrics.total_companies)}
-              description="Distinct hiring companies after excluding recruiting agencies."
-            />
-            <MetricCard
-              label="Published in 30d"
-              value={formatInteger(vacancyTrends.summary?.published_30d)}
-              description="Latest rolling-month intake of newly published vacancies."
-            />
-            <MetricCard
-              label="Salary coverage"
-              value={formatPercent(salarySummary.salary_coverage)}
-              description={`${formatInteger(salarySummary.salary_count)} vacancies with normalized yearly salary data.`}
-            />
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="vacancy-trends">
-        <div className="cy-container">
-          <VacancyTrendsPanel trends={vacancyTrends} />
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="vacancy-map">
-        <div className="cy-container">
-          <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">
-              Swiss vacancy <span className="cy-hero-title-accent">map</span>
-            </h2>
-          </div>
-
-          <SwissVacancyMap items={cityMapItems} />
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="charts">
-        <div className="cy-container">
-          <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">
-              Analysis <span className="cy-hero-title-accent">dashboard</span>
-            </h2>
-          </div>
-
-          <div className="cy-dashboard-grid">
-            <article className="cy-card cy-dashboard-panel">
-              <div className="cy-data-panel-head">
-                <h3>Role category share</h3>
-              </div>
-              <HorizontalBarChart
-                items={roleItems}
-                labelKey="label"
-                valueKey="vacancy_count"
-                shareKey="share"
-              />
-            </article>
-
-            <article className="cy-card cy-dashboard-panel">
-              <div className="cy-data-panel-head">
-                <h3>Leading cantons</h3>
-              </div>
-              <HorizontalBarChart
-                items={cantonItems}
-                labelKey="label"
-                valueKey="vacancy_count"
-                shareKey="share"
-                labelFormatter={formatCantonCode}
-              />
-            </article>
-
-            <article className="cy-card cy-dashboard-panel">
-              <div className="cy-data-panel-head">
-                <h3>Work mode distribution</h3>
-              </div>
-              <SegmentChart items={workModeItems} />
-            </article>
-
-            <article className="cy-card cy-dashboard-panel">
-              <div className="cy-data-panel-head">
-                <h3>Seniority mix</h3>
-              </div>
-              <SegmentChart items={seniorityItems} />
-            </article>
-
-            <article className="cy-card cy-dashboard-panel">
-              <div className="cy-data-panel-head">
-                <h3>Top cities</h3>
-              </div>
-              <HorizontalBarChart
-                items={cityItems}
-                labelKey="label"
-                valueKey="vacancy_count"
-                shareKey="share"
-              />
-            </article>
-
-            <article className="cy-card cy-dashboard-panel cy-company-panel">
-              <div className="cy-data-panel-head">
-                <h3>Top direct employers</h3>
-                <p className="cy-copy">Recruiting agencies and job boards are excluded.</p>
-              </div>
-              <HorizontalBarChart
-                items={companyItems}
-                labelKey="label"
-                valueKey="vacancy_count"
-                shareKey="share"
-              />
-              {hasMoreCompanyItems ? (
-                <button
-                  type="button"
-                  className="cy-data-more-button"
-                  onClick={() => setShowMoreCompanyItems((value) => !value)}
-                >
-                  {showMoreCompanyItems ? "LESS" : "MORE"}
-                </button>
-              ) : null}
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="experience">
-        <div className="cy-container">
-          <ExperienceRequirementsPanel
-            summary={experienceSummary}
-            bySeniority={experienceBySeniority}
-          />
-          <SeniorityDistributionPanel items={allKnownSeniorityItems} />
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="salary">
-        <div className="cy-container">
-          <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">
-              Salary <span className="cy-hero-title-accent">metrics</span>
-            </h2>
-          </div>
-
-          <div className="cy-salary-layout">
-            <article className="cy-card cy-data-panel cy-salary-summary-panel">
-              <div className="cy-data-panel-head">
-                <h3>Compensation snapshot</h3>
-                <p className="cy-copy">
-                  Comparable CHF salaries normalized to yearly values.
-                </p>
-              </div>
-
-              <div className="cy-salary-toggle" aria-label="Salary breakdown">
-                <button
-                  type="button"
-                  className={salaryBreakdown === "role_category" ? "is-active" : ""}
-                  onClick={() => setSalaryBreakdown("role_category")}
-                >
-                  Roles
-                </button>
-                <button
-                  type="button"
-                  className={salaryBreakdown === "seniority" ? "is-active" : ""}
-                  onClick={() => setSalaryBreakdown("seniority")}
-                >
-                  Seniority
-                </button>
-              </div>
-
-              <div className="cy-salary-stat-grid">
-                <SalaryStat
-                  value={formatCurrency(salarySummary.average_salary)}
-                  label="Average yearly"
-                />
-                <SalaryStat
-                  value={formatCurrency(salarySummary.median_salary)}
-                  label="Median yearly"
-                />
-                <SalaryStat
-                  value={formatPercent(salarySummary.salary_coverage)}
-                  label="Salary coverage"
-                />
-                <SalaryStat value={formatInteger(salarySummary.salary_count)} label="Records" />
-              </div>
-
-              <button
-                type="button"
-                className="cy-salary-more-button"
-                onClick={() => setShowAllSalaryGroups((value) => !value)}
-              >
-                {showAllSalaryGroups ? "Less" : "More"}
-              </button>
-            </article>
-
-            <article className="cy-card cy-data-panel cy-salary-chart-panel">
-              <div className="cy-data-panel-head">
-                <h3>{salaryChartConfig.title}</h3>
-                <p className="cy-copy">{salaryChartConfig.description}</p>
-              </div>
-              <SalaryRankingChart
-                items={salaryChartConfig.items}
-                summary={salarySummary}
-                groupKey={salaryChartConfig.groupKey}
-              />
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="skills">
-        <div className="cy-container">
-          <div className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">
-              Top <span className="cy-hero-title-accent">skills</span> and{" "}
-              <span className="cy-hero-title-accent">pairings</span>
-            </h2>
-          </div>
-
-          <div className="cy-data-grid">
-            <article className="cy-card cy-data-panel">
-              <div className="cy-data-panel-head">
-                <h3>Top overall skills</h3>
-                <p className="cy-copy">Ranked by vacancy frequency.</p>
-              </div>
-              <div className="cy-table-shell">
-                <table className="cy-data-table">
-                  <thead>
-                    <tr>
-                      <th>Skill</th>
-                      <th>Vacancies</th>
-                      <th>Share</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {topSkillsItems.map((item) => (
-                      <tr key={item.skill}>
-                        <td>{prettifyLabel(item.skill)}</td>
-                        <td>{formatInteger(item.vacancy_count)}</td>
-                        <td>{formatPercent(item.share)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </article>
-
-            <article className="cy-card cy-data-panel">
-              <div className="cy-data-panel-head">
-                <h3>Frequent pairings</h3>
-                <p className="cy-copy">Technologies that often appear together.</p>
-              </div>
-              <div className="cy-pair-list">
-                {topPairs.map((pair) => (
-                  <div key={`${pair.skill_1}-${pair.skill_2}`} className="cy-pair-item">
+          <div className="cy-page-content">
+            <section className="cy-section cy-trust-section" id="snapshot" aria-labelledby="snapshot-context">
+              <div className="cy-container">
+                <article className="cy-card cy-trust-panel">
+                  <div className="cy-data-panel-head cy-trust-panel-head">
                     <div>
-                      <strong>
-                        {prettifyLabel(pair.skill_1)} + {prettifyLabel(pair.skill_2)}
-                      </strong>
+                      <p className="cy-kicker">Snapshot context</p>
+                      <h2 id="snapshot-context">What this page is built on</h2>
+                    </div>
+                    <p className="cy-copy">
+                      Quick context on freshness, sample size, coverage, and what the public export
+                      does not claim to measure.
+                    </p>
+                  </div>
+
+                  <div className="cy-trust-grid">
+                    <TrustInfoCard
+                      label="Sources"
+                      title={`${PUBLIC_SNAPSHOT_SOURCES.length} public job boards`}
+                    >
+                      <div className="cy-chip-list cy-trust-chip-list">
+                        {PUBLIC_SNAPSHOT_SOURCES.map((source) => (
+                          <span key={source} className="cy-chip">
+                            {source}
+                          </span>
+                        ))}
+                      </div>
                       <p className="cy-copy">
-                        {formatInteger(pair.vacancy_count)} shared vacancies
+                        Deduplicated at vacancy level before the public aggregate is published.
+                      </p>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard label="Updated" title={formatShortDate(metadata.generated_at)}>
+                      <p className="cy-copy">{formatDateTime(metadata.generated_at)}</p>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard
+                      label="Sample size"
+                      title={formatInteger(overviewMetrics.total_vacancies)}
+                    >
+                      <p className="cy-copy">
+                        {formatInteger(overviewMetrics.total_companies)} direct employers after agency
+                        filtering.
+                      </p>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard
+                      label="Salary coverage"
+                      title={formatPercent(salarySummary.salary_coverage)}
+                    >
+                      <p className="cy-copy">
+                        {formatInteger(salarySummary.salary_count)} listings with normalized CHF yearly
+                        salary data.
+                      </p>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard label="Snapshot includes" title="Core market signals">
+                      <div className="cy-chip-list cy-trust-chip-list">
+                        {SNAPSHOT_SCOPE_ITEMS.map((item) => (
+                          <span key={item} className="cy-chip">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard label="Main limitations" title="Read before comparing numbers">
+                      <div className="cy-trust-note-list">
+                        {trustLimitations.map((item) => (
+                          <p key={item} className="cy-copy">
+                            {item}
+                          </p>
+                        ))}
+                      </div>
+                    </TrustInfoCard>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section className="cy-section cy-findings-section" id="findings" aria-labelledby="key-findings">
+              <div className="cy-container">
+                <article className="cy-card cy-findings-panel">
+                  <div className="cy-data-panel-head cy-findings-head">
+                    <div>
+                      <p className="cy-kicker">Key findings</p>
+                      <h2 id="key-findings">What stands out right now</h2>
+                    </div>
+                  </div>
+
+                  <div className="cy-findings-grid">
+                    {keyFindings.map((item) => (
+                      <KeyFindingCard
+                        key={item.title}
+                        label={item.label}
+                        title={item.title}
+                        description={item.description}
+                      />
+                    ))}
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section className="cy-section cy-surface-section">
+              <div className="cy-container">
+                <div className="cy-metrics-grid cy-product-summary-grid">
+                  <MetricCard
+                    label="Vacancies tracked"
+                    value={formatInteger(overviewMetrics.total_vacancies)}
+                    description="Current public export size across the Swiss tech market."
+                  />
+                  <MetricCard
+                    label="Direct employers"
+                    value={formatInteger(overviewMetrics.total_companies)}
+                    description="Distinct hiring companies after excluding recruiting agencies."
+                  />
+                  <MetricCard
+                    label="Published in 30d"
+                    value={formatInteger(vacancyTrends.summary?.published_30d)}
+                    description="Latest rolling-month intake of newly published vacancies."
+                  />
+                  <MetricCard
+                    label="Salary coverage"
+                    value={formatPercent(salarySummary.salary_coverage)}
+                    description={`${formatInteger(salarySummary.salary_count)} vacancies with normalized yearly salary data.`}
+                  />
+                </div>
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="vacancy-trends">
+              <div className="cy-container">
+                <VacancyTrendsPanel trends={vacancyTrends} />
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="vacancy-map">
+              <div className="cy-container">
+                <div className="cy-section-intro cy-section-intro-compact">
+                  <h2 className="cy-heading cy-section-title">
+                    Swiss vacancy <span className="cy-hero-title-accent">map</span>
+                  </h2>
+                </div>
+
+                <SwissVacancyMap items={cityMapItems} />
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="charts">
+              <div className="cy-container">
+                <div className="cy-section-intro cy-section-intro-compact">
+                  <h2 className="cy-heading cy-section-title">
+                    Analysis <span className="cy-hero-title-accent">dashboard</span>
+                  </h2>
+                </div>
+
+                <div className="cy-dashboard-grid">
+                  <article className="cy-card cy-dashboard-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Role category share</h3>
+                    </div>
+                    <HorizontalBarChart
+                      items={roleItems}
+                      labelKey="label"
+                      valueKey="vacancy_count"
+                      shareKey="share"
+                    />
+                  </article>
+
+                  <article className="cy-card cy-dashboard-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Leading cantons</h3>
+                    </div>
+                    <HorizontalBarChart
+                      items={cantonItems}
+                      labelKey="label"
+                      valueKey="vacancy_count"
+                      shareKey="share"
+                      labelFormatter={formatCantonCode}
+                    />
+                  </article>
+
+                  <article className="cy-card cy-dashboard-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Work mode distribution</h3>
+                    </div>
+                    <SegmentChart items={workModeItems} />
+                  </article>
+
+                  <article className="cy-card cy-dashboard-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Seniority mix</h3>
+                    </div>
+                    <SegmentChart items={seniorityItems} />
+                  </article>
+
+                  <article className="cy-card cy-dashboard-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Top cities</h3>
+                    </div>
+                    <HorizontalBarChart
+                      items={cityItems}
+                      labelKey="label"
+                      valueKey="vacancy_count"
+                      shareKey="share"
+                    />
+                  </article>
+
+                  <article className="cy-card cy-dashboard-panel cy-company-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Top direct employers</h3>
+                      <p className="cy-copy">Recruiting agencies and job boards are excluded.</p>
+                    </div>
+                    <HorizontalBarChart
+                      items={companyItems}
+                      labelKey="label"
+                      valueKey="vacancy_count"
+                      shareKey="share"
+                    />
+                    {hasMoreCompanyItems ? (
+                      <button
+                        type="button"
+                        className="cy-data-more-button"
+                        onClick={() => setShowMoreCompanyItems((value) => !value)}
+                      >
+                        {showMoreCompanyItems ? "LESS" : "MORE"}
+                      </button>
+                    ) : null}
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="experience">
+              <div className="cy-container">
+                <ExperienceRequirementsPanel
+                  summary={experienceSummary}
+                  bySeniority={experienceBySeniority}
+                />
+                <SeniorityDistributionPanel items={allKnownSeniorityItems} />
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="salary">
+              <div className="cy-container">
+                <div className="cy-section-intro cy-section-intro-compact">
+                  <h2 className="cy-heading cy-section-title">
+                    Salary <span className="cy-hero-title-accent">metrics</span>
+                  </h2>
+                </div>
+
+                <div className="cy-salary-layout">
+                  <article className="cy-card cy-data-panel cy-salary-summary-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Compensation snapshot</h3>
+                      <p className="cy-copy">
+                        Comparable CHF salaries normalized to yearly values.
                       </p>
                     </div>
-                    <div className="cy-pair-meter">
-                      <div
-                        className="cy-pair-meter-fill"
-                        style={{
-                          width: `${Math.max(
-                            (pair.vacancy_count / (topPairs[0]?.vacancy_count || 1)) * 100,
-                            10,
-                          )}%`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
 
-              <div className="cy-role-highlight-grid">
-                {topRoleGroups.map((group) => (
-                  <div key={group.group} className="cy-role-highlight-card">
-                    <p className="cy-kicker">{prettifyLabel(group.group)}</p>
-                    <div className="cy-chip-list">
-                      {selectTopItems(group.items ?? [], 4).map((item) => (
-                        <span key={`${group.group}-${item.skill}`} className="cy-chip">
-                          {prettifyLabel(item.skill)} · {formatPercent(item.share_within_group)}
-                        </span>
+                    <div className="cy-salary-toggle" aria-label="Salary breakdown">
+                      <button
+                        type="button"
+                        className={salaryBreakdown === "role_category" ? "is-active" : ""}
+                        onClick={() => setSalaryBreakdown("role_category")}
+                      >
+                        Roles
+                      </button>
+                      <button
+                        type="button"
+                        className={salaryBreakdown === "seniority" ? "is-active" : ""}
+                        onClick={() => setSalaryBreakdown("seniority")}
+                      >
+                        Seniority
+                      </button>
+                    </div>
+
+                    <div className="cy-salary-stat-grid">
+                      <SalaryStat
+                        value={formatCurrency(salarySummary.average_salary)}
+                        label="Average yearly"
+                      />
+                      <SalaryStat
+                        value={formatCurrency(salarySummary.median_salary)}
+                        label="Median yearly"
+                      />
+                      <SalaryStat
+                        value={formatPercent(salarySummary.salary_coverage)}
+                        label="Salary coverage"
+                      />
+                      <SalaryStat value={formatInteger(salarySummary.salary_count)} label="Records" />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="cy-salary-more-button"
+                      onClick={() => setShowAllSalaryGroups((value) => !value)}
+                    >
+                      {showAllSalaryGroups ? "Less" : "More"}
+                    </button>
+                  </article>
+
+                  <article className="cy-card cy-data-panel cy-salary-chart-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>{salaryChartConfig.title}</h3>
+                      <p className="cy-copy">{salaryChartConfig.description}</p>
+                    </div>
+                    <SalaryRankingChart
+                      items={salaryChartConfig.items}
+                      summary={salarySummary}
+                      groupKey={salaryChartConfig.groupKey}
+                    />
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="skills">
+              <div className="cy-container">
+                <div className="cy-section-intro cy-section-intro-compact">
+                  <h2 className="cy-heading cy-section-title">
+                    Top <span className="cy-hero-title-accent">skills</span> and{" "}
+                    <span className="cy-hero-title-accent">pairings</span>
+                  </h2>
+                </div>
+
+                <div className="cy-data-grid">
+                  <article className="cy-card cy-data-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Top overall skills</h3>
+                      <p className="cy-copy">Ranked by vacancy frequency.</p>
+                    </div>
+                    <div className="cy-table-shell">
+                      <table className="cy-data-table">
+                        <thead>
+                          <tr>
+                            <th>Skill</th>
+                            <th>Vacancies</th>
+                            <th>Share</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {topSkillsItems.map((item) => (
+                            <tr key={item.skill}>
+                              <td>{prettifyLabel(item.skill)}</td>
+                              <td>{formatInteger(item.vacancy_count)}</td>
+                              <td>{formatPercent(item.share)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </article>
+
+                  <article className="cy-card cy-data-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Frequent pairings</h3>
+                      <p className="cy-copy">Technologies that often appear together.</p>
+                    </div>
+                    <div className="cy-pair-list">
+                      {topPairs.map((pair) => (
+                        <div key={`${pair.skill_1}-${pair.skill_2}`} className="cy-pair-item">
+                          <div>
+                            <strong>
+                              {prettifyLabel(pair.skill_1)} + {prettifyLabel(pair.skill_2)}
+                            </strong>
+                            <p className="cy-copy">
+                              {formatInteger(pair.vacancy_count)} shared vacancies
+                            </p>
+                          </div>
+                          <div className="cy-pair-meter">
+                            <div
+                              className="cy-pair-meter-fill"
+                              style={{
+                                width: `${Math.max(
+                                  (pair.vacancy_count / (topPairs[0]?.vacancy_count || 1)) * 100,
+                                  10,
+                                )}%`,
+                              }}
+                            />
+                          </div>
+                        </div>
                       ))}
                     </div>
+
+                    <div className="cy-role-highlight-grid">
+                      {topRoleGroups.map((group) => (
+                        <div key={group.group} className="cy-role-highlight-card">
+                          <p className="cy-kicker">{prettifyLabel(group.group)}</p>
+                          <div className="cy-chip-list">
+                            {selectTopItems(group.items ?? [], 4).map((item) => (
+                              <span key={`${group.group}-${item.skill}`} className="cy-chip">
+                                {prettifyLabel(item.skill)} · {formatPercent(item.share_within_group)}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                </div>
+
+                <article className="cy-card cy-data-panel cy-programming-language-panel">
+                  <div className="cy-data-panel-head">
+                    <h3>Top programming languages</h3>
+                    <p className="cy-copy">
+                      Language mentions extracted from the current vacancy snapshot.
+                    </p>
                   </div>
-                ))}
-              </div>
-            </article>
-          </div>
 
-          <article className="cy-card cy-data-panel cy-programming-language-panel">
-            <div className="cy-data-panel-head">
-              <h3>Top programming languages</h3>
-              <p className="cy-copy">Language mentions extracted from the current vacancy snapshot.</p>
-            </div>
-
-            <div className="cy-summary-chip-row">
-              <span className="cy-chip">
-                Coverage · {formatPercent(programmingLanguageSummary.vacancy_coverage)}
-              </span>
-              <span className="cy-chip">
-                Vacancies · {formatInteger(programmingLanguageSummary.vacancies_with_items)}
-              </span>
-              <span className="cy-chip">
-                Distinct languages · {formatInteger(programmingLanguageSummary.distinct_items)}
-              </span>
-            </div>
-
-            <div className="cy-table-shell">
-              <table className="cy-data-table">
-                <thead>
-                  <tr>
-                    <th>Language</th>
-                    <th>Vacancies</th>
-                    <th>Share</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topProgrammingLanguages.map((item) => (
-                    <tr key={item.programming_language}>
-                      <td>{prettifyLabel(item.programming_language)}</td>
-                      <td>{formatInteger(item.vacancy_count)}</td>
-                      <td>{formatPercent(item.share)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </article>
-
-          <article className="cy-card cy-data-panel cy-programming-language-panel">
-            <div className="cy-data-panel-head">
-              <h3>Top frameworks & libraries</h3>
-              <p className="cy-copy">Framework and library mentions extracted from the current vacancy snapshot.</p>
-            </div>
-
-            <div className="cy-summary-chip-row">
-              <span className="cy-chip">
-                Coverage · {formatPercent(frameworksSummary.vacancy_coverage)}
-              </span>
-              <span className="cy-chip">
-                Vacancies · {formatInteger(frameworksSummary.vacancies_with_items)}
-              </span>
-              <span className="cy-chip">
-                Distinct items · {formatInteger(frameworksSummary.distinct_items)}
-              </span>
-            </div>
-
-            <div className="cy-table-shell">
-              <table className="cy-data-table">
-                <thead>
-                  <tr>
-                    <th>Framework / Library</th>
-                    <th>Vacancies</th>
-                    <th>Share</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topFrameworksLibraries.map((item) => (
-                    <tr key={item.framework_library}>
-                      <td>{prettifyLabel(item.framework_library)}</td>
-                      <td>{formatInteger(item.vacancy_count)}</td>
-                      <td>{formatPercent(item.share)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </article>
-
-          <article className="cy-card cy-data-panel cy-skill-matrix-panel">
-            <div className="cy-data-panel-head">
-              <h3>Job skills by role</h3>
-              <p className="cy-copy">
-                Skill mix within the leading role categories. Segment width is normalized inside
-                each role.
-              </p>
-            </div>
-
-            <SkillRoleMatrix matrix={skillRoleMatrix} />
-          </article>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section className="cy-section" id="metadata">
-        <div className="cy-container">
-          <div id="methodology" className="cy-section-intro cy-section-intro-compact">
-            <h2 className="cy-heading cy-section-title">
-              Read <span className="cy-hero-title-accent">methodology</span>
-            </h2>
-            <p className="cy-copy cy-section-copy">
-              How the public snapshot is assembled, normalized, and published for the
-              dashboard.
-            </p>
-          </div>
-
-          <div className="cy-meta-strip">
-            <article className="cy-card cy-data-panel">
-              <div className="cy-data-panel-head">
-                <h3>Pipeline overview</h3>
-                <p className="cy-copy">
-                  The dashboard is built from aggregated vacancy exports, AI-assisted vacancy
-                  enrichment, and compact public snapshot files.
-                </p>
-              </div>
-
-              <div className="cy-methodology-step-list">
-                {methodologySteps.map((step, index) => (
-                  <div key={step} className="cy-methodology-step-item">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <p className="cy-copy">{step}</p>
+                  <div className="cy-summary-chip-row">
+                    <span className="cy-chip">
+                      Coverage · {formatPercent(programmingLanguageSummary.vacancy_coverage)}
+                    </span>
+                    <span className="cy-chip">
+                      Vacancies · {formatInteger(programmingLanguageSummary.vacancies_with_items)}
+                    </span>
+                    <span className="cy-chip">
+                      Distinct languages · {formatInteger(programmingLanguageSummary.distinct_items)}
+                    </span>
                   </div>
-                ))}
-              </div>
 
-              <div className="cy-summary-chip-row">
-                <span className="cy-chip">Source CSV dir · {metadata.source_csv_dir ?? "n/a"}</span>
-                <span className="cy-chip">Public data dir · {metadata.public_data_dir ?? "n/a"}</span>
-                <span className="cy-chip">Schema v{metadata.schema_version ?? "n/a"}</span>
-              </div>
-            </article>
+                  <div className="cy-table-shell">
+                    <table className="cy-data-table">
+                      <thead>
+                        <tr>
+                          <th>Language</th>
+                          <th>Vacancies</th>
+                          <th>Share</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {topProgrammingLanguages.map((item) => (
+                          <tr key={item.programming_language}>
+                            <td>{prettifyLabel(item.programming_language)}</td>
+                            <td>{formatInteger(item.vacancy_count)}</td>
+                            <td>{formatPercent(item.share)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
 
-            <article className="cy-card cy-data-panel">
-              <div className="cy-data-panel-head">
-                <h3>Snapshot coverage</h3>
-                <p className="cy-copy">
-                  Current build metadata for the export powering this page.
-                </p>
-              </div>
+                <article className="cy-card cy-data-panel cy-programming-language-panel">
+                  <div className="cy-data-panel-head">
+                    <h3>Top frameworks & libraries</h3>
+                    <p className="cy-copy">
+                      Framework and library mentions extracted from the current vacancy snapshot.
+                    </p>
+                  </div>
 
-              <div className="cy-meta-strip-grid">
-                <MetricCard
-                  label="Generated"
-                  value={formatShortDate(metadata.generated_at)}
-                  description={formatDateTime(metadata.generated_at)}
-                />
-                <MetricCard
-                  label="JSON snapshots"
-                  value={formatInteger(generatedSnapshots.length)}
-                  description="Public files published to the dashboard."
-                />
-                <MetricCard
-                  label="CSV inputs"
-                  value={formatInteger(availableCsvFiles.length)}
-                  description="Analytics exports available for this build."
-                />
-                <MetricCard
-                  label="Missing inputs"
-                  value={formatInteger(missingCsvFiles.length)}
-                  description={
-                    missingCsvFiles.length
-                      ? missingCsvFiles.join(", ")
-                      : "All expected CSV inputs are present."
-                  }
-                />
-              </div>
+                  <div className="cy-summary-chip-row">
+                    <span className="cy-chip">
+                      Coverage · {formatPercent(frameworksSummary.vacancy_coverage)}
+                    </span>
+                    <span className="cy-chip">
+                      Vacancies · {formatInteger(frameworksSummary.vacancies_with_items)}
+                    </span>
+                    <span className="cy-chip">
+                      Distinct items · {formatInteger(frameworksSummary.distinct_items)}
+                    </span>
+                  </div>
 
-              <div className="cy-methodology-file-list">
-                {generatedSnapshots.slice(0, 8).map((fileName) => (
-                  <span key={fileName} className="cy-chip">
-                    {fileName}
-                  </span>
-                ))}
-                {generatedSnapshots.length > 8 ? (
-                  <span className="cy-chip">+{generatedSnapshots.length - 8} more</span>
-                ) : null}
-              </div>
+                  <div className="cy-table-shell">
+                    <table className="cy-data-table">
+                      <thead>
+                        <tr>
+                          <th>Framework / Library</th>
+                          <th>Vacancies</th>
+                          <th>Share</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {topFrameworksLibraries.map((item) => (
+                          <tr key={item.framework_library}>
+                            <td>{prettifyLabel(item.framework_library)}</td>
+                            <td>{formatInteger(item.vacancy_count)}</td>
+                            <td>{formatPercent(item.share)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
 
-              <div className="cy-button-row cy-methodology-downloads">
-                {generatedSnapshots.length ? (
-                  <PrimaryButton
-                    href={downloadLinks.jsonArchive}
-                    download="swiss-it-jobs-json-snapshots.zip"
-                  >
-                    Download JSON snapshots
-                  </PrimaryButton>
-                ) : null}
-                {availableCsvFiles.length ? (
-                  <PrimaryButton
-                    href={downloadLinks.csvArchive}
-                    variant="outline"
-                    download="swiss-it-jobs-csv-exports.zip"
-                  >
-                    Download CSV exports
-                  </PrimaryButton>
-                ) : null}
+                <article className="cy-card cy-data-panel cy-skill-matrix-panel">
+                  <div className="cy-data-panel-head">
+                    <h3>Job skills by role</h3>
+                    <p className="cy-copy">
+                      Skill mix within the leading role categories. Segment width is normalized inside
+                      each role.
+                    </p>
+                  </div>
+
+                  <SkillRoleMatrix matrix={skillRoleMatrix} />
+                </article>
               </div>
-            </article>
+            </section>
+
+            <SectionDivider />
+
+            <section className="cy-section" id="metadata">
+              <div className="cy-container">
+                <div id="methodology" className="cy-section-intro cy-section-intro-compact">
+                  <h2 className="cy-heading cy-section-title">
+                    Read <span className="cy-hero-title-accent">methodology</span>
+                  </h2>
+                  <p className="cy-copy cy-section-copy">
+                    How the public snapshot is assembled, normalized, and published for the
+                    dashboard.
+                  </p>
+                </div>
+
+                <div className="cy-meta-strip">
+                  <article className="cy-card cy-data-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Pipeline overview</h3>
+                      <p className="cy-copy">
+                        The dashboard is built from aggregated vacancy exports, AI-assisted vacancy
+                        enrichment, and compact public snapshot files.
+                      </p>
+                    </div>
+
+                    <div className="cy-methodology-step-list">
+                      {methodologySteps.map((step, index) => (
+                        <div key={step} className="cy-methodology-step-item">
+                          <span>{String(index + 1).padStart(2, "0")}</span>
+                          <p className="cy-copy">{step}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="cy-summary-chip-row">
+                      <span className="cy-chip">Source CSV dir · {metadata.source_csv_dir ?? "n/a"}</span>
+                      <span className="cy-chip">Public data dir · {metadata.public_data_dir ?? "n/a"}</span>
+                      <span className="cy-chip">Schema v{metadata.schema_version ?? "n/a"}</span>
+                    </div>
+                  </article>
+
+                  <article className="cy-card cy-data-panel">
+                    <div className="cy-data-panel-head">
+                      <h3>Snapshot coverage</h3>
+                      <p className="cy-copy">
+                        Current build metadata for the export powering this page.
+                      </p>
+                    </div>
+
+                    <div className="cy-meta-strip-grid">
+                      <MetricCard
+                        label="Generated"
+                        value={formatShortDate(metadata.generated_at)}
+                        description={formatDateTime(metadata.generated_at)}
+                      />
+                      <MetricCard
+                        label="JSON snapshots"
+                        value={formatInteger(generatedSnapshots.length)}
+                        description="Public files published to the dashboard."
+                      />
+                      <MetricCard
+                        label="CSV inputs"
+                        value={formatInteger(availableCsvFiles.length)}
+                        description="Analytics exports available for this build."
+                      />
+                      <MetricCard
+                        label="Missing inputs"
+                        value={formatInteger(missingCsvFiles.length)}
+                        description={
+                          missingCsvFiles.length
+                            ? missingCsvFiles.join(", ")
+                            : "All expected CSV inputs are present."
+                        }
+                      />
+                    </div>
+
+                    <div className="cy-methodology-file-list">
+                      {generatedSnapshots.slice(0, 8).map((fileName) => (
+                        <span key={fileName} className="cy-chip">
+                          {fileName}
+                        </span>
+                      ))}
+                      {generatedSnapshots.length > 8 ? (
+                        <span className="cy-chip">+{generatedSnapshots.length - 8} more</span>
+                      ) : null}
+                    </div>
+
+                    <div className="cy-button-row cy-methodology-downloads">
+                      {generatedSnapshots.length ? (
+                        <PrimaryButton
+                          href={downloadLinks.jsonArchive}
+                          download="swiss-it-jobs-json-snapshots.zip"
+                        >
+                          Download JSON snapshots
+                        </PrimaryButton>
+                      ) : null}
+                      {availableCsvFiles.length ? (
+                        <PrimaryButton
+                          href={downloadLinks.csvArchive}
+                          variant="outline"
+                          download="swiss-it-jobs-csv-exports.zip"
+                        >
+                          Download CSV exports
+                        </PrimaryButton>
+                      ) : null}
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-      </section>
+      </div>
 
       <footer className="cy-footer">
         <div className="cy-section">
@@ -1322,6 +1405,30 @@ function PrimaryButton({ children, href, variant = "solid", download }) {
     >
       {children}
     </a>
+  );
+}
+
+function SectionRail({ sections, activeSectionId }) {
+  return (
+    <aside className="cy-section-rail" aria-label="Page sections">
+      <div className="cy-card cy-section-rail-card">
+        <p className="cy-kicker">Navigate</p>
+        <nav className="cy-section-rail-nav">
+          {sections.map((section, index) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className={`cy-section-rail-link ${
+                activeSectionId === section.id ? "is-active" : ""
+              }`}
+            >
+              <span className="cy-section-rail-index">{String(index + 1).padStart(2, "0")}</span>
+              <span>{section.label}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </aside>
   );
 }
 
