@@ -1,0 +1,612 @@
+role_category,skill,vacancy_count,rank,share_within_group
+data_ai,python,302,1,0.5797
+data_ai,sql,213,2,0.4088
+data_ai,ci_cd,103,3,0.1977
+data_ai,aws,100,4,0.1919
+data_ai,etl,100,4,0.1919
+data_ai,spark,90,5,0.1727
+data_ai,databricks,89,6,0.1708
+data_ai,azure,87,7,0.167
+data_ai,agile,78,8,0.1497
+data_ai,devops,78,8,0.1497
+data_ai,snowflake,78,8,0.1497
+data_ai,gcp,76,9,0.1459
+data_ai,dbt,63,10,0.1209
+data_ai,pytorch,54,11,0.1036
+data_ai,java,52,12,0.0998
+data_ai,airflow,39,13,0.0749
+data_ai,tensorflow,31,14,0.0595
+data_ai,pandas,29,15,0.0557
+data_ai,scikit_learn,28,16,0.0537
+data_ai,c++,26,17,0.0499
+data_ai,bigquery,25,18,0.048
+data_ai,scala,25,18,0.048
+data_ai,postgresql,24,19,0.0461
+data_ai,kafka,23,20,0.0441
+data_ai,terraform,23,20,0.0441
+devops_cloud_platform,devops,308,1,0.2857
+devops_cloud_platform,azure,286,2,0.2653
+devops_cloud_platform,ci_cd,236,3,0.2189
+devops_cloud_platform,python,195,4,0.1809
+devops_cloud_platform,ansible,150,5,0.1391
+devops_cloud_platform,kubernetes,143,6,0.1327
+devops_cloud_platform,agile,121,7,0.1122
+devops_cloud_platform,aws,119,8,0.1104
+devops_cloud_platform,sql,101,9,0.0937
+devops_cloud_platform,terraform,101,9,0.0937
+devops_cloud_platform,gcp,67,10,0.0622
+devops_cloud_platform,java,67,10,0.0622
+devops_cloud_platform,docker,61,11,0.0566
+devops_cloud_platform,postgresql,60,12,0.0557
+devops_cloud_platform,openshift,55,13,0.051
+devops_cloud_platform,oracle,53,14,0.0492
+devops_cloud_platform,devsecops,33,15,0.0306
+devops_cloud_platform,microservices,29,16,0.0269
+devops_cloud_platform,mssql,29,16,0.0269
+devops_cloud_platform,linux,27,17,0.025
+devops_cloud_platform,kafka,26,18,0.0241
+devops_cloud_platform,scrum,26,18,0.0241
+devops_cloud_platform,vmware,26,18,0.0241
+devops_cloud_platform,javascript,25,19,0.0232
+devops_cloud_platform,spring,25,19,0.0232
+devops_cloud_platform,csharp,23,20,0.0213
+devops_cloud_platform,microsoft 365,23,20,0.0213
+erp_business_systems,spark,16,1,0.125
+erp_business_systems,agile,15,2,0.1172
+erp_business_systems,oracle,7,3,0.0547
+erp_business_systems,sap,4,4,0.0312
+erp_business_systems,devops,3,5,0.0234
+erp_business_systems,dotnet,3,5,0.0234
+erp_business_systems,dynamics 365,3,5,0.0234
+erp_business_systems,power platform,3,5,0.0234
+erp_business_systems,sql,3,5,0.0234
+erp_business_systems,azure,2,6,0.0156
+erp_business_systems,boost,2,6,0.0156
+erp_business_systems,microsoft 365,2,6,0.0156
+erp_business_systems,microsoft azure,2,6,0.0156
+erp_business_systems,s/4hana,2,6,0.0156
+erp_business_systems,vue,2,6,0.0156
+erp_business_systems,.net framework,1,7,0.0078
+erp_business_systems,abap,1,7,0.0078
+erp_business_systems,business_consulting,1,7,0.0078
+erp_business_systems,claude code,1,7,0.0078
+erp_business_systems,copilot,1,7,0.0078
+erp_business_systems,csharp,1,7,0.0078
+erp_business_systems,databricks,1,7,0.0078
+erp_business_systems,db2,1,7,0.0078
+erp_business_systems,fpsl,1,7,0.0078
+erp_business_systems,hana,1,7,0.0078
+erp_business_systems,hermes,1,7,0.0078
+erp_business_systems,hybrid,1,7,0.0078
+erp_business_systems,integration_tests,1,7,0.0078
+erp_business_systems,integrationsmanagement,1,7,0.0078
+erp_business_systems,java,1,7,0.0078
+erp_business_systems,javascript,1,7,0.0078
+erp_business_systems,m365,1,7,0.0078
+erp_business_systems,maxdb,1,7,0.0078
+erp_business_systems,ms sql,1,7,0.0078
+erp_business_systems,multiprojektmanagement,1,7,0.0078
+erp_business_systems,pair_programming,1,7,0.0078
+erp_business_systems,php,1,7,0.0078
+erp_business_systems,product management,1,7,0.0078
+erp_business_systems,python,1,7,0.0078
+erp_business_systems,s4/hana,1,7,0.0078
+erp_business_systems,safe,1,7,0.0078
+erp_business_systems,sap activate,1,7,0.0078
+erp_business_systems,sap fpsl,1,7,0.0078
+erp_business_systems,sap is-h,1,7,0.0078
+erp_business_systems,sap public cloud,1,7,0.0078
+erp_business_systems,sap s/4hana,1,7,0.0078
+erp_business_systems,sap sd,1,7,0.0078
+erp_business_systems,sap_s/4hana,1,7,0.0078
+erp_business_systems,scrum,1,7,0.0078
+erp_business_systems,sct,1,7,0.0078
+erp_business_systems,sfm,1,7,0.0078
+erp_business_systems,snowflake,1,7,0.0078
+erp_business_systems,stakeholdermanagement,1,7,0.0078
+erp_business_systems,swift,1,7,0.0078
+erp_business_systems,test_automation,1,7,0.0078
+erp_business_systems,typescript,1,7,0.0078
+erp_business_systems,unit_tests,1,7,0.0078
+erp_business_systems,version_control,1,7,0.0078
+erp_business_systems,visual studio,1,7,0.0078
+erp_business_systems,visual studio code,1,7,0.0078
+erp_business_systems,waterfall,1,7,0.0078
+product_project_analysis,agile,272,1,0.4109
+product_project_analysis,sql,55,2,0.0831
+product_project_analysis,devops,42,3,0.0634
+product_project_analysis,python,27,4,0.0408
+product_project_analysis,scrum,27,4,0.0408
+product_project_analysis,safe,21,5,0.0317
+product_project_analysis,aws,14,6,0.0211
+product_project_analysis,kanban,13,7,0.0196
+product_project_analysis,ci_cd,12,8,0.0181
+product_project_analysis,sap,11,9,0.0166
+product_project_analysis,hermes,10,10,0.0151
+product_project_analysis,oracle,10,10,0.0151
+product_project_analysis,dotnet,9,11,0.0136
+product_project_analysis,gcp,9,11,0.0136
+product_project_analysis,microservices,9,11,0.0136
+product_project_analysis,spark,9,11,0.0136
+product_project_analysis,azure,8,12,0.0121
+product_project_analysis,java,8,12,0.0121
+product_project_analysis,bpmn,7,13,0.0106
+product_project_analysis,power bi,7,13,0.0106
+product_project_analysis,uml,7,13,0.0106
+product_project_analysis,csharp,6,14,0.0091
+product_project_analysis,kafka,6,14,0.0091
+product_project_analysis,vue,6,14,0.0091
+product_project_analysis,bpmn 2.0,5,15,0.0076
+product_project_analysis,project management,5,15,0.0076
+product_project_analysis,relational databases,5,15,0.0076
+product_project_analysis,swift,5,15,0.0076
+product_project_analysis,waterfall,5,15,0.0076
+product_project_analysis,business analysis,4,16,0.006
+product_project_analysis,c4,4,16,0.006
+product_project_analysis,change management,4,16,0.006
+product_project_analysis,databricks,4,16,0.006
+product_project_analysis,domain driven design (ddd),4,16,0.006
+product_project_analysis,gherkin,4,16,0.006
+product_project_analysis,javascript,4,16,0.006
+product_project_analysis,kubernetes,4,16,0.006
+product_project_analysis,lean,4,16,0.006
+product_project_analysis,plantuml,4,16,0.006
+product_project_analysis,power platform,4,16,0.006
+product_project_analysis,specification by example,4,16,0.006
+product_project_analysis,user story mapping,4,16,0.006
+product_project_analysis,value stream mapping,4,16,0.006
+product_project_analysis,confluence,3,17,0.0045
+product_project_analysis,excel,3,17,0.0045
+product_project_analysis,hybrid,3,17,0.0045
+product_project_analysis,ipma,3,17,0.0045
+product_project_analysis,itil,3,17,0.0045
+product_project_analysis,jira,3,17,0.0045
+product_project_analysis,lean six sigma,3,17,0.0045
+product_project_analysis,mssql,3,17,0.0045
+product_project_analysis,power apps,3,17,0.0045
+product_project_analysis,requirements engineering,3,17,0.0045
+product_project_analysis,rest_api,3,17,0.0045
+product_project_analysis,test_automation,3,17,0.0045
+product_project_analysis,archimate,2,18,0.003
+product_project_analysis,babok,2,18,0.003
+product_project_analysis,bigquery,2,18,0.003
+product_project_analysis,boost,2,18,0.003
+product_project_analysis,classic,2,18,0.003
+product_project_analysis,cloud,2,18,0.003
+product_project_analysis,data analysis,2,18,0.003
+product_project_analysis,design thinking,2,18,0.003
+product_project_analysis,dmaic,2,18,0.003
+product_project_analysis,docker,2,18,0.003
+product_project_analysis,express,2,18,0.003
+product_project_analysis,ireb,2,18,0.003
+product_project_analysis,kotlin,2,18,0.003
+product_project_analysis,microsoft 365,2,18,0.003
+product_project_analysis,nextjs,2,18,0.003
+product_project_analysis,nodejs,2,18,0.003
+product_project_analysis,php,2,18,0.003
+product_project_analysis,power query,2,18,0.003
+product_project_analysis,process optimization,2,18,0.003
+product_project_analysis,project_management,2,18,0.003
+product_project_analysis,requirements management,2,18,0.003
+product_project_analysis,requirements_engineering,2,18,0.003
+product_project_analysis,salesforce,2,18,0.003
+product_project_analysis,sap fi/co,2,18,0.003
+product_project_analysis,sap hr,2,18,0.003
+product_project_analysis,sap s/4hana,2,18,0.003
+product_project_analysis,snowflake,2,18,0.003
+product_project_analysis,successfactors,2,18,0.003
+product_project_analysis,togaf,2,18,0.003
+product_project_analysis,workday,2,18,0.003
+product_project_analysis,.net,1,19,0.0015
+product_project_analysis,amos,1,19,0.0015
+product_project_analysis,analysis,1,19,0.0015
+product_project_analysis,anaplan,1,19,0.0015
+product_project_analysis,axioma risk,1,19,0.0015
+product_project_analysis,azure sql,1,19,0.0015
+product_project_analysis,bi tools,1,19,0.0015
+product_project_analysis,business intelligence,1,19,0.0015
+product_project_analysis,business_analysis,1,19,0.0015
+product_project_analysis,business_process_analysis,1,19,0.0015
+product_project_analysis,camunda,1,19,0.0015
+product_project_analysis,classical,1,19,0.0015
+product_project_analysis,conventional,1,19,0.0015
+product_project_analysis,cycle en v,1,19,0.0015
+product_project_analysis,data analytics,1,19,0.0015
+product_project_analysis,dax,1,19,0.0015
+product_project_analysis,dwh,1,19,0.0015
+product_project_analysis,enterprise_architecture,1,19,0.0015
+product_project_analysis,erp/mro platforms,1,19,0.0015
+product_project_analysis,genesys cloud,1,19,0.0015
+product_project_analysis,gis,1,19,0.0015
+product_project_analysis,gis-based-modeling,1,19,0.0015
+product_project_analysis,google cloud platform,1,19,0.0015
+product_project_analysis,hr process digitization,1,19,0.0015
+product_project_analysis,hr project management,1,19,0.0015
+product_project_analysis,ifs,1,19,0.0015
+product_project_analysis,integration projects,1,19,0.0015
+product_project_analysis,itsm,1,19,0.0015
+product_project_analysis,lean startup,1,19,0.0015
+product_project_analysis,lean-agile,1,19,0.0015
+product_project_analysis,looker,1,19,0.0015
+product_project_analysis,lucanet,1,19,0.0015
+product_project_analysis,management consulting,1,19,0.0015
+product_project_analysis,mcda,1,19,0.0015
+product_project_analysis,mes tulip,1,19,0.0015
+product_project_analysis,microsoft dynamics crm,1,19,0.0015
+product_project_analysis,microsoft dynamics nav/ navision,1,19,0.0015
+product_project_analysis,miro,1,19,0.0015
+product_project_analysis,model-based working methods,1,19,0.0015
+product_project_analysis,ms office,1,19,0.0015
+product_project_analysis,nato architecture framework (naf),1,19,0.0015
+product_project_analysis,openshift,1,19,0.0015
+product_project_analysis,or_tools,1,19,0.0015
+product_project_analysis,parameterization,1,19,0.0015
+product_project_analysis,power automate,1,19,0.0015
+product_project_analysis,process analysis,1,19,0.0015
+product_project_analysis,process automation,1,19,0.0015
+product_project_analysis,process mining,1,19,0.0015
+product_project_analysis,process modeling,1,19,0.0015
+product_project_analysis,process_management,1,19,0.0015
+product_project_analysis,processautomation,1,19,0.0015
+product_project_analysis,project/process management,1,19,0.0015
+product_project_analysis,prozessdiagramme,1,19,0.0015
+product_project_analysis,qliksense,1,19,0.0015
+product_project_analysis,quarkus,1,19,0.0015
+product_project_analysis,r,1,19,0.0015
+product_project_analysis,rails,1,19,0.0015
+product_project_analysis,react,1,19,0.0015
+product_project_analysis,requirement life cycle,1,19,0.0015
+product_project_analysis,requirement management,1,19,0.0015
+product_project_analysis,requirements analysis,1,19,0.0015
+product_project_analysis,requirements gathering,1,19,0.0015
+product_project_analysis,requirements_management,1,19,0.0015
+product_project_analysis,s/4 hana,1,19,0.0015
+product_project_analysis,s/4hana,1,19,0.0015
+product_project_analysis,s3/hdfs,1,19,0.0015
+product_project_analysis,salesforce service cloud,1,19,0.0015
+product_project_analysis,sap apo,1,19,0.0015
+product_project_analysis,sap mm,1,19,0.0015
+product_project_analysis,scrum/agile,1,19,0.0015
+product_project_analysis,sharepoint,1,19,0.0015
+product_project_analysis,signavio,1,19,0.0015
+product_project_analysis,simcorp dimension,1,19,0.0015
+product_project_analysis,six sigma,1,19,0.0015
+product_project_analysis,spatio-temporal-analytics,1,19,0.0015
+product_project_analysis,specification,1,19,0.0015
+product_project_analysis,spring,1,19,0.0015
+product_project_analysis,teams,1,19,0.0015
+product_project_analysis,tensorflow,1,19,0.0015
+product_project_analysis,use cases,1,19,0.0015
+product_project_analysis,ux design thinking,1,19,0.0015
+product_project_analysis,vba,1,19,0.0015
+product_project_analysis,visio,1,19,0.0015
+product_project_analysis,warehouse-management-systeme,1,19,0.0015
+product_project_analysis,wms,1,19,0.0015
+product_project_analysis,workshop facilitation,1,19,0.0015
+qa_testing,test_automation,74,1,0.3474
+qa_testing,agile,54,2,0.2535
+qa_testing,ci_cd,42,3,0.1972
+qa_testing,python,38,4,0.1784
+qa_testing,java,33,5,0.1549
+qa_testing,devops,32,6,0.1502
+qa_testing,playwright,16,7,0.0751
+qa_testing,selenium,16,7,0.0751
+qa_testing,javascript,14,8,0.0657
+qa_testing,sql,13,9,0.061
+qa_testing,csharp,11,10,0.0516
+qa_testing,cypress,10,11,0.0469
+qa_testing,safe,10,11,0.0469
+qa_testing,typescript,10,11,0.0469
+qa_testing,scrum,9,12,0.0423
+qa_testing,microservices,7,13,0.0329
+qa_testing,swift,7,13,0.0329
+qa_testing,angular,6,14,0.0282
+qa_testing,bdd,5,15,0.0235
+qa_testing,dotnet,5,15,0.0235
+qa_testing,robot framework,5,15,0.0235
+qa_testing,c++,4,16,0.0188
+qa_testing,cucumber,4,16,0.0188
+qa_testing,fmea,4,16,0.0188
+qa_testing,junit,4,16,0.0188
+qa_testing,kafka,4,16,0.0188
+qa_testing,kotlin,4,16,0.0188
+qa_testing,openshift,4,16,0.0188
+qa_testing,react,4,16,0.0188
+qa_testing,azure,3,17,0.0141
+qa_testing,c,3,17,0.0141
+qa_testing,kaizen,3,17,0.0141
+qa_testing,kanban,3,17,0.0141
+qa_testing,mongodb,3,17,0.0141
+qa_testing,php,3,17,0.0141
+qa_testing,rust,3,17,0.0141
+qa_testing,5 why,2,18,0.0094
+qa_testing,8d,2,18,0.0094
+qa_testing,appium,2,18,0.0094
+qa_testing,aws,2,18,0.0094
+qa_testing,boost,2,18,0.0094
+qa_testing,clean_code,2,18,0.0094
+qa_testing,dart,2,18,0.0094
+qa_testing,docker,2,18,0.0094
+qa_testing,gherkin,2,18,0.0094
+qa_testing,kubernetes,2,18,0.0094
+qa_testing,lean,2,18,0.0094
+qa_testing,manual_testing,2,18,0.0094
+qa_testing,quality assurance,2,18,0.0094
+qa_testing,rest assured,2,18,0.0094
+qa_testing,six sigma,2,18,0.0094
+qa_testing,spark,2,18,0.0094
+qa_testing,spring,2,18,0.0094
+qa_testing,squish,2,18,0.0094
+qa_testing,tosca,2,18,0.0094
+qa_testing,5s,1,19,0.0047
+qa_testing,ai quality evaluation,1,19,0.0047
+qa_testing,capa,1,19,0.0047
+qa_testing,codiumate,1,19,0.0047
+qa_testing,data annotation,1,19,0.0047
+qa_testing,data-driven,1,19,0.0047
+qa_testing,databricks,1,19,0.0047
+qa_testing,detox,1,19,0.0047
+qa_testing,dmaic,1,19,0.0047
+qa_testing,documentation,1,19,0.0047
+qa_testing,espresso,1,19,0.0047
+qa_testing,fastapi,1,19,0.0047
+qa_testing,gcp,1,19,0.0047
+qa_testing,gemba walks,1,19,0.0047
+qa_testing,hil,1,19,0.0047
+qa_testing,html5,1,19,0.0047
+qa_testing,hybrid,1,19,0.0047
+qa_testing,inspection,1,19,0.0047
+qa_testing,ishikawa,1,19,0.0047
+qa_testing,iso 9001,1,19,0.0047
+qa_testing,istqb,1,19,0.0047
+qa_testing,istqb foundation level,1,19,0.0047
+qa_testing,istqb foundation level (preferred),1,19,0.0047
+qa_testing,itil,1,19,0.0047
+qa_testing,jest,1,19,0.0047
+qa_testing,keyword-driven,1,19,0.0047
+qa_testing,mabl,1,19,0.0047
+qa_testing,matlab,1,19,0.0047
+qa_testing,matrix organization,1,19,0.0047
+qa_testing,methodical analysis,1,19,0.0047
+qa_testing,methodisch,1,19,0.0047
+qa_testing,mockito,1,19,0.0047
+qa_testing,ms-sql,1,19,0.0047
+qa_testing,msa,1,19,0.0047
+qa_testing,mssql,1,19,0.0047
+qa_testing,pdca,1,19,0.0047
+qa_testing,playwright-ai plugins,1,19,0.0047
+qa_testing,process improvement,1,19,0.0047
+qa_testing,protractor,1,19,0.0047
+qa_testing,qa_testing,1,19,0.0047
+qa_testing,regulated environment,1,19,0.0047
+qa_testing,rest,1,19,0.0047
+qa_testing,risk_based_testing,1,19,0.0047
+qa_testing,sap,1,19,0.0047
+qa_testing,shainin,1,19,0.0047
+qa_testing,shift-left,1,19,0.0047
+qa_testing,smed,1,19,0.0047
+qa_testing,spc,1,19,0.0047
+qa_testing,specflow,1,19,0.0047
+qa_testing,testcontainers,1,19,0.0047
+qa_testing,testim ai,1,19,0.0047
+qa_testing,tests,1,19,0.0047
+qa_testing,vsm,1,19,0.0047
+qa_testing,waterfall,1,19,0.0047
+qa_testing,weibull,1,19,0.0047
+qa_testing,xcuitest,1,19,0.0047
+security,python,63,1,0.1186
+security,agile,62,2,0.1168
+security,aws,45,3,0.0847
+security,ci_cd,44,4,0.0829
+security,azure,43,5,0.081
+security,devops,37,6,0.0697
+security,gcp,32,7,0.0603
+security,spark,22,8,0.0414
+security,sql,21,9,0.0395
+security,devsecops,15,10,0.0282
+security,boost,14,11,0.0264
+security,java,14,11,0.0264
+security,ansible,13,12,0.0245
+security,databricks,13,12,0.0245
+security,csharp,10,13,0.0188
+security,kubernetes,10,13,0.0188
+security,snowflake,10,13,0.0188
+security,terraform,8,14,0.0151
+security,linux,7,15,0.0132
+security,c++,6,16,0.0113
+security,etl,6,16,0.0113
+security,rust,6,16,0.0113
+security,waterfall,6,16,0.0113
+security,go,5,17,0.0094
+security,itil,5,17,0.0094
+security,nist,5,17,0.0094
+security,scrum,5,17,0.0094
+security,docker,4,18,0.0075
+security,express,4,18,0.0075
+security,javascript,4,18,0.0075
+security,microservices,4,18,0.0075
+security,mssql,4,18,0.0075
+security,postgresql,4,18,0.0075
+security,react,4,18,0.0075
+security,spring,4,18,0.0075
+security,test_automation,4,18,0.0075
+security,typescript,4,18,0.0075
+security,cloud,3,19,0.0056
+security,integration_tests,3,19,0.0056
+security,microsoft 365,3,19,0.0056
+security,microsoft azure,3,19,0.0056
+security,openshift,3,19,0.0056
+security,oracle,3,19,0.0056
+security,pair_programming,3,19,0.0056
+security,powershell,3,19,0.0056
+security,unit_tests,3,19,0.0056
+security,vmware,3,19,0.0056
+security,windows,3,19,0.0056
+security,airflow,2,20,0.0038
+security,bash,2,20,0.0038
+security,bcm,2,20,0.0038
+security,c,2,20,0.0038
+security,ci / cd build server,2,20,0.0038
+security,cobit,2,20,0.0038
+security,code_reviews,2,20,0.0038
+security,compliance,2,20,0.0038
+security,dbt,2,20,0.0038
+security,dotnet,2,20,0.0038
+security,governance,2,20,0.0038
+security,iso 27001,2,20,0.0038
+security,iso/iec 27001,2,20,0.0038
+security,itsm,2,20,0.0038
+security,kafka,2,20,0.0038
+security,m365,2,20,0.0038
+security,php,2,20,0.0038
+security,risk management,2,20,0.0038
+security,static_code_analysis,2,20,0.0038
+security,testers,2,20,0.0038
+security,time_tracking,2,20,0.0038
+software_engineering,agile,564,1,0.2975
+software_engineering,ci_cd,489,2,0.2579
+software_engineering,java,475,3,0.2505
+software_engineering,python,415,4,0.2189
+software_engineering,devops,331,5,0.1746
+software_engineering,sql,311,6,0.164
+software_engineering,react,293,7,0.1545
+software_engineering,typescript,281,8,0.1482
+software_engineering,angular,268,9,0.1414
+software_engineering,javascript,215,10,0.1134
+software_engineering,spring,212,11,0.1118
+software_engineering,csharp,209,12,0.1102
+software_engineering,aws,199,13,0.105
+software_engineering,dotnet,187,14,0.0986
+software_engineering,c++,182,15,0.096
+software_engineering,microservices,158,16,0.0833
+software_engineering,azure,154,17,0.0812
+software_engineering,kubernetes,127,18,0.067
+software_engineering,postgresql,123,19,0.0649
+software_engineering,scrum,103,20,0.0543
+support_operations,sql,42,1,0.1091
+support_operations,agile,25,2,0.0649
+support_operations,itil,23,3,0.0597
+support_operations,azure,11,4,0.0286
+support_operations,oracle,11,4,0.0286
+support_operations,java,10,5,0.026
+support_operations,ci_cd,9,6,0.0234
+support_operations,python,9,6,0.0234
+support_operations,aws,8,7,0.0208
+support_operations,devops,6,8,0.0156
+support_operations,linux,6,8,0.0156
+support_operations,express,5,9,0.013
+support_operations,docker,4,10,0.0104
+support_operations,gcp,4,10,0.0104
+support_operations,itsm,4,10,0.0104
+support_operations,mssql,4,10,0.0104
+support_operations,sap,4,10,0.0104
+support_operations,javascript,3,11,0.0078
+support_operations,kubernetes,3,11,0.0078
+support_operations,postgresql,3,11,0.0078
+support_operations,react,3,11,0.0078
+support_operations,terraform,3,11,0.0078
+support_operations,devsecops,2,12,0.0052
+support_operations,dicom,2,12,0.0052
+support_operations,dotnet,2,12,0.0052
+support_operations,etl,2,12,0.0052
+support_operations,git,2,12,0.0052
+support_operations,intune,2,12,0.0052
+support_operations,ms sql,2,12,0.0052
+support_operations,mysql,2,12,0.0052
+support_operations,pacs,2,12,0.0052
+support_operations,php,2,12,0.0052
+support_operations,powershell,2,12,0.0052
+support_operations,project_management,2,12,0.0052
+support_operations,ris,2,12,0.0052
+support_operations,scrum,2,12,0.0052
+support_operations,spring,2,12,0.0052
+support_operations,vmware,2,12,0.0052
+support_operations,vue,2,12,0.0052
+support_operations,active directory,1,13,0.0026
+support_operations,angular,1,13,0.0026
+support_operations,ansible,1,13,0.0026
+support_operations,azure ad connect,1,13,0.0026
+support_operations,azure_devops,1,13,0.0026
+support_operations,bi,1,13,0.0026
+support_operations,bpmn,1,13,0.0026
+support_operations,c++,1,13,0.0026
+support_operations,citrix,1,13,0.0026
+support_operations,cloud,1,13,0.0026
+support_operations,crm,1,13,0.0026
+support_operations,csharp,1,13,0.0026
+support_operations,dhcp,1,13,0.0026
+support_operations,dns,1,13,0.0026
+support_operations,end-to-end support,1,13,0.0026
+support_operations,epk,1,13,0.0026
+support_operations,erp,1,13,0.0026
+support_operations,excel,1,13,0.0026
+support_operations,exchange online,1,13,0.0026
+support_operations,fortinet,1,13,0.0026
+support_operations,front- and back-end development,1,13,0.0026
+support_operations,google cloud,1,13,0.0026
+support_operations,gpos,1,13,0.0026
+support_operations,grafana,1,13,0.0026
+support_operations,groovy,1,13,0.0026
+support_operations,hana,1,13,0.0026
+support_operations,hermes,1,13,0.0026
+support_operations,html,1,13,0.0026
+support_operations,influxdb,1,13,0.0026
+support_operations,kanban,1,13,0.0026
+support_operations,linux server,1,13,0.0026
+support_operations,matlab,1,13,0.0026
+support_operations,microservices,1,13,0.0026
+support_operations,microsoft 365,1,13,0.0026
+support_operations,microsoft 365?,1,13,0.0026
+support_operations,microsoft dynamics 365 business central,1,13,0.0026
+support_operations,microsoft teams,1,13,0.0026
+support_operations,microsoft windows server,1,13,0.0026
+support_operations,modbus,1,13,0.0026
+support_operations,mongodb,1,13,0.0026
+support_operations,mqtt,1,13,0.0026
+support_operations,ms exchange,1,13,0.0026
+support_operations,ms sql server,1,13,0.0026
+support_operations,ms-sql server,1,13,0.0026
+support_operations,node-red,1,13,0.0026
+support_operations,nodejs,1,13,0.0026
+support_operations,"nodejs (js, ts)",1,13,0.0026
+support_operations,o365,1,13,0.0026
+support_operations,opc ua,1,13,0.0026
+support_operations,openshift,1,13,0.0026
+support_operations,payroll systems,1,13,0.0026
+support_operations,postgres,1,13,0.0026
+support_operations,project management,1,13,0.0026
+support_operations,project-management,1,13,0.0026
+support_operations,re/fx,1,13,0.0026
+support_operations,redis,1,13,0.0026
+support_operations,requirements-engineering,1,13,0.0026
+support_operations,s7,1,13,0.0026
+support_operations,safe,1,13,0.0026
+support_operations,safe-inspired,1,13,0.0026
+support_operations,"sap cloud (btp, calm, rise)",1,13,0.0026
+support_operations,sap fi/co,1,13,0.0026
+support_operations,sap hcm,1,13,0.0026
+support_operations,servicenow,1,13,0.0026
+support_operations,sybase,1,13,0.0026
+support_operations,ticketing,1,13,0.0026
+support_operations,typescript,1,13,0.0026
+support_operations,ums,1,13,0.0026
+support_operations,veeam,1,13,0.0026
+support_operations,windows,1,13,0.0026
+support_operations,windows server,1,13,0.0026
+ux_ui_design,agile,3,1,0.1034
+ux_ui_design,react,3,1,0.1034
+ux_ui_design,typescript,3,1,0.1034
+ux_ui_design,angular,2,2,0.069
+ux_ui_design,ci_cd,2,2,0.069
+ux_ui_design,devops,2,2,0.069
+ux_ui_design,kubernetes,2,2,0.069
+ux_ui_design,rest_api,2,2,0.069
+ux_ui_design,sql,2,2,0.069
+ux_ui_design,vue,2,2,0.069
+ux_ui_design,boost,1,3,0.0345
+ux_ui_design,express,1,3,0.0345
+ux_ui_design,figma,1,3,0.0345
+ux_ui_design,gcp,1,3,0.0345
+ux_ui_design,mongodb,1,3,0.0345
+ux_ui_design,nextjs,1,3,0.0345
+ux_ui_design,relational,1,3,0.0345

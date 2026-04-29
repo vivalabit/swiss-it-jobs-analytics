@@ -506,6 +506,9 @@ function App() {
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
   const allKnownSeniorityItems = filterUnknown(seniorityDistribution.items ?? []);
   const workModeItems = selectTopItems(filterUnknown(workModeDistribution.items ?? []), 4);
+  const availableCsvFiles = metadata.available_csv_files ?? [];
+  const missingCsvFiles = metadata.missing_csv_files ?? [];
+  const generatedSnapshots = metadata.generated_snapshots ?? [];
   const salaryRoleGroups = (salaryMetrics.by_role_category ?? []).filter(
     (item) => item.role_category && item.role_category !== "Unknown",
   );
@@ -538,6 +541,17 @@ function App() {
     3,
   );
   const skillRoleMatrix = buildSkillRoleMatrix(topSkills.by_role_category ?? [], 8, 18);
+  const downloadLinks = {
+    jsonArchive: `${import.meta.env.BASE_URL}downloads/swiss-it-jobs-json-snapshots.zip`,
+    csvArchive: `${import.meta.env.BASE_URL}downloads/swiss-it-jobs-csv-exports.zip`,
+  };
+  const methodologySteps = [
+    "Collect processed vacancy exports from the multi-source analytics pipeline.",
+    "Deduplicate and normalize companies, locations, work mode, seniority, and salary fields.",
+    "Run AI-assisted vacancy analysis to improve classification accuracy and recover details that rule-based filters can miss.",
+    "Convert salary data to comparable yearly CHF ranges before aggregation.",
+    "Publish compact JSON snapshots and mirrored CSV extracts for the public dashboard.",
+  ];
 
   return (
     <main className="cy-app">
@@ -555,8 +569,11 @@ function App() {
                   Track hiring volume, salary benchmarks, and location hotspots from the
                   latest public Swiss IT vacancy data.
                 </p>
-                <div className="cy-hero-actions">
+                <div className="cy-button-row cy-hero-actions">
                   <PrimaryButton href="#vacancy-trends">Explore the dashboard</PrimaryButton>
+                  <PrimaryButton href="#methodology" variant="outline">
+                    Read methodology
+                  </PrimaryButton>
                 </div>
                 <div className="cy-kpi-grid">
                   <ProductKpiCard
@@ -1003,6 +1020,109 @@ function App() {
 
       <section className="cy-section" id="metadata">
         <div className="cy-container">
+          <div id="methodology" className="cy-section-intro cy-section-intro-compact">
+            <h2 className="cy-heading cy-section-title">
+              Read <span className="cy-hero-title-accent">methodology</span>
+            </h2>
+            <p className="cy-copy cy-section-copy">
+              How the public snapshot is assembled, normalized, and published for the
+              dashboard.
+            </p>
+          </div>
+
+          <div className="cy-meta-strip">
+            <article className="cy-card cy-data-panel">
+              <div className="cy-data-panel-head">
+                <h3>Pipeline overview</h3>
+                <p className="cy-copy">
+                  The dashboard is built from aggregated vacancy exports, AI-assisted vacancy
+                  enrichment, and compact public snapshot files.
+                </p>
+              </div>
+
+              <div className="cy-methodology-step-list">
+                {methodologySteps.map((step, index) => (
+                  <div key={step} className="cy-methodology-step-item">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p className="cy-copy">{step}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="cy-summary-chip-row">
+                <span className="cy-chip">Source CSV dir · {metadata.source_csv_dir ?? "n/a"}</span>
+                <span className="cy-chip">Public data dir · {metadata.public_data_dir ?? "n/a"}</span>
+                <span className="cy-chip">Schema v{metadata.schema_version ?? "n/a"}</span>
+              </div>
+            </article>
+
+            <article className="cy-card cy-data-panel">
+              <div className="cy-data-panel-head">
+                <h3>Snapshot coverage</h3>
+                <p className="cy-copy">
+                  Current build metadata for the export powering this page.
+                </p>
+              </div>
+
+              <div className="cy-meta-strip-grid">
+                <MetricCard
+                  label="Generated"
+                  value={formatShortDate(metadata.generated_at)}
+                  description={formatDateTime(metadata.generated_at)}
+                />
+                <MetricCard
+                  label="JSON snapshots"
+                  value={formatInteger(generatedSnapshots.length)}
+                  description="Public files published to the dashboard."
+                />
+                <MetricCard
+                  label="CSV inputs"
+                  value={formatInteger(availableCsvFiles.length)}
+                  description="Analytics exports available for this build."
+                />
+                <MetricCard
+                  label="Missing inputs"
+                  value={formatInteger(missingCsvFiles.length)}
+                  description={
+                    missingCsvFiles.length
+                      ? missingCsvFiles.join(", ")
+                      : "All expected CSV inputs are present."
+                  }
+                />
+              </div>
+
+              <div className="cy-methodology-file-list">
+                {generatedSnapshots.slice(0, 8).map((fileName) => (
+                  <span key={fileName} className="cy-chip">
+                    {fileName}
+                  </span>
+                ))}
+                {generatedSnapshots.length > 8 ? (
+                  <span className="cy-chip">+{generatedSnapshots.length - 8} more</span>
+                ) : null}
+              </div>
+
+              <div className="cy-button-row cy-methodology-downloads">
+                {generatedSnapshots.length ? (
+                  <PrimaryButton
+                    href={downloadLinks.jsonArchive}
+                    download="swiss-it-jobs-json-snapshots.zip"
+                  >
+                    Download JSON snapshots
+                  </PrimaryButton>
+                ) : null}
+                {availableCsvFiles.length ? (
+                  <PrimaryButton
+                    href={downloadLinks.csvArchive}
+                    variant="outline"
+                    download="swiss-it-jobs-csv-exports.zip"
+                  >
+                    Download CSV exports
+                  </PrimaryButton>
+                ) : null}
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -1066,10 +1186,11 @@ function StatusScreen({ title, message }) {
   );
 }
 
-function PrimaryButton({ children, href, variant = "solid" }) {
+function PrimaryButton({ children, href, variant = "solid", download }) {
   return (
     <a
       href={href}
+      download={download}
       className={`cy-button ${variant === "outline" ? "cy-button-outline" : "cy-button-solid"}`}
     >
       {children}

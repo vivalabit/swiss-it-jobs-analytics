@@ -64,6 +64,11 @@ img {
   padding-inline: 20px;
 }
 
+.cy-section[id],
+.cy-anchor-target {
+  scroll-margin-top: 112px;
+}
+
 .cy-container {
   width: min(100%, 1180px);
   margin-inline: auto;
@@ -1607,6 +1612,44 @@ img {
 .cy-meta-strip-grid {
   display: grid;
   gap: 14px;
+}
+
+.cy-methodology-step-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cy-methodology-step-item {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  border: 1px solid var(--border);
+  background: rgba(249, 250, 251, 0.7);
+  padding: 14px 16px;
+}
+
+.cy-methodology-step-item span {
+  color: var(--primary);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.cy-methodology-step-item .cy-copy {
+  margin: 0;
+}
+
+.cy-methodology-file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.cy-methodology-downloads {
+  margin-top: 24px;
 }
 
 .cy-footer {
