@@ -537,6 +537,77 @@ img {
   background: rgba(249, 250, 251, 0.35);
 }
 
+.cy-trust-section {
+  margin-top: 28px;
+}
+
+.cy-trust-panel {
+  padding: 24px;
+}
+
+.cy-trust-panel-head {
+  display: grid;
+  gap: 16px;
+}
+
+.cy-trust-panel-head h2 {
+  margin: 10px 0 0;
+  color: var(--foreground);
+  font-size: clamp(1.8rem, 4vw, 2.45rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.cy-trust-panel-head .cy-copy {
+  max-width: 560px;
+}
+
+.cy-trust-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.cy-trust-item {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.92)),
+    #fff;
+  padding: 20px;
+}
+
+.cy-trust-item-title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+}
+
+.cy-trust-item-body {
+  display: grid;
+  gap: 10px;
+}
+
+.cy-trust-item-body .cy-copy {
+  margin-top: 0;
+}
+
+.cy-trust-chip-list {
+  margin-top: 0;
+}
+
+.cy-trust-note-list {
+  display: grid;
+  gap: 8px;
+}
+
 .cy-metrics-grid {
   display: grid;
   gap: 16px;
@@ -1727,11 +1798,21 @@ img {
   .cy-dashboard-grid,
   .cy-data-grid,
   .cy-kpi-grid,
+  .cy-trust-grid,
   .cy-hero-highlight-grid,
   .cy-experience-stat-grid,
   .cy-salary-stat-grid,
   .cy-meta-strip-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cy-trust-panel {
+    padding: 28px;
+  }
+
+  .cy-trust-panel-head {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    align-items: end;
   }
 
   .cy-hero-market-grid {
@@ -1774,6 +1855,10 @@ img {
 
   .cy-dashboard-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cy-trust-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .cy-company-panel {

@@ -379,6 +379,27 @@ const SKILL_MATRIX_COLORS = [
   "#20a84f",
   "#ef0b79",
 ];
+const PUBLIC_SNAPSHOT_SOURCES = [
+  "LinkedIn",
+  "jobs.ch",
+  "jobscout24.ch",
+  "jobup.ch",
+  "swissdevjobs.ch",
+];
+const SNAPSHOT_SCOPE_ITEMS = [
+  "Vacancy volume",
+  "Salary benchmarks",
+  "Role and seniority mix",
+  "City and canton demand",
+  "Work mode split",
+  "Skill and stack trends",
+];
+const SNAPSHOT_LIMITATIONS = [
+  "Public aggregate snapshot, not a full census of the Swiss market.",
+  "Salary benchmarks only use vacancies with explicit pay ranges.",
+  "Coverage is limited to vacancies published from 2026 onward.",
+  "Some fields are normalized or AI-assisted from posting text and structured metadata.",
+];
 
 function App() {
   const [state, setState] = useState({
@@ -552,6 +573,7 @@ function App() {
     "Convert salary data to comparable yearly CHF ranges before aggregation.",
     "Publish compact JSON snapshots and mirrored CSV extracts for the public dashboard.",
   ];
+  const trustLimitations = [...SNAPSHOT_LIMITATIONS];
 
   return (
     <main className="cy-app">
@@ -608,6 +630,79 @@ function App() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="cy-section cy-trust-section" aria-labelledby="snapshot-context">
+        <div className="cy-container">
+          <article className="cy-card cy-trust-panel">
+            <div className="cy-data-panel-head cy-trust-panel-head">
+              <div>
+                <p className="cy-kicker">Snapshot context</p>
+                <h2 id="snapshot-context">What this page is built on</h2>
+              </div>
+              <p className="cy-copy">
+                Quick context on freshness, sample size, coverage, and what the public export
+                does not claim to measure.
+              </p>
+            </div>
+
+            <div className="cy-trust-grid">
+              <TrustInfoCard
+                label="Sources"
+                title={`${PUBLIC_SNAPSHOT_SOURCES.length} public job boards`}
+              >
+                <div className="cy-chip-list cy-trust-chip-list">
+                  {PUBLIC_SNAPSHOT_SOURCES.map((source) => (
+                    <span key={source} className="cy-chip">
+                      {source}
+                    </span>
+                  ))}
+                </div>
+                <p className="cy-copy">
+                  Deduplicated at vacancy level before the public aggregate is published.
+                </p>
+              </TrustInfoCard>
+
+              <TrustInfoCard label="Updated" title={formatShortDate(metadata.generated_at)}>
+                <p className="cy-copy">{formatDateTime(metadata.generated_at)}</p>
+              </TrustInfoCard>
+
+              <TrustInfoCard label="Sample size" title={formatInteger(overviewMetrics.total_vacancies)}>
+                <p className="cy-copy">
+                  {formatInteger(overviewMetrics.total_companies)} direct employers after agency
+                  filtering.
+                </p>
+              </TrustInfoCard>
+
+              <TrustInfoCard label="Salary coverage" title={formatPercent(salarySummary.salary_coverage)}>
+                <p className="cy-copy">
+                  {formatInteger(salarySummary.salary_count)} listings with normalized CHF yearly
+                  salary data.
+                </p>
+              </TrustInfoCard>
+
+              <TrustInfoCard label="Snapshot includes" title="Core market signals">
+                <div className="cy-chip-list cy-trust-chip-list">
+                  {SNAPSHOT_SCOPE_ITEMS.map((item) => (
+                    <span key={item} className="cy-chip">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </TrustInfoCard>
+
+              <TrustInfoCard label="Main limitations" title="Read before comparing numbers">
+                <div className="cy-trust-note-list">
+                  {trustLimitations.map((item) => (
+                    <p key={item} className="cy-copy">
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </TrustInfoCard>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -1240,6 +1335,16 @@ function MetricCard({ label, value, description }) {
       <p className="cy-kpi-label">{label}</p>
       <div className="cy-metric-value">{value}</div>
       <p className="cy-copy">{description}</p>
+    </article>
+  );
+}
+
+function TrustInfoCard({ label, title, children }) {
+  return (
+    <article className="cy-trust-item">
+      <p className="cy-kpi-label">{label}</p>
+      <h3 className="cy-trust-item-title">{title}</h3>
+      <div className="cy-trust-item-body">{children}</div>
     </article>
   );
 }
