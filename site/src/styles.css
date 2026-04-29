@@ -608,6 +608,55 @@ img {
   gap: 8px;
 }
 
+.cy-findings-section {
+  margin-top: 28px;
+}
+
+.cy-findings-panel {
+  padding: 24px;
+}
+
+.cy-findings-head h2 {
+  margin: 10px 0 0;
+  color: var(--foreground);
+  font-size: clamp(1.8rem, 4vw, 2.45rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.cy-findings-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.cy-finding-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.92)),
+    #fff;
+  padding: 20px;
+}
+
+.cy-finding-title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.12rem, 2.8vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 1.15;
+}
+
+.cy-finding-card .cy-copy {
+  margin-top: 0;
+}
+
 .cy-metrics-grid {
   display: grid;
   gap: 16px;
@@ -1810,6 +1859,10 @@ img {
     padding: 28px;
   }
 
+  .cy-findings-panel {
+    padding: 28px;
+  }
+
   .cy-trust-panel-head {
     grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
     align-items: end;
@@ -1859,6 +1912,10 @@ img {
 
   .cy-trust-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cy-findings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .cy-company-panel {
@@ -1997,7 +2054,15 @@ img {
     margin-top: 20px;
   }
 
+  .cy-findings-section {
+    margin-top: 20px;
+  }
+
   .cy-trust-panel-head h2 {
+    font-size: clamp(1.45rem, 8vw, 2rem);
+  }
+
+  .cy-findings-head h2 {
     font-size: clamp(1.45rem, 8vw, 2rem);
   }
 
@@ -2005,6 +2070,20 @@ img {
   .cy-hero-highlight-grid,
   .cy-hero-market-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cy-findings-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .cy-finding-card {
+    padding: 16px;
+  }
+
+  .cy-finding-title {
+    font-size: 1.05rem;
   }
 
   .cy-trust-grid {

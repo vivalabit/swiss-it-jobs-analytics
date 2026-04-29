@@ -557,6 +557,8 @@ function App() {
           groupKey: "role_category",
         };
   const topCity = cityItems[0] ?? null;
+  const leadingRole = roleItems[0] ?? null;
+  const fastestGrowingRole = getFastestGrowingRole(vacancyTrends);
   const topRoleGroups = selectTopItems(
     (topSkills.by_role_category ?? []).filter((group) => group.group !== "Unknown"),
     3,
@@ -574,6 +576,12 @@ function App() {
     "Publish compact JSON snapshots and mirrored CSV extracts for the public dashboard.",
   ];
   const trustLimitations = [...SNAPSHOT_LIMITATIONS];
+  const keyFindings = buildKeyFindings({
+    topCity,
+    leadingRole,
+    fastestGrowingRole,
+    salarySummary,
+  });
 
   return (
     <main className="cy-app">
@@ -701,6 +709,30 @@ function App() {
                   ))}
                 </div>
               </TrustInfoCard>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="cy-section cy-findings-section" aria-labelledby="key-findings">
+        <div className="cy-container">
+          <article className="cy-card cy-findings-panel">
+            <div className="cy-data-panel-head cy-findings-head">
+              <div>
+                <p className="cy-kicker">Key findings</p>
+                <h2 id="key-findings">What stands out right now</h2>
+              </div>
+            </div>
+
+            <div className="cy-findings-grid">
+              {keyFindings.map((item) => (
+                <KeyFindingCard
+                  key={item.title}
+                  label={item.label}
+                  title={item.title}
+                  description={item.description}
+                />
+              ))}
             </div>
           </article>
         </div>
@@ -1345,6 +1377,16 @@ function TrustInfoCard({ label, title, children }) {
       <p className="cy-kpi-label">{label}</p>
       <h3 className="cy-trust-item-title">{title}</h3>
       <div className="cy-trust-item-body">{children}</div>
+    </article>
+  );
+}
+
+function KeyFindingCard({ label, title, description }) {
+  return (
+    <article className="cy-finding-card">
+      <p className="cy-kpi-label">{label}</p>
+      <h3 className="cy-finding-title">{title}</h3>
+      <p className="cy-copy">{description}</p>
     </article>
   );
 }
@@ -2777,6 +2819,114 @@ function formatShortDate(value) {
     year: "numeric",
     timeZone: "Europe/Zurich",
   }).format(date);
+}
+
+function buildKeyFindings({ topCity, leadingRole, fastestGrowingRole, salarySummary }) {
+  const findings = [];
+
+  if (topCity) {
+    findings.push({
+      label: "Location",
+      title: `${prettifyLabel(topCity.label)} keeps the largest share`,
+      description: `${formatPercent(topCity.share)} of tracked vacancies are clustered there.`,
+    });
+  }
+
+  if (fastestGrowingRole) {
+    findings.push({
+      label: "Momentum",
+      title: `${prettifyLabel(fastestGrowingRole.role)} is growing fastest`,
+      description: `${formatInteger(fastestGrowingRole.current)} postings in the last 30 days, ${formatMultiplier(
+        fastestGrowingRole.growth,
+      )} vs the previous 30-day window.`,
+    });
+  }
+
+  if (typeof salarySummary?.salary_coverage === "number") {
+    findings.push({
+      label: "Compensation",
+      title: "Salary coverage is still limited",
+      description: `${formatInteger(salarySummary.salary_count)} listings expose usable pay data, or ${formatPercent(
+        salarySummary.salary_coverage,
+      )} of the snapshot.`,
+    });
+  }
+
+  if (leadingRole) {
+    findings.push({
+      label: "Demand",
+      title: `${prettifyLabel(leadingRole.label)} still anchors hiring`,
+      description: `${formatPercent(leadingRole.share)} of tracked vacancies fall into this role category.`,
+    });
+  }
+
+  return findings.slice(0, 4);
+}
+
+function getFastestGrowingRole(vacancyTrends) {
+  const items = vacancyTrends?.segments?.daily ?? [];
+  const latestDateValue = vacancyTrends?.summary?.latest_publication_date;
+  if (!items.length || !latestDateValue) {
+    return null;
+  }
+
+  const latestDate = new Date(`${latestDateValue}T00:00:00Z`);
+  if (Number.isNaN(latestDate.getTime())) {
+    return null;
+  }
+
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const currentWindowStart = new Date(latestDate.getTime() - 29 * DAY_MS);
+  const previousWindowStart = new Date(latestDate.getTime() - 59 * DAY_MS);
+  const previousWindowEnd = new Date(latestDate.getTime() - 30 * DAY_MS);
+  const totalsByRole = new Map();
+
+  for (const item of items) {
+    const role = item.role_category;
+    if (!role || role === "Unknown") {
+      continue;
+    }
+
+    const dateValue = item.date;
+    const date = new Date(`${dateValue}T00:00:00Z`);
+    if (Number.isNaN(date.getTime())) {
+      continue;
+    }
+
+    const current = totalsByRole.get(role) ?? { role, current: 0, previous: 0 };
+
+    if (date >= currentWindowStart && date <= latestDate) {
+      current.current += item.published_count ?? 0;
+    } else if (date >= previousWindowStart && date <= previousWindowEnd) {
+      current.previous += item.published_count ?? 0;
+    }
+
+    totalsByRole.set(role, current);
+  }
+
+  const rankedRoles = [...totalsByRole.values()]
+    .filter((item) => item.current > 0 && item.previous > 0)
+    .map((item) => ({
+      ...item,
+      growth: (item.current - item.previous) / item.previous,
+      delta: item.current - item.previous,
+    }))
+    .sort((first, second) => {
+      if (second.growth !== first.growth) {
+        return second.growth - first.growth;
+      }
+      return second.delta - first.delta;
+    });
+
+  return rankedRoles[0] ?? null;
+}
+
+function formatMultiplier(value) {
+  if (typeof value !== "number") {
+    return "n/a";
+  }
+
+  return `${(value + 1).toFixed(value >= 1 ? 1 : 2)}x`;
 }
 
 function prettifyLabel(value) {
