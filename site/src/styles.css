@@ -1898,21 +1898,190 @@ img {
 }
 
 @media (max-width: 767px) {
+  .cy-section {
+    padding-inline: 16px;
+  }
+
+  .cy-header-row {
+    min-height: 72px;
+    gap: 16px;
+  }
+
+  .cy-button-row {
+    gap: 10px;
+  }
+
+  .cy-button {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+
+  .cy-hero-shell {
+    margin-top: 20px;
+    padding: 28px 18px 22px;
+  }
+
+  .cy-hero-grid {
+    gap: 24px;
+  }
+
+  .cy-hero-copy {
+    max-width: none;
+  }
+
+  .cy-hero-title {
+    max-width: 8ch;
+    font-size: clamp(2.35rem, 13vw, 3.35rem);
+    line-height: 0.96;
+  }
+
+  .cy-hero-text,
+  .cy-section-copy {
+    margin-top: 14px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .cy-hero-actions {
+    margin-top: 20px;
+  }
+
   .cy-hero-copy-flag {
     top: 12%;
     right: -18%;
-    width: min(280px, 72vw);
-    opacity: 0.05;
+    width: min(220px, 56vw);
+    opacity: 0.04;
   }
 
   .cy-hero-stat-grid {
     grid-template-columns: 1fr;
   }
 
-  .cy-kpi-grid,
+  .cy-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .cy-kpi-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .cy-kpi-card,
+  .cy-dashboard-panel,
+  .cy-data-panel,
+  .cy-meta-strip,
+  .cy-trust-panel {
+    padding: 18px;
+  }
+
+  .cy-kpi-card {
+    gap: 8px;
+  }
+
+  .cy-kpi-value {
+    font-size: clamp(1.2rem, 7vw, 1.55rem);
+  }
+
+  .cy-kpi-trend {
+    gap: 6px;
+    font-size: 0.74rem;
+  }
+
+  .cy-kpi-trend strong {
+    font-size: 0.76rem;
+  }
+
+  .cy-trust-section {
+    margin-top: 20px;
+  }
+
+  .cy-trust-panel-head h2 {
+    font-size: clamp(1.45rem, 8vw, 2rem);
+  }
+
+  .cy-trust-grid,
   .cy-hero-highlight-grid,
   .cy-hero-market-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cy-trust-grid {
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .cy-trust-item {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .cy-trust-item-title {
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+
+  .cy-chip-list,
+  .cy-summary-chip-row,
+  .cy-methodology-file-list {
+    gap: 8px;
+  }
+
+  .cy-chip {
+    min-height: 30px;
+    max-width: 100%;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
+
+  .cy-metrics-grid,
+  .cy-dashboard-grid,
+  .cy-data-grid,
+  .cy-salary-layout {
+    gap: 16px;
+    margin-top: 28px;
+    padding-bottom: 40px;
+  }
+
+  .cy-section-intro,
+  .cy-section-intro-compact {
+    padding-block: 36px 0;
+  }
+
+  .cy-section-title {
+    margin-top: 16px;
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+  }
+
+  .cy-divider {
+    height: 22px;
+    margin-top: 20px;
+  }
+
+  .cy-trend-panel,
+  .cy-experience-panel,
+  .cy-seniority-distribution-panel,
+  .cy-programming-language-panel {
+    margin-top: 28px;
+  }
+
+  .cy-methodology-step-list,
+  .cy-summary-chip-row,
+  .cy-methodology-file-list,
+  .cy-methodology-downloads {
+    margin-top: 18px;
+  }
+
+  .cy-methodology-step-item {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .cy-methodology-step-item span {
+    font-size: 0.76rem;
   }
 
   .cy-city-pill {
@@ -1954,8 +2123,38 @@ img {
     flex: 1 1 160px;
   }
 
+  .cy-trend-title-block h3 {
+    font-size: clamp(1.5rem, 8vw, 2.2rem);
+  }
+
+  .cy-trend-filter-card,
+  .cy-salary-stat,
+  .cy-role-highlight-card {
+    padding: 14px;
+  }
+
+  .cy-trend-chip-row,
+  .cy-trend-toggle {
+    gap: 8px;
+  }
+
+  .cy-trend-chip-row button,
+  .cy-trend-toggle button,
+  .cy-salary-toggle button,
+  .cy-salary-more-button,
+  .cy-data-more-button {
+    min-height: 36px;
+    font-size: 0.72rem;
+  }
+
+  .cy-salary-stat-grid {
+    gap: 10px;
+    margin-top: 18px;
+  }
+
   .cy-salary-chart {
-    padding-top: 28px;
+    margin-top: 18px;
+    padding-top: 20px;
   }
 
   .cy-salary-reference-layer {
@@ -1977,5 +2176,45 @@ img {
 
   .cy-salary-value {
     text-align: left;
+  }
+
+  .cy-data-table th,
+  .cy-data-table td {
+    padding: 12px 0;
+    font-size: 0.86rem;
+  }
+
+  .cy-skill-matrix {
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .cy-footer {
+    margin-top: 56px;
+    background:
+      linear-gradient(180deg, rgba(249, 250, 251, 0), rgba(249, 250, 251, 0.9) 38%, #f9fafb 100%);
+  }
+
+  .cy-footer-shell {
+    padding: 36px 0 32px;
+    min-height: 132px;
+  }
+
+  .cy-footer-shell-compact {
+    padding-top: 28px;
+  }
+
+  .cy-footer-shape {
+    left: -18%;
+    width: 136%;
+    opacity: 0.42;
+  }
+
+  .cy-footer-bottom {
+    gap: 12px;
+  }
+
+  .cy-footer-bottom-compact {
+    padding-top: 18px;
   }
 }
