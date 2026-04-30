@@ -839,6 +839,29 @@ img {
   letter-spacing: -0.08em;
 }
 
+.cy-map-coverage-copy {
+  max-width: 56ch;
+}
+
+.cy-map-summary-breakdown {
+  display: grid;
+  gap: 9px;
+  margin-top: 2px;
+}
+
+.cy-map-summary-breakdown p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.cy-map-summary-breakdown strong {
+  color: var(--foreground);
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
 .cy-map-canvas {
   overflow: hidden;
   margin-top: 28px;

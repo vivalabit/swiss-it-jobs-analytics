@@ -99,6 +99,7 @@ const CANTON_CAPITAL_CITY_KEYS = new Set([
   "zug",
   "zurich",
 ]);
+const MAP_CITY_LABEL_MIN_VACANCIES = 35;
 
 const CITY_LOCATIONS = [
   cityLocation("zurich", "Zürich", 47.3769, 8.5417, [
@@ -587,6 +588,10 @@ function App() {
   const hasMoreCompanyItems = directCompanyItems.length > COMPANY_PREVIEW_LIMIT;
   const cityItems = selectTopItems(filterUnknown(cityDistribution.items ?? []), 6);
   const cityMapItems = buildSwissCityVacancyPoints(cityDistribution.items ?? []);
+  const cityMapCoverage = buildSwissCityMapCoverage(
+    cityDistribution.items ?? [],
+    overviewMetrics.total_vacancies,
+  );
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
@@ -859,7 +864,7 @@ function App() {
                   </h2>
                 </div>
 
-                <SwissVacancyMap items={cityMapItems} />
+                <SwissVacancyMap items={cityMapItems} coverage={cityMapCoverage} />
               </div>
             </section>
 
@@ -2032,16 +2037,13 @@ function TrendLineChart({ chartData, granularity }) {
   );
 }
 
-function SwissVacancyMap({ items }) {
+function SwissVacancyMap({ items, coverage }) {
   const maxValue = Math.max(...items.map((item) => item.vacancy_count), 1);
-  const mappedVacancies = items.reduce((sum, item) => sum + item.vacancy_count, 0);
   const markerItems = [...items].sort((a, b) => a.vacancy_count - b.vacancy_count);
-  const labelItems = items.filter((item) => CANTON_CAPITAL_CITY_KEYS.has(item.key));
-  const legendValues = [
-    maxValue,
-    Math.max(Math.round(maxValue * 0.35), 1),
-    Math.max(Math.round(maxValue * 0.08), 1),
-  ];
+  const labelItems = items.filter(
+    (item) =>
+      CANTON_CAPITAL_CITY_KEYS.has(item.key) && item.vacancy_count >= MAP_CITY_LABEL_MIN_VACANCIES,
+  );
 
   if (!items.length) {
     return (
@@ -2063,10 +2065,35 @@ function SwissVacancyMap({ items }) {
             Red bubbles are scaled by vacancy count. Darker and larger bubbles represent stronger
             city concentration.
           </p>
+          {coverage ? (
+            <p className="cy-copy cy-map-coverage-copy">
+              {formatInteger(Math.round(coverage.mappedVacancies))} of{" "}
+              {formatInteger(Math.round(coverage.totalVacancies))} tracked vacancies are placed on
+              the city map ({formatPercent(coverage.mappedShare)} coverage).
+            </p>
+          ) : null}
         </div>
         <div className="cy-map-summary" aria-label="Mapped vacancy summary">
           <span>{formatInteger(items.length)} cities</span>
-          <strong>{formatInteger(Math.round(mappedVacancies))} mapped vacancies</strong>
+          <strong>{formatInteger(Math.round(coverage?.mappedVacancies ?? 0))} mapped vacancies</strong>
+          {coverage ? (
+            <div className="cy-map-summary-breakdown">
+              <p>
+                <strong>{formatInteger(Math.round(coverage.multiCityVacancies))}</strong> mention
+                multiple cities and are split across bubbles.
+              </p>
+              <p>
+                <strong>{formatInteger(Math.round(coverage.broadLocationVacancies))}</strong> use
+                nationwide, regional, or remote-style location labels.
+              </p>
+              <p>
+                <strong>{formatInteger(Math.round(coverage.missingLocationVacancies))}</strong>{" "}
+                are unknown and{" "}
+                <strong>{formatInteger(Math.round(coverage.unmatchedLocationVacancies))}</strong>{" "}
+                more still use labels not mapped to a city.
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -2144,22 +2171,6 @@ function SwissVacancyMap({ items }) {
             })}
           </g>
         </svg>
-      </div>
-
-      <div className="cy-map-legend" aria-label="Bubble size legend">
-        {legendValues.map((value) => (
-          <div key={value} className="cy-map-legend-item">
-            <span
-              className="cy-map-legend-bubble"
-              style={{
-                width: `${getMapBubbleRadius(value, maxValue) * 1.25}px`,
-                height: `${getMapBubbleRadius(value, maxValue) * 1.25}px`,
-                opacity: getMapBubbleOpacity(value, maxValue),
-              }}
-            />
-            <span>{formatInteger(value)} vacancies</span>
-          </div>
-        ))}
       </div>
     </article>
   );
@@ -2362,6 +2373,58 @@ function buildSwissCityVacancyPoints(items) {
     .sort((a, b) => b.vacancy_count - a.vacancy_count);
 }
 
+function buildSwissCityMapCoverage(items, totalVacancies) {
+  let mappedVacancies = 0;
+  let multiCityVacancies = 0;
+  let broadLocationVacancies = 0;
+  let missingLocationVacancies = 0;
+  let unmatchedLocationVacancies = 0;
+  let computedTotalVacancies = 0;
+
+  for (const item of items) {
+    const value = item?.vacancy_count;
+    if (typeof value !== "number" || value <= 0) {
+      continue;
+    }
+
+    computedTotalVacancies += value;
+    const cityKeys = resolveCityKeys(item.label ?? item.key);
+    if (cityKeys.length) {
+      mappedVacancies += value;
+      if (cityKeys.length > 1) {
+        multiCityVacancies += value;
+      }
+      continue;
+    }
+
+    const classification = classifyUnmappedCityLabel(item.label ?? item.key);
+    if (classification === "broad") {
+      broadLocationVacancies += value;
+    } else if (classification === "missing") {
+      missingLocationVacancies += value;
+    } else {
+      unmatchedLocationVacancies += value;
+    }
+  }
+
+  const normalizedTotalVacancies =
+    typeof totalVacancies === "number" && totalVacancies > 0
+      ? totalVacancies
+      : computedTotalVacancies;
+
+  return {
+    totalVacancies: normalizedTotalVacancies,
+    mappedVacancies,
+    mappedShare: normalizedTotalVacancies ? mappedVacancies / normalizedTotalVacancies : 0,
+    unmappedVacancies:
+      broadLocationVacancies + missingLocationVacancies + unmatchedLocationVacancies,
+    multiCityVacancies,
+    broadLocationVacancies,
+    missingLocationVacancies,
+    unmatchedLocationVacancies,
+  };
+}
+
 function buildSkillRoleMatrix(groups, roleLimit, skillLimit) {
   const roleGroups = (groups ?? [])
     .filter((group) => group.group && group.group !== "Unknown" && Array.isArray(group.items))
@@ -2438,6 +2501,26 @@ function resolveCityKeys(value) {
   }
 
   return matches;
+}
+
+function classifyUnmappedCityLabel(value) {
+  const normalizedValue = normalizeCityLabel(value);
+  if (!normalizedValue || normalizedValue === "unknown") {
+    return "missing";
+  }
+
+  if (isBroadSwissLocationLabel(value)) {
+    return "broad";
+  }
+
+  return "unmatched";
+}
+
+function isBroadSwissLocationLabel(value) {
+  const rawValue = String(value ?? "");
+  return /remote|home\s*office|hybrid|switzerland|schweiz|suisse|svizzera|metropolitan area|district|canton|region|romandy|ostschweiz|deutschschweiz|central switzerland/i.test(
+    rawValue,
+  );
 }
 
 function containsCityAlias(value, alias) {
