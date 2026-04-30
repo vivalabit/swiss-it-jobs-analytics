@@ -1,2323 +1,2059 @@
 {
-  "generated_at": "2026-04-30T08:56:21Z",
+  "generated_at": "2026-04-30T09:21:22Z",
   "available": true,
   "dimension": "company",
   "items": [
     {
-      "key": "ti&m AG",
-      "label": "ti&m AG",
-      "vacancy_count": 76,
-      "share": 0.014
-    },
-    {
       "key": "adesso Schweiz AG",
       "label": "adesso Schweiz AG",
-      "vacancy_count": 71,
-      "share": 0.013
-    },
-    {
-      "key": "Deloitte",
-      "label": "Deloitte",
-      "vacancy_count": 56,
-      "share": 0.0103
-    },
-    {
-      "key": "Bank Julius Bär & Co. AG",
-      "label": "Bank Julius Bär & Co. AG",
-      "vacancy_count": 52,
-      "share": 0.0096
+      "vacancy_count": 70,
+      "share": 0.0145
     },
     {
       "key": "ViaSat Antenna Systems SA",
       "label": "ViaSat Antenna Systems SA",
-      "vacancy_count": 49,
-      "share": 0.009
+      "vacancy_count": 46,
+      "share": 0.0095
     },
     {
-      "key": "Akros AG",
-      "label": "Akros AG",
-      "vacancy_count": 44,
-      "share": 0.0081
+      "key": "Bank Julius Bär & Co. AG",
+      "label": "Bank Julius Bär & Co. AG",
+      "vacancy_count": 45,
+      "share": 0.0093
+    },
+    {
+      "key": "ti&m AG",
+      "label": "ti&m AG",
+      "vacancy_count": 45,
+      "share": 0.0093
     },
     {
       "key": "Elca informatique SA",
       "label": "Elca informatique SA",
       "vacancy_count": 39,
-      "share": 0.0072
+      "share": 0.0081
     },
     {
       "key": "Stadler Rail Group",
       "label": "Stadler Rail Group",
-      "vacancy_count": 39,
-      "share": 0.0072
-    },
-    {
-      "key": "SonarSource SA",
-      "label": "SonarSource SA",
-      "vacancy_count": 38,
-      "share": 0.007
-    },
-    {
-      "key": "RUAG AG",
-      "label": "RUAG AG",
-      "vacancy_count": 36,
-      "share": 0.0066
-    },
-    {
-      "key": "Eraneos Switzerland AG",
-      "label": "Eraneos Switzerland AG",
-      "vacancy_count": 34,
-      "share": 0.0062
+      "vacancy_count": 35,
+      "share": 0.0073
     },
     {
       "key": "Google",
       "label": "Google",
       "vacancy_count": 34,
+      "share": 0.007
+    },
+    {
+      "key": "RUAG AG",
+      "label": "RUAG AG",
+      "vacancy_count": 30,
       "share": 0.0062
     },
     {
-      "key": "PRODYNA (Schweiz) AG",
-      "label": "PRODYNA (Schweiz) AG",
-      "vacancy_count": 32,
-      "share": 0.0059
+      "key": "Deloitte",
+      "label": "Deloitte",
+      "vacancy_count": 29,
+      "share": 0.006
+    },
+    {
+      "key": "SonarSource SA",
+      "label": "SonarSource SA",
+      "vacancy_count": 29,
+      "share": 0.006
     },
     {
       "key": "Hitachi Energy AG",
       "label": "Hitachi Energy AG",
-      "vacancy_count": 30,
-      "share": 0.0055
+      "vacancy_count": 27,
+      "share": 0.0056
     },
     {
-      "key": "Axept Business Software AG",
-      "label": "Axept Business Software AG",
+      "key": "PRODYNA (Schweiz) AG",
+      "label": "PRODYNA (Schweiz) AG",
       "vacancy_count": 25,
-      "share": 0.0046
+      "share": 0.0052
     },
     {
       "key": "Turing",
       "label": "Turing",
       "vacancy_count": 24,
-      "share": 0.0044
+      "share": 0.005
     },
     {
-      "key": "finnova AG Bankware",
-      "label": "finnova AG Bankware",
-      "vacancy_count": 24,
-      "share": 0.0044
-    },
-    {
-      "key": "Deloitte AG",
-      "label": "Deloitte AG",
-      "vacancy_count": 23,
-      "share": 0.0042
-    },
-    {
-      "key": "clavis IT ag",
-      "label": "clavis IT ag",
-      "vacancy_count": 23,
-      "share": 0.0042
+      "key": "Akros AG",
+      "label": "Akros AG",
+      "vacancy_count": 22,
+      "share": 0.0046
     },
     {
       "key": "Siemens Schweiz AG",
       "label": "Siemens Schweiz AG",
       "vacancy_count": 22,
-      "share": 0.004
+      "share": 0.0046
     },
     {
       "key": "CERN",
       "label": "CERN",
       "vacancy_count": 21,
-      "share": 0.0039
+      "share": 0.0044
     },
     {
       "key": "Julius Baer",
       "label": "Julius Baer",
       "vacancy_count": 21,
-      "share": 0.0039
+      "share": 0.0044
     },
     {
       "key": "Banque Cantonale Vaudoise",
       "label": "Banque Cantonale Vaudoise",
       "vacancy_count": 20,
-      "share": 0.0037
+      "share": 0.0041
     },
     {
       "key": "Kraken",
       "label": "Kraken",
       "vacancy_count": 20,
-      "share": 0.0037
+      "share": 0.0041
     },
     {
       "key": "BRACK.CH AG",
       "label": "BRACK.CH AG",
       "vacancy_count": 19,
-      "share": 0.0035
+      "share": 0.0039
     },
     {
-      "key": "Banque Lombard Odier & Cie SA",
-      "label": "Banque Lombard Odier & Cie SA",
+      "key": "finnova AG Bankware",
+      "label": "finnova AG Bankware",
       "vacancy_count": 18,
-      "share": 0.0033
+      "share": 0.0037
+    },
+    {
+      "key": "Deloitte AG",
+      "label": "Deloitte AG",
+      "vacancy_count": 17,
+      "share": 0.0035
     },
     {
       "key": "Experis Switzerland",
       "label": "Experis Switzerland",
       "vacancy_count": 17,
-      "share": 0.0031
+      "share": 0.0035
     },
     {
       "key": "Kanton Zürich",
       "label": "Kanton Zürich",
       "vacancy_count": 17,
-      "share": 0.0031
+      "share": 0.0035
     },
     {
       "key": "On AG",
       "label": "On AG",
       "vacancy_count": 17,
-      "share": 0.0031
-    },
-    {
-      "key": "Swisscom Digital Technology SA",
-      "label": "Swisscom Digital Technology SA",
-      "vacancy_count": 17,
-      "share": 0.0031
+      "share": 0.0035
     },
     {
       "key": "UMB AG, Zweigniederlassung Volketswil",
       "label": "UMB AG, Zweigniederlassung Volketswil",
       "vacancy_count": 17,
-      "share": 0.0031
+      "share": 0.0035
     },
     {
-      "key": "ITRIS AG",
-      "label": "ITRIS AG",
+      "key": "Axept Business Software AG",
+      "label": "Axept Business Software AG",
       "vacancy_count": 16,
-      "share": 0.0029
-    },
-    {
-      "key": "Nexthink",
-      "label": "Nexthink",
-      "vacancy_count": 16,
-      "share": 0.0029
-    },
-    {
-      "key": "isolutions AG",
-      "label": "isolutions AG",
-      "vacancy_count": 16,
-      "share": 0.0029
+      "share": 0.0033
     },
     {
       "key": "Amaris Consulting Sàrl",
       "label": "Amaris Consulting Sàrl",
       "vacancy_count": 15,
-      "share": 0.0028
+      "share": 0.0031
     },
     {
-      "key": "Auctae Switzerland Sàrl",
-      "label": "Auctae Switzerland Sàrl",
+      "key": "Banque Lombard Odier & Cie SA",
+      "label": "Banque Lombard Odier & Cie SA",
       "vacancy_count": 15,
-      "share": 0.0028
+      "share": 0.0031
     },
     {
-      "key": "Bison Schweiz AG",
-      "label": "Bison Schweiz AG",
+      "key": "Nexthink",
+      "label": "Nexthink",
       "vacancy_count": 15,
-      "share": 0.0028
-    },
-    {
-      "key": "Ergon Informatik AG",
-      "label": "Ergon Informatik AG",
-      "vacancy_count": 15,
-      "share": 0.0028
-    },
-    {
-      "key": "Ernst & Young AG",
-      "label": "Ernst & Young AG",
-      "vacancy_count": 15,
-      "share": 0.0028
+      "share": 0.0031
     },
     {
       "key": "SBB CFF FFS",
       "label": "SBB CFF FFS",
       "vacancy_count": 15,
-      "share": 0.0028
+      "share": 0.0031
     },
     {
       "key": "Zürcher Kantonalbank und ihre Tochtergesellschaften",
       "label": "Zürcher Kantonalbank und ihre Tochtergesellschaften",
       "vacancy_count": 15,
-      "share": 0.0028
+      "share": 0.0031
     },
     {
-      "key": "CodeWay SA",
-      "label": "CodeWay SA",
+      "key": "Bison Schweiz AG",
+      "label": "Bison Schweiz AG",
       "vacancy_count": 14,
-      "share": 0.0026
+      "share": 0.0029
     },
     {
       "key": "ELCA Group",
       "label": "ELCA Group",
       "vacancy_count": 14,
-      "share": 0.0026
-    },
-    {
-      "key": "Innovation Process Technology AG",
-      "label": "Innovation Process Technology AG",
-      "vacancy_count": 14,
-      "share": 0.0026
+      "share": 0.0029
     },
     {
       "key": "VZ VermögensZentrum",
       "label": "VZ VermögensZentrum",
       "vacancy_count": 14,
-      "share": 0.0026
-    },
-    {
-      "key": "CISTEC AG",
-      "label": "CISTEC AG",
-      "vacancy_count": 13,
-      "share": 0.0024
+      "share": 0.0029
     },
     {
       "key": "EFG Bank AG",
       "label": "EFG Bank AG",
       "vacancy_count": 13,
-      "share": 0.0024
-    },
-    {
-      "key": "EY (Ernst & Young AG)",
-      "label": "EY (Ernst & Young AG)",
-      "vacancy_count": 13,
-      "share": 0.0024
+      "share": 0.0027
     },
     {
       "key": "Microsoft AI",
       "label": "Microsoft AI",
       "vacancy_count": 13,
-      "share": 0.0024
+      "share": 0.0027
     },
     {
       "key": "UMB AG",
       "label": "UMB AG",
       "vacancy_count": 13,
-      "share": 0.0024
+      "share": 0.0027
+    },
+    {
+      "key": "CISTEC AG",
+      "label": "CISTEC AG",
+      "vacancy_count": 12,
+      "share": 0.0025
     },
     {
       "key": "EY",
       "label": "EY",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "Expleo Group",
       "label": "Expleo Group",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "Geberit AG",
       "label": "Geberit AG",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "KPMG",
       "label": "KPMG",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "LHH",
       "label": "LHH",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "Metrohm AG",
       "label": "Metrohm AG",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "Twine",
       "label": "Twine",
       "vacancy_count": 12,
-      "share": 0.0022
-    },
-    {
-      "key": "Zühlke Engineering AG",
-      "label": "Zühlke Engineering AG",
-      "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "infomaniak | The Ethical Cloud",
       "label": "infomaniak | The Ethical Cloud",
       "vacancy_count": 12,
-      "share": 0.0022
+      "share": 0.0025
     },
     {
       "key": "Avaloq Group AG",
       "label": "Avaloq Group AG",
       "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
-      "key": "Digt AG",
-      "label": "Digt AG",
+      "key": "Eraneos Switzerland AG",
+      "label": "Eraneos Switzerland AG",
       "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "Inventx AG",
       "label": "Inventx AG",
       "vacancy_count": 11,
-      "share": 0.002
-    },
-    {
-      "key": "ParMag AG",
-      "label": "ParMag AG",
-      "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "ROLEX",
       "label": "ROLEX",
       "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "Red Commerce Schweiz GmbH",
       "label": "Red Commerce Schweiz GmbH",
       "vacancy_count": 11,
-      "share": 0.002
-    },
-    {
-      "key": "SIX Group AG",
-      "label": "SIX Group AG",
-      "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "Source Group International GmbH",
       "label": "Source Group International GmbH",
       "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "Swisscom",
       "label": "Swisscom",
       "vacancy_count": 11,
-      "share": 0.002
-    },
-    {
-      "key": "VF International Sagl",
-      "label": "VF International Sagl",
-      "vacancy_count": 11,
-      "share": 0.002
+      "share": 0.0023
     },
     {
       "key": "Bank Frick AG",
       "label": "Bank Frick AG",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "Bechtle Schweiz AG, Systemhaus Deutschschweiz",
       "label": "Bechtle Schweiz AG, Systemhaus Deutschschweiz",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "Coopers Group AG",
       "label": "Coopers Group AG",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "Crossing Hurdles",
       "label": "Crossing Hurdles",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
-      "key": "IT Di-Visions AG",
-      "label": "IT Di-Visions AG",
+      "key": "Ergon Informatik AG",
+      "label": "Ergon Informatik AG",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
+    },
+    {
+      "key": "ITRIS AG",
+      "label": "ITRIS AG",
+      "vacancy_count": 10,
+      "share": 0.0021
     },
     {
       "key": "Ivy Partners",
       "label": "Ivy Partners",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "JobCourier",
       "label": "JobCourier",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "NVIDIA",
       "label": "NVIDIA",
       "vacancy_count": 10,
-      "share": 0.0018
-    },
-    {
-      "key": "Open Systems AG",
-      "label": "Open Systems AG",
-      "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "RM Group (Switzerland)",
       "label": "RM Group (Switzerland)",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
+    },
+    {
+      "key": "SIX Group AG",
+      "label": "SIX Group AG",
+      "vacancy_count": 10,
+      "share": 0.0021
+    },
+    {
+      "key": "VF International Sagl",
+      "label": "VF International Sagl",
+      "vacancy_count": 10,
+      "share": 0.0021
     },
     {
       "key": "YO IT Consulting",
       "label": "YO IT Consulting",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
+    },
+    {
+      "key": "clavis IT ag",
+      "label": "clavis IT ag",
+      "vacancy_count": 10,
+      "share": 0.0021
     },
     {
       "key": "untersee AG",
       "label": "untersee AG",
       "vacancy_count": 10,
-      "share": 0.0018
+      "share": 0.0021
     },
     {
       "key": "ALTEN",
       "label": "ALTEN",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
-      "key": "Business & Decision (Suisse) SA",
-      "label": "Business & Decision (Suisse) SA",
+      "key": "Auctae Switzerland Sàrl",
+      "label": "Auctae Switzerland Sàrl",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "CSS",
       "label": "CSS",
       "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "Daedalean AG",
-      "label": "Daedalean AG",
-      "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Deligo DAG AG",
       "label": "Deligo DAG AG",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
+    },
+    {
+      "key": "EY (Ernst & Young AG)",
+      "label": "EY (Ernst & Young AG)",
+      "vacancy_count": 9,
+      "share": 0.0019
     },
     {
       "key": "Fincons Group",
       "label": "Fincons Group",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Hexagon Robotics",
       "label": "Hexagon Robotics",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
-      "key": "ITpoint Systems AG",
-      "label": "ITpoint Systems AG",
+      "key": "IT Di-Visions AG",
+      "label": "IT Di-Visions AG",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Informaticon AG",
       "label": "Informaticon AG",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Kanton Graubünden",
       "label": "Kanton Graubünden",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "KastGroup GmbH",
       "label": "KastGroup GmbH",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Logitech",
       "label": "Logitech",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
-      "key": "Luzerner Kantonsspital",
-      "label": "Luzerner Kantonsspital",
+      "key": "Open Systems AG",
+      "label": "Open Systems AG",
       "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "Migros-Genossenschafts-Bund",
-      "label": "Migros-Genossenschafts-Bund",
-      "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "Nexplore AG",
-      "label": "Nexplore AG",
-      "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "SAP (Schweiz) AG",
-      "label": "SAP (Schweiz) AG",
-      "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "Ubique Innovation AG",
-      "label": "Ubique Innovation AG",
-      "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Unknown",
       "label": "Unknown",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "VAUDOISE ASSURANCES HOLDING SA",
       "label": "VAUDOISE ASSURANCES HOLDING SA",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Vangard AG",
       "label": "Vangard AG",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "Zürich Versicherungs-Gesellschaft AG / Zurich Insurance Company Ltd / Zurich Compagnie d'Assurances SA",
       "label": "Zürich Versicherungs-Gesellschaft AG / Zurich Insurance Company Ltd / Zurich Compagnie d'Assurances SA",
       "vacancy_count": 9,
-      "share": 0.0017
-    },
-    {
-      "key": "p3b ag",
-      "label": "p3b ag",
-      "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "swissgrid ag",
       "label": "swissgrid ag",
       "vacancy_count": 9,
-      "share": 0.0017
+      "share": 0.0019
     },
     {
       "key": "AXA Versicherungen AG",
       "label": "AXA Versicherungen AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "BROMsolutions AG Biel",
       "label": "BROMsolutions AG Biel",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Brack.Alltron AG",
       "label": "Brack.Alltron AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
+    },
+    {
+      "key": "Business & Decision (Suisse) SA",
+      "label": "Business & Decision (Suisse) SA",
+      "vacancy_count": 8,
+      "share": 0.0017
     },
     {
       "key": "Code Compass 🧭",
       "label": "Code Compass 🧭",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Comfone AG",
       "label": "Comfone AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Digital Asset",
       "label": "Digital Asset",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "EFG International",
       "label": "EFG International",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Green",
       "label": "Green",
       "vacancy_count": 8,
-      "share": 0.0015
-    },
-    {
-      "key": "Lombard Odier",
-      "label": "Lombard Odier",
-      "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "MGI Consultants SA",
       "label": "MGI Consultants SA",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
+    },
+    {
+      "key": "Migros-Genossenschafts-Bund",
+      "label": "Migros-Genossenschafts-Bund",
+      "vacancy_count": 8,
+      "share": 0.0017
+    },
+    {
+      "key": "Nexplore AG",
+      "label": "Nexplore AG",
+      "vacancy_count": 8,
+      "share": 0.0017
     },
     {
       "key": "Richemont",
       "label": "Richemont",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
+    },
+    {
+      "key": "SAP (Schweiz) AG",
+      "label": "SAP (Schweiz) AG",
+      "vacancy_count": 8,
+      "share": 0.0017
     },
     {
       "key": "SMG Swiss Marketplace Group",
       "label": "SMG Swiss Marketplace Group",
       "vacancy_count": 8,
-      "share": 0.0015
-    },
-    {
-      "key": "SOCIETE GENERALE Private Banking (Suisse) SA",
-      "label": "SOCIETE GENERALE Private Banking (Suisse) SA",
-      "vacancy_count": 8,
-      "share": 0.0015
-    },
-    {
-      "key": "SUISA, Genossenschaft der Urheber und Verleger von Musik",
-      "label": "SUISA, Genossenschaft der Urheber und Verleger von Musik",
-      "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Securiton AG",
       "label": "Securiton AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Sumex AG",
       "label": "Sumex AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Sunrise GmbH",
       "label": "Sunrise GmbH",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Transgourmet Schweiz AG",
       "label": "Transgourmet Schweiz AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
       "key": "Zurich Insurance",
       "label": "Zurich Insurance",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
     },
     {
-      "key": "redIT Services AG",
-      "label": "redIT Services AG",
+      "key": "Zühlke Engineering AG",
+      "label": "Zühlke Engineering AG",
       "vacancy_count": 8,
-      "share": 0.0015
+      "share": 0.0017
+    },
+    {
+      "key": "isolutions AG",
+      "label": "isolutions AG",
+      "vacancy_count": 8,
+      "share": 0.0017
+    },
+    {
+      "key": "p3b ag",
+      "label": "p3b ag",
+      "vacancy_count": 8,
+      "share": 0.0017
     },
     {
       "key": "univativ Schweiz AG",
       "label": "univativ Schweiz AG",
       "vacancy_count": 8,
-      "share": 0.0015
-    },
-    {
-      "key": "Axpo Group",
-      "label": "Axpo Group",
-      "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0017
     },
     {
       "key": "Banque Pictet & Cie SA",
       "label": "Banque Pictet & Cie SA",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Bergauer AG",
       "label": "Bergauer AG",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "CSEM",
       "label": "CSEM",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Centris AG",
       "label": "Centris AG",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "DV Bern AG",
       "label": "DV Bern AG",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Delvitech SA",
       "label": "Delvitech SA",
       "vacancy_count": 7,
-      "share": 0.0013
-    },
-    {
-      "key": "EBP Schweiz AG",
-      "label": "EBP Schweiz AG",
-      "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "EPAM Systems",
       "label": "EPAM Systems",
       "vacancy_count": 7,
-      "share": 0.0013
-    },
-    {
-      "key": "ERNI Schweiz AG",
-      "label": "ERNI Schweiz AG",
-      "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Endress+Hauser",
       "label": "Endress+Hauser",
       "vacancy_count": 7,
-      "share": 0.0013
-    },
-    {
-      "key": "Ferag AG",
-      "label": "Ferag AG",
-      "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Franke Group",
       "label": "Franke Group",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Hochschule Luzern",
       "label": "Hochschule Luzern",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Hochschule Luzern (HSLU)",
       "label": "Hochschule Luzern (HSLU)",
       "vacancy_count": 7,
-      "share": 0.0013
-    },
-    {
-      "key": "Hostpoint AG",
-      "label": "Hostpoint AG",
-      "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Kantonale Verwaltung Zürich",
       "label": "Kantonale Verwaltung Zürich",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Keyrock",
       "label": "Keyrock",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "LGT",
       "label": "LGT",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
+    },
+    {
+      "key": "Luzerner Kantonsspital",
+      "label": "Luzerner Kantonsspital",
+      "vacancy_count": 7,
+      "share": 0.0015
     },
     {
       "key": "Nicoll Curtin",
       "label": "Nicoll Curtin",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Omnilex",
       "label": "Omnilex",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Proton",
       "label": "Proton",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Psychiatrische Universitätsklinik Zürich",
       "label": "Psychiatrische Universitätsklinik Zürich",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Roche",
       "label": "Roche",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Sensirion AG",
       "label": "Sensirion AG",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Skydio",
       "label": "Skydio",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Sonar",
       "label": "Sonar",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
-      "key": "SpeedCom (Schweiz) AG",
-      "label": "SpeedCom (Schweiz) AG",
+      "key": "Swisscom Digital Technology SA",
+      "label": "Swisscom Digital Technology SA",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Swissquote",
       "label": "Swissquote",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "TELUS Digital",
       "label": "TELUS Digital",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "Tether.io",
       "label": "Tether.io",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
-      "key": "Ärztekasse Genossenschaft",
-      "label": "Ärztekasse Genossenschaft",
+      "key": "redIT Services AG",
+      "label": "redIT Services AG",
       "vacancy_count": 7,
-      "share": 0.0013
+      "share": 0.0015
     },
     {
       "key": "AO Foundation",
       "label": "AO Foundation",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Agoda",
       "label": "Agoda",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Axians Amanox AG",
       "label": "Axians Amanox AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
+    },
+    {
+      "key": "Axpo Group",
+      "label": "Axpo Group",
+      "vacancy_count": 6,
+      "share": 0.0012
     },
     {
       "key": "BCV - Banque Cantonale Vaudoise",
       "label": "BCV - Banque Cantonale Vaudoise",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "BOBST MEX SA",
       "label": "BOBST MEX SA",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Bedag Informatik AG",
       "label": "Bedag Informatik AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
-      "key": "Beyond Gravity Schweiz AG",
-      "label": "Beyond Gravity Schweiz AG",
+      "key": "CodeWay SA",
+      "label": "CodeWay SA",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Bobst Mex SA",
-      "label": "Bobst Mex SA",
-      "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Cudos AG",
-      "label": "Cudos AG",
-      "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "CyOne Security AG",
-      "label": "CyOne Security AG",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Dentsply Sirona",
       "label": "Dentsply Sirona",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Digitec Galaxus AG",
       "label": "Digitec Galaxus AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "ERNI",
       "label": "ERNI",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "ETH Zürich",
       "label": "ETH Zürich",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "EYRAitservices SA",
-      "label": "EYRAitservices SA",
-      "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Ellisys SA",
-      "label": "Ellisys SA",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Equans Switzerland Process Automation AG",
       "label": "Equans Switzerland Process Automation AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
+    },
+    {
+      "key": "Ferag AG",
+      "label": "Ferag AG",
+      "vacancy_count": 6,
+      "share": 0.0012
     },
     {
       "key": "Galenica AG",
       "label": "Galenica AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Galliker Transport AG",
       "label": "Galliker Transport AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Hamilton Services AG",
       "label": "Hamilton Services AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Helbling Technik",
       "label": "Helbling Technik",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Hilti Group",
       "label": "Hilti Group",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Hirslanden AG",
       "label": "Hirslanden AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
-      "key": "Netrics AG",
-      "label": "Netrics AG",
+      "key": "Hostpoint AG",
+      "label": "Hostpoint AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Noir",
       "label": "Noir",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Planzer",
       "label": "Planzer",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Quatico Solutions AG",
-      "label": "Quatico Solutions AG",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "RepRisk",
       "label": "RepRisk",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "SQLI",
       "label": "SQLI",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "SR Technics Switzerland AG",
-      "label": "SR Technics Switzerland AG",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Schweizerische Nationalbank",
       "label": "Schweizerische Nationalbank",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Siemens",
       "label": "Siemens",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Sonceboz Automotive S.A.",
-      "label": "Sonceboz Automotive S.A.",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Sonic Suisse SSD",
       "label": "Sonic Suisse SSD",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Sopra Steria",
       "label": "Sopra Steria",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Sozialversicherungsanstalt des Kantons Zürich SVA",
       "label": "Sozialversicherungsanstalt des Kantons Zürich SVA",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Speechify",
       "label": "Speechify",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Swisslinx",
       "label": "Swisslinx",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Swissquote Bank SA",
       "label": "Swissquote Bank SA",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Tecan Schweiz AG",
       "label": "Tecan Schweiz AG",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "UPGREAT AG",
-      "label": "UPGREAT AG",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "VERISIGN",
       "label": "VERISIGN",
       "vacancy_count": 6,
-      "share": 0.0011
-    },
-    {
-      "key": "Vitol",
-      "label": "Vitol",
-      "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Winterthur Gas & Diesel AG",
       "label": "Winterthur Gas & Diesel AG",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
     },
     {
       "key": "Zühlke Group",
       "label": "Zühlke Group",
       "vacancy_count": 6,
-      "share": 0.0011
+      "share": 0.0012
+    },
+    {
+      "key": "Ärztekasse Genossenschaft",
+      "label": "Ärztekasse Genossenschaft",
+      "vacancy_count": 6,
+      "share": 0.0012
     },
     {
       "key": "AXA",
       "label": "AXA",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Amazon Web Services (AWS)",
       "label": "Amazon Web Services (AWS)",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Ambit Group AG",
-      "label": "Ambit Group AG",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Avalect GmbH",
       "label": "Avalect GmbH",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Aveniq AG",
-      "label": "Aveniq AG",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "BCG Platinion",
       "label": "BCG Platinion",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "BMK Recruitment",
-      "label": "BMK Recruitment",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Bachem AG",
       "label": "Bachem AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Bank J. Safra Sarasin",
       "label": "Bank J. Safra Sarasin",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Besi Switzerland AG",
       "label": "Besi Switzerland AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "C5I",
       "label": "C5I",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "CTC Analytics AG",
       "label": "CTC Analytics AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "CTC Resourcing Solutions",
       "label": "CTC Resourcing Solutions",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Callista",
       "label": "Callista",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Cargill",
       "label": "Cargill",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Concordia",
       "label": "Concordia",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
-      "key": "EKZ Eltop AG",
-      "label": "EKZ Eltop AG",
+      "key": "Daedalean AG",
+      "label": "Daedalean AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
-      "key": "Emil Frey Gruppe Schweiz",
-      "label": "Emil Frey Gruppe Schweiz",
+      "key": "Digt AG",
+      "label": "Digt AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
-      "key": "Energie Service Biel/Bienne (ESB)",
-      "label": "Energie Service Biel/Bienne (ESB)",
+      "key": "EBP Schweiz AG",
+      "label": "EBP Schweiz AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
+    },
+    {
+      "key": "Ernst & Young AG",
+      "label": "Ernst & Young AG",
+      "vacancy_count": 5,
+      "share": 0.001
     },
     {
       "key": "Europartner Consulting GmbH",
       "label": "Europartner Consulting GmbH",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Evergreen Human Resources AG",
       "label": "Evergreen Human Resources AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Fincons Group AG",
       "label": "Fincons Group AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "G. et F. Châtelain, succursale de Chanel SARL",
       "label": "G. et F. Châtelain, succursale de Chanel SARL",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Harmattan AI",
       "label": "Harmattan AI",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "IBM",
       "label": "IBM",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "InfoGuard AG",
-      "label": "InfoGuard AG",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Init7 (Schweiz) AG",
-      "label": "Init7 (Schweiz) AG",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Itecor Suisse SA",
-      "label": "Itecor Suisse SA",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "KEMARO AG",
-      "label": "KEMARO AG",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Kanton Basel-Stadt",
-      "label": "Kanton Basel-Stadt",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "LLB - Liechtensteinische Landesbank AG",
-      "label": "LLB - Liechtensteinische Landesbank AG",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Letec IT Solutions AG",
       "label": "Letec IT Solutions AG",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "MAZARS SA",
-      "label": "MAZARS SA",
-      "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Meanquest",
-      "label": "Meanquest",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Merkle",
       "label": "Merkle",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Michael Bailey Associates",
       "label": "Michael Bailey Associates",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Microsoft",
       "label": "Microsoft",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
-      "key": "Mirabit AG",
-      "label": "Mirabit AG",
+      "key": "Netrics AG",
+      "label": "Netrics AG",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "NOVA-Industrietechnik AG",
-      "label": "NOVA-Industrietechnik AG",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Novartis AG",
       "label": "Novartis AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Oettinger Davidoff AG",
       "label": "Oettinger Davidoff AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "PQM Consulting AG",
       "label": "PQM Consulting AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "SCOR Services Switzerland AG",
       "label": "SCOR Services Switzerland AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "SIGA Services AG",
       "label": "SIGA Services AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
+    },
+    {
+      "key": "SOCIETE GENERALE Private Banking (Suisse) SA",
+      "label": "SOCIETE GENERALE Private Banking (Suisse) SA",
+      "vacancy_count": 5,
+      "share": 0.001
     },
     {
       "key": "Scalera AG",
       "label": "Scalera AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Schweizer Armee - Kommando Cyber Kdo Cy",
       "label": "Schweizer Armee - Kommando Cyber Kdo Cy",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Skysec Defence GmbH",
       "label": "Skysec Defence GmbH",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Snyk",
       "label": "Snyk",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "SpeciTec SA",
-      "label": "SpeciTec SA",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Stadler",
       "label": "Stadler",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Swiss Medical Network",
-      "label": "Swiss Medical Network",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Thermoplan AG",
       "label": "Thermoplan AG",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Thoratec Switzerland GmbH",
       "label": "Thoratec Switzerland GmbH",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Valora Group",
       "label": "Valora Group",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Viseca Payment Services SA",
       "label": "Viseca Payment Services SA",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "Visium",
       "label": "Visium",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
+    },
+    {
+      "key": "Vitol",
+      "label": "Vitol",
+      "vacancy_count": 5,
+      "share": 0.001
     },
     {
       "key": "Wavestone",
       "label": "Wavestone",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "ZHAW Zürcher Hochschule für Angewandte Wissenschaften",
       "label": "ZHAW Zürcher Hochschule für Angewandte Wissenschaften",
       "vacancy_count": 5,
-      "share": 0.0009
-    },
-    {
-      "key": "Zettaplan AG",
-      "label": "Zettaplan AG",
-      "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "addexpert GmbH",
       "label": "addexpert GmbH",
       "vacancy_count": 5,
-      "share": 0.0009
+      "share": 0.001
     },
     {
       "key": "AEW Energie AG",
       "label": "AEW Energie AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "AGRIDEA Schweizerische Vereinigung für die Entwicklung der Landwirtschaft und des ländlichen Raums",
       "label": "AGRIDEA Schweizerische Vereinigung für die Entwicklung der Landwirtschaft und des ländlichen Raums",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "AMAG Group",
       "label": "AMAG Group",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "ATSP Schweiz GmbH",
-      "label": "ATSP Schweiz GmbH",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "AYES - Management & Technology Consulting",
       "label": "AYES - Management & Technology Consulting",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Abbott AG",
       "label": "Abbott AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Aequor Consulting GmbH",
       "label": "Aequor Consulting GmbH",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Alltitude SA",
       "label": "Alltitude SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Ammann Schweiz AG",
       "label": "Ammann Schweiz AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Artefact",
       "label": "Artefact",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Atlas Copco (Schweiz) AG",
       "label": "Atlas Copco (Schweiz) AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Aveniq AG",
+      "label": "Aveniq AG",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Avictis",
       "label": "Avictis",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Axpo Gruppe",
       "label": "Axpo Gruppe",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "BANK-now AG",
-      "label": "BANK-now AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "BELIMO Automation AG",
       "label": "BELIMO Automation AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "BKW Energie AG",
       "label": "BKW Energie AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "BSgroup Financial Solutions AG",
-      "label": "BSgroup Financial Solutions AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Bank CIC (Schweiz) AG",
       "label": "Bank CIC (Schweiz) AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Banque Syz SA",
       "label": "Banque Syz SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Baumer Group",
       "label": "Baumer Group",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Bechtle",
       "label": "Bechtle",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Bechtle Suisse SA",
       "label": "Bechtle Suisse SA",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "Belimed Life Science AG",
-      "label": "Belimed Life Science AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Beltronic IT AG",
       "label": "Beltronic IT AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Beyond Gravity Schweiz AG",
+      "label": "Beyond Gravity Schweiz AG",
+      "vacancy_count": 4,
+      "share": 0.0008
+    },
+    {
+      "key": "Bobst Mex SA",
+      "label": "Bobst Mex SA",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "COOP",
       "label": "COOP",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "CSL Behring AG",
       "label": "CSL Behring AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "CWS-boco Suisse SA",
       "label": "CWS-boco Suisse SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Chestonag Automation AG",
       "label": "Chestonag Automation AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Coders Connect",
       "label": "Coders Connect",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Curaden AG",
       "label": "Curaden AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "DXC Technology Switzerland GmbH",
-      "label": "DXC Technology Switzerland GmbH",
-      "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "Dentsu International Switzerland AG",
-      "label": "Dentsu International Switzerland AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Digital HR Ecosystem GmbH",
       "label": "Digital HR Ecosystem GmbH",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "ELCA Cloud Services SA",
       "label": "ELCA Cloud Services SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "ELCA Security SA",
       "label": "ELCA Security SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "ERNI Schweiz AG",
+      "label": "ERNI Schweiz AG",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Ecorobotix SA",
       "label": "Ecorobotix SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Ekkiden",
       "label": "Ekkiden",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Energie Service Biel/Bienne (ESB)",
+      "label": "Energie Service Biel/Bienne (ESB)",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Energy Vault SA",
       "label": "Energy Vault SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Equans Switzerland AG",
       "label": "Equans Switzerland AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Eraneos",
       "label": "Eraneos",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Erni Schweiz AG",
       "label": "Erni Schweiz AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "FORUM MONDIAL DE L'ECONOMIE",
-      "label": "FORUM MONDIAL DE L'ECONOMIE",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Finders SA",
       "label": "Finders SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "G-20 Group",
       "label": "G-20 Group",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "H55 SA",
       "label": "H55 SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "HCLTech",
       "label": "HCLTech",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "HINT AG",
       "label": "HINT AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "HOCH Health Ostschweiz",
-      "label": "HOCH Health Ostschweiz",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Hexagon AB",
       "label": "Hexagon AB",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "IT ADVANCED CONSULTING SA",
       "label": "IT ADVANCED CONSULTING SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "ITRIS One AG",
       "label": "ITRIS One AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
-      "key": "Implenia Schweiz AG",
-      "label": "Implenia Schweiz AG",
+      "key": "InfoGuard AG",
+      "label": "InfoGuard AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "Insel Gruppe",
-      "label": "Insel Gruppe",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "JOB WATCH SA",
       "label": "JOB WATCH SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Jörg Lienert AG",
       "label": "Jörg Lienert AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
-      "key": "KPMG Switzerland",
-      "label": "KPMG Switzerland",
+      "key": "KEMARO AG",
+      "label": "KEMARO AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Kanadevia Inova",
       "label": "Kanadevia Inova",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Klinik Im Hasel AG",
       "label": "Klinik Im Hasel AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Knowledge Lab AG",
       "label": "Knowledge Lab AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Kudelski S.A.",
       "label": "Kudelski S.A.",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "Kurath Engineering AG",
-      "label": "Kurath Engineering AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "LGT Capital Partners AG",
       "label": "LGT Capital Partners AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
-      "key": "Lambda Health System SA",
-      "label": "Lambda Health System SA",
+      "key": "LLB - Liechtensteinische Landesbank AG",
+      "label": "LLB - Liechtensteinische Landesbank AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Legartis",
       "label": "Legartis",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "LocalBini",
       "label": "LocalBini",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Lombard Odier Group",
       "label": "Lombard Odier Group",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Luzerner Kantonalbank",
       "label": "Luzerner Kantonalbank",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "MAZARS SA",
+      "label": "MAZARS SA",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "MTF Solutions AG",
       "label": "MTF Solutions AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
-      "key": "Manexperts (Schweiz) GmbH",
-      "label": "Manexperts (Schweiz) GmbH",
+      "key": "Meanquest",
+      "label": "Meanquest",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Medacta Italia",
       "label": "Medacta Italia",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "NOVO Business Consultants AG",
       "label": "NOVO Business Consultants AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Nozomi Networks",
       "label": "Nozomi Networks",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "PEAX AG",
-      "label": "PEAX AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "PMS SCHÖNENBERGER AG",
       "label": "PMS SCHÖNENBERGER AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "PRIME INTERNATIONAL GROUP Sàrl",
-      "label": "PRIME INTERNATIONAL GROUP Sàrl",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Pascal Dietrich Consulting AG",
       "label": "Pascal Dietrich Consulting AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Performance Consultant SA",
       "label": "Performance Consultant SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "PostFinance",
       "label": "PostFinance",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Qim info",
       "label": "Qim info",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "RJC Group",
       "label": "RJC Group",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Relewant",
       "label": "Relewant",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Ripple",
       "label": "Ripple",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SFS Group Schweiz AG",
       "label": "SFS Group Schweiz AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SIGMALIS Sàrl",
       "label": "SIGMALIS Sàrl",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SRG",
       "label": "SRG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SSI Schäfer AG",
       "label": "SSI Schäfer AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "SUISA, Genossenschaft der Urheber und Verleger von Musik",
+      "label": "SUISA, Genossenschaft der Urheber und Verleger von Musik",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "SWICA Gesundheitsorganisation",
       "label": "SWICA Gesundheitsorganisation",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SkyCell AG",
       "label": "SkyCell AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Skysec Defence",
       "label": "Skysec Defence",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Sonceboz Automotive S.A.",
+      "label": "Sonceboz Automotive S.A.",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Sonova AG",
       "label": "Sonova AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "SpeciTec SA",
+      "label": "SpeciTec SA",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Specialized Bicycle Components",
       "label": "Specialized Bicycle Components",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Stadt Zürich – Organisation und Informatik",
       "label": "Stadt Zürich – Organisation und Informatik",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Swiss International Air Lines AG",
       "label": "Swiss International Air Lines AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Swiss Medical Network",
+      "label": "Swiss Medical Network",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Swiss National Bank",
       "label": "Swiss National Bank",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Swiss Re",
       "label": "Swiss Re",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "SwissPeak Partners",
       "label": "SwissPeak Partners",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Swissgrid AG",
       "label": "Swissgrid AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Switch",
       "label": "Switch",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Sword Group",
       "label": "Sword Group",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "T&N Telekom & Netzwerk AG",
       "label": "T&N Telekom & Netzwerk AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "TCS Touring Club Schweiz",
       "label": "TCS Touring Club Schweiz",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Taurus SA",
       "label": "Taurus SA",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Teleflex",
       "label": "Teleflex",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Transgourmet/Prodega Schweiz",
       "label": "Transgourmet/Prodega Schweiz",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "UBS",
       "label": "UBS",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "UNITY Schweiz AG",
       "label": "UNITY Schweiz AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
+    },
+    {
+      "key": "Ubique Innovation AG",
+      "label": "Ubique Innovation AG",
+      "vacancy_count": 4,
+      "share": 0.0008
     },
     {
       "key": "Universität Bern",
       "label": "Universität Bern",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Universitätsspital Basel",
       "label": "Universitätsspital Basel",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Valjob",
       "label": "Valjob",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
-      "key": "Varian Medical Systems Imaging Laboratory GmbH",
-      "label": "Varian Medical Systems Imaging Laboratory GmbH",
+      "key": "Zettaplan AG",
+      "label": "Zettaplan AG",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "Wingtra AG",
-      "label": "Wingtra AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Ziemer Ophthalmic Systems AG",
       "label": "Ziemer Ophthalmic Systems AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "Zürcher Kantonalbank",
       "label": "Zürcher Kantonalbank",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "act digital",
-      "label": "act digital",
-      "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "adidas sport gmbh",
-      "label": "adidas sport gmbh",
-      "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "at rete ag",
-      "label": "at rete ag",
-      "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "dynamic devices AG",
-      "label": "dynamic devices AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "emineo AG",
       "label": "emineo AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "esolva ag",
       "label": "esolva ag",
       "vacancy_count": 4,
-      "share": 0.0007
-    },
-    {
-      "key": "green.ch AG",
-      "label": "green.ch AG",
-      "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "itesys AG",
       "label": "itesys AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "swisspro AG",
       "label": "swisspro AG",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "ti&m",
       "label": "ti&m",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "uniQconsulting ag",
       "label": "uniQconsulting ag",
       "vacancy_count": 4,
-      "share": 0.0007
+      "share": 0.0008
     },
     {
       "key": "A. Baggenstos & Co AG",
@@ -2362,6 +2098,12 @@
       "share": 0.0006
     },
     {
+      "key": "Ambit Group AG",
+      "label": "Ambit Group AG",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
       "key": "Artificialy",
       "label": "Artificialy",
       "vacancy_count": 3,
@@ -2382,6 +2124,12 @@
     {
       "key": "Aventit AG",
       "label": "Aventit AG",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
+      "key": "BMK Recruitment",
+      "label": "BMK Recruitment",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2452,12 +2200,6 @@
       "share": 0.0006
     },
     {
-      "key": "CKW",
-      "label": "CKW",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "Carrosserie HESS AG",
       "label": "Carrosserie HESS AG",
       "vacancy_count": 3,
@@ -2500,18 +2242,6 @@
       "share": 0.0006
     },
     {
-      "key": "Crypto Finance AG",
-      "label": "Crypto Finance AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
-      "key": "Daco-Systems AG",
-      "label": "Daco-Systems AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "Datadog",
       "label": "Datadog",
       "vacancy_count": 3,
@@ -2530,14 +2260,20 @@
       "share": 0.0006
     },
     {
+      "key": "Dentsu International Switzerland AG",
+      "label": "Dentsu International Switzerland AG",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
       "key": "Die Securitas Gruppe",
       "label": "Die Securitas Gruppe",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
-      "key": "Digital Architects Zurich GmbH",
-      "label": "Digital Architects Zurich GmbH",
+      "key": "EKZ Eltop AG",
+      "label": "EKZ Eltop AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2572,6 +2308,12 @@
       "share": 0.0006
     },
     {
+      "key": "Emil Frey Gruppe Schweiz",
+      "label": "Emil Frey Gruppe Schweiz",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
       "key": "Equans Switzerland Facility Management AG",
       "label": "Equans Switzerland Facility Management AG",
       "vacancy_count": 3,
@@ -2590,14 +2332,14 @@
       "share": 0.0006
     },
     {
-      "key": "F24 Schweiz AG",
-      "label": "F24 Schweiz AG",
+      "key": "FIFA",
+      "label": "FIFA",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
-      "key": "FIFA",
-      "label": "FIFA",
+      "key": "FORUM MONDIAL DE L'ECONOMIE",
+      "label": "FORUM MONDIAL DE L'ECONOMIE",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2656,8 +2398,8 @@
       "share": 0.0006
     },
     {
-      "key": "HAEUSLER AG Duggingen",
-      "label": "HAEUSLER AG Duggingen",
+      "key": "HOCH Health Ostschweiz",
+      "label": "HOCH Health Ostschweiz",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2704,26 +2446,26 @@
       "share": 0.0006
     },
     {
-      "key": "IESF AG",
-      "label": "IESF AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "IWB Industrielle Werke Basel",
       "label": "IWB Industrielle Werke Basel",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
-      "key": "Idea Creation GmbH",
-      "label": "Idea Creation GmbH",
+      "key": "Implenia Schweiz AG",
+      "label": "Implenia Schweiz AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
       "key": "Infometis",
       "label": "Infometis",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
+      "key": "Insel Gruppe",
+      "label": "Insel Gruppe",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2776,6 +2518,12 @@
       "share": 0.0006
     },
     {
+      "key": "Kanton Basel-Stadt",
+      "label": "Kanton Basel-Stadt",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
       "key": "Kanton Basel-Stadt Finanzdepartement",
       "label": "Kanton Basel-Stadt Finanzdepartement",
       "vacancy_count": 3,
@@ -2790,12 +2538,6 @@
     {
       "key": "Kanton Thurgau",
       "label": "Kanton Thurgau",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
-      "key": "Kessler & Co AG",
-      "label": "Kessler & Co AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -2980,14 +2722,14 @@
       "share": 0.0006
     },
     {
-      "key": "Smart Energy Link AG",
-      "label": "Smart Energy Link AG",
+      "key": "Sonio AG",
+      "label": "Sonio AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
-      "key": "Sonio AG",
-      "label": "Sonio AG",
+      "key": "SpeedCom (Schweiz) AG",
+      "label": "SpeedCom (Schweiz) AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3028,12 +2770,6 @@
       "share": 0.0006
     },
     {
-      "key": "Swisslog AG",
-      "label": "Swisslog AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "Sympany",
       "label": "Sympany",
       "vacancy_count": 3,
@@ -3042,12 +2778,6 @@
     {
       "key": "Syntegon Packaging Systems AG",
       "label": "Syntegon Packaging Systems AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
-      "key": "Sécheron SA",
-      "label": "Sécheron SA",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3066,12 +2796,6 @@
     {
       "key": "Talan",
       "label": "Talan",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
-      "key": "Tanner + Co AG Verpackungstechnik",
-      "label": "Tanner + Co AG Verpackungstechnik",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3130,8 +2854,8 @@
       "share": 0.0006
     },
     {
-      "key": "Universität St. Gallen",
-      "label": "Universität St. Gallen",
+      "key": "UPGREAT AG",
+      "label": "UPGREAT AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3148,14 +2872,14 @@
       "share": 0.0006
     },
     {
-      "key": "Viessmann (Schweiz) GmbH",
-      "label": "Viessmann (Schweiz) GmbH",
+      "key": "Varian Medical Systems Imaging Laboratory GmbH",
+      "label": "Varian Medical Systems Imaging Laboratory GmbH",
       "vacancy_count": 3,
       "share": 0.0006
     },
     {
-      "key": "Viollier AG",
-      "label": "Viollier AG",
+      "key": "Viessmann (Schweiz) GmbH",
+      "label": "Viessmann (Schweiz) GmbH",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3220,6 +2944,18 @@
       "share": 0.0006
     },
     {
+      "key": "adidas sport gmbh",
+      "label": "adidas sport gmbh",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
+      "key": "at rete ag",
+      "label": "at rete ag",
+      "vacancy_count": 3,
+      "share": 0.0006
+    },
+    {
       "key": "bossinfo.ch AG",
       "label": "bossinfo.ch AG",
       "vacancy_count": 3,
@@ -3232,20 +2968,8 @@
       "share": 0.0006
     },
     {
-      "key": "devs group",
-      "label": "devs group",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "dormakaba Schweiz AG",
       "label": "dormakaba Schweiz AG",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
-      "key": "exxo it-services AG",
-      "label": "exxo it-services AG",
       "vacancy_count": 3,
       "share": 0.0006
     },
@@ -3274,12 +2998,6 @@
       "share": 0.0006
     },
     {
-      "key": "ridgeline ag",
-      "label": "ridgeline ag",
-      "vacancy_count": 3,
-      "share": 0.0006
-    },
-    {
       "key": "u-blox AG",
       "label": "u-blox AG",
       "vacancy_count": 3,
@@ -3290,12 +3008,6 @@
       "label": "valantic",
       "vacancy_count": 3,
       "share": 0.0006
-    },
-    {
-      "key": "ADE photonExa GmbH",
-      "label": "ADE photonExa GmbH",
-      "vacancy_count": 2,
-      "share": 0.0004
     },
     {
       "key": "AFRY",
@@ -3340,20 +3052,8 @@
       "share": 0.0004
     },
     {
-      "key": "AVM Engineering AG",
-      "label": "AVM Engineering AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Aargauische Gebäudeversicherung",
       "label": "Aargauische Gebäudeversicherung",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Abrantix AG",
-      "label": "Abrantix AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3460,18 +3160,6 @@
       "share": 0.0004
     },
     {
-      "key": "Axians IT Services AG",
-      "label": "Axians IT Services AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Axians Somnitec AG",
-      "label": "Axians Somnitec AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Axians in Switzerland",
       "label": "Axians in Switzerland",
       "vacancy_count": 2,
@@ -3514,12 +3202,6 @@
       "share": 0.0004
     },
     {
-      "key": "Bank-now",
-      "label": "Bank-now",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Batterman Consulting Basel AG",
       "label": "Batterman Consulting Basel AG",
       "vacancy_count": 2,
@@ -3540,6 +3222,12 @@
     {
       "key": "Bechtle Switzerland",
       "label": "Bechtle Switzerland",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "Belimed Life Science AG",
+      "label": "Belimed Life Science AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3598,6 +3286,12 @@
       "share": 0.0004
     },
     {
+      "key": "CKW",
+      "label": "CKW",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
       "key": "CLEEVEN",
       "label": "CLEEVEN",
       "vacancy_count": 2,
@@ -3624,12 +3318,6 @@
     {
       "key": "Cartier",
       "label": "Cartier",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Casale SA",
-      "label": "Casale SA",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3688,12 +3376,6 @@
       "share": 0.0004
     },
     {
-      "key": "ControlTech Engineering AG",
-      "label": "ControlTech Engineering AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Coop",
       "label": "Coop",
       "vacancy_count": 2,
@@ -3712,20 +3394,8 @@
       "share": 0.0004
     },
     {
-      "key": "D ONE Value Creation AG",
-      "label": "D ONE Value Creation AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "DXC Technology",
       "label": "DXC Technology",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Data Migration International AG",
-      "label": "Data Migration International AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3748,12 +3418,6 @@
       "share": 0.0004
     },
     {
-      "key": "Dexion Services AG",
-      "label": "Dexion Services AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Dietrich engineering consultants S.A.",
       "label": "Dietrich engineering consultants S.A.",
       "vacancy_count": 2,
@@ -3762,24 +3426,6 @@
     {
       "key": "Digital Architects Zurich",
       "label": "Digital Architects Zurich",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Docpier",
-      "label": "Docpier",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Dottikon Exclusive Synthesis AG",
-      "label": "Dottikon Exclusive Synthesis AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Dreier AG",
-      "label": "Dreier AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3832,12 +3478,6 @@
       "share": 0.0004
     },
     {
-      "key": "Enerconom AG",
-      "label": "Enerconom AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Energie Wasser Bern",
       "label": "Energie Wasser Bern",
       "vacancy_count": 2,
@@ -3856,14 +3496,14 @@
       "share": 0.0004
     },
     {
-      "key": "EveryWare AG",
-      "label": "EveryWare AG",
+      "key": "Exeon Analytics AG",
+      "label": "Exeon Analytics AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
     {
-      "key": "Exeon Analytics AG",
-      "label": "Exeon Analytics AG",
+      "key": "F24 Schweiz AG",
+      "label": "F24 Schweiz AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -3888,12 +3528,6 @@
     {
       "key": "Fides Treasury Services",
       "label": "Fides Treasury Services",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "FinTeX Finance and Technology eXpertise SA",
-      "label": "FinTeX Finance and Technology eXpertise SA",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4120,12 +3754,6 @@
       "share": 0.0004
     },
     {
-      "key": "HolidayCheck",
-      "label": "HolidayCheck",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Hoval AG",
       "label": "Hoval AG",
       "vacancy_count": 2,
@@ -4180,8 +3808,8 @@
       "share": 0.0004
     },
     {
-      "key": "Ikerian AG",
-      "label": "Ikerian AG",
+      "key": "ITpoint Systems AG",
+      "label": "ITpoint Systems AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4222,12 +3850,6 @@
       "share": 0.0004
     },
     {
-      "key": "Ivoclar Vivadent AG",
-      "label": "Ivoclar Vivadent AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "J. Safra Sarasin",
       "label": "J. Safra Sarasin",
       "vacancy_count": 2,
@@ -4252,20 +3874,8 @@
       "share": 0.0004
     },
     {
-      "key": "KARL STORZ Endoskop Produktions GmbH",
-      "label": "KARL STORZ Endoskop Produktions GmbH",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "KEYTEO",
       "label": "KEYTEO",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "KM - Pilgram Management Consulting",
-      "label": "KM - Pilgram Management Consulting",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4306,14 +3916,8 @@
       "share": 0.0004
     },
     {
-      "key": "Kantonsspital Graubünden",
-      "label": "Kantonsspital Graubünden",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Kaulquappe AG",
-      "label": "Kaulquappe AG",
+      "key": "Kessler & Co AG",
+      "label": "Kessler & Co AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4384,20 +3988,8 @@
       "share": 0.0004
     },
     {
-      "key": "LYO-X AG",
-      "label": "LYO-X AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Lakera",
       "label": "Lakera",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Leantin AG",
-      "label": "Leantin AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4440,6 +4032,12 @@
     {
       "key": "Logjob AG - For Supply Chain Experts",
       "label": "Logjob AG - For Supply Chain Experts",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "Lombard Odier",
+      "label": "Lombard Odier",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4528,6 +4126,12 @@
       "share": 0.0004
     },
     {
+      "key": "Manexperts (Schweiz) GmbH",
+      "label": "Manexperts (Schweiz) GmbH",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
       "key": "Manufact (YC S25)",
       "label": "Manufact (YC S25)",
       "vacancy_count": 2,
@@ -4558,12 +4162,6 @@
       "share": 0.0004
     },
     {
-      "key": "Mikron Switzerland AG, Zweigniederlassung Agno, Tool",
-      "label": "Mikron Switzerland AG, Zweigniederlassung Agno, Tool",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Mirabaud Group",
       "label": "Mirabaud Group",
       "vacancy_count": 2,
@@ -4588,14 +4186,14 @@
       "share": 0.0004
     },
     {
-      "key": "NUM AG",
-      "label": "NUM AG",
+      "key": "NOVA-Industrietechnik AG",
+      "label": "NOVA-Industrietechnik AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
     {
-      "key": "Netkum AG",
-      "label": "Netkum AG",
+      "key": "NUM AG",
+      "label": "NUM AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4632,12 +4230,6 @@
     {
       "key": "OTTO'S AG",
       "label": "OTTO'S AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Object ECM AG",
-      "label": "Object ECM AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4690,26 +4282,20 @@
       "share": 0.0004
     },
     {
+      "key": "PEAX AG",
+      "label": "PEAX AG",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
       "key": "PHOENIQS",
       "label": "PHOENIQS",
       "vacancy_count": 2,
       "share": 0.0004
     },
     {
-      "key": "PIDAS Aktiengesellschaft",
-      "label": "PIDAS Aktiengesellschaft",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "PLAIN IT AG",
       "label": "PLAIN IT AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "ParetoLabs",
-      "label": "ParetoLabs",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4798,12 +4384,6 @@
       "share": 0.0004
     },
     {
-      "key": "QACube",
-      "label": "QACube",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "QESTIT DACH",
       "label": "QESTIT DACH",
       "vacancy_count": 2,
@@ -4818,6 +4398,12 @@
     {
       "key": "Quantum Digital",
       "label": "Quantum Digital",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "Quatico Solutions AG",
+      "label": "Quatico Solutions AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4852,12 +4438,6 @@
       "share": 0.0004
     },
     {
-      "key": "Rebsamen Technics AG",
-      "label": "Rebsamen Technics AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Rent a person Beratungs AG",
       "label": "Rent a person Beratungs AG",
       "vacancy_count": 2,
@@ -4872,12 +4452,6 @@
     {
       "key": "Ronal AG",
       "label": "Ronal AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Rotzinger AG",
-      "label": "Rotzinger AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -4930,8 +4504,8 @@
       "share": 0.0004
     },
     {
-      "key": "STRAPAG Strahm und Partner AG",
-      "label": "STRAPAG Strahm und Partner AG",
+      "key": "SR Technics Switzerland AG",
+      "label": "SR Technics Switzerland AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5020,12 +4594,6 @@
       "share": 0.0004
     },
     {
-      "key": "Solothurner Spitäler AG",
-      "label": "Solothurner Spitäler AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Sonepar International Services SA",
       "label": "Sonepar International Services SA",
       "vacancy_count": 2,
@@ -5050,12 +4618,6 @@
       "share": 0.0004
     },
     {
-      "key": "StackWorks GmbH",
-      "label": "StackWorks GmbH",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Stadt Bülach",
       "label": "Stadt Bülach",
       "vacancy_count": 2,
@@ -5064,12 +4626,6 @@
     {
       "key": "Stanzwerk AG",
       "label": "Stanzwerk AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Stellenwerk AG",
-      "label": "Stellenwerk AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5134,12 +4690,6 @@
       "share": 0.0004
     },
     {
-      "key": "Syngenta Crop Protection",
-      "label": "Syngenta Crop Protection",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Synotis",
       "label": "Synotis",
       "vacancy_count": 2,
@@ -5154,6 +4704,12 @@
     {
       "key": "SystemsAccountants",
       "label": "SystemsAccountants",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "Sécheron SA",
+      "label": "Sécheron SA",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5230,12 +4786,6 @@
       "share": 0.0004
     },
     {
-      "key": "TwinCap First AG",
-      "label": "TwinCap First AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "Unit8 SA",
       "label": "Unit8 SA",
       "vacancy_count": 2,
@@ -5260,6 +4810,12 @@
       "share": 0.0004
     },
     {
+      "key": "Universität St. Gallen",
+      "label": "Universität St. Gallen",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
       "key": "Universitätsspital Zürich",
       "label": "Universitätsspital Zürich",
       "vacancy_count": 2,
@@ -5272,26 +4828,8 @@
       "share": 0.0004
     },
     {
-      "key": "VAT Vakuumventile AG",
-      "label": "VAT Vakuumventile AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "VF Corporation",
       "label": "VF Corporation",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "VTU Engineering Schweiz AG",
-      "label": "VTU Engineering Schweiz AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "Valion AG",
-      "label": "Valion AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5358,6 +4896,12 @@
     {
       "key": "WinGD Ltd.",
       "label": "WinGD Ltd.",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "Wingtra AG",
+      "label": "Wingtra AG",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5440,12 +4984,6 @@
       "share": 0.0004
     },
     {
-      "key": "aietes ag",
-      "label": "aietes ag",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "allvaco group AG",
       "label": "allvaco group AG",
       "vacancy_count": 2,
@@ -5472,6 +5010,12 @@
     {
       "key": "comparis.ch AG",
       "label": "comparis.ch AG",
+      "vacancy_count": 2,
+      "share": 0.0004
+    },
+    {
+      "key": "devs group",
+      "label": "devs group",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5572,12 +5116,6 @@
       "share": 0.0004
     },
     {
-      "key": "ongoing GmbH",
-      "label": "ongoing GmbH",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
       "key": "safely by Lobsiger & Partner",
       "label": "safely by Lobsiger & Partner",
       "vacancy_count": 2,
@@ -5622,18 +5160,6 @@
     {
       "key": "wega Informatik AG",
       "label": "wega Informatik AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "weroSoft AG",
-      "label": "weroSoft AG",
-      "vacancy_count": 2,
-      "share": 0.0004
-    },
-    {
-      "key": "xinfra gmbh",
-      "label": "xinfra gmbh",
       "vacancy_count": 2,
       "share": 0.0004
     },
@@ -5686,6 +5212,12 @@
       "share": 0.0002
     },
     {
+      "key": "ADE photonExa GmbH",
+      "label": "ADE photonExa GmbH",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "AEROCONTACT",
       "label": "AEROCONTACT",
       "vacancy_count": 1,
@@ -5716,12 +5248,6 @@
       "share": 0.0002
     },
     {
-      "key": "AIM Sp. z o.o",
-      "label": "AIM Sp. z o.o",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "ALBEDIS - GENEVE",
       "label": "ALBEDIS - GENEVE",
       "vacancy_count": 1,
@@ -5736,12 +5262,6 @@
     {
       "key": "ALLPS",
       "label": "ALLPS",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "ALSTOM Schweiz AG",
-      "label": "ALSTOM Schweiz AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -5794,6 +5314,12 @@
       "share": 0.0002
     },
     {
+      "key": "ATSP Schweiz GmbH",
+      "label": "ATSP Schweiz GmbH",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "AWU AG System- und Umwelttechnik",
       "label": "AWU AG System- und Umwelttechnik",
       "vacancy_count": 1,
@@ -5802,12 +5328,6 @@
     {
       "key": "AXA Group Operations",
       "label": "AXA Group Operations",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "AXIS RE SE, Dublin, Zurich Branch",
-      "label": "AXIS RE SE, Dublin, Zurich Branch",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -5926,12 +5446,6 @@
       "share": 0.0002
     },
     {
-      "key": "AlpineAI AG",
-      "label": "AlpineAI AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Alpiq",
       "label": "Alpiq",
       "vacancy_count": 1,
@@ -5952,12 +5466,6 @@
     {
       "key": "Amazon RIVR",
       "label": "Amazon RIVR",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Amcor Flexibles Burgdorf GmbH",
-      "label": "Amcor Flexibles Burgdorf GmbH",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6106,12 +5614,6 @@
       "share": 0.0002
     },
     {
-      "key": "Auticon Swiss AG",
-      "label": "Auticon Swiss AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Autodesk",
       "label": "Autodesk",
       "vacancy_count": 1,
@@ -6130,8 +5632,14 @@
       "share": 0.0002
     },
     {
-      "key": "Avantec AG",
-      "label": "Avantec AG",
+      "key": "Axians IT Services AG",
+      "label": "Axians IT Services AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Axians Somnitec AG",
+      "label": "Axians Somnitec AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6162,6 +5670,12 @@
     {
       "key": "BAMBUS Software AG",
       "label": "BAMBUS Software AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "BANK-now AG",
+      "label": "BANK-now AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6208,20 +5722,8 @@
       "share": 0.0002
     },
     {
-      "key": "BLP Digital AG",
-      "label": "BLP Digital AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "BLS AG",
       "label": "BLS AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "BRACK.CH",
-      "label": "BRACK.CH",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6330,12 +5832,6 @@
     {
       "key": "BearingPoint",
       "label": "BearingPoint",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Beat Mathys, GATCOM, IT-Equipement",
-      "label": "Beat Mathys, GATCOM, IT-Equipement",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6556,12 +6052,6 @@
       "share": 0.0002
     },
     {
-      "key": "Bénédict-Schule AG",
-      "label": "Bénédict-Schule AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Bögli ICT AG",
       "label": "Bögli ICT AG",
       "vacancy_count": 1,
@@ -6588,12 +6078,6 @@
     {
       "key": "CARAUKTION AG",
       "label": "CARAUKTION AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "CARU AG",
-      "label": "CARU AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6642,12 +6126,6 @@
     {
       "key": "CM Informatik AG",
       "label": "CM Informatik AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "CONVOTIS Schweiz AG",
-      "label": "CONVOTIS Schweiz AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6720,6 +6198,12 @@
     {
       "key": "Carl Zeiss AG",
       "label": "Carl Zeiss AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Casale SA",
+      "label": "Casale SA",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6838,8 +6322,8 @@
       "share": 0.0002
     },
     {
-      "key": "Consultants in Science Sàrl",
-      "label": "Consultants in Science Sàrl",
+      "key": "ControlTech Engineering AG",
+      "label": "ControlTech Engineering AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6874,6 +6358,12 @@
       "share": 0.0002
     },
     {
+      "key": "Crypto Finance AG",
+      "label": "Crypto Finance AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Curaden Global",
       "label": "Curaden Global",
       "vacancy_count": 1,
@@ -6894,6 +6384,12 @@
     {
       "key": "Cytiva",
       "label": "Cytiva",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "D ONE Value Creation AG",
+      "label": "D ONE Value Creation AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -6924,6 +6420,12 @@
     {
       "key": "DSwiss AG",
       "label": "DSwiss AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "DXC Technology Switzerland GmbH",
+      "label": "DXC Technology Switzerland GmbH",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7068,6 +6570,18 @@
     {
       "key": "DonTouch SA",
       "label": "DonTouch SA",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Dottikon Exclusive Synthesis AG",
+      "label": "Dottikon Exclusive Synthesis AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Dreier AG",
+      "label": "Dreier AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7228,6 +6742,12 @@
       "share": 0.0002
     },
     {
+      "key": "Enerconom AG",
+      "label": "Enerconom AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Energie 360° AG",
       "label": "Energie 360° AG",
       "vacancy_count": 1,
@@ -7242,12 +6762,6 @@
     {
       "key": "Epic Fusion",
       "label": "Epic Fusion",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Ergonomics AG",
-      "label": "Ergonomics AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7276,12 +6790,6 @@
       "share": 0.0002
     },
     {
-      "key": "Evatec AG",
-      "label": "Evatec AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Eventfrog AG",
       "label": "Eventfrog AG",
       "vacancy_count": 1,
@@ -7290,6 +6798,12 @@
     {
       "key": "Everllence",
       "label": "Everllence",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "EveryWare AG",
+      "label": "EveryWare AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7630,14 +7144,14 @@
       "share": 0.0002
     },
     {
-      "key": "GuardEx Sàrl",
-      "label": "GuardEx Sàrl",
+      "key": "Gutor",
+      "label": "Gutor",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "Gutor",
-      "label": "Gutor",
+      "key": "HAEUSLER AG Duggingen",
+      "label": "HAEUSLER AG Duggingen",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7716,12 +7230,6 @@
     {
       "key": "HYDRO Exploitation SA",
       "label": "HYDRO Exploitation SA",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Habegger AG",
-      "label": "Habegger AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7810,14 +7318,14 @@
       "share": 0.0002
     },
     {
-      "key": "Hodel + Partner Management Consulting",
-      "label": "Hodel + Partner Management Consulting",
+      "key": "Holcim (Schweiz) AG",
+      "label": "Holcim (Schweiz) AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "Holcim (Schweiz) AG",
-      "label": "Holcim (Schweiz) AG",
+      "key": "HolidayCheck",
+      "label": "HolidayCheck",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -7876,6 +7384,12 @@
       "share": 0.0002
     },
     {
+      "key": "IESF AG",
+      "label": "IESF AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "IGAKIS Genossenschaft",
       "label": "IGAKIS Genossenschaft",
       "vacancy_count": 1,
@@ -7890,12 +7404,6 @@
     {
       "key": "IGS GmbH",
       "label": "IGS GmbH",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "IGS Informatikgesellschaft für Sozialversicherungen GmbH",
-      "label": "IGS Informatikgesellschaft für Sozialversicherungen GmbH",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8068,18 +7576,6 @@
       "share": 0.0002
     },
     {
-      "key": "International School of Zug and Luzern",
-      "label": "International School of Zug and Luzern",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Intonate",
-      "label": "Intonate",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Intrum AG",
       "label": "Intrum AG",
       "vacancy_count": 1,
@@ -8106,6 +7602,12 @@
     {
       "key": "Ironforge Consulting AG",
       "label": "Ironforge Consulting AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Ivoclar Vivadent AG",
+      "label": "Ivoclar Vivadent AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8188,6 +7690,12 @@
       "share": 0.0002
     },
     {
+      "key": "KPMG Switzerland",
+      "label": "KPMG Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "KV Basel AG",
       "label": "KV Basel AG",
       "vacancy_count": 1,
@@ -8242,6 +7750,12 @@
       "share": 0.0002
     },
     {
+      "key": "Kantonsspital Graubünden",
+      "label": "Kantonsspital Graubünden",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Karma Metrix",
       "label": "Karma Metrix",
       "vacancy_count": 1,
@@ -8290,12 +7804,6 @@
       "share": 0.0002
     },
     {
-      "key": "Kollabo AG",
-      "label": "Kollabo AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Konova AG / E-Mitwirkung",
       "label": "Konova AG / E-Mitwirkung",
       "vacancy_count": 1,
@@ -8310,6 +7818,12 @@
     {
       "key": "Krüger + Co. AG",
       "label": "Krüger + Co. AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Kurath Engineering AG",
+      "label": "Kurath Engineering AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8350,14 +7864,14 @@
       "share": 0.0002
     },
     {
-      "key": "LUI.IS LLC",
-      "label": "LUI.IS LLC",
+      "key": "La Fosse",
+      "label": "La Fosse",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "La Fosse",
-      "label": "La Fosse",
+      "key": "Lambda Health System SA",
+      "label": "Lambda Health System SA",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8424,12 +7938,6 @@
     {
       "key": "Lobsiger & Partner GmbH",
       "label": "Lobsiger & Partner GmbH",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Local.ch",
-      "label": "Local.ch",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8632,12 +8140,6 @@
       "share": 0.0002
     },
     {
-      "key": "Mettler-Toledo GmbH",
-      "label": "Mettler-Toledo GmbH",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Michael Kors (Switzerland) GmbH",
       "label": "Michael Kors (Switzerland) GmbH",
       "vacancy_count": 1,
@@ -8692,8 +8194,8 @@
       "share": 0.0002
     },
     {
-      "key": "Mindfire AG",
-      "label": "Mindfire AG",
+      "key": "Mirabit AG",
+      "label": "Mirabit AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8730,12 +8232,6 @@
     {
       "key": "NTI AG LinMot & MagSpring",
       "label": "NTI AG LinMot & MagSpring",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "NTT DATA Business Solutions AG",
-      "label": "NTT DATA Business Solutions AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -8890,12 +8386,6 @@
       "share": 0.0002
     },
     {
-      "key": "ONZACK AG",
-      "label": "ONZACK AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Octave",
       "label": "Octave",
       "vacancy_count": 1,
@@ -8974,12 +8464,6 @@
       "share": 0.0002
     },
     {
-      "key": "Optiswiss AG",
-      "label": "Optiswiss AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Optotune",
       "label": "Optotune",
       "vacancy_count": 1,
@@ -9004,6 +8488,12 @@
       "share": 0.0002
     },
     {
+      "key": "PIDAS Aktiengesellschaft",
+      "label": "PIDAS Aktiengesellschaft",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "PKZ Burger-Kehl & Co. AG",
       "label": "PKZ Burger-Kehl & Co. AG",
       "vacancy_count": 1,
@@ -9022,6 +8512,12 @@
       "share": 0.0002
     },
     {
+      "key": "PRIME INTERNATIONAL GROUP Sàrl",
+      "label": "PRIME INTERNATIONAL GROUP Sàrl",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "PXL Vision",
       "label": "PXL Vision",
       "vacancy_count": 1,
@@ -9036,6 +8532,12 @@
     {
       "key": "Papers AG",
       "label": "Papers AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "ParetoLabs",
+      "label": "ParetoLabs",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9106,12 +8608,6 @@
       "share": 0.0002
     },
     {
-      "key": "Pharmatronic AG",
-      "label": "Pharmatronic AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Pinterest",
       "label": "Pinterest",
       "vacancy_count": 1,
@@ -9120,12 +8616,6 @@
     {
       "key": "Planzer Synergistics",
       "label": "Planzer Synergistics",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Planzer Transport AG, Zweigniederlassung Informatik",
-      "label": "Planzer Transport AG, Zweigniederlassung Informatik",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9190,12 +8680,6 @@
       "share": 0.0002
     },
     {
-      "key": "Pädagogische Hochschule Bern",
-      "label": "Pädagogische Hochschule Bern",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "QuantumBlack, AI by McKinsey",
       "label": "QuantumBlack, AI by McKinsey",
       "vacancy_count": 1,
@@ -9226,12 +8710,6 @@
       "share": 0.0002
     },
     {
-      "key": "Raiffeisen Schweiz",
-      "label": "Raiffeisen Schweiz",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Raiffeisenbank Unteremmental",
       "label": "Raiffeisenbank Unteremmental",
       "vacancy_count": 1,
@@ -9246,6 +8724,12 @@
     {
       "key": "Rapinno Tech Solutions GmbH",
       "label": "Rapinno Tech Solutions GmbH",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Rebsamen Technics AG",
+      "label": "Rebsamen Technics AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9316,12 +8800,6 @@
       "share": 0.0002
     },
     {
-      "key": "Rivero AG",
-      "label": "Rivero AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Riverty",
       "label": "Riverty",
       "vacancy_count": 1,
@@ -9334,26 +8812,20 @@
       "share": 0.0002
     },
     {
-      "key": "RobitiFAI",
-      "label": "RobitiFAI",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Romer's Hausbäckerei AG",
       "label": "Romer's Hausbäckerei AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "Routeco AG",
-      "label": "Routeco AG",
+      "key": "Rotzinger AG",
+      "label": "Rotzinger AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "Roy C. Hitchman AG, Unternehmensberatung",
-      "label": "Roy C. Hitchman AG, Unternehmensberatung",
+      "key": "Routeco AG",
+      "label": "Routeco AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9400,12 +8872,6 @@
       "share": 0.0002
     },
     {
-      "key": "SHOTOVER Systems",
-      "label": "SHOTOVER Systems",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "SICPA HOLDING SA",
       "label": "SICPA HOLDING SA",
       "vacancy_count": 1,
@@ -9432,12 +8898,6 @@
     {
       "key": "SKIDATA",
       "label": "SKIDATA",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "SNAQ",
-      "label": "SNAQ",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9724,6 +9184,12 @@
       "share": 0.0002
     },
     {
+      "key": "Smart Energy Link AG",
+      "label": "Smart Energy Link AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Snap Inc.",
       "label": "Snap Inc.",
       "vacancy_count": 1,
@@ -9762,6 +9228,12 @@
     {
       "key": "Solarstream AG",
       "label": "Solarstream AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Solothurner Spitäler AG",
+      "label": "Solothurner Spitäler AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -9826,12 +9298,6 @@
       "share": 0.0002
     },
     {
-      "key": "Spitäler Frutigen Meiringen Interlaken AG",
-      "label": "Spitäler Frutigen Meiringen Interlaken AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Spitäler Schaffhausen",
       "label": "Spitäler Schaffhausen",
       "vacancy_count": 1,
@@ -9874,6 +9340,12 @@
       "share": 0.0002
     },
     {
+      "key": "Stellenwerk AG",
+      "label": "Stellenwerk AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Stiftung Swiss Sport Integrity",
       "label": "Stiftung Swiss Sport Integrity",
       "vacancy_count": 1,
@@ -9882,12 +9354,6 @@
     {
       "key": "Stiftung Töpferhaus",
       "label": "Stiftung Töpferhaus",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Stone Sourcing AG",
-      "label": "Stone Sourcing AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10048,6 +9514,12 @@
       "share": 0.0002
     },
     {
+      "key": "Swisslog AG",
+      "label": "Swisslog AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "Swissmedic",
       "label": "Swissmedic",
       "vacancy_count": 1,
@@ -10062,6 +9534,12 @@
     {
       "key": "Syngenta",
       "label": "Syngenta",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
+      "key": "Syngenta Crop Protection",
+      "label": "Syngenta Crop Protection",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10156,14 +9634,14 @@
       "share": 0.0002
     },
     {
-      "key": "Tata Consultancy Services",
-      "label": "Tata Consultancy Services",
+      "key": "Tanner + Co AG Verpackungstechnik",
+      "label": "Tanner + Co AG Verpackungstechnik",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "Team Partners Suisse SA",
-      "label": "Team Partners Suisse SA",
+      "key": "Tata Consultancy Services",
+      "label": "Tata Consultancy Services",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10288,8 +9766,8 @@
       "share": 0.0002
     },
     {
-      "key": "Typewise",
-      "label": "Typewise",
+      "key": "TwinCap First AG",
+      "label": "TwinCap First AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10320,12 +9798,6 @@
     {
       "key": "Umanova SA",
       "label": "Umanova SA",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Unic AG",
-      "label": "Unic AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10396,6 +9868,12 @@
       "share": 0.0002
     },
     {
+      "key": "VAT Vakuumventile AG",
+      "label": "VAT Vakuumventile AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "VELUX Schweiz AG",
       "label": "VELUX Schweiz AG",
       "vacancy_count": 1,
@@ -10408,20 +9886,14 @@
       "share": 0.0002
     },
     {
-      "key": "VONDO AG",
-      "label": "VONDO AG",
+      "key": "Valion AG",
+      "label": "Valion AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
       "key": "Veeam Software",
       "label": "Veeam Software",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Ventoo AG",
-      "label": "Ventoo AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10630,12 +10102,6 @@
       "share": 0.0002
     },
     {
-      "key": "XB Consultants",
-      "label": "XB Consultants",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "Xelon AG",
       "label": "Xelon AG",
       "vacancy_count": 1,
@@ -10674,12 +10140,6 @@
     {
       "key": "Zeit AG",
       "label": "Zeit AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "Zellweger Management Consultants AG",
-      "label": "Zellweger Management Consultants AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10774,12 +10234,6 @@
       "share": 0.0002
     },
     {
-      "key": "amétiq connect ag",
-      "label": "amétiq connect ag",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "apheros",
       "label": "apheros",
       "vacancy_count": 1,
@@ -10836,18 +10290,6 @@
     {
       "key": "contagi",
       "label": "contagi",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "cyon AG",
-      "label": "cyon AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "devedis",
-      "label": "devedis",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -10918,14 +10360,20 @@
       "share": 0.0002
     },
     {
+      "key": "exxo it-services AG",
+      "label": "exxo it-services AG",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "fifty-five",
       "label": "fifty-five",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "gateB",
-      "label": "gateB",
+      "key": "green.ch AG",
+      "label": "green.ch AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -11014,12 +10462,6 @@
       "share": 0.0002
     },
     {
-      "key": "mp technology AG",
-      "label": "mp technology AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "myGwork - LGBTQ+ Business Community",
       "label": "myGwork - LGBTQ+ Business Community",
       "vacancy_count": 1,
@@ -11062,6 +10504,12 @@
       "share": 0.0002
     },
     {
+      "key": "ongoing GmbH",
+      "label": "ongoing GmbH",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "oprandi & partner ag",
       "label": "oprandi & partner ag",
       "vacancy_count": 1,
@@ -11092,6 +10540,12 @@
       "share": 0.0002
     },
     {
+      "key": "ridgeline ag",
+      "label": "ridgeline ag",
+      "vacancy_count": 1,
+      "share": 0.0002
+    },
+    {
       "key": "rready",
       "label": "rready",
       "vacancy_count": 1,
@@ -11112,12 +10566,6 @@
     {
       "key": "skyquest AG",
       "label": "skyquest AG",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
-      "key": "smart-me AG",
-      "label": "smart-me AG",
       "vacancy_count": 1,
       "share": 0.0002
     },
@@ -11152,20 +10600,14 @@
       "share": 0.0002
     },
     {
-      "key": "techexperts4you ag",
-      "label": "techexperts4you ag",
-      "vacancy_count": 1,
-      "share": 0.0002
-    },
-    {
       "key": "webwirkung GmbH",
       "label": "webwirkung GmbH",
       "vacancy_count": 1,
       "share": 0.0002
     },
     {
-      "key": "whatwedo GmbH",
-      "label": "whatwedo GmbH",
+      "key": "weroSoft AG",
+      "label": "weroSoft AG",
       "vacancy_count": 1,
       "share": 0.0002
     },

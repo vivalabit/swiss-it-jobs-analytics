@@ -1,10 +1,10 @@
 metric,value
-total_vacancies,5445.0
-seniority_known_count,5098.0
-seniority_known_share,0.9363
-experience_years_mentioned_count,1688.0
-experience_years_mentioned_share,0.31
+total_vacancies,4825.0
+seniority_known_count,4551.0
+seniority_known_share,0.9432
+experience_years_mentioned_count,1499.0
+experience_years_mentioned_share,0.3107
 average_min_experience_years,4.69
 median_min_experience_years,5.0
-average_experience_years,4.85
+average_experience_years,4.84
 median_experience_years,5.0

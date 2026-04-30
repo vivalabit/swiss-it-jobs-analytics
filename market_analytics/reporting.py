@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from datetime import UTC
 from pathlib import Path
 from typing import Mapping
 
 import pandas as pd
 
 from .analytics import (
+    _parse_datetime_series,
     exclude_staffing_agencies,
     calculate_education_requirements_summary,
     calculate_experience_by_seniority,
@@ -19,6 +21,7 @@ from .analytics import (
     calculate_salary_summary,
     calculate_vacancy_trend_outputs,
 )
+from .constants import PUBLIC_ANALYTICS_MIN_PUBLICATION_DATE
 from .deduplication import deduplicate_cross_source_vacancies
 from .skills import (
     calculate_list_summary,
@@ -26,6 +29,11 @@ from .skills import (
     calculate_top_list_items,
     calculate_top_skills_by_dimension,
     calculate_top_skills_overall,
+)
+
+PUBLIC_ANALYTICS_MIN_PUBLICATION_TIMESTAMP = pd.Timestamp(
+    PUBLIC_ANALYTICS_MIN_PUBLICATION_DATE,
+    tz=UTC,
 )
 
 
@@ -36,6 +44,7 @@ def build_analytics_outputs(
 ) -> dict[str, pd.DataFrame]:
     dataset = deduplicate_cross_source_vacancies(dataset).reset_index(drop=True)
     dataset = exclude_staffing_agencies(dataset).reset_index(drop=True)
+    dataset = _filter_dataset_to_public_coverage(dataset).reset_index(drop=True)
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),
         "education_requirements_summary": calculate_education_requirements_summary(dataset),
@@ -88,6 +97,15 @@ def build_analytics_outputs(
         **calculate_crosstabs(dataset),
     }
     return outputs
+
+
+def _filter_dataset_to_public_coverage(dataset: pd.DataFrame) -> pd.DataFrame:
+    if "publication_date" not in dataset.columns:
+        return dataset.iloc[0:0].copy()
+
+    published_at = _parse_datetime_series(dataset["publication_date"])
+    coverage_mask = published_at >= PUBLIC_ANALYTICS_MIN_PUBLICATION_TIMESTAMP
+    return dataset.loc[coverage_mask.fillna(False)].copy()
 
 
 def save_analytics_outputs(

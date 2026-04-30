@@ -217,6 +217,55 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertEqual(2, city_map_details.loc["Zürich", "vacancy_count"])
         self.assertIn("software_engineering", city_map_details.loc["Zürich", "role_distribution_json"])
 
+    def test_build_analytics_outputs_excludes_pre_2026_publications_from_public_stats(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "company": ["Acme", "Legacy Co", "Unknown Date Co"],
+                "title": ["Data Engineer", "Old Python Engineer", "Missing Date Analyst"],
+                "description_text": [
+                    "Python and SQL.",
+                    "Kotlin and Java.",
+                    "Excel and BI.",
+                ],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2025-12-31T23:30:00+00:00",
+                    None,
+                ],
+                "first_seen_at": [
+                    "2026-04-20T08:00:00+00:00",
+                    "2025-12-31T08:00:00+00:00",
+                    "2026-04-21T08:00:00+00:00",
+                ],
+                "last_seen_at": [
+                    "2026-04-21T08:00:00+00:00",
+                    "2026-01-01T08:00:00+00:00",
+                    "2026-04-21T08:00:00+00:00",
+                ],
+                "role_category": ["data_ai", "software_engineering", "product_project_analysis"],
+                "city": ["Zurich", "Bern", "Geneva"],
+                "canton": ["ZH", "BE", "GE"],
+                "seniority": ["senior", "mid", "mid"],
+                "work_mode": ["hybrid", "onsite", "remote"],
+                "skills": [["python", "sql"], ["kotlin", "java"], ["excel"]],
+            }
+        )
+
+        standardized = validate_and_standardize_dataset(dataset)
+        outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
+
+        overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
+        self.assertEqual(1, overview["total_vacancies"])
+        self.assertEqual(1, overview["total_companies"])
+        self.assertEqual({"Acme"}, set(outputs["distribution_company"]["company"]))
+        self.assertEqual(
+            {"2026-04-20"},
+            set(outputs["vacancy_trends_daily"]["date"]),
+        )
+        trend_summary = outputs["vacancy_trends_summary"].set_index("metric")["value"].to_dict()
+        self.assertEqual(1, trend_summary["published_total"])
+        self.assertEqual("2026-04-20", trend_summary["latest_publication_date"])
+
     def test_exclude_staffing_agencies_removes_normalized_agency_names(self) -> None:
         dataset = pd.DataFrame(
             {

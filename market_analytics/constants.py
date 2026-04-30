@@ -77,6 +77,7 @@ MISSING_TEXT_VALUES: frozenset[str] = frozenset(
 )
 
 UNKNOWN_LABEL = "Unknown"
+PUBLIC_ANALYTICS_MIN_PUBLICATION_DATE = "2026-01-01"
 STAFFING_AGENCY_COMPANY_NAMES: frozenset[str] = frozenset(
     {
         "Adecco",
