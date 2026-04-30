@@ -123,7 +123,7 @@ AR,qt,1,6,0.05
 AR,react.js,1,6,0.05
 AR,scrum,1,6,0.05
 BE,agile,157,1,0.2924
-BE,ci_cd,118,2,0.2197
+BE,ci_cd,117,2,0.2179
 BE,devops,101,3,0.1881
 BE,java,92,4,0.1713
 BE,python,76,5,0.1415
@@ -221,7 +221,7 @@ BS,rails,2,16,0.0146
 BS,test_automation,2,16,0.0146
 BS,aks,1,17,0.0073
 BS,apache,1,17,0.0073
-BS,azure_devops,1,17,0.0073
+BS,azure devops,1,17,0.0073
 BS,bi,1,17,0.0073
 BS,boost,1,17,0.0073
 BS,c,1,17,0.0073
@@ -1046,14 +1046,14 @@ ZG,vteststudio,1,11,0.0118
 ZG,winui,1,11,0.0118
 ZG,xaml,1,11,0.0118
 ZG,zfs,1,11,0.0118
-ZH,agile,682,1,0.2213
+ZH,agile,682,1,0.2212
 ZH,python,619,2,0.2008
-ZH,ci_cd,538,3,0.1746
+ZH,ci_cd,538,3,0.1745
 ZH,devops,484,4,0.157
-ZH,sql,436,5,0.1415
+ZH,sql,437,5,0.1417
 ZH,java,390,6,0.1265
 ZH,azure,343,7,0.1113
-ZH,aws,281,8,0.0912
+ZH,aws,281,8,0.0911
 ZH,typescript,208,9,0.0675
 ZH,react,201,10,0.0652
 ZH,kubernetes,181,11,0.0587
@@ -1065,4 +1065,4 @@ ZH,c++,151,16,0.049
 ZH,spring,143,17,0.0464
 ZH,dotnet,136,18,0.0441
 ZH,spark,135,19,0.0438
-ZH,microservices,125,20,0.0406
+ZH,microservices,125,20,0.0405

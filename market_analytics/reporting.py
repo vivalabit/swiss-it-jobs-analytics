@@ -11,6 +11,7 @@ from .analytics import (
     calculate_experience_by_seniority,
     calculate_experience_requirements_summary,
     calculate_crosstabs,
+    calculate_city_map_details,
     calculate_distributions,
     calculate_overview_metrics,
     calculate_salary_by_role_category,
@@ -44,6 +45,7 @@ def build_analytics_outputs(
         "salary_by_role_category": calculate_salary_by_role_category(dataset),
         "salary_by_seniority": calculate_salary_by_seniority(dataset),
         **calculate_distributions(dataset),
+        "city_map_details": calculate_city_map_details(dataset),
         "top_skills_overall": calculate_top_skills_overall(
             dataset,
             top_n=top_skills_limit,

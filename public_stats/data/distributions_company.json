@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "dimension": "company",
   "items": [
@@ -274,6 +274,12 @@
       "share": 0.0026
     },
     {
+      "key": "CISTEC AG",
+      "label": "CISTEC AG",
+      "vacancy_count": 13,
+      "share": 0.0024
+    },
+    {
       "key": "EFG Bank AG",
       "label": "EFG Bank AG",
       "vacancy_count": 13,
@@ -296,12 +302,6 @@
       "label": "UMB AG",
       "vacancy_count": 13,
       "share": 0.0024
-    },
-    {
-      "key": "CISTEC AG",
-      "label": "CISTEC AG",
-      "vacancy_count": 12,
-      "share": 0.0022
     },
     {
       "key": "EY",

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import unicodedata
 from datetime import UTC
@@ -667,6 +668,97 @@ def calculate_crosstabs(dataset: pd.DataFrame) -> dict[str, pd.DataFrame]:
             columns_column="work_mode",
         ),
     }
+
+
+def calculate_city_map_details(dataset: pd.DataFrame) -> pd.DataFrame:
+    columns = [
+        "city",
+        "vacancy_count",
+        "share",
+        "role_distribution_json",
+        "company_distribution_json",
+        "work_mode_distribution_json",
+    ]
+    if dataset.empty:
+        return pd.DataFrame(columns=columns)
+
+    city_groups = (
+        dataset.assign(city=dataset["city"].fillna(UNKNOWN_LABEL))
+        .groupby("city", dropna=False, sort=False)
+    )
+    total_vacancies = len(dataset)
+    records: list[dict[str, object]] = []
+
+    for city, city_frame in city_groups:
+        vacancy_count = int(len(city_frame))
+        records.append(
+            {
+                "city": city,
+                "vacancy_count": vacancy_count,
+                "share": round(vacancy_count / total_vacancies, 4) if total_vacancies else 0.0,
+                "role_distribution_json": json.dumps(
+                    _build_dimension_distribution_items(
+                        city_frame,
+                        column="role_category",
+                        label_key="role_category",
+                    ),
+                    ensure_ascii=False,
+                ),
+                "company_distribution_json": json.dumps(
+                    _build_dimension_distribution_items(
+                        city_frame,
+                        column="company",
+                        label_key="company",
+                    ),
+                    ensure_ascii=False,
+                ),
+                "work_mode_distribution_json": json.dumps(
+                    _build_dimension_distribution_items(
+                        city_frame,
+                        column="work_mode",
+                        label_key="work_mode",
+                    ),
+                    ensure_ascii=False,
+                ),
+            }
+        )
+
+    return pd.DataFrame.from_records(records, columns=columns).sort_values(
+        ["vacancy_count", "city"],
+        ascending=[False, True],
+    ).reset_index(drop=True)
+
+
+def _build_dimension_distribution_items(
+    dataset: pd.DataFrame,
+    *,
+    column: str,
+    label_key: str,
+) -> list[dict[str, object]]:
+    counts = (
+        dataset[column]
+        .fillna(UNKNOWN_LABEL)
+        .map(_known_or_unknown)
+        .value_counts(dropna=False)
+        .rename_axis(label_key)
+        .reset_index(name="vacancy_count")
+        .sort_values(["vacancy_count", label_key], ascending=[False, True])
+        .reset_index(drop=True)
+    )
+    total_count = int(len(dataset))
+    counts["share_within_city"] = (
+        counts["vacancy_count"] / total_count if total_count else 0.0
+    ).round(4)
+    counts["rank"] = counts.index + 1
+    return [
+        {
+            label_key: str(row[label_key]),
+            "vacancy_count": int(row["vacancy_count"]),
+            "share_within_city": float(row["share_within_city"]),
+            "rank": int(row["rank"]),
+        }
+        for row in counts.to_dict(orient="records")
+    ]
 
 
 def calculate_salary_summary(dataset: pd.DataFrame) -> pd.DataFrame:

@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "summary": {
-    "published_total": 5367,
+    "published_total": 5368,
     "closed_total": 940,
     "latest_publication_date": "2026-04-27",
-    "published_30d": 3616,
+    "published_30d": 3617,
     "published_previous_30d": 845,
-    "growth_30d": 3.2793,
-    "published_90d": 4724,
+    "growth_30d": 3.2805,
+    "published_90d": 4725,
     "published_previous_90d": 277,
-    "growth_90d": 16.0542,
-    "published_180d": 5001,
+    "growth_90d": 16.0578,
+    "published_180d": 5002,
     "published_previous_180d": 233,
-    "growth_180d": 20.4635,
-    "published_365d": 5234,
+    "growth_180d": 20.4678,
+    "published_365d": 5235,
     "published_previous_365d": 85,
-    "growth_365d": 60.5765
+    "growth_365d": 60.5882
   },
   "daily": [
     {
@@ -2156,17 +2156,17 @@
     },
     {
       "date": "2026-04-16",
-      "published_count": 583,
+      "published_count": 584,
       "closed_count": 0,
-      "net_change": 583,
-      "growth_rate": 5.8588
+      "net_change": 584,
+      "growth_rate": 5.8706
     },
     {
       "date": "2026-04-17",
       "published_count": 213,
       "closed_count": 240,
       "net_change": -27,
-      "growth_rate": -0.6346
+      "growth_rate": -0.6353
     },
     {
       "date": "2026-04-18",
@@ -2900,17 +2900,17 @@
     },
     {
       "week_start": "2026-04-13",
-      "published_count": 1247,
+      "published_count": 1248,
       "closed_count": 518,
-      "net_change": 729,
-      "growth_rate": 0.6989
+      "net_change": 730,
+      "growth_rate": 0.7003
     },
     {
       "week_start": "2026-04-20",
       "published_count": 874,
       "closed_count": 422,
       "net_change": 452,
-      "growth_rate": -0.2991
+      "growth_rate": -0.2997
     },
     {
       "week_start": "2026-04-27",
@@ -16990,9 +16990,9 @@
         "date": "2026-04-16",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 130,
+        "published_count": 131,
         "closed_count": 0,
-        "net_change": 130
+        "net_change": 131
       },
       {
         "date": "2026-04-16",
@@ -29064,9 +29064,9 @@
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 280,
+        "published_count": 281,
         "closed_count": 104,
-        "net_change": 176
+        "net_change": 177
       },
       {
         "week_start": "2026-04-13",
@@ -30221,12 +30221,12 @@
       {
         "month": 3,
         "vacancy_count": 968,
-        "share": 0.1804
+        "share": 0.1803
       },
       {
         "month": 4,
-        "vacancy_count": 3522,
-        "share": 0.6562
+        "vacancy_count": 3523,
+        "share": 0.6563
       },
       {
         "month": 5,

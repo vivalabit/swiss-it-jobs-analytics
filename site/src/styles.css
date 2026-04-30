@@ -862,9 +862,14 @@ img {
   letter-spacing: 0;
 }
 
+.cy-map-layout {
+  display: grid;
+  gap: 24px;
+  margin-top: 28px;
+}
+
 .cy-map-canvas {
   overflow: hidden;
-  margin-top: 28px;
   border: 1px solid var(--border);
   background:
     linear-gradient(135deg, rgba(16, 24, 40, 0.035), transparent 42%),
@@ -883,12 +888,26 @@ img {
   opacity: 0.96;
 }
 
+.cy-map-marker {
+  cursor: pointer;
+}
+
+.cy-map-marker:focus-visible {
+  outline: none;
+}
+
 .cy-map-bubble {
   fill: var(--primary);
   stroke: #a90007;
   stroke-width: 1.3;
   mix-blend-mode: multiply;
   vector-effect: non-scaling-stroke;
+  transition: stroke-width 160ms ease;
+}
+
+.cy-map-bubble-selected {
+  stroke: #101828;
+  stroke-width: 2.4;
 }
 
 .cy-map-city-dot {
@@ -922,6 +941,184 @@ img {
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.cy-map-label-selected .cy-map-label-name,
+.cy-map-label-selected .cy-map-label-value {
+  fill: #101828;
+}
+
+.cy-map-detail-panel {
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(231, 0, 11, 0.04), rgba(231, 0, 11, 0)),
+    rgba(249, 250, 251, 0.9);
+  padding: 20px;
+}
+
+.cy-map-detail-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+
+.cy-map-detail-head h3 {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+}
+
+.cy-map-detail-rank {
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  background: #fff;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+
+.cy-map-city-picker {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.cy-map-city-picker-head {
+  display: grid;
+  gap: 4px;
+}
+
+.cy-map-city-picker-head span {
+  color: var(--muted-foreground);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.cy-map-city-picker-head p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.cy-map-city-picker-field {
+  position: relative;
+}
+
+.cy-map-city-picker-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--foreground);
+  font: inherit;
+  padding: 12px 14px;
+}
+
+.cy-map-city-picker-input:focus {
+  outline: none;
+  border-color: rgba(245, 86, 86, 0.75);
+  box-shadow: 0 0 0 3px rgba(245, 86, 86, 0.12);
+}
+
+.cy-map-city-picker-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: grid;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
+  padding: 8px;
+}
+
+.cy-map-city-picker-option {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  padding: 11px 12px;
+  text-align: left;
+}
+
+.cy-map-city-picker-option span {
+  font-weight: 700;
+}
+
+.cy-map-city-picker-option strong {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  letter-spacing: -0.03em;
+}
+
+.cy-map-city-picker-option.is-highlighted {
+  border-color: rgba(245, 86, 86, 0.2);
+  background: rgba(245, 86, 86, 0.08);
+}
+
+.cy-map-city-picker-option.is-selected {
+  border-color: rgba(245, 86, 86, 0.32);
+  background: rgba(245, 86, 86, 0.12);
+}
+
+.cy-map-city-picker-empty {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  padding: 12px;
+}
+
+.cy-map-detail-stats {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cy-map-detail-stat {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 14px;
+}
+
+.cy-map-detail-stat span {
+  color: var(--muted-foreground);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.cy-map-detail-stat strong {
+  color: var(--foreground);
+  font-size: 1.25rem;
+  line-height: 1.15;
+  letter-spacing: -0.06em;
+}
+
+.cy-map-detail-block {
+  display: grid;
+  gap: 8px;
 }
 
 .cy-map-legend {
@@ -2365,6 +2562,14 @@ img {
 
   .cy-map-panel {
     padding: 16px;
+  }
+
+  .cy-map-detail-head {
+    display: grid;
+  }
+
+  .cy-map-detail-stats {
+    grid-template-columns: 1fr;
   }
 
   .cy-map-canvas {

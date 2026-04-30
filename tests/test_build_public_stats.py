@@ -40,6 +40,60 @@ class BuildPublicStatsTests(unittest.TestCase):
             ).to_csv(csv_dir / "overview_metrics.csv", index=False)
             pd.DataFrame(
                 [
+                    {
+                        "city": "Zürich",
+                        "vacancy_count": 2,
+                        "share": 0.6667,
+                        "role_distribution_json": json.dumps(
+                            [
+                                {
+                                    "role_category": "data_ai",
+                                    "vacancy_count": 1,
+                                    "share_within_city": 0.5,
+                                    "rank": 1,
+                                },
+                                {
+                                    "role_category": "software_engineering",
+                                    "vacancy_count": 1,
+                                    "share_within_city": 0.5,
+                                    "rank": 2,
+                                },
+                            ],
+                            ensure_ascii=False,
+                        ),
+                        "company_distribution_json": json.dumps(
+                            [
+                                {
+                                    "company": "Acme",
+                                    "vacancy_count": 2,
+                                    "share_within_city": 1.0,
+                                    "rank": 1,
+                                }
+                            ],
+                            ensure_ascii=False,
+                        ),
+                        "work_mode_distribution_json": json.dumps(
+                            [
+                                {
+                                    "work_mode": "hybrid",
+                                    "vacancy_count": 1,
+                                    "share_within_city": 0.5,
+                                    "rank": 1,
+                                },
+                                {
+                                    "work_mode": "remote",
+                                    "vacancy_count": 1,
+                                    "share_within_city": 0.5,
+                                    "rank": 2,
+                                },
+                            ],
+                            ensure_ascii=False,
+                        ),
+                    }
+                ]
+            ).to_csv(csv_dir / "city_map_details.csv", index=False)
+            pd.DataFrame(
+                [
                     {"metric": "total_vacancies", "value": 3},
                     {"metric": "higher_education_vacancy_count", "value": 2},
                     {"metric": "higher_education_vacancy_share", "value": 0.6667},
@@ -276,6 +330,16 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue(overview["available"])
             self.assertEqual(3, overview["metrics"]["total_vacancies"])
 
+            city_map_details = json.loads(
+                (output_dir / "city_map_details.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(city_map_details["available"])
+            self.assertEqual("Zürich", city_map_details["items"][0]["city"])
+            self.assertEqual(
+                "data_ai",
+                city_map_details["items"][0]["role_distribution"][0]["role_category"],
+            )
+
             education_requirements = json.loads(
                 (output_dir / "education_requirements.json").read_text(encoding="utf-8")
             )
@@ -340,6 +404,7 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertEqual(2, company_distribution["items"][0]["vacancy_count"])
 
             self.assertTrue((copy_csv_dir / "overview_metrics.csv").exists())
+            self.assertTrue((copy_csv_dir / "city_map_details.csv").exists())
             self.assertTrue((copy_csv_dir / "education_requirements_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "experience_by_seniority.csv").exists())
             self.assertTrue((copy_csv_dir / "vacancy_trends_daily.csv").exists())

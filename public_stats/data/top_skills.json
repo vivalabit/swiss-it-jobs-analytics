@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "overall": [
     {
@@ -10,12 +10,12 @@
     {
       "skill": "python",
       "vacancy_count": 1050,
-      "share": 0.1929
+      "share": 0.1928
     },
     {
       "skill": "ci_cd",
-      "vacancy_count": 937,
-      "share": 0.1721
+      "vacancy_count": 936,
+      "share": 0.1719
     },
     {
       "skill": "devops",
@@ -24,8 +24,8 @@
     },
     {
       "skill": "sql",
-      "vacancy_count": 761,
-      "share": 0.1398
+      "vacancy_count": 762,
+      "share": 0.1399
     },
     {
       "skill": "java",
@@ -40,7 +40,7 @@
     {
       "skill": "aws",
       "vacancy_count": 487,
-      "share": 0.0895
+      "share": 0.0894
     },
     {
       "skill": "react",
@@ -2925,37 +2925,37 @@
           "skill": "agile",
           "vacancy_count": 564,
           "rank": 1,
-          "share_within_group": 0.2975
+          "share_within_group": 0.2973
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 489,
+          "vacancy_count": 488,
           "rank": 2,
-          "share_within_group": 0.2579
+          "share_within_group": 0.2572
         },
         {
           "skill": "java",
           "vacancy_count": 475,
           "rank": 3,
-          "share_within_group": 0.2505
+          "share_within_group": 0.2504
         },
         {
           "skill": "python",
           "vacancy_count": 415,
           "rank": 4,
-          "share_within_group": 0.2189
+          "share_within_group": 0.2188
         },
         {
           "skill": "devops",
           "vacancy_count": 331,
           "rank": 5,
-          "share_within_group": 0.1746
+          "share_within_group": 0.1745
         },
         {
           "skill": "sql",
-          "vacancy_count": 311,
+          "vacancy_count": 312,
           "rank": 6,
-          "share_within_group": 0.164
+          "share_within_group": 0.1645
         },
         {
           "skill": "react",
@@ -2967,19 +2967,19 @@
           "skill": "typescript",
           "vacancy_count": 281,
           "rank": 8,
-          "share_within_group": 0.1482
+          "share_within_group": 0.1481
         },
         {
           "skill": "angular",
           "vacancy_count": 268,
           "rank": 9,
-          "share_within_group": 0.1414
+          "share_within_group": 0.1413
         },
         {
           "skill": "javascript",
           "vacancy_count": 215,
           "rank": 10,
-          "share_within_group": 0.1134
+          "share_within_group": 0.1133
         },
         {
           "skill": "spring",
@@ -2997,7 +2997,7 @@
           "skill": "aws",
           "vacancy_count": 199,
           "rank": 13,
-          "share_within_group": 0.105
+          "share_within_group": 0.1049
         },
         {
           "skill": "dotnet",
@@ -3009,7 +3009,7 @@
           "skill": "c++",
           "vacancy_count": 182,
           "rank": 15,
-          "share_within_group": 0.096
+          "share_within_group": 0.0959
         },
         {
           "skill": "microservices",
@@ -3027,13 +3027,13 @@
           "skill": "kubernetes",
           "vacancy_count": 127,
           "rank": 18,
-          "share_within_group": 0.067
+          "share_within_group": 0.0669
         },
         {
           "skill": "postgresql",
           "vacancy_count": 123,
           "rank": 19,
-          "share_within_group": 0.0649
+          "share_within_group": 0.0648
         },
         {
           "skill": "scrum",
@@ -4576,9 +4576,9 @@
         },
         {
           "skill": "ci_cd",
-          "vacancy_count": 118,
+          "vacancy_count": 117,
           "rank": 2,
-          "share_within_group": 0.2197
+          "share_within_group": 0.2179
         },
         {
           "skill": "devops",
@@ -5173,7 +5173,7 @@
           "share_within_group": 0.0073
         },
         {
-          "skill": "azure_devops",
+          "skill": "azure devops",
           "vacancy_count": 1,
           "rank": 17,
           "share_within_group": 0.0073
@@ -10221,7 +10221,7 @@
           "skill": "agile",
           "vacancy_count": 682,
           "rank": 1,
-          "share_within_group": 0.2213
+          "share_within_group": 0.2212
         },
         {
           "skill": "python",
@@ -10233,7 +10233,7 @@
           "skill": "ci_cd",
           "vacancy_count": 538,
           "rank": 3,
-          "share_within_group": 0.1746
+          "share_within_group": 0.1745
         },
         {
           "skill": "devops",
@@ -10243,9 +10243,9 @@
         },
         {
           "skill": "sql",
-          "vacancy_count": 436,
+          "vacancy_count": 437,
           "rank": 5,
-          "share_within_group": 0.1415
+          "share_within_group": 0.1417
         },
         {
           "skill": "java",
@@ -10263,7 +10263,7 @@
           "skill": "aws",
           "vacancy_count": 281,
           "rank": 8,
-          "share_within_group": 0.0912
+          "share_within_group": 0.0911
         },
         {
           "skill": "typescript",
@@ -10335,7 +10335,7 @@
           "skill": "microservices",
           "vacancy_count": 125,
           "rank": 20,
-          "share_within_group": 0.0406
+          "share_within_group": 0.0405
         }
       ]
     }
@@ -10343,20 +10343,20 @@
   "programming_languages": {
     "summary": {
       "distinct_items": 95,
-      "total_mentions": 4529,
-      "vacancies_with_items": 2272,
-      "vacancy_coverage": 0.4173
+      "total_mentions": 4530,
+      "vacancies_with_items": 2273,
+      "vacancy_coverage": 0.4174
     },
     "items": [
       {
         "programming_language": "python",
         "vacancy_count": 1050,
-        "share": 0.1929
+        "share": 0.1928
       },
       {
         "programming_language": "sql",
-        "vacancy_count": 759,
-        "share": 0.1394
+        "vacancy_count": 760,
+        "share": 0.1396
       },
       {
         "programming_language": "java",
@@ -10429,12 +10429,12 @@
         "share": 0.0044
       },
       {
-        "programming_language": "powershell",
+        "programming_language": "r",
         "vacancy_count": 16,
         "share": 0.0029
       },
       {
-        "programming_language": "r",
+        "programming_language": "powershell",
         "vacancy_count": 16,
         "share": 0.0029
       },
@@ -10455,7 +10455,7 @@
       "distinct_items": 570,
       "total_mentions": 3310,
       "vacancies_with_items": 1436,
-      "vacancy_coverage": 0.2638
+      "vacancy_coverage": 0.2637
     },
     "items": [
       {

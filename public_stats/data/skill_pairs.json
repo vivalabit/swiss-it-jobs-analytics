@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "items": [
     {
       "skill_1": "ci_cd",
       "skill_2": "devops",
-      "vacancy_count": 466
+      "vacancy_count": 465
     },
     {
       "skill_1": "agile",
       "skill_2": "ci_cd",
-      "vacancy_count": 403
+      "vacancy_count": 402
     },
     {
       "skill_1": "ci_cd",
@@ -83,13 +83,13 @@
       "vacancy_count": 217
     },
     {
-      "skill_1": "java",
-      "skill_2": "python",
+      "skill_1": "devops",
+      "skill_2": "java",
       "vacancy_count": 206
     },
     {
-      "skill_1": "devops",
-      "skill_2": "java",
+      "skill_1": "java",
+      "skill_2": "python",
       "vacancy_count": 206
     },
     {
@@ -135,7 +135,7 @@
     {
       "skill_1": "ci_cd",
       "skill_2": "kubernetes",
-      "vacancy_count": 166
+      "vacancy_count": 165
     },
     {
       "skill_1": "aws",
@@ -168,11 +168,6 @@
       "vacancy_count": 151
     },
     {
-      "skill_1": "devops",
-      "skill_2": "kubernetes",
-      "vacancy_count": 145
-    },
-    {
       "skill_1": "ci_cd",
       "skill_2": "typescript",
       "vacancy_count": 145
@@ -180,6 +175,11 @@
     {
       "skill_1": "gcp",
       "skill_2": "python",
+      "vacancy_count": 145
+    },
+    {
+      "skill_1": "devops",
+      "skill_2": "kubernetes",
       "vacancy_count": 145
     },
     {
@@ -210,7 +210,7 @@
     {
       "skill_1": "ci_cd",
       "skill_2": "microservices",
-      "vacancy_count": 133
+      "vacancy_count": 132
     },
     {
       "skill_1": "azure",
@@ -223,6 +223,11 @@
       "vacancy_count": 131
     },
     {
+      "skill_1": "ci_cd",
+      "skill_2": "spring",
+      "vacancy_count": 130
+    },
+    {
       "skill_1": "angular",
       "skill_2": "spring",
       "vacancy_count": 130
@@ -233,23 +238,18 @@
       "vacancy_count": 130
     },
     {
-      "skill_1": "ci_cd",
-      "skill_2": "spring",
-      "vacancy_count": 130
-    },
-    {
       "skill_1": "c++",
       "skill_2": "python",
       "vacancy_count": 129
     },
     {
-      "skill_1": "angular",
-      "skill_2": "react",
+      "skill_1": "aws",
+      "skill_2": "sql",
       "vacancy_count": 128
     },
     {
-      "skill_1": "aws",
-      "skill_2": "sql",
+      "skill_1": "angular",
+      "skill_2": "react",
       "vacancy_count": 128
     }
   ]

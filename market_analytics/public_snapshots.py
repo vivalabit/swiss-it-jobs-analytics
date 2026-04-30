@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -10,6 +9,7 @@ import pandas as pd
 
 EXPECTED_CSV_FILES: tuple[str, ...] = (
     "overview_metrics.csv",
+    "city_map_details.csv",
     "education_requirements_summary.csv",
     "experience_requirements_summary.csv",
     "experience_by_seniority.csv",
@@ -66,7 +66,7 @@ def build_public_snapshots(
         for file_name, frame in csv_frames.items():
             if frame is None:
                 continue
-            shutil.copy2(csv_dir / file_name, copy_csv_dir / file_name)
+            frame.to_csv(copy_csv_dir / file_name, index=False)
 
     snapshots: dict[str, dict[str, Any]] = {
         "metadata.json": _build_metadata_snapshot(
@@ -78,6 +78,10 @@ def build_public_snapshots(
         "overview.json": _build_overview_snapshot(
             generated_at=generated_at,
             overview_frame=csv_frames["overview_metrics.csv"],
+        ),
+        "city_map_details.json": _build_city_map_details_snapshot(
+            generated_at=generated_at,
+            frame=csv_frames["city_map_details.csv"],
         ),
         "education_requirements.json": _build_education_requirements_snapshot(
             generated_at=generated_at,
@@ -144,7 +148,96 @@ def _load_csv_frames(csv_dir: Path) -> dict[str, pd.DataFrame | None]:
     for file_name in EXPECTED_CSV_FILES:
         path = csv_dir / file_name
         frames[file_name] = pd.read_csv(path) if path.exists() else None
+    frames["city_map_details.csv"] = _reconcile_city_map_details_frame(
+        frames.get("city_map_details.csv"),
+        frames.get("distribution_city.csv"),
+    )
     return frames
+
+
+def _reconcile_city_map_details_frame(
+    details_frame: pd.DataFrame | None,
+    distribution_city_frame: pd.DataFrame | None,
+) -> pd.DataFrame | None:
+    if distribution_city_frame is None or not {"city", "vacancy_count", "share"}.issubset(
+        distribution_city_frame.columns
+    ):
+        return details_frame
+    if details_frame is None or "city" not in details_frame.columns:
+        return details_frame
+
+    details_by_city = {
+        str(row["city"]): row for row in details_frame.to_dict(orient="records") if row.get("city") is not None
+    }
+    reconciled_rows: list[dict[str, Any]] = []
+
+    for row in distribution_city_frame.to_dict(orient="records"):
+        city = _to_python_value(row.get("city"))
+        vacancy_count = _to_python_value(row.get("vacancy_count"))
+        share = _to_python_value(row.get("share"))
+        detail_row = details_by_city.get(str(city))
+        source_total = detail_row.get("vacancy_count") if detail_row else None
+        reconciled_rows.append(
+            {
+                "city": city,
+                "vacancy_count": vacancy_count,
+                "share": share,
+                "role_distribution_json": _rescale_distribution_json(
+                    detail_row.get("role_distribution_json") if detail_row else None,
+                    source_total=source_total,
+                    target_total=vacancy_count,
+                ),
+                "company_distribution_json": _rescale_distribution_json(
+                    detail_row.get("company_distribution_json") if detail_row else None,
+                    source_total=source_total,
+                    target_total=vacancy_count,
+                ),
+                "work_mode_distribution_json": _rescale_distribution_json(
+                    detail_row.get("work_mode_distribution_json") if detail_row else None,
+                    source_total=source_total,
+                    target_total=vacancy_count,
+                ),
+            }
+        )
+
+    return pd.DataFrame.from_records(reconciled_rows)
+
+
+def _rescale_distribution_json(
+    value: Any,
+    *,
+    source_total: Any,
+    target_total: Any,
+) -> str:
+    items = _parse_json_array_value(value)
+    target_total_value = _coerce_numeric(target_total)
+    source_total_value = _coerce_numeric(source_total)
+    if not items or target_total_value is None or target_total_value <= 0:
+        return "[]"
+
+    normalized_items: list[dict[str, Any]] = []
+    for item in items:
+        count = _coerce_numeric(item.get("vacancy_count"))
+        if count is None or count <= 0:
+            continue
+        normalized_items.append(dict(item))
+    if not normalized_items:
+        return "[]"
+
+    if source_total_value is None or source_total_value <= 0:
+        source_total_value = sum(_coerce_numeric(item.get("vacancy_count")) or 0 for item in normalized_items)
+    scale = target_total_value / source_total_value if source_total_value else 0
+
+    scaled_items: list[dict[str, Any]] = []
+    for item in normalized_items:
+        scaled_item = dict(item)
+        vacancy_count = (_coerce_numeric(item.get("vacancy_count")) or 0) * scale
+        scaled_item["vacancy_count"] = round(vacancy_count, 4)
+        scaled_item["share_within_city"] = (
+            round(vacancy_count / target_total_value, 4) if target_total_value else 0
+        )
+        scaled_items.append(scaled_item)
+    return json.dumps(scaled_items, ensure_ascii=False)
 
 
 def _build_metadata_snapshot(
@@ -159,6 +252,7 @@ def _build_metadata_snapshot(
     generated_snapshots = [
         "metadata.json",
         "overview.json",
+        "city_map_details.json",
         "education_requirements.json",
         "experience_requirements.json",
         "salary_metrics.json",
@@ -169,7 +263,7 @@ def _build_metadata_snapshot(
     ]
     return {
         "generated_at": generated_at,
-        "schema_version": 2,
+        "schema_version": 3,
         "source_csv_dir": str(csv_dir),
         "public_data_dir": str(output_dir),
         "available_csv_files": available_csv_files,
@@ -193,6 +287,41 @@ def _build_overview_snapshot(
         "generated_at": generated_at,
         "available": bool(metrics),
         "metrics": metrics,
+    }
+
+
+def _build_city_map_details_snapshot(
+    *,
+    generated_at: str,
+    frame: pd.DataFrame | None,
+) -> dict[str, Any]:
+    items: list[dict[str, Any]] = []
+    required_columns = {
+        "city",
+        "vacancy_count",
+        "share",
+        "role_distribution_json",
+        "company_distribution_json",
+        "work_mode_distribution_json",
+    }
+    if frame is not None and required_columns.issubset(frame.columns):
+        for row in frame.to_dict(orient="records"):
+            items.append(
+                {
+                    "city": _to_python_value(row.get("city")),
+                    "vacancy_count": _to_python_value(row.get("vacancy_count")),
+                    "share": _to_python_value(row.get("share")),
+                    "role_distribution": _parse_json_array_value(row.get("role_distribution_json")),
+                    "company_distribution": _parse_json_array_value(row.get("company_distribution_json")),
+                    "work_mode_distribution": _parse_json_array_value(
+                        row.get("work_mode_distribution_json")
+                    ),
+                }
+            )
+    return {
+        "generated_at": generated_at,
+        "available": bool(items),
+        "items": items,
     }
 
 
@@ -400,6 +529,33 @@ def _to_python_value(value: Any) -> Any:
         except ValueError:
             pass
     return value
+
+
+def _coerce_numeric(value: Any) -> float | None:
+    normalized = _to_python_value(value)
+    if isinstance(normalized, bool) or normalized is None:
+        return None
+    if isinstance(normalized, (int, float)):
+        return float(normalized)
+    try:
+        parsed = pd.to_numeric(normalized, errors="coerce")
+    except (TypeError, ValueError):
+        return None
+    if pd.isna(parsed):
+        return None
+    return float(parsed)
+
+
+def _parse_json_array_value(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, str) or not value.strip():
+        return []
+    try:
+        parsed = json.loads(value)
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(parsed, list):
+        return []
+    return [_clean_record(item) for item in parsed if isinstance(item, dict)]
 
 
 def _normalize_metric_value(metric_name: str, value: Any) -> Any:

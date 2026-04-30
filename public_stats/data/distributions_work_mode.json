@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "dimension": "work_mode",
   "items": [
@@ -7,13 +7,13 @@
       "key": "Unknown",
       "label": "Unknown",
       "vacancy_count": 3097,
-      "share": 0.5689
+      "share": 0.5688
     },
     {
       "key": "hybrid",
       "label": "hybrid",
       "vacancy_count": 1264,
-      "share": 0.2322
+      "share": 0.2321
     },
     {
       "key": "onsite",
@@ -24,8 +24,8 @@
     {
       "key": "remote",
       "label": "remote",
-      "vacancy_count": 478,
-      "share": 0.0878
+      "vacancy_count": 479,
+      "share": 0.088
     }
   ]
 }

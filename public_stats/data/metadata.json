@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
-  "schema_version": 2,
+  "generated_at": "2026-04-30T08:56:21Z",
+  "schema_version": 3,
   "source_csv_dir": "analytics_output",
   "public_data_dir": "public_stats/data",
   "available_csv_files": [
     "overview_metrics.csv",
+    "city_map_details.csv",
     "education_requirements_summary.csv",
     "experience_requirements_summary.csv",
     "experience_by_seniority.csv",
@@ -36,6 +37,7 @@
   "generated_snapshots": [
     "metadata.json",
     "overview.json",
+    "city_map_details.json",
     "education_requirements.json",
     "experience_requirements.json",
     "salary_metrics.json",

@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "dimension": "canton",
   "items": [
     {
       "key": "ZH",
       "label": "ZH",
-      "vacancy_count": 3082,
-      "share": 0.5661
+      "vacancy_count": 3083,
+      "share": 0.5662
     },
     {
       "key": "BE",
@@ -49,7 +49,7 @@
       "key": "LU",
       "label": "LU",
       "vacancy_count": 95,
-      "share": 0.0175
+      "share": 0.0174
     },
     {
       "key": "SG",

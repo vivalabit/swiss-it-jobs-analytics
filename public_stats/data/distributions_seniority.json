@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "dimension": "seniority",
   "items": [
@@ -7,7 +7,7 @@
       "key": "senior",
       "label": "senior",
       "vacancy_count": 2728,
-      "share": 0.5011
+      "share": 0.501
     },
     {
       "key": "manager",
@@ -25,13 +25,13 @@
       "key": "junior",
       "label": "junior",
       "vacancy_count": 395,
-      "share": 0.0726
+      "share": 0.0725
     },
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 346,
-      "share": 0.0636
+      "vacancy_count": 347,
+      "share": 0.0637
     },
     {
       "key": "intern",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import dotUrl from "./assets/images/arrow-badge-right.svg";
 import flagUrl from "./assets/images/flag.png";
@@ -11,6 +11,7 @@ const footerShapeUrl =
 const SNAPSHOT_FILES = {
   metadata: "metadata.json",
   overview: "overview.json",
+  cityMapDetails: "city_map_details.json",
   educationRequirements: "education_requirements.json",
   experienceRequirements: "experience_requirements.json",
   vacancyTrends: "vacancy_trends.json",
@@ -100,6 +101,8 @@ const CANTON_CAPITAL_CITY_KEYS = new Set([
   "zurich",
 ]);
 const MAP_CITY_LABEL_MIN_VACANCIES = 35;
+const MAP_DETAIL_ROLE_LIMIT = 4;
+const MAP_DETAIL_EMPLOYER_LIMIT = 5;
 
 const CITY_LOCATIONS = [
   cityLocation("zurich", "Zürich", 47.3769, 8.5417, [
@@ -425,6 +428,7 @@ function App() {
   const [showAllSalaryGroups, setShowAllSalaryGroups] = useState(false);
   const [showMoreCompanyItems, setShowMoreCompanyItems] = useState(false);
   const [activeSectionId, setActiveSectionId] = useState(PAGE_SECTION_LINKS[0].id);
+  const [selectedMapCityKey, setSelectedMapCityKey] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -537,6 +541,7 @@ function App() {
   const {
     metadata,
     overview,
+    cityMapDetails,
     educationRequirements,
     experienceRequirements,
     vacancyTrends,
@@ -592,6 +597,15 @@ function App() {
     cityDistribution.items ?? [],
     overviewMetrics.total_vacancies,
   );
+  const cityMapDetailsByKey = buildSwissCityDetailMap(
+    cityMapDetails.items ?? [],
+    overviewMetrics.total_vacancies,
+  );
+  const cityMapOptions = [...cityMapDetailsByKey.values()];
+  const selectedCityKey = cityMapDetailsByKey.has(selectedMapCityKey)
+    ? selectedMapCityKey
+    : cityMapItems[0]?.key ?? null;
+  const selectedCityDetails = selectedCityKey ? cityMapDetailsByKey.get(selectedCityKey) ?? null : null;
   const cantonItems = selectTopItems(filterUnknown(cantonDistribution.items ?? []), 6);
   const roleItems = selectTopItems(filterUnknown(roleDistribution.items ?? []), 6);
   const seniorityItems = selectTopItems(filterUnknown(seniorityDistribution.items ?? []), 5);
@@ -864,7 +878,14 @@ function App() {
                   </h2>
                 </div>
 
-                <SwissVacancyMap items={cityMapItems} coverage={cityMapCoverage} />
+                <SwissVacancyMap
+                  items={cityMapItems}
+                  coverage={cityMapCoverage}
+                  selectedCityKey={selectedCityKey}
+                  selectedCityDetails={selectedCityDetails}
+                  cityOptions={cityMapOptions}
+                  onSelectCity={setSelectedMapCityKey}
+                />
               </div>
             </section>
 
@@ -2037,7 +2058,14 @@ function TrendLineChart({ chartData, granularity }) {
   );
 }
 
-function SwissVacancyMap({ items, coverage }) {
+function SwissVacancyMap({
+  items,
+  coverage,
+  selectedCityKey,
+  selectedCityDetails,
+  cityOptions,
+  onSelectCity,
+}) {
   const maxValue = Math.max(...items.map((item) => item.vacancy_count), 1);
   const markerItems = [...items].sort((a, b) => a.vacancy_count - b.vacancy_count);
   const labelItems = items.filter(
@@ -2097,82 +2125,384 @@ function SwissVacancyMap({ items, coverage }) {
         </div>
       </div>
 
-      <div className="cy-map-canvas">
-        <svg
-          className="cy-swiss-map"
-          viewBox={SWISS_MAP.viewBox}
-          role="img"
-          aria-labelledby="swiss-vacancy-map-title swiss-vacancy-map-description"
-        >
-          <title id="swiss-vacancy-map-title">Swiss IT job vacancies by city</title>
-          <desc id="swiss-vacancy-map-description">
-            Switzerland outline with red translucent circles over cities. Circle size and opacity
-            increase with vacancy count.
-          </desc>
-          <defs>
-            <filter id="mapBubbleShadow" x="-40%" y="-40%" width="180%" height="180%">
-              <feDropShadow dx="0" dy="10" stdDeviation="8" floodColor="#e7000b" floodOpacity="0.16" />
-            </filter>
-          </defs>
+      <div className="cy-map-layout">
+        <div className="cy-map-canvas">
+          <svg
+            className="cy-swiss-map"
+            viewBox={SWISS_MAP.viewBox}
+            role="img"
+            aria-labelledby="swiss-vacancy-map-title swiss-vacancy-map-description"
+          >
+            <title id="swiss-vacancy-map-title">Swiss IT job vacancies by city</title>
+            <desc id="swiss-vacancy-map-description">
+              Switzerland outline with red translucent circles over cities. Circle size and opacity
+              increase with vacancy count.
+            </desc>
+            <defs>
+              <filter id="mapBubbleShadow" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="10" stdDeviation="8" floodColor="#e7000b" floodOpacity="0.16" />
+              </filter>
+            </defs>
 
-          <image
-            className="cy-map-base-image"
-            href={swissMapUrl}
-            x="0"
-            y="0"
-            width={SWISS_MAP.width}
-            height={SWISS_MAP.height}
-            preserveAspectRatio="xMidYMid meet"
-          />
+            <image
+              className="cy-map-base-image"
+              href={swissMapUrl}
+              x="0"
+              y="0"
+              width={SWISS_MAP.width}
+              height={SWISS_MAP.height}
+              preserveAspectRatio="xMidYMid meet"
+            />
 
-          <g className="cy-map-markers">
-            {markerItems.map((item) => {
-              const [x, y] = projectSwissPoint(item.lon, item.lat);
-              const radius = getMapBubbleRadius(item.vacancy_count, maxValue);
-              const opacity = getMapBubbleOpacity(item.vacancy_count, maxValue);
+            <g className="cy-map-markers">
+              {markerItems.map((item) => {
+                const [x, y] = projectSwissPoint(item.lon, item.lat);
+                const radius = getMapBubbleRadius(item.vacancy_count, maxValue);
+                const opacity = getMapBubbleOpacity(item.vacancy_count, maxValue);
+                const isSelected = item.key === selectedCityKey;
 
-              return (
-                <g key={item.key} transform={`translate(${x} ${y})`}>
-                  <circle
-                    className="cy-map-bubble"
-                    r={radius}
-                    fillOpacity={opacity}
-                    strokeOpacity={Math.min(opacity + 0.18, 0.86)}
-                    filter="url(#mapBubbleShadow)"
+                return (
+                  <g
+                    key={item.key}
+                    className="cy-map-marker"
+                    transform={`translate(${x} ${y})`}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    onClick={() => onSelectCity(item.key)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        onSelectCity(item.key);
+                      }
+                    }}
                   >
-                    <title>
-                      {item.label}: {formatInteger(Math.round(item.vacancy_count))} vacancies
-                    </title>
-                  </circle>
-                  <circle className="cy-map-city-dot" r="2.6" />
-                </g>
-              );
-            })}
-          </g>
+                    <circle
+                      className={`cy-map-bubble ${isSelected ? "cy-map-bubble-selected" : ""}`}
+                      r={radius}
+                      fillOpacity={opacity}
+                      strokeOpacity={Math.min(opacity + 0.18, 0.86)}
+                      filter="url(#mapBubbleShadow)"
+                    >
+                      <title>
+                        {item.label}: {formatInteger(Math.round(item.vacancy_count))} vacancies
+                      </title>
+                    </circle>
+                    <circle className="cy-map-city-dot" r="2.6" />
+                  </g>
+                );
+              })}
+            </g>
 
-          <g className="cy-map-labels">
-            {labelItems.map((item) => {
-              const [x, y] = projectSwissPoint(item.lon, item.lat);
-              const [dx, dy] = MAP_LABEL_OFFSETS[item.key] ?? [10, -12];
+            <g className="cy-map-labels">
+              {labelItems.map((item) => {
+                const [x, y] = projectSwissPoint(item.lon, item.lat);
+                const [dx, dy] = MAP_LABEL_OFFSETS[item.key] ?? [10, -12];
+                const isSelected = item.key === selectedCityKey;
 
-              return (
-                <text
-                  key={`${item.key}-label`}
-                  x={x + dx}
-                  y={y + dy}
-                  textAnchor={dx < 0 ? "end" : "start"}
-                >
-                  <tspan className="cy-map-label-name">{item.label}</tspan>
-                  <tspan className="cy-map-label-value" x={x + dx} dy="13">
-                    {formatInteger(Math.round(item.vacancy_count))}
-                  </tspan>
-                </text>
-              );
-            })}
-          </g>
-        </svg>
+                return (
+                  <text
+                    key={`${item.key}-label`}
+                    className={isSelected ? "cy-map-label-selected" : ""}
+                    x={x + dx}
+                    y={y + dy}
+                    textAnchor={dx < 0 ? "end" : "start"}
+                  >
+                    <tspan className="cy-map-label-name">{item.label}</tspan>
+                    <tspan className="cy-map-label-value" x={x + dx} dy="13">
+                      {formatInteger(Math.round(item.vacancy_count))}
+                    </tspan>
+                  </text>
+                );
+              })}
+            </g>
+          </svg>
+        </div>
+
+        <MapCityDetailPanel
+          details={selectedCityDetails}
+          cityOptions={cityOptions}
+          onSelectCity={onSelectCity}
+        />
       </div>
     </article>
+  );
+}
+
+function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
+  if (!details) {
+    return (
+      <aside className="cy-map-detail-panel">
+        <p className="cy-kicker">City detail</p>
+        <h3>Select a city bubble</h3>
+        <p className="cy-copy">
+          Click a bubble on the map to inspect local hiring volume, share of the market, top roles,
+          employers, and work mode mix.
+        </p>
+      </aside>
+    );
+  }
+
+  const topRoles = selectTopItems(filterUnknown(details.roleDistribution ?? []), MAP_DETAIL_ROLE_LIMIT);
+  const topEmployers = selectTopItems(
+    filterUnknown(details.companyDistribution ?? []),
+    MAP_DETAIL_EMPLOYER_LIMIT,
+  );
+  const workModeItems = selectTopItems(
+    filterUnknown(details.workModeDistribution ?? []),
+    details.workModeDistribution?.length ?? 4,
+  );
+
+  return (
+    <aside className="cy-map-detail-panel" aria-live="polite">
+      <div className="cy-map-detail-head">
+        <div>
+          <p className="cy-kicker">City detail</p>
+          <h3>{details.label}</h3>
+        </div>
+        <span className="cy-map-detail-rank">#{details.rank} mapped city</span>
+      </div>
+
+      <MapCityPicker
+        selectedCityKey={details.key}
+        cityOptions={cityOptions}
+        onSelectCity={onSelectCity}
+      />
+
+      <div className="cy-map-detail-stats">
+        <MapDetailStat
+          label="Vacancies"
+          value={formatInteger(Math.round(details.vacancy_count))}
+        />
+        <MapDetailStat label="Market share" value={formatPercent(details.share)} />
+      </div>
+
+      <div className="cy-map-detail-block">
+        <div className="cy-data-panel-head">
+          <h4>Top roles</h4>
+        </div>
+        {topRoles.length ? (
+          <HorizontalBarChart
+            items={topRoles}
+            labelKey="role_category"
+            valueKey="vacancy_count"
+            shareKey="share"
+          />
+        ) : (
+          <p className="cy-copy cy-empty-state">No role breakdown available.</p>
+        )}
+      </div>
+
+      <div className="cy-map-detail-block">
+        <div className="cy-data-panel-head">
+          <h4>Top employers</h4>
+        </div>
+        {topEmployers.length ? (
+          <HorizontalBarChart
+            items={topEmployers}
+            labelKey="company"
+            valueKey="vacancy_count"
+            shareKey="share"
+            labelFormatter={(value) => value || "n/a"}
+          />
+        ) : (
+          <p className="cy-copy cy-empty-state">No employer breakdown available.</p>
+        )}
+      </div>
+
+      <div className="cy-map-detail-block">
+        <div className="cy-data-panel-head">
+          <h4>Work mode split</h4>
+        </div>
+        {workModeItems.length ? (
+          <SegmentChart items={workModeItems} />
+        ) : (
+          <p className="cy-copy cy-empty-state">No work mode breakdown available.</p>
+        )}
+      </div>
+    </aside>
+  );
+}
+
+function MapCityPicker({ selectedCityKey, cityOptions, onSelectCity }) {
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
+
+  const selectedCity =
+    cityOptions.find((item) => item.key === selectedCityKey) ?? cityOptions[0] ?? null;
+  const normalizedQuery = query.trim().toLowerCase();
+  const selectedCityLabel = selectedCity?.label ?? "";
+  const shouldFilterOptions =
+    isOpen && normalizedQuery && normalizedQuery !== selectedCityLabel.toLowerCase();
+  const filteredOptions = shouldFilterOptions
+    ? cityOptions.filter((item) => item.label.toLowerCase().includes(normalizedQuery))
+    : cityOptions;
+
+  useEffect(() => {
+    if (selectedCityLabel) {
+      setQuery(selectedCityLabel);
+    }
+  }, [selectedCityLabel]);
+
+  useEffect(() => {
+    if (highlightedIndex < 0 || highlightedIndex >= filteredOptions.length) {
+      setHighlightedIndex(0);
+    }
+  }, [filteredOptions.length, highlightedIndex]);
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (!containerRef.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, []);
+
+  function openMenu() {
+    const selectedIndex = filteredOptions.findIndex((item) => item.key === selectedCityKey);
+    setIsOpen(true);
+    setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
+  }
+
+  function handleSelect(item) {
+    setQuery(item.label);
+    setIsOpen(false);
+    setHighlightedIndex(0);
+    onSelectCity(item.key);
+  }
+
+  function handleInputFocus() {
+    openMenu();
+    window.requestAnimationFrame(() => {
+      inputRef.current?.select();
+    });
+  }
+
+  function handleInputChange(event) {
+    setQuery(event.target.value);
+    setIsOpen(true);
+    setHighlightedIndex(0);
+  }
+
+  function handleInputKeyDown(event) {
+    if (!filteredOptions.length && event.key === "Escape") {
+      setIsOpen(false);
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (!isOpen) {
+        openMenu();
+        return;
+      }
+      if (!filteredOptions.length) {
+        return;
+      }
+      setHighlightedIndex((current) => Math.min(current + 1, filteredOptions.length - 1));
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!isOpen) {
+        openMenu();
+        return;
+      }
+      if (!filteredOptions.length) {
+        return;
+      }
+      setHighlightedIndex((current) => Math.max(current - 1, 0));
+      return;
+    }
+
+    if (event.key === "Enter") {
+      if (isOpen && filteredOptions[highlightedIndex]) {
+        event.preventDefault();
+        handleSelect(filteredOptions[highlightedIndex]);
+      }
+      return;
+    }
+
+    if (event.key === "Escape") {
+      setQuery(selectedCity?.label ?? "");
+      setIsOpen(false);
+    }
+  }
+
+  return (
+    <div className="cy-map-city-picker" ref={containerRef}>
+      <div className="cy-map-city-picker-head">
+        <span>Choose another city</span>
+        <p>Type to search or use arrow keys.</p>
+      </div>
+
+      <div className="cy-map-city-picker-field">
+        <input
+          ref={inputRef}
+          className="cy-map-city-picker-input"
+          type="text"
+          value={query}
+          placeholder="Search city"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={isOpen}
+          aria-controls="city-map-picker-listbox"
+          onFocus={handleInputFocus}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        />
+      </div>
+
+      {isOpen ? (
+        <div className="cy-map-city-picker-menu" role="listbox" id="city-map-picker-listbox">
+          {filteredOptions.length ? (
+            filteredOptions.map((item, index) => {
+              const isSelected = item.key === selectedCityKey;
+              const isHighlighted = index === highlightedIndex;
+
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  className={[
+                    "cy-map-city-picker-option",
+                    isSelected ? "is-selected" : "",
+                    isHighlighted ? "is-highlighted" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onMouseEnter={() => setHighlightedIndex(index)}
+                  onClick={() => handleSelect(item)}
+                >
+                  <span>{item.label}</span>
+                  <strong>{formatInteger(Math.round(item.vacancy_count))}</strong>
+                </button>
+              );
+            })
+          ) : (
+            <p className="cy-map-city-picker-empty">No matching city found.</p>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function MapDetailStat({ label, value }) {
+  return (
+    <div className="cy-map-detail-stat">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
   );
 }
 
@@ -2423,6 +2753,127 @@ function buildSwissCityMapCoverage(items, totalVacancies) {
     missingLocationVacancies,
     unmatchedLocationVacancies,
   };
+}
+
+function buildSwissCityDetailMap(items, totalVacancies) {
+  const detailMap = new Map();
+
+  for (const item of items ?? []) {
+    const vacancyCount = Number(item?.vacancy_count);
+    if (!Number.isFinite(vacancyCount) || vacancyCount <= 0) {
+      continue;
+    }
+
+    const cityKeys = resolveCityKeys(item.city);
+    if (!cityKeys.length) {
+      continue;
+    }
+
+    const weight = 1 / cityKeys.length;
+    for (const cityKey of cityKeys) {
+      const city = CITY_LOCATION_BY_KEY.get(cityKey);
+      if (!city) {
+        continue;
+      }
+
+      const detail = detailMap.get(cityKey) ?? createSwissCityDetailEntry(city);
+      detail.vacancy_count += vacancyCount * weight;
+      accumulateWeightedDistribution(
+        detail.roleDistributionMap,
+        item.role_distribution,
+        "role_category",
+        weight,
+      );
+      accumulateWeightedDistribution(
+        detail.companyDistributionMap,
+        item.company_distribution,
+        "company",
+        weight,
+      );
+      accumulateWeightedDistribution(
+        detail.workModeDistributionMap,
+        item.work_mode_distribution,
+        "work_mode",
+        weight,
+      );
+      detailMap.set(cityKey, detail);
+    }
+  }
+
+  const normalizedTotalVacancies =
+    typeof totalVacancies === "number" && totalVacancies > 0 ? totalVacancies : 0;
+  const sortedDetails = [...detailMap.values()]
+    .map((detail) => ({
+      key: detail.key,
+      label: detail.label,
+      vacancy_count: detail.vacancy_count,
+      share: normalizedTotalVacancies ? detail.vacancy_count / normalizedTotalVacancies : 0,
+      roleDistribution: finalizeWeightedDistribution(
+        detail.roleDistributionMap,
+        "role_category",
+        detail.vacancy_count,
+      ),
+      companyDistribution: finalizeWeightedDistribution(
+        detail.companyDistributionMap,
+        "company",
+        detail.vacancy_count,
+      ),
+      workModeDistribution: finalizeWeightedDistribution(
+        detail.workModeDistributionMap,
+        "work_mode",
+        detail.vacancy_count,
+      ),
+    }))
+    .sort((left, right) => {
+      if (right.vacancy_count !== left.vacancy_count) {
+        return right.vacancy_count - left.vacancy_count;
+      }
+      return left.label.localeCompare(right.label, "en-US");
+    });
+
+  sortedDetails.forEach((detail, index) => {
+    detail.rank = index + 1;
+  });
+  return new Map(sortedDetails.map((detail) => [detail.key, detail]));
+}
+
+function createSwissCityDetailEntry(city) {
+  return {
+    key: city.key,
+    label: city.label,
+    vacancy_count: 0,
+    roleDistributionMap: new Map(),
+    companyDistributionMap: new Map(),
+    workModeDistributionMap: new Map(),
+  };
+}
+
+function accumulateWeightedDistribution(targetMap, items, labelKey, weight) {
+  for (const item of items ?? []) {
+    const label = item?.[labelKey];
+    const vacancyCount = Number(item?.vacancy_count);
+    if (!label || !Number.isFinite(vacancyCount) || vacancyCount <= 0) {
+      continue;
+    }
+    targetMap.set(label, (targetMap.get(label) ?? 0) + vacancyCount * weight);
+  }
+}
+
+function finalizeWeightedDistribution(itemsMap, labelKey, totalVacancyCount) {
+  return [...itemsMap.entries()]
+    .map(([label, vacancyCount]) => ({
+      key: label,
+      label,
+      [labelKey]: label,
+      vacancy_count: vacancyCount,
+      share: totalVacancyCount ? vacancyCount / totalVacancyCount : 0,
+    }))
+    .sort((left, right) => {
+      if (right.vacancy_count !== left.vacancy_count) {
+        return right.vacancy_count - left.vacancy_count;
+      }
+      return String(left.label).localeCompare(String(right.label), "en-US");
+    });
 }
 
 function buildSkillRoleMatrix(groups, roleLimit, skillLimit) {

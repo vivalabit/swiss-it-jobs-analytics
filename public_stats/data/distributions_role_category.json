@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-04-27T09:24:25Z",
+  "generated_at": "2026-04-30T08:56:21Z",
   "available": true,
   "dimension": "role_category",
   "items": [
     {
       "key": "software_engineering",
       "label": "software_engineering",
-      "vacancy_count": 1896,
-      "share": 0.3483
+      "vacancy_count": 1897,
+      "share": 0.3484
     },
     {
       "key": "devops_cloud_platform",

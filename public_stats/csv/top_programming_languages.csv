@@ -1,6 +1,6 @@
 programming_language,vacancy_count,share
-python,1050,0.1929
-sql,759,0.1394
+python,1050,0.1928
+sql,760,0.1396
 java,660,0.1212
 typescript,325,0.0597
 javascript,275,0.0505
@@ -15,7 +15,7 @@ go,65,0.0119
 swift,50,0.0092
 scala,47,0.0086
 angular,24,0.0044
-powershell,16,0.0029
 r,16,0.0029
+powershell,16,0.0029
 nodejs,14,0.0026
 react,14,0.0026

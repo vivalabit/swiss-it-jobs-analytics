@@ -1,12 +1,12 @@
 skill,vacancy_count,share
 agile,1194,0.2193
-python,1050,0.1929
-ci_cd,937,0.1721
+python,1050,0.1928
+ci_cd,936,0.1719
 devops,839,0.1541
-sql,761,0.1398
+sql,762,0.1399
 java,660,0.1212
 azure,594,0.1091
-aws,487,0.0895
+aws,487,0.0894
 react,335,0.0615
 typescript,326,0.0599
 kubernetes,301,0.0553

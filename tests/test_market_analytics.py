@@ -155,7 +155,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(29, len(outputs))
+        self.assertEqual(30, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -212,6 +212,10 @@ class MarketAnalyticsTests(unittest.TestCase):
         )
         self.assertEqual("junior", outputs["salary_by_seniority"].iloc[0]["seniority"])
         self.assertNotIn("Rocken®", set(outputs["distribution_company"]["company"]))
+        self.assertIn("city_map_details", outputs)
+        city_map_details = outputs["city_map_details"].set_index("city")
+        self.assertEqual(2, city_map_details.loc["Zürich", "vacancy_count"])
+        self.assertIn("software_engineering", city_map_details.loc["Zürich", "role_distribution_json"])
 
     def test_exclude_staffing_agencies_removes_normalized_agency_names(self) -> None:
         dataset = pd.DataFrame(
