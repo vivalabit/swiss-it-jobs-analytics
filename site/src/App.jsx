@@ -1282,11 +1282,6 @@ function App() {
                       ))}
                     </div>
 
-                    <div className="cy-summary-chip-row">
-                      <span className="cy-chip">Source CSV dir · {metadata.source_csv_dir ?? "n/a"}</span>
-                      <span className="cy-chip">Public data dir · {metadata.public_data_dir ?? "n/a"}</span>
-                      <span className="cy-chip">Schema v{metadata.schema_version ?? "n/a"}</span>
-                    </div>
                   </article>
 
                   <article className="cy-card cy-data-panel">

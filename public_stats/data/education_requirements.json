@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-30T09:21:22Z",
+  "generated_at": "2026-05-01T10:15:11Z",
   "available": true,
   "summary": {
-    "total_vacancies": 4825,
-    "higher_education_vacancy_count": 2226,
-    "higher_education_vacancy_share": 0.4613,
-    "without_explicit_higher_education_count": 2599
+    "total_vacancies": 5442,
+    "higher_education_vacancy_count": 2500,
+    "higher_education_vacancy_share": 0.4594,
+    "without_explicit_higher_education_count": 2942
   }
 }

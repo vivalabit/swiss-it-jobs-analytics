@@ -1,256 +1,256 @@
 {
-  "generated_at": "2026-04-30T09:21:22Z",
+  "generated_at": "2026-05-01T10:15:11Z",
   "available": true,
   "items": [
     {
       "skill_1": "ci_cd",
       "skill_2": "devops",
-      "vacancy_count": 418
+      "vacancy_count": 484
     },
     {
       "skill_1": "agile",
       "skill_2": "ci_cd",
-      "vacancy_count": 337
+      "vacancy_count": 380
     },
     {
       "skill_1": "ci_cd",
       "skill_2": "python",
-      "vacancy_count": 321
-    },
-    {
-      "skill_1": "agile",
-      "skill_2": "devops",
-      "vacancy_count": 288
+      "vacancy_count": 371
     },
     {
       "skill_1": "python",
       "skill_2": "sql",
-      "vacancy_count": 284
+      "vacancy_count": 340
+    },
+    {
+      "skill_1": "agile",
+      "skill_2": "devops",
+      "vacancy_count": 327
     },
     {
       "skill_1": "devops",
       "skill_2": "python",
-      "vacancy_count": 244
-    },
-    {
-      "skill_1": "agile",
-      "skill_2": "java",
-      "vacancy_count": 231
+      "vacancy_count": 289
     },
     {
       "skill_1": "ci_cd",
       "skill_2": "java",
-      "vacancy_count": 230
+      "vacancy_count": 265
+    },
+    {
+      "skill_1": "agile",
+      "skill_2": "java",
+      "vacancy_count": 262
     },
     {
       "skill_1": "azure",
       "skill_2": "devops",
-      "vacancy_count": 226
+      "vacancy_count": 245
     },
     {
       "skill_1": "agile",
       "skill_2": "python",
-      "vacancy_count": 212
+      "vacancy_count": 233
     },
     {
       "skill_1": "aws",
       "skill_2": "python",
-      "vacancy_count": 206
-    },
-    {
-      "skill_1": "java",
-      "skill_2": "spring",
-      "vacancy_count": 200
+      "vacancy_count": 233
     },
     {
       "skill_1": "agile",
       "skill_2": "sql",
-      "vacancy_count": 196
+      "vacancy_count": 226
+    },
+    {
+      "skill_1": "java",
+      "skill_2": "spring",
+      "vacancy_count": 222
     },
     {
       "skill_1": "azure",
       "skill_2": "ci_cd",
-      "vacancy_count": 195
+      "vacancy_count": 215
+    },
+    {
+      "skill_1": "aws",
+      "skill_2": "ci_cd",
+      "vacancy_count": 210
     },
     {
       "skill_1": "aws",
       "skill_2": "gcp",
-      "vacancy_count": 181
+      "vacancy_count": 205
     },
     {
-      "skill_1": "aws",
-      "skill_2": "ci_cd",
-      "vacancy_count": 181
+      "skill_1": "java",
+      "skill_2": "sql",
+      "vacancy_count": 204
     },
     {
       "skill_1": "java",
       "skill_2": "python",
-      "vacancy_count": 178
-    },
-    {
-      "skill_1": "java",
-      "skill_2": "sql",
-      "vacancy_count": 173
+      "vacancy_count": 200
     },
     {
       "skill_1": "devops",
       "skill_2": "java",
-      "vacancy_count": 168
+      "vacancy_count": 197
     },
     {
       "skill_1": "devops",
       "skill_2": "sql",
-      "vacancy_count": 159
-    },
-    {
-      "skill_1": "angular",
-      "skill_2": "java",
-      "vacancy_count": 155
+      "vacancy_count": 197
     },
     {
       "skill_1": "ci_cd",
       "skill_2": "sql",
-      "vacancy_count": 152
+      "vacancy_count": 187
     },
     {
       "skill_1": "aws",
       "skill_2": "devops",
-      "vacancy_count": 149
+      "vacancy_count": 178
+    },
+    {
+      "skill_1": "angular",
+      "skill_2": "java",
+      "vacancy_count": 167
     },
     {
       "skill_1": "azure",
       "skill_2": "python",
-      "vacancy_count": 149
+      "vacancy_count": 165
     },
     {
       "skill_1": "ci_cd",
       "skill_2": "kubernetes",
-      "vacancy_count": 142
-    },
-    {
-      "skill_1": "ci_cd",
-      "skill_2": "react",
-      "vacancy_count": 141
-    },
-    {
-      "skill_1": "agile",
-      "skill_2": "scrum",
-      "vacancy_count": 133
-    },
-    {
-      "skill_1": "react",
-      "skill_2": "typescript",
-      "vacancy_count": 132
-    },
-    {
-      "skill_1": "ci_cd",
-      "skill_2": "typescript",
-      "vacancy_count": 132
-    },
-    {
-      "skill_1": "aws",
-      "skill_2": "azure",
-      "vacancy_count": 132
+      "vacancy_count": 163
     },
     {
       "skill_1": "gcp",
       "skill_2": "python",
-      "vacancy_count": 132
+      "vacancy_count": 157
+    },
+    {
+      "skill_1": "ci_cd",
+      "skill_2": "react",
+      "vacancy_count": 156
+    },
+    {
+      "skill_1": "aws",
+      "skill_2": "azure",
+      "vacancy_count": 152
     },
     {
       "skill_1": "agile",
-      "skill_2": "angular",
-      "vacancy_count": 130
+      "skill_2": "scrum",
+      "vacancy_count": 150
+    },
+    {
+      "skill_1": "react",
+      "skill_2": "typescript",
+      "vacancy_count": 150
     },
     {
       "skill_1": "devops",
       "skill_2": "kubernetes",
-      "vacancy_count": 126
+      "vacancy_count": 147
     },
     {
-      "skill_1": "java",
-      "skill_2": "react",
-      "vacancy_count": 126
+      "skill_1": "ci_cd",
+      "skill_2": "typescript",
+      "vacancy_count": 147
     },
     {
-      "skill_1": "angular",
-      "skill_2": "ci_cd",
-      "vacancy_count": 124
+      "skill_1": "agile",
+      "skill_2": "angular",
+      "vacancy_count": 144
+    },
+    {
+      "skill_1": "ci_cd",
+      "skill_2": "microservices",
+      "vacancy_count": 141
     },
     {
       "skill_1": "c++",
       "skill_2": "python",
-      "vacancy_count": 122
+      "vacancy_count": 136
+    },
+    {
+      "skill_1": "angular",
+      "skill_2": "ci_cd",
+      "vacancy_count": 134
+    },
+    {
+      "skill_1": "ci_cd",
+      "skill_2": "spring",
+      "vacancy_count": 131
+    },
+    {
+      "skill_1": "java",
+      "skill_2": "react",
+      "vacancy_count": 130
+    },
+    {
+      "skill_1": "aws",
+      "skill_2": "sql",
+      "vacancy_count": 130
     },
     {
       "skill_1": "agile",
       "skill_2": "typescript",
-      "vacancy_count": 118
+      "vacancy_count": 129
     },
     {
       "skill_1": "agile",
       "skill_2": "azure",
-      "vacancy_count": 118
-    },
-    {
-      "skill_1": "ci_cd",
-      "skill_2": "microservices",
-      "vacancy_count": 115
-    },
-    {
-      "skill_1": "azure",
-      "skill_2": "sql",
-      "vacancy_count": 115
-    },
-    {
-      "skill_1": "agile",
-      "skill_2": "react",
-      "vacancy_count": 114
-    },
-    {
-      "skill_1": "csharp",
-      "skill_2": "dotnet",
-      "vacancy_count": 113
-    },
-    {
-      "skill_1": "agile",
-      "skill_2": "spring",
-      "vacancy_count": 112
-    },
-    {
-      "skill_1": "aws",
-      "skill_2": "sql",
-      "vacancy_count": 112
-    },
-    {
-      "skill_1": "ci_cd",
-      "skill_2": "spring",
-      "vacancy_count": 111
+      "vacancy_count": 127
     },
     {
       "skill_1": "agile",
       "skill_2": "aws",
-      "vacancy_count": 110
+      "vacancy_count": 126
     },
     {
-      "skill_1": "aws",
-      "skill_2": "java",
-      "vacancy_count": 105
-    },
-    {
-      "skill_1": "angular",
+      "skill_1": "agile",
       "skill_2": "react",
-      "vacancy_count": 105
+      "vacancy_count": 125
+    },
+    {
+      "skill_1": "azure",
+      "skill_2": "sql",
+      "vacancy_count": 125
+    },
+    {
+      "skill_1": "agile",
+      "skill_2": "spring",
+      "vacancy_count": 124
+    },
+    {
+      "skill_1": "csharp",
+      "skill_2": "dotnet",
+      "vacancy_count": 123
+    },
+    {
+      "skill_1": "docker",
+      "skill_2": "kubernetes",
+      "vacancy_count": 120
     },
     {
       "skill_1": "java",
       "skill_2": "microservices",
-      "vacancy_count": 104
+      "vacancy_count": 120
+    },
+    {
+      "skill_1": "aws",
+      "skill_2": "java",
+      "vacancy_count": 120
     },
     {
       "skill_1": "ci_cd",
-      "skill_2": "test_automation",
-      "vacancy_count": 104
+      "skill_2": "terraform",
+      "vacancy_count": 120
     }
   ]
 }

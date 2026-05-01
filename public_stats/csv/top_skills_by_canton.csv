@@ -1,341 +1,341 @@
 canton,skill,vacancy_count,rank,share_within_group
-AG,agile,23,1,0.2
-AG,sql,20,2,0.1739
-AG,azure,18,3,0.1565
-AG,devops,14,4,0.1217
-AG,python,12,5,0.1043
-AG,csharp,11,6,0.0957
-AG,ci_cd,10,7,0.087
-AG,java,9,8,0.0783
-AG,react,8,9,0.0696
-AG,aws,7,10,0.0609
-AG,javascript,7,10,0.0609
-AG,dotnet,6,11,0.0522
-AG,c++,5,12,0.0435
-AG,oracle,5,12,0.0435
-AG,angular,4,13,0.0348
-AG,c,4,13,0.0348
-AG,ms sql,4,13,0.0348
-AG,typescript,4,13,0.0348
-AG,databricks,3,14,0.0261
-AG,devexpress xaf,3,14,0.0261
-AG,docker,3,14,0.0261
-AG,etl,3,14,0.0261
-AG,linux,3,14,0.0261
-AG,microservices,3,14,0.0261
-AG,mssql,3,14,0.0261
-AG,postgresql,3,14,0.0261
-AG,rust,3,14,0.0261
-AG,bigquery,2,15,0.0174
-AG,d365,2,15,0.0174
-AG,dbt,2,15,0.0174
-AG,itil,2,15,0.0174
-AG,kubernetes,2,15,0.0174
-AG,m365,2,15,0.0174
-AG,microsoft 365,2,15,0.0174
-AG,mysql,2,15,0.0174
-AG,nodejs,2,15,0.0174
-AG,office365,2,15,0.0174
-AG,onprem,2,15,0.0174
-AG,snowflake,2,15,0.0174
-AG,terraform,2,15,0.0174
-AG,test_automation,2,15,0.0174
-AG,.net,1,16,0.0087
-AG,.net core,1,16,0.0087
-AG,8d,1,16,0.0087
-AG,ansible,1,16,0.0087
-AG,apache spark,1,16,0.0087
-AG,azure/cloud,1,16,0.0087
-AG,bash,1,16,0.0087
-AG,cats,1,16,0.0087
-AG,cats effect,1,16,0.0087
-AG,data governance,1,16,0.0087
-AG,data modeling,1,16,0.0087
-AG,dataframes,1,16,0.0087
-AG,devexpress,1,16,0.0087
-AG,dotnet_core,1,16,0.0087
-AG,etl/elt,1,16,0.0087
-AG,flink,1,16,0.0087
-AG,gcp,1,16,0.0087
-AG,git,1,16,0.0087
-AG,grafana,1,16,0.0087
-AG,hadoop,1,16,0.0087
-AG,html,1,16,0.0087
-AG,influxdb,1,16,0.0087
-AG,kafka,1,16,0.0087
-AG,lean manufacturing,1,16,0.0087
-AG,linux server,1,16,0.0087
-AG,microsoft,1,16,0.0087
-AG,modbus,1,16,0.0087
-AG,mongodb,1,16,0.0087
-AG,mqtt,1,16,0.0087
-AG,ms-sql,1,16,0.0087
-AG,nextjs,1,16,0.0087
-AG,node-red,1,16,0.0087
-AG,"nodejs (js, ts)",1,16,0.0087
-AG,opc ua,1,16,0.0087
-AG,openshift,1,16,0.0087
-AG,php,1,16,0.0087
-AG,pl/sql,1,16,0.0087
-AG,postgres,1,16,0.0087
-AG,powershell,1,16,0.0087
-AG,project_management,1,16,0.0087
-AG,qa_testing,1,16,0.0087
-AG,quality assurance,1,16,0.0087
-AG,redis,1,16,0.0087
-AG,relational databases,1,16,0.0087
-AG,requirements_engineering,1,16,0.0087
-AG,s7,1,16,0.0087
-AG,scala,1,16,0.0087
-AG,scrum,1,16,0.0087
-AG,six sigma,1,16,0.0087
-AG,spark,1,16,0.0087
-AG,spring,1,16,0.0087
-AG,t-sql,1,16,0.0087
-AG,testing,1,16,0.0087
-AG,vmware,1,16,0.0087
-AG,windows server,1,16,0.0087
-AG,winforms,1,16,0.0087
-AR,agile,6,1,0.3333
-AR,java,6,1,0.3333
-AR,ci_cd,4,2,0.2222
-AR,devops,4,2,0.2222
-AR,clean_code,2,3,0.1111
-AR,cloudstack,2,3,0.1111
-AR,csharp,2,3,0.1111
-AR,dotnet,2,3,0.1111
-AR,elasticsearch,2,3,0.1111
-AR,hibernate,2,3,0.1111
-AR,microservices,2,3,0.1111
-AR,mysql,2,3,0.1111
-AR,nextjs,2,3,0.1111
-AR,react,2,3,0.1111
-AR,typescript,2,3,0.1111
-AR,c++,1,4,0.0556
-AR,itil,1,4,0.0556
-AR,kubernetes,1,4,0.0556
-AR,liferay,1,4,0.0556
-AR,mariadb,1,4,0.0556
-AR,qt,1,4,0.0556
-AR,scrum,1,4,0.0556
-BE,agile,136,1,0.2863
-BE,ci_cd,103,2,0.2168
-BE,devops,91,3,0.1916
-BE,java,72,4,0.1516
-BE,python,65,5,0.1368
-BE,sql,59,6,0.1242
-BE,azure,50,7,0.1053
-BE,ansible,47,8,0.0989
-BE,angular,42,9,0.0884
-BE,spring,40,10,0.0842
-BE,kubernetes,38,11,0.08
-BE,aws,32,12,0.0674
-BE,scrum,30,13,0.0632
-BE,react,27,14,0.0568
-BE,postgresql,26,15,0.0547
-BE,dotnet,25,16,0.0526
-BE,microservices,25,16,0.0526
-BE,safe,25,16,0.0526
-BE,terraform,25,16,0.0526
-BE,devsecops,24,17,0.0505
-BE,docker,22,18,0.0463
-BE,openshift,20,19,0.0421
-BE,csharp,19,20,0.04
-BE,typescript,19,20,0.04
-BL,agile,9,1,0.2143
-BL,azure,8,2,0.1905
-BL,devops,6,3,0.1429
-BL,c,5,4,0.119
-BL,ci_cd,3,5,0.0714
-BL,python,3,5,0.0714
-BL,sql,3,5,0.0714
-BL,aws,2,6,0.0476
-BL,gcp,2,6,0.0476
-BL,laravel,2,6,0.0476
-BL,boost,1,7,0.0238
-BL,databricks,1,7,0.0238
-BL,dbt,1,7,0.0238
-BL,docker,1,7,0.0238
-BL,etl,1,7,0.0238
-BL,github actions,1,7,0.0238
-BL,integration projects,1,7,0.0238
-BL,java,1,7,0.0238
-BL,m365,1,7,0.0238
-BL,ms-sql,1,7,0.0238
-BL,private cloud,1,7,0.0238
-BL,process analysis,1,7,0.0238
-BL,public cloud,1,7,0.0238
-BL,requirement management,1,7,0.0238
-BL,rust,1,7,0.0238
-BL,sap s/4hana,1,7,0.0238
-BL,snowflake,1,7,0.0238
-BL,terraform,1,7,0.0238
-BL,warehouse-management-systeme,1,7,0.0238
-BL,wms,1,7,0.0238
-BS,ci_cd,30,1,0.2609
-BS,azure,24,2,0.2087
-BS,devops,24,2,0.2087
-BS,python,21,3,0.1826
-BS,agile,18,4,0.1565
-BS,aws,13,5,0.113
-BS,sql,9,6,0.0783
-BS,terraform,9,6,0.0783
-BS,ansible,7,7,0.0609
-BS,javascript,7,7,0.0609
-BS,dotnet,6,8,0.0522
-BS,gcp,6,8,0.0522
-BS,java,6,8,0.0522
-BS,kubernetes,6,8,0.0522
-BS,oracle,5,9,0.0435
-BS,react,5,9,0.0435
-BS,spark,5,9,0.0435
-BS,angular,4,10,0.0348
-BS,csharp,4,10,0.0348
-BS,etl,4,10,0.0348
-BS,mssql,4,10,0.0348
-BS,typescript,4,10,0.0348
-BS,microservices,3,11,0.0261
-BS,postgresql,3,11,0.0261
-BS,spring,3,11,0.0261
-BS,c++,2,12,0.0174
-BS,databricks,2,12,0.0174
-BS,dbt,2,12,0.0174
-BS,docker,2,12,0.0174
-BS,gitlab ci/cd,2,12,0.0174
-BS,itil,2,12,0.0174
-BS,kafka,2,12,0.0174
-BS,m365,2,12,0.0174
-BS,rails,2,12,0.0174
-BS,snowflake,2,12,0.0174
-BS,test_automation,2,12,0.0174
-BS,aks,1,13,0.0087
-BS,apache,1,13,0.0087
-BS,azure_devops,1,13,0.0087
-BS,bi,1,13,0.0087
-BS,c,1,13,0.0087
-BS,cisco,1,13,0.0087
-BS,clean_code,1,13,0.0087
-BS,cloud,1,13,0.0087
-BS,controller-runtime,1,13,0.0087
-BS,data-warehouse,1,13,0.0087
-BS,dell vxrail,1,13,0.0087
-BS,devsecops,1,13,0.0087
-BS,entra id,1,13,0.0087
-BS,envoy gateway,1,13,0.0087
-BS,fluentd,1,13,0.0087
-BS,gitops,1,13,0.0087
-BS,go,1,13,0.0087
-BS,google cloud,1,13,0.0087
-BS,intune,1,13,0.0087
-BS,iso27k,1,13,0.0087
-BS,itsm,1,13,0.0087
-BS,kubebuilder,1,13,0.0087
-BS,mariadb,1,13,0.0087
-BS,microsoft 365,1,13,0.0087
-BS,mongodb,1,13,0.0087
-BS,ms sql,1,13,0.0087
-BS,nist csf 2.0,1,13,0.0087
-BS,openshift,1,13,0.0087
-BS,palo alto,1,13,0.0087
-BS,prometheus,1,13,0.0087
-BS,proxmox,1,13,0.0087
-BS,prtg,1,13,0.0087
-BS,pytorch,1,13,0.0087
-BS,rust,1,13,0.0087
-BS,s/4 hana,1,13,0.0087
-BS,s/4hana,1,13,0.0087
-BS,sap,1,13,0.0087
-BS,sap fi/co,1,13,0.0087
-BS,sap mm,1,13,0.0087
-BS,scala,1,13,0.0087
-BS,swift,1,13,0.0087
-BS,terragrunt,1,13,0.0087
-BS,tomcat,1,13,0.0087
-BS,trivy,1,13,0.0087
-BS,velero,1,13,0.0087
-BS,vmware,1,13,0.0087
-BS,windows app sdk,1,13,0.0087
-BS,winui,1,13,0.0087
-BS,xaml,1,13,0.0087
-FR,agile,7,1,0.3182
-FR,devops,6,2,0.2727
-FR,python,5,3,0.2273
-FR,ci_cd,4,4,0.1818
-FR,gcp,4,4,0.1818
-FR,sql,4,4,0.1818
-FR,javascript,3,5,0.1364
-FR,microservices,3,5,0.1364
-FR,airflow,2,6,0.0909
-FR,azure,2,6,0.0909
-FR,bigquery,2,6,0.0909
-FR,dbt,2,6,0.0909
-FR,dotnet,2,6,0.0909
-FR,etl,2,6,0.0909
-FR,fastapi,2,6,0.0909
-FR,java,2,6,0.0909
-FR,postgresql,2,6,0.0909
-FR,angular,1,7,0.0455
-FR,azure_devops,1,7,0.0455
-FR,csharp,1,7,0.0455
-FR,docker,1,7,0.0455
-FR,endpoint manager,1,7,0.0455
-FR,excel,1,7,0.0455
-FR,hermes,1,7,0.0455
-FR,intune,1,7,0.0455
-FR,itil,1,7,0.0455
-FR,kotlin,1,7,0.0455
-FR,linux,1,7,0.0455
-FR,mariadb,1,7,0.0455
-FR,ms sql server,1,7,0.0455
-FR,mssql,1,7,0.0455
-FR,oracle,1,7,0.0455
-FR,power apps,1,7,0.0455
-FR,power bi,1,7,0.0455
-FR,power platform,1,7,0.0455
-FR,qliksense,1,7,0.0455
-FR,rest_api,1,7,0.0455
-FR,sap hana,1,7,0.0455
-FR,spring,1,7,0.0455
-FR,sql server,1,7,0.0455
-FR,test_automation,1,7,0.0455
-GE,python,84,1,0.3
-GE,sql,60,2,0.2143
-GE,agile,59,3,0.2107
-GE,devops,53,4,0.1893
-GE,ci_cd,48,5,0.1714
-GE,aws,44,6,0.1571
-GE,java,38,7,0.1357
-GE,azure,29,8,0.1036
-GE,kubernetes,22,9,0.0786
-GE,etl,17,10,0.0607
-GE,gcp,17,10,0.0607
-GE,angular,15,11,0.0536
-GE,javascript,15,11,0.0536
-GE,typescript,15,11,0.0536
-GE,postgresql,14,12,0.05
-GE,snowflake,14,12,0.05
-GE,databricks,13,13,0.0464
-GE,docker,13,13,0.0464
-GE,oracle,13,13,0.0464
-GE,spark,13,13,0.0464
-GE,ansible,12,14,0.0429
-GE,csharp,12,14,0.0429
-GE,react,12,14,0.0429
-GE,terraform,12,14,0.0429
-GE,microservices,11,15,0.0393
-GE,test_automation,11,15,0.0393
-GE,spring,10,16,0.0357
-GE,dbt,9,17,0.0321
-GE,dotnet,9,17,0.0321
-GE,openshift,9,17,0.0321
-GE,devsecops,8,18,0.0286
-GE,elasticsearch,7,19,0.025
-GE,mysql,7,19,0.025
-GE,php,7,19,0.025
-GE,airflow,6,20,0.0214
-GE,go,6,20,0.0214
-GE,mssql,6,20,0.0214
-GE,rust,6,20,0.0214
+AG,agile,29,1,0.232
+AG,sql,24,2,0.192
+AG,azure,20,3,0.16
+AG,devops,16,4,0.128
+AG,ci_cd,13,5,0.104
+AG,csharp,13,5,0.104
+AG,python,12,6,0.096
+AG,java,11,7,0.088
+AG,react,9,8,0.072
+AG,aws,7,9,0.056
+AG,dotnet,7,9,0.056
+AG,javascript,7,9,0.056
+AG,oracle,6,10,0.048
+AG,c++,5,11,0.04
+AG,ms sql,5,11,0.04
+AG,angular,4,12,0.032
+AG,c,4,12,0.032
+AG,devexpress xaf,4,12,0.032
+AG,typescript,4,12,0.032
+AG,databricks,3,13,0.024
+AG,docker,3,13,0.024
+AG,etl,3,13,0.024
+AG,linux,3,13,0.024
+AG,microservices,3,13,0.024
+AG,mssql,3,13,0.024
+AG,postgresql,3,13,0.024
+AG,rust,3,13,0.024
+AG,bigquery,2,14,0.016
+AG,d365,2,14,0.016
+AG,dbt,2,14,0.016
+AG,itil,2,14,0.016
+AG,kubernetes,2,14,0.016
+AG,m365,2,14,0.016
+AG,microsoft 365,2,14,0.016
+AG,mysql,2,14,0.016
+AG,nodejs,2,14,0.016
+AG,office365,2,14,0.016
+AG,onprem,2,14,0.016
+AG,scrum,2,14,0.016
+AG,snowflake,2,14,0.016
+AG,terraform,2,14,0.016
+AG,test_automation,2,14,0.016
+AG,.net,1,15,0.008
+AG,.net core,1,15,0.008
+AG,8d,1,15,0.008
+AG,ansible,1,15,0.008
+AG,apache spark,1,15,0.008
+AG,azure/cloud,1,15,0.008
+AG,bash,1,15,0.008
+AG,cats,1,15,0.008
+AG,cats effect,1,15,0.008
+AG,data governance,1,15,0.008
+AG,data modeling,1,15,0.008
+AG,dataframes,1,15,0.008
+AG,devexpress,1,15,0.008
+AG,dotnet_core,1,15,0.008
+AG,etl/elt,1,15,0.008
+AG,flink,1,15,0.008
+AG,gcp,1,15,0.008
+AG,git,1,15,0.008
+AG,grafana,1,15,0.008
+AG,hadoop,1,15,0.008
+AG,html,1,15,0.008
+AG,influxdb,1,15,0.008
+AG,kafka,1,15,0.008
+AG,lean manufacturing,1,15,0.008
+AG,linux server,1,15,0.008
+AG,microsoft,1,15,0.008
+AG,modbus,1,15,0.008
+AG,mongodb,1,15,0.008
+AG,mqtt,1,15,0.008
+AG,ms-sql,1,15,0.008
+AG,nextjs,1,15,0.008
+AG,node-red,1,15,0.008
+AG,"nodejs (js, ts)",1,15,0.008
+AG,opc ua,1,15,0.008
+AG,openshift,1,15,0.008
+AG,php,1,15,0.008
+AG,pl/sql,1,15,0.008
+AG,postgres,1,15,0.008
+AG,powershell,1,15,0.008
+AG,project_management,1,15,0.008
+AG,qa_testing,1,15,0.008
+AG,quality assurance,1,15,0.008
+AG,redis,1,15,0.008
+AG,relational databases,1,15,0.008
+AG,requirements_engineering,1,15,0.008
+AG,s7,1,15,0.008
+AG,scala,1,15,0.008
+AG,six sigma,1,15,0.008
+AG,spark,1,15,0.008
+AG,spring,1,15,0.008
+AG,t-sql,1,15,0.008
+AG,testing,1,15,0.008
+AG,vmware,1,15,0.008
+AG,windows server,1,15,0.008
+AG,winforms,1,15,0.008
+AR,java,6,1,0.3529
+AR,agile,5,2,0.2941
+AR,ci_cd,4,3,0.2353
+AR,devops,4,3,0.2353
+AR,cloudstack,2,4,0.1176
+AR,elasticsearch,2,4,0.1176
+AR,hibernate,2,4,0.1176
+AR,microservices,2,4,0.1176
+AR,mysql,2,4,0.1176
+AR,nextjs,2,4,0.1176
+AR,react,2,4,0.1176
+AR,typescript,2,4,0.1176
+AR,c++,1,5,0.0588
+AR,clean_code,1,5,0.0588
+AR,csharp,1,5,0.0588
+AR,dotnet,1,5,0.0588
+AR,itil,1,5,0.0588
+AR,kubernetes,1,5,0.0588
+AR,liferay,1,5,0.0588
+AR,mariadb,1,5,0.0588
+AR,qt,1,5,0.0588
+AR,scrum,1,5,0.0588
+BE,agile,156,1,0.2905
+BE,ci_cd,118,2,0.2197
+BE,devops,106,3,0.1974
+BE,java,82,4,0.1527
+BE,sql,71,5,0.1322
+BE,python,70,6,0.1304
+BE,azure,53,7,0.0987
+BE,ansible,50,8,0.0931
+BE,angular,47,9,0.0875
+BE,spring,46,10,0.0857
+BE,kubernetes,41,11,0.0764
+BE,aws,39,12,0.0726
+BE,scrum,32,13,0.0596
+BE,react,30,14,0.0559
+BE,devsecops,29,15,0.054
+BE,dotnet,28,16,0.0521
+BE,microservices,28,16,0.0521
+BE,postgresql,28,16,0.0521
+BE,safe,28,16,0.0521
+BE,terraform,27,17,0.0503
+BE,typescript,24,18,0.0447
+BE,docker,23,19,0.0428
+BE,csharp,22,20,0.041
+BE,javascript,22,20,0.041
+BE,openshift,22,20,0.041
+BL,agile,12,1,0.2667
+BL,azure,8,2,0.1778
+BL,devops,6,3,0.1333
+BL,c,5,4,0.1111
+BL,ci_cd,3,5,0.0667
+BL,python,3,5,0.0667
+BL,sql,3,5,0.0667
+BL,aws,2,6,0.0444
+BL,gcp,2,6,0.0444
+BL,laravel,2,6,0.0444
+BL,boost,1,7,0.0222
+BL,databricks,1,7,0.0222
+BL,dbt,1,7,0.0222
+BL,docker,1,7,0.0222
+BL,etl,1,7,0.0222
+BL,github actions,1,7,0.0222
+BL,integration projects,1,7,0.0222
+BL,java,1,7,0.0222
+BL,m365,1,7,0.0222
+BL,ms-sql,1,7,0.0222
+BL,private cloud,1,7,0.0222
+BL,process analysis,1,7,0.0222
+BL,public cloud,1,7,0.0222
+BL,requirement management,1,7,0.0222
+BL,rust,1,7,0.0222
+BL,sap s/4hana,1,7,0.0222
+BL,snowflake,1,7,0.0222
+BL,terraform,1,7,0.0222
+BL,warehouse-management-systeme,1,7,0.0222
+BL,wms,1,7,0.0222
+BS,ci_cd,30,1,0.2419
+BS,devops,24,2,0.1935
+BS,azure,23,3,0.1855
+BS,python,21,4,0.1694
+BS,agile,17,5,0.1371
+BS,aws,13,6,0.1048
+BS,sql,11,7,0.0887
+BS,terraform,9,8,0.0726
+BS,javascript,7,9,0.0565
+BS,ansible,6,10,0.0484
+BS,dotnet,6,10,0.0484
+BS,gcp,6,10,0.0484
+BS,java,6,10,0.0484
+BS,kubernetes,6,10,0.0484
+BS,oracle,5,11,0.0403
+BS,react,5,11,0.0403
+BS,spark,5,11,0.0403
+BS,angular,4,12,0.0323
+BS,csharp,4,12,0.0323
+BS,etl,4,12,0.0323
+BS,mssql,4,12,0.0323
+BS,typescript,4,12,0.0323
+BS,microservices,3,13,0.0242
+BS,postgresql,3,13,0.0242
+BS,spring,3,13,0.0242
+BS,c++,2,14,0.0161
+BS,databricks,2,14,0.0161
+BS,dbt,2,14,0.0161
+BS,docker,2,14,0.0161
+BS,gitlab ci/cd,2,14,0.0161
+BS,itil,2,14,0.0161
+BS,kafka,2,14,0.0161
+BS,rails,2,14,0.0161
+BS,sap fi/co,2,14,0.0161
+BS,snowflake,2,14,0.0161
+BS,test_automation,2,14,0.0161
+BS,vmware,2,14,0.0161
+BS,aks,1,15,0.0081
+BS,apache,1,15,0.0081
+BS,azure_devops,1,15,0.0081
+BS,bi,1,15,0.0081
+BS,c,1,15,0.0081
+BS,cisco,1,15,0.0081
+BS,clean_code,1,15,0.0081
+BS,container,1,15,0.0081
+BS,controller-runtime,1,15,0.0081
+BS,data-warehouse,1,15,0.0081
+BS,dell vxrail,1,15,0.0081
+BS,devsecops,1,15,0.0081
+BS,entra id,1,15,0.0081
+BS,envoy gateway,1,15,0.0081
+BS,fluentd,1,15,0.0081
+BS,gitops,1,15,0.0081
+BS,go,1,15,0.0081
+BS,google cloud,1,15,0.0081
+BS,intune,1,15,0.0081
+BS,iso27k,1,15,0.0081
+BS,itsm,1,15,0.0081
+BS,kubebuilder,1,15,0.0081
+BS,m365,1,15,0.0081
+BS,mariadb,1,15,0.0081
+BS,microsoft 365,1,15,0.0081
+BS,mongodb,1,15,0.0081
+BS,ms sql,1,15,0.0081
+BS,nist csf 2.0,1,15,0.0081
+BS,openshift,1,15,0.0081
+BS,palo alto,1,15,0.0081
+BS,prometheus,1,15,0.0081
+BS,proxmox,1,15,0.0081
+BS,prtg,1,15,0.0081
+BS,pytorch,1,15,0.0081
+BS,rust,1,15,0.0081
+BS,s/4 hana,1,15,0.0081
+BS,s/4hana,1,15,0.0081
+BS,sap,1,15,0.0081
+BS,sap mm,1,15,0.0081
+BS,sap s/4hana,1,15,0.0081
+BS,scala,1,15,0.0081
+BS,swift,1,15,0.0081
+BS,terragrunt,1,15,0.0081
+BS,tomcat,1,15,0.0081
+BS,trivy,1,15,0.0081
+BS,velero,1,15,0.0081
+BS,windows app sdk,1,15,0.0081
+BS,windows_server,1,15,0.0081
+BS,winui,1,15,0.0081
+BS,xaml,1,15,0.0081
+FR,agile,8,1,0.2963
+FR,devops,6,2,0.2222
+FR,python,6,2,0.2222
+FR,sql,5,3,0.1852
+FR,ci_cd,4,4,0.1481
+FR,gcp,4,4,0.1481
+FR,javascript,4,4,0.1481
+FR,csharp,3,5,0.1111
+FR,microservices,3,5,0.1111
+FR,airflow,2,6,0.0741
+FR,azure,2,6,0.0741
+FR,bigquery,2,6,0.0741
+FR,dbt,2,6,0.0741
+FR,dotnet,2,6,0.0741
+FR,etl,2,6,0.0741
+FR,fastapi,2,6,0.0741
+FR,java,2,6,0.0741
+FR,postgresql,2,6,0.0741
+FR,angular,1,7,0.037
+FR,azure_devops,1,7,0.037
+FR,docker,1,7,0.037
+FR,endpoint manager,1,7,0.037
+FR,excel,1,7,0.037
+FR,hermes,1,7,0.037
+FR,intune,1,7,0.037
+FR,itil,1,7,0.037
+FR,kotlin,1,7,0.037
+FR,linux,1,7,0.037
+FR,mariadb,1,7,0.037
+FR,ms sql server,1,7,0.037
+FR,mssql,1,7,0.037
+FR,oracle,1,7,0.037
+FR,power apps,1,7,0.037
+FR,power bi,1,7,0.037
+FR,power platform,1,7,0.037
+FR,qliksense,1,7,0.037
+FR,rest_api,1,7,0.037
+FR,sap hana,1,7,0.037
+FR,spring,1,7,0.037
+FR,sql server,1,7,0.037
+FR,test_automation,1,7,0.037
+GE,python,88,1,0.2803
+GE,sql,69,2,0.2197
+GE,agile,63,3,0.2006
+GE,devops,56,4,0.1783
+GE,ci_cd,51,5,0.1624
+GE,aws,44,6,0.1401
+GE,java,42,7,0.1338
+GE,azure,31,8,0.0987
+GE,kubernetes,23,9,0.0732
+GE,etl,18,10,0.0573
+GE,gcp,17,11,0.0541
+GE,oracle,17,11,0.0541
+GE,javascript,16,12,0.051
+GE,typescript,16,12,0.051
+GE,angular,15,13,0.0478
+GE,csharp,14,14,0.0446
+GE,postgresql,14,14,0.0446
+GE,snowflake,14,14,0.0446
+GE,databricks,13,15,0.0414
+GE,docker,13,15,0.0414
+GE,react,13,15,0.0414
+GE,spark,13,15,0.0414
+GE,ansible,12,16,0.0382
+GE,terraform,12,16,0.0382
+GE,test_automation,12,16,0.0382
+GE,dbt,11,17,0.035
+GE,microservices,11,17,0.035
+GE,spring,10,18,0.0318
+GE,dotnet,9,19,0.0287
+GE,mysql,9,19,0.0287
+GE,openshift,9,19,0.0287
+GE,php,9,19,0.0287
+GE,rust,9,19,0.0287
+GE,devsecops,8,20,0.0255
+GE,mssql,8,20,0.0255
 GL,aws,1,1,0.5
 GL,azure,1,1,0.5
 GL,ci_cd,1,1,0.5
@@ -344,164 +344,181 @@ GL,gcp,1,1,0.5
 GL,javascript,1,1,0.5
 GL,microservices,1,1,0.5
 GL,rest_api,1,1,0.5
-GR,python,3,1,0.1071
-GR,dotnet,2,2,0.0714
-GR,java,2,2,0.0714
-GR,react,2,2,0.0714
-GR,sql,2,2,0.0714
-GR,agile,1,3,0.0357
-GR,angular,1,3,0.0357
-GR,c++,1,3,0.0357
-GR,ci_cd,1,3,0.0357
-GR,clean_code,1,3,0.0357
-GR,csharp,1,3,0.0357
-GR,docker,1,3,0.0357
-GR,kubernetes,1,3,0.0357
-GR,linux,1,3,0.0357
-GR,microsoft 365,1,3,0.0357
-GR,mssql,1,3,0.0357
-GR,postgresql,1,3,0.0357
-GR,power platform,1,3,0.0357
-GR,rust,1,3,0.0357
-GR,sharepoint,1,3,0.0357
-GR,spring,1,3,0.0357
-GR,svelte,1,3,0.0357
-GR,swift,1,3,0.0357
-GR,teams,1,3,0.0357
-GR,typescript,1,3,0.0357
-GR,windows,1,3,0.0357
-LU,agile,25,1,0.2778
-LU,azure,16,2,0.1778
-LU,ci_cd,12,3,0.1333
-LU,python,12,3,0.1333
-LU,devops,11,4,0.1222
-LU,angular,7,5,0.0778
-LU,ansible,7,5,0.0778
-LU,java,6,6,0.0667
-LU,react,6,6,0.0667
-LU,sql,6,6,0.0667
-LU,itil,5,7,0.0556
-LU,openshift,5,7,0.0556
-LU,clean_code,4,8,0.0444
-LU,terraform,4,8,0.0444
-LU,typescript,4,8,0.0444
-LU,dotnet,3,9,0.0333
-LU,kubernetes,3,9,0.0333
-LU,postgresql,3,9,0.0333
-LU,safe,3,9,0.0333
-LU,scrum,3,9,0.0333
-LU,vmware,3,9,0.0333
-LU,camunda,2,10,0.0222
-LU,csharp,2,10,0.0222
-LU,databricks,2,10,0.0222
-LU,docker,2,10,0.0222
-LU,fastapi,2,10,0.0222
-LU,flask,2,10,0.0222
-LU,flowable,2,10,0.0222
-LU,javascript,2,10,0.0222
-LU,jboss,2,10,0.0222
-LU,mssql,2,10,0.0222
-LU,office 365,2,10,0.0222
-LU,oracle,2,10,0.0222
-LU,spring,2,10,0.0222
-LU,test_automation,2,10,0.0222
-LU,weblogic,2,10,0.0222
-LU,argocd,1,11,0.0111
-LU,azure data factory,1,11,0.0111
-LU,azure data lake,1,11,0.0111
-LU,ci / cd build server,1,11,0.0111
-LU,ci/cd,1,11,0.0111
-LU,citrix,1,11,0.0111
-LU,cloud,1,11,0.0111
-LU,code reviews,1,11,0.0111
-LU,code_reviews,1,11,0.0111
-LU,devsecops,1,11,0.0111
-LU,elasticsearch,1,11,0.0111
-LU,exchange,1,11,0.0111
-LU,helm,1,11,0.0111
-LU,hp msa storage,1,11,0.0111
-LU,hyper-v,1,11,0.0111
-LU,integration tests,1,11,0.0111
-LU,integration_tests,1,11,0.0111
-LU,it4it,1,11,0.0111
-LU,itil v4,1,11,0.0111
-LU,lean,1,11,0.0111
-LU,microsoft azure,1,11,0.0111
-LU,microsoft sql server,1,11,0.0111
-LU,ms,1,11,0.0111
-LU,opacc cloud center (schweiz),1,11,0.0111
-LU,pair programming,1,11,0.0111
-LU,pair_programming,1,11,0.0111
-LU,php,1,11,0.0111
-LU,power bi,1,11,0.0111
-LU,static code analysis,1,11,0.0111
-LU,symfony,1,11,0.0111
-LU,tcp/ip,1,11,0.0111
-LU,togaf,1,11,0.0111
-LU,unit tests,1,11,0.0111
-LU,unit_tests,1,11,0.0111
-LU,veeam backup,1,11,0.0111
-LU,version control,1,11,0.0111
-LU,vuejs,1,11,0.0111
-LU,windows server,1,11,0.0111
-NE,python,18,1,0.4615
-NE,ci_cd,8,2,0.2051
-NE,agile,6,3,0.1538
-NE,c,4,4,0.1026
-NE,kubernetes,4,4,0.1026
-NE,devops,3,5,0.0769
-NE,docker,3,5,0.0769
-NE,laravel,3,5,0.0769
-NE,php,3,5,0.0769
-NE,sql,3,5,0.0769
-NE,angular,2,6,0.0513
-NE,ansible,2,6,0.0513
-NE,csharp,2,6,0.0513
-NE,elasticsearch,2,6,0.0513
-NE,etl,2,6,0.0513
-NE,go,2,6,0.0513
-NE,javascript,2,6,0.0513
-NE,mysql,2,6,0.0513
-NE,power bi,2,6,0.0513
-NE,redis,2,6,0.0513
-NE,test_automation,2,6,0.0513
-NE,altium designer,1,7,0.0256
-NE,autosar,1,7,0.0256
-NE,azure,1,7,0.0256
-NE,blazor,1,7,0.0256
-NE,c++,1,7,0.0256
-NE,can,1,7,0.0256
-NE,clickhouse,1,7,0.0256
-NE,continuous improvement,1,7,0.0256
-NE,cycle en v,1,7,0.0256
-NE,dart,1,7,0.0256
-NE,data integration,1,7,0.0256
-NE,django,1,7,0.0256
-NE,elastic,1,7,0.0256
-NE,excel,1,7,0.0256
-NE,flutter,1,7,0.0256
-NE,gitlab,1,7,0.0256
-NE,gitlab_ci,1,7,0.0256
-NE,grafana,1,7,0.0256
-NE,helm,1,7,0.0256
-NE,java,1,7,0.0256
-NE,lean,1,7,0.0256
-NE,mariadb,1,7,0.0256
-NE,microservices,1,7,0.0256
-NE,microsoft excel,1,7,0.0256
-NE,non-autosar,1,7,0.0256
-NE,nuxt,1,7,0.0256
-NE,prometheus,1,7,0.0256
-NE,rabbitmq,1,7,0.0256
-NE,sac,1,7,0.0256
-NE,sap analysis cloud,1,7,0.0256
-NE,sap analytics cloud,1,7,0.0256
-NE,sap bw,1,7,0.0256
-NE,sap bw analysis,1,7,0.0256
-NE,sap erp,1,7,0.0256
-NE,spring,1,7,0.0256
-NE,typescript,1,7,0.0256
-NE,v-cycle,1,7,0.0256
+GR,python,3,1,0.1
+GR,dotnet,2,2,0.0667
+GR,java,2,2,0.0667
+GR,sql,2,2,0.0667
+GR,agile,1,3,0.0333
+GR,angular,1,3,0.0333
+GR,c++,1,3,0.0333
+GR,ci_cd,1,3,0.0333
+GR,clean_code,1,3,0.0333
+GR,csharp,1,3,0.0333
+GR,devops,1,3,0.0333
+GR,docker,1,3,0.0333
+GR,kubernetes,1,3,0.0333
+GR,linux,1,3,0.0333
+GR,microsoft 365,1,3,0.0333
+GR,mssql,1,3,0.0333
+GR,postgresql,1,3,0.0333
+GR,power platform,1,3,0.0333
+GR,react,1,3,0.0333
+GR,rust,1,3,0.0333
+GR,sharepoint,1,3,0.0333
+GR,spring,1,3,0.0333
+GR,svelte,1,3,0.0333
+GR,swift,1,3,0.0333
+GR,teams,1,3,0.0333
+GR,typescript,1,3,0.0333
+GR,windows,1,3,0.0333
+LU,agile,27,1,0.27
+LU,azure,16,2,0.16
+LU,python,14,3,0.14
+LU,ci_cd,13,4,0.13
+LU,devops,11,5,0.11
+LU,angular,8,6,0.08
+LU,sql,8,6,0.08
+LU,ansible,7,7,0.07
+LU,java,6,8,0.06
+LU,react,6,8,0.06
+LU,dotnet,5,9,0.05
+LU,itil,5,9,0.05
+LU,openshift,5,9,0.05
+LU,clean_code,4,10,0.04
+LU,postgresql,4,10,0.04
+LU,terraform,4,10,0.04
+LU,typescript,4,10,0.04
+LU,csharp,3,11,0.03
+LU,javascript,3,11,0.03
+LU,kubernetes,3,11,0.03
+LU,safe,3,11,0.03
+LU,scrum,3,11,0.03
+LU,test_automation,3,11,0.03
+LU,vmware,3,11,0.03
+LU,camunda,2,12,0.02
+LU,databricks,2,12,0.02
+LU,docker,2,12,0.02
+LU,fastapi,2,12,0.02
+LU,flask,2,12,0.02
+LU,flowable,2,12,0.02
+LU,jboss,2,12,0.02
+LU,mssql,2,12,0.02
+LU,office 365,2,12,0.02
+LU,oracle,2,12,0.02
+LU,spring,2,12,0.02
+LU,weblogic,2,12,0.02
+LU,appium,1,13,0.01
+LU,argocd,1,13,0.01
+LU,azure data factory,1,13,0.01
+LU,azure data lake,1,13,0.01
+LU,browser library,1,13,0.01
+LU,c,1,13,0.01
+LU,ci / cd build server,1,13,0.01
+LU,ci/cd,1,13,0.01
+LU,citrix,1,13,0.01
+LU,clean architecture,1,13,0.01
+LU,cloud,1,13,0.01
+LU,code reviews,1,13,0.01
+LU,code_reviews,1,13,0.01
+LU,cqrs,1,13,0.01
+LU,ddd,1,13,0.01
+LU,devsecops,1,13,0.01
+LU,elasticsearch,1,13,0.01
+LU,exchange,1,13,0.01
+LU,flaui,1,13,0.01
+LU,helm,1,13,0.01
+LU,hp msa storage,1,13,0.01
+LU,hyper-v,1,13,0.01
+LU,integration tests,1,13,0.01
+LU,integration_tests,1,13,0.01
+LU,it4it,1,13,0.01
+LU,itil v4,1,13,0.01
+LU,jenkins,1,13,0.01
+LU,lean,1,13,0.01
+LU,microsoft azure,1,13,0.01
+LU,microsoft sql,1,13,0.01
+LU,microsoft sql server,1,13,0.01
+LU,ms,1,13,0.01
+LU,ms sql,1,13,0.01
+LU,opacc cloud center (schweiz),1,13,0.01
+LU,pair programming,1,13,0.01
+LU,pair_programming,1,13,0.01
+LU,php,1,13,0.01
+LU,pl/sql,1,13,0.01
+LU,power bi,1,13,0.01
+LU,robot framework,1,13,0.01
+LU,static code analysis,1,13,0.01
+LU,swift,1,13,0.01
+LU,symfony,1,13,0.01
+LU,tcp/ip,1,13,0.01
+LU,telerik,1,13,0.01
+LU,togaf,1,13,0.01
+LU,unit tests,1,13,0.01
+LU,unit_tests,1,13,0.01
+LU,veeam backup,1,13,0.01
+LU,version control,1,13,0.01
+LU,vuejs,1,13,0.01
+LU,wcf,1,13,0.01
+LU,windows server,1,13,0.01
+LU,wpf,1,13,0.01
+NE,python,19,1,0.4222
+NE,agile,10,2,0.2222
+NE,ci_cd,8,3,0.1778
+NE,c,4,4,0.0889
+NE,kubernetes,4,4,0.0889
+NE,laravel,4,4,0.0889
+NE,php,4,4,0.0889
+NE,devops,3,5,0.0667
+NE,docker,3,5,0.0667
+NE,elasticsearch,3,5,0.0667
+NE,go,3,5,0.0667
+NE,mysql,3,5,0.0667
+NE,redis,3,5,0.0667
+NE,sql,3,5,0.0667
+NE,angular,2,6,0.0444
+NE,ansible,2,6,0.0444
+NE,csharp,2,6,0.0444
+NE,etl,2,6,0.0444
+NE,javascript,2,6,0.0444
+NE,microservices,2,6,0.0444
+NE,power bi,2,6,0.0444
+NE,test_automation,2,6,0.0444
+NE,altium designer,1,7,0.0222
+NE,autosar,1,7,0.0222
+NE,azure,1,7,0.0222
+NE,blazor,1,7,0.0222
+NE,c++,1,7,0.0222
+NE,can,1,7,0.0222
+NE,clickhouse,1,7,0.0222
+NE,continuous improvement,1,7,0.0222
+NE,cycle en v,1,7,0.0222
+NE,dart,1,7,0.0222
+NE,data integration,1,7,0.0222
+NE,django,1,7,0.0222
+NE,elastic,1,7,0.0222
+NE,excel,1,7,0.0222
+NE,flutter,1,7,0.0222
+NE,gitlab,1,7,0.0222
+NE,gitlab_ci,1,7,0.0222
+NE,grafana,1,7,0.0222
+NE,helm,1,7,0.0222
+NE,java,1,7,0.0222
+NE,lean,1,7,0.0222
+NE,mariadb,1,7,0.0222
+NE,microsoft excel,1,7,0.0222
+NE,non-autosar,1,7,0.0222
+NE,nuxt,1,7,0.0222
+NE,prometheus,1,7,0.0222
+NE,rabbitmq,1,7,0.0222
+NE,sac,1,7,0.0222
+NE,sap analysis cloud,1,7,0.0222
+NE,sap analytics cloud,1,7,0.0222
+NE,sap bw,1,7,0.0222
+NE,sap bw analysis,1,7,0.0222
+NE,sap erp,1,7,0.0222
+NE,spring,1,7,0.0222
+NE,typescript,1,7,0.0222
+NE,v-cycle,1,7,0.0222
 NW,agile,4,1,0.5714
 NW,angular,2,2,0.2857
 NW,java,2,2,0.2857
@@ -518,104 +535,113 @@ NW,nodejs,1,3,0.1429
 NW,nosql,1,3,0.1429
 NW,r,1,3,0.1429
 NW,ruby,1,3,0.1429
-OW,python,3,1,0.75
-OW,ci_cd,1,2,0.25
-OW,csharp,1,2,0.25
-OW,itil,1,2,0.25
-OW,pytorch,1,2,0.25
-OW,servicenow,1,2,0.25
-SG,sql,12,1,0.15
-SG,agile,8,2,0.1
-SG,azure,8,2,0.1
-SG,ci_cd,8,2,0.1
-SG,devops,8,2,0.1
-SG,aws,6,3,0.075
-SG,java,6,3,0.075
-SG,angular,5,4,0.0625
-SG,python,5,4,0.0625
-SG,terraform,5,4,0.0625
-SG,c++,4,5,0.05
-SG,spring,4,5,0.05
-SG,gcp,3,6,0.0375
-SG,microservices,3,6,0.0375
-SG,react,3,6,0.0375
-SG,typescript,3,6,0.0375
-SG,ansible,2,7,0.025
-SG,csharp,2,7,0.025
-SG,docker,2,7,0.025
-SG,git,2,7,0.025
-SG,javascript,2,7,0.025
-SG,kotlin,2,7,0.025
-SG,microsoft azure,2,7,0.025
-SG,mssql,2,7,0.025
-SG,oracle,2,7,0.025
-SG,rest_api,2,7,0.025
-SG,scrum,2,7,0.025
-SG,abap oo,1,8,0.0125
-SG,apidesign,1,8,0.0125
-SG,azure ad connect,1,8,0.0125
-SG,azure devops,1,8,0.0125
-SG,azure openai,1,8,0.0125
-SG,azure sql,1,8,0.0125
-SG,backlog_management,1,8,0.0125
-SG,bcm,1,8,0.0125
-SG,ci/cd,1,8,0.0125
-SG,clean_code,1,8,0.0125
-SG,cloud-architecture,1,8,0.0125
-SG,conventional,1,8,0.0125
-SG,data-driven,1,8,0.0125
-SG,datenschutzmanagement,1,8,0.0125
-SG,devsecops,1,8,0.0125
-SG,dotnet,1,8,0.0125
-SG,exchange online,1,8,0.0125
-SG,experimentation,1,8,0.0125
-SG,fi/co,1,8,0.0125
-SG,fortinet,1,8,0.0125
-SG,github actions,1,8,0.0125
-SG,go,1,8,0.0125
-SG,grc,1,8,0.0125
-SG,hugging face,1,8,0.0125
-SG,ikt-minimalstandard,1,8,0.0125
-SG,intune,1,8,0.0125
-SG,iso/iec 27001,1,8,0.0125
-SG,kubernetes,1,8,0.0125
-SG,labview,1,8,0.0125
-SG,langchain,1,8,0.0125
-SG,linux,1,8,0.0125
-SG,llamaindex,1,8,0.0125
-SG,llmops,1,8,0.0125
-SG,m365,1,8,0.0125
-SG,microsoft 365,1,8,0.0125
-SG,microsoft sql,1,8,0.0125
-SG,microsoft teams,1,8,0.0125
-SG,microsoft windows server,1,8,0.0125
-SG,milvus,1,8,0.0125
-SG,mlops,1,8,0.0125
-SG,mm,1,8,0.0125
-SG,nist,1,8,0.0125
-SG,o365,1,8,0.0125
-SG,openai,1,8,0.0125
-SG,openai/azure openai,1,8,0.0125
-SG,packers,1,8,0.0125
-SG,php,1,8,0.0125
-SG,pinecone,1,8,0.0125
-SG,pl/sql,1,8,0.0125
-SG,plsql,1,8,0.0125
-SG,pm,1,8,0.0125
-SG,qt,1,8,0.0125
-SG,relationalen datenbanken,1,8,0.0125
-SG,risk management,1,8,0.0125
-SG,s/4hana,1,8,0.0125
-SG,safe,1,8,0.0125
-SG,sap btp,1,8,0.0125
-SG,sapui5,1,8,0.0125
-SG,sd,1,8,0.0125
-SG,ui5,1,8,0.0125
-SG,veeam,1,8,0.0125
-SG,vmware,1,8,0.0125
-SG,vue,1,8,0.0125
-SG,weaviate,1,8,0.0125
-SG,windows server,1,8,0.0125
+OW,python,3,1,0.5
+OW,ci_cd,2,2,0.3333
+OW,csharp,2,2,0.3333
+OW,agile,1,3,0.1667
+OW,clean_code,1,3,0.1667
+OW,data_analytics,1,3,0.1667
+OW,dotnet,1,3,0.1667
+OW,itil,1,3,0.1667
+OW,low-code,1,3,0.1667
+OW,pytorch,1,3,0.1667
+OW,scrum,1,3,0.1667
+OW,servicenow,1,3,0.1667
+OW,sql,1,3,0.1667
+OW,test_automation,1,3,0.1667
+OW,wpf,1,3,0.1667
+SG,sql,13,1,0.1512
+SG,agile,8,2,0.093
+SG,azure,8,2,0.093
+SG,ci_cd,8,2,0.093
+SG,devops,8,2,0.093
+SG,aws,6,3,0.0698
+SG,java,6,3,0.0698
+SG,angular,5,4,0.0581
+SG,python,5,4,0.0581
+SG,terraform,5,4,0.0581
+SG,c++,4,5,0.0465
+SG,spring,4,5,0.0465
+SG,gcp,3,6,0.0349
+SG,microservices,3,6,0.0349
+SG,oracle,3,6,0.0349
+SG,react,3,6,0.0349
+SG,typescript,3,6,0.0349
+SG,ansible,2,7,0.0233
+SG,csharp,2,7,0.0233
+SG,docker,2,7,0.0233
+SG,git,2,7,0.0233
+SG,javascript,2,7,0.0233
+SG,kotlin,2,7,0.0233
+SG,microsoft azure,2,7,0.0233
+SG,mssql,2,7,0.0233
+SG,rest_api,2,7,0.0233
+SG,scrum,2,7,0.0233
+SG,abap oo,1,8,0.0116
+SG,apidesign,1,8,0.0116
+SG,azure ad connect,1,8,0.0116
+SG,azure devops,1,8,0.0116
+SG,azure openai,1,8,0.0116
+SG,azure sql,1,8,0.0116
+SG,backlog_management,1,8,0.0116
+SG,bcm,1,8,0.0116
+SG,ci/cd,1,8,0.0116
+SG,clean_code,1,8,0.0116
+SG,cloud-architecture,1,8,0.0116
+SG,conventional,1,8,0.0116
+SG,data-driven,1,8,0.0116
+SG,datenschutzmanagement,1,8,0.0116
+SG,devsecops,1,8,0.0116
+SG,dotnet,1,8,0.0116
+SG,exchange online,1,8,0.0116
+SG,experimentation,1,8,0.0116
+SG,fi/co,1,8,0.0116
+SG,fortinet,1,8,0.0116
+SG,github actions,1,8,0.0116
+SG,go,1,8,0.0116
+SG,grc,1,8,0.0116
+SG,hugging face,1,8,0.0116
+SG,ikt-minimalstandard,1,8,0.0116
+SG,intune,1,8,0.0116
+SG,iso/iec 27001,1,8,0.0116
+SG,kubernetes,1,8,0.0116
+SG,labview,1,8,0.0116
+SG,langchain,1,8,0.0116
+SG,linux,1,8,0.0116
+SG,llamaindex,1,8,0.0116
+SG,llmops,1,8,0.0116
+SG,m365,1,8,0.0116
+SG,microsoft 365,1,8,0.0116
+SG,microsoft sql,1,8,0.0116
+SG,microsoft teams,1,8,0.0116
+SG,microsoft windows server,1,8,0.0116
+SG,milvus,1,8,0.0116
+SG,mlops,1,8,0.0116
+SG,mm,1,8,0.0116
+SG,nist,1,8,0.0116
+SG,o365,1,8,0.0116
+SG,openai,1,8,0.0116
+SG,openai/azure openai,1,8,0.0116
+SG,packers,1,8,0.0116
+SG,php,1,8,0.0116
+SG,pinecone,1,8,0.0116
+SG,pl/sql,1,8,0.0116
+SG,plsql,1,8,0.0116
+SG,pm,1,8,0.0116
+SG,qt,1,8,0.0116
+SG,relationalen datenbanken,1,8,0.0116
+SG,risk management,1,8,0.0116
+SG,s/4hana,1,8,0.0116
+SG,safe,1,8,0.0116
+SG,sap btp,1,8,0.0116
+SG,sapui5,1,8,0.0116
+SG,sd,1,8,0.0116
+SG,ui5,1,8,0.0116
+SG,veeam,1,8,0.0116
+SG,vmware,1,8,0.0116
+SG,vue,1,8,0.0116
+SG,weaviate,1,8,0.0116
+SG,windows server,1,8,0.0116
 SH,agile,2,1,0.1429
 SH,azure,1,2,0.0714
 SH,ci_cd,1,2,0.0714
@@ -630,252 +656,270 @@ SH,react,1,2,0.0714
 SH,scylla/cassandra,1,2,0.0714
 SH,sql,1,2,0.0714
 SH,swift,1,2,0.0714
-SO,azure,9,1,0.2
-SO,sql,9,1,0.2
-SO,ci_cd,7,2,0.1556
-SO,csharp,6,3,0.1333
-SO,typescript,6,3,0.1333
-SO,angular,5,4,0.1111
-SO,agile,4,5,0.0889
-SO,devops,4,5,0.0889
-SO,dotnet,4,5,0.0889
-SO,oracle,4,5,0.0889
-SO,terraform,4,5,0.0889
-SO,aws,3,6,0.0667
-SO,gcp,3,6,0.0667
-SO,kafka,3,6,0.0667
-SO,python,3,6,0.0667
-SO,bigquery,2,7,0.0444
-SO,databricks,2,7,0.0444
-SO,linux,2,7,0.0444
-SO,mssql,2,7,0.0444
-SO,oci,2,7,0.0444
-SO,postgresql,2,7,0.0444
-SO,ansible,1,8,0.0222
-SO,dataiku,1,8,0.0222
-SO,datenintegration,1,8,0.0222
-SO,datenplattformen,1,8,0.0222
-SO,docker,1,8,0.0222
-SO,documentation,1,8,0.0222
-SO,etl,1,8,0.0222
-SO,inspection,1,8,0.0222
-SO,integration platform,1,8,0.0222
-SO,java,1,8,0.0222
-SO,javascript,1,8,0.0222
-SO,kubernetes,1,8,0.0222
-SO,mongodb,1,8,0.0222
-SO,openshift,1,8,0.0222
-SO,oracle cloud,1,8,0.0222
-SO,oracle linux,1,8,0.0222
-SO,oracle_cloud,1,8,0.0222
-SO,pl/sql,1,8,0.0222
-SO,pytorch,1,8,0.0222
-SO,quality assurance,1,8,0.0222
-SO,react,1,8,0.0222
-SO,sap,1,8,0.0222
-SO,spring,1,8,0.0222
-SO,tensorflow,1,8,0.0222
-SO,tests,1,8,0.0222
-SZ,sql,6,1,0.25
-SZ,agile,4,2,0.1667
-SZ,devops,3,3,0.125
-SZ,oracle,3,3,0.125
-SZ,test_automation,3,3,0.125
-SZ,aws,2,4,0.0833
-SZ,azure,2,4,0.0833
-SZ,ci_cd,2,4,0.0833
-SZ,gcp,2,4,0.0833
-SZ,python,2,4,0.0833
-SZ,rust,2,4,0.0833
-SZ,sqlite,2,4,0.0833
-SZ,svelte,2,4,0.0833
-SZ,typescript,2,4,0.0833
-SZ,vite,2,4,0.0833
-SZ,axioma risk,1,5,0.0417
-SZ,business analysis,1,5,0.0417
-SZ,business intelligence,1,5,0.0417
-SZ,c,1,5,0.0417
-SZ,datawarehouse,1,5,0.0417
-SZ,dwh,1,5,0.0417
-SZ,elasticsearch,1,5,0.0417
-SZ,electron,1,5,0.0417
-SZ,electronjs,1,5,0.0417
-SZ,etl,1,5,0.0417
-SZ,etl/elt,1,5,0.0417
-SZ,java,1,5,0.0417
-SZ,kotlin,1,5,0.0417
-SZ,microservices,1,5,0.0417
-SZ,microsoft fabric,1,5,0.0417
-SZ,mongodb,1,5,0.0417
-SZ,ms sql server,1,5,0.0417
-SZ,mssql,1,5,0.0417
-SZ,mysql,1,5,0.0417
-SZ,postgresql,1,5,0.0417
-SZ,power bi,1,5,0.0417
-SZ,project management,1,5,0.0417
-SZ,requirements analysis,1,5,0.0417
-SZ,scala,1,5,0.0417
-SZ,simcorp dimension,1,5,0.0417
-SZ,terraform,1,5,0.0417
-TG,ci_cd,7,1,0.1707
-TG,agile,4,2,0.0976
-TG,c++,4,2,0.0976
-TG,sql,4,2,0.0976
-TG,azure,3,3,0.0732
-TG,devops,3,3,0.0732
-TG,kafka,3,3,0.0732
-TG,csharp,2,4,0.0488
-TG,dotnet,2,4,0.0488
-TG,nosql,2,4,0.0488
-TG,aws,1,5,0.0244
-TG,c,1,5,0.0244
-TG,gcp,1,5,0.0244
-TG,java,1,5,0.0244
-TG,javascript,1,5,0.0244
-TG,kotlin,1,5,0.0244
-TG,kubernetes,1,5,0.0244
-TG,microservices,1,5,0.0244
-TG,mssql,1,5,0.0244
-TG,mysql,1,5,0.0244
-TG,nestjs,1,5,0.0244
-TG,nodejs,1,5,0.0244
-TG,own storage engines,1,5,0.0244
-TG,python,1,5,0.0244
-TG,qt,1,5,0.0244
-TG,rust,1,5,0.0244
-TG,scrum,1,5,0.0244
-TG,symfony,1,5,0.0244
-TG,tdd,1,5,0.0244
-TG,terraform,1,5,0.0244
-TG,typescript,1,5,0.0244
-TI,python,14,1,0.2979
-TI,java,8,2,0.1702
-TI,ci_cd,7,3,0.1489
-TI,agile,6,4,0.1277
-TI,aws,5,5,0.1064
-TI,azure,4,6,0.0851
-TI,devops,4,6,0.0851
-TI,gcp,4,6,0.0851
-TI,sql,4,6,0.0851
-TI,c++,3,7,0.0638
-TI,microservices,3,7,0.0638
-TI,test_automation,3,7,0.0638
-TI,ansible,2,8,0.0426
-TI,docker,2,8,0.0426
-TI,openshift,2,8,0.0426
-TI,oracle,2,8,0.0426
-TI,spring,2,8,0.0426
-TI,bigquery,1,9,0.0213
-TI,boost,1,9,0.0213
-TI,clean_code,1,9,0.0213
-TI,data analysis,1,9,0.0213
-TI,dbt,1,9,0.0213
-TI,etl,1,9,0.0213
-TI,gitops,1,9,0.0213
-TI,javascript,1,9,0.0213
-TI,kafka,1,9,0.0213
-TI,langchain,1,9,0.0213
-TI,langgraph,1,9,0.0213
-TI,looker,1,9,0.0213
-TI,mongodb,1,9,0.0213
-TI,ms-excel,1,9,0.0213
-TI,ms-powerbi,1,9,0.0213
-TI,nosql,1,9,0.0213
-TI,numpy,1,9,0.0213
-TI,ollama,1,9,0.0213
-TI,on-premises,1,9,0.0213
-TI,onestream,1,9,0.0213
-TI,pandas,1,9,0.0213
-TI,postgresql,1,9,0.0213
-TI,powerpoint,1,9,0.0213
-TI,process optimization,1,9,0.0213
-TI,project management,1,9,0.0213
-TI,pytorch,1,9,0.0213
-TI,react,1,9,0.0213
-TI,redis,1,9,0.0213
-TI,sap hr,1,9,0.0213
-TI,sas enterprise guide,1,9,0.0213
-TI,scrum,1,9,0.0213
-TI,successfactors,1,9,0.0213
-TI,terraform,1,9,0.0213
-TI,vba,1,9,0.0213
-TI,vllm,1,9,0.0213
-TI,workday,1,9,0.0213
-Unknown,python,47,1,0.2271
-Unknown,ci_cd,34,2,0.1643
-Unknown,agile,29,3,0.1401
-Unknown,react,26,4,0.1256
-Unknown,aws,25,5,0.1208
-Unknown,devops,23,6,0.1111
-Unknown,javascript,22,7,0.1063
-Unknown,typescript,21,8,0.1014
-Unknown,sql,19,9,0.0918
-Unknown,rust,18,10,0.087
-Unknown,gcp,14,11,0.0676
-Unknown,terraform,14,11,0.0676
-Unknown,c++,13,12,0.0628
-Unknown,java,13,12,0.0628
-Unknown,nodejs,12,13,0.058
-Unknown,azure,11,14,0.0531
-Unknown,test_automation,11,14,0.0531
-Unknown,csharp,10,15,0.0483
-Unknown,postgresql,10,15,0.0483
-Unknown,mysql,9,16,0.0435
-Unknown,kafka,8,17,0.0386
-Unknown,microservices,8,17,0.0386
-Unknown,c,7,18,0.0338
-Unknown,kubernetes,7,18,0.0338
-Unknown,redis,7,18,0.0338
-Unknown,etl,6,19,0.029
-Unknown,go,6,19,0.029
-Unknown,snowflake,6,19,0.029
-Unknown,spring,6,19,0.029
-Unknown,ansible,5,20,0.0242
-Unknown,elasticsearch,5,20,0.0242
-Unknown,mongodb,5,20,0.0242
-Unknown,php,5,20,0.0242
-Unknown,swift,5,20,0.0242
-Unknown,vue,5,20,0.0242
-VD,agile,92,1,0.2659
-VD,python,85,2,0.2457
-VD,ci_cd,67,3,0.1936
-VD,devops,59,4,0.1705
-VD,sql,59,4,0.1705
-VD,aws,41,5,0.1185
-VD,java,39,6,0.1127
-VD,azure,31,7,0.0896
-VD,gcp,25,8,0.0723
-VD,c++,23,9,0.0665
-VD,postgresql,23,9,0.0665
-VD,oracle,19,10,0.0549
-VD,csharp,18,11,0.052
-VD,kubernetes,16,12,0.0462
-VD,microservices,16,12,0.0462
-VD,react,16,12,0.0462
-VD,test_automation,15,13,0.0434
-VD,angular,14,14,0.0405
-VD,ansible,14,14,0.0405
-VD,dotnet,14,14,0.0405
-VD,etl,14,14,0.0405
-VD,kafka,14,14,0.0405
-VD,typescript,14,14,0.0405
-VD,javascript,13,15,0.0376
-VD,mongodb,13,15,0.0376
-VD,spring,13,15,0.0376
-VD,terraform,13,15,0.0376
-VD,databricks,11,16,0.0318
-VD,mssql,11,16,0.0318
-VD,mysql,11,16,0.0318
-VD,vue,11,16,0.0318
-VD,redis,10,17,0.0289
-VD,snowflake,10,17,0.0289
-VD,devsecops,9,18,0.026
-VD,pytorch,9,18,0.026
-VD,spark,9,18,0.026
-VD,dbt,8,19,0.0231
-VD,elasticsearch,7,20,0.0202
-VD,gitops,7,20,0.0202
-VS,databricks,5,1,0.2632
+SO,sql,10,1,0.1961
+SO,azure,9,2,0.1765
+SO,ci_cd,7,3,0.1373
+SO,csharp,6,4,0.1176
+SO,typescript,6,4,0.1176
+SO,angular,5,5,0.098
+SO,agile,4,6,0.0784
+SO,devops,4,6,0.0784
+SO,dotnet,4,6,0.0784
+SO,oracle,4,6,0.0784
+SO,python,4,6,0.0784
+SO,terraform,4,6,0.0784
+SO,aws,3,7,0.0588
+SO,gcp,3,7,0.0588
+SO,kafka,3,7,0.0588
+SO,bigquery,2,8,0.0392
+SO,databricks,2,8,0.0392
+SO,etl,2,8,0.0392
+SO,linux,2,8,0.0392
+SO,mssql,2,8,0.0392
+SO,oci,2,8,0.0392
+SO,postgresql,2,8,0.0392
+SO,ansible,1,9,0.0196
+SO,dataiku,1,9,0.0196
+SO,datenintegration,1,9,0.0196
+SO,datenplattformen,1,9,0.0196
+SO,docker,1,9,0.0196
+SO,documentation,1,9,0.0196
+SO,inspection,1,9,0.0196
+SO,integration platform,1,9,0.0196
+SO,java,1,9,0.0196
+SO,javascript,1,9,0.0196
+SO,kubernetes,1,9,0.0196
+SO,mongodb,1,9,0.0196
+SO,openshift,1,9,0.0196
+SO,oracle cloud,1,9,0.0196
+SO,oracle linux,1,9,0.0196
+SO,oracle_cloud,1,9,0.0196
+SO,pl/sql,1,9,0.0196
+SO,pytorch,1,9,0.0196
+SO,quality assurance,1,9,0.0196
+SO,react,1,9,0.0196
+SO,sap,1,9,0.0196
+SO,spring,1,9,0.0196
+SO,tensorflow,1,9,0.0196
+SO,tests,1,9,0.0196
+SZ,sql,6,1,0.24
+SZ,agile,4,2,0.16
+SZ,devops,3,3,0.12
+SZ,oracle,3,3,0.12
+SZ,test_automation,3,3,0.12
+SZ,aws,2,4,0.08
+SZ,azure,2,4,0.08
+SZ,ci_cd,2,4,0.08
+SZ,gcp,2,4,0.08
+SZ,python,2,4,0.08
+SZ,rust,2,4,0.08
+SZ,sqlite,2,4,0.08
+SZ,svelte,2,4,0.08
+SZ,typescript,2,4,0.08
+SZ,vite,2,4,0.08
+SZ,axioma risk,1,5,0.04
+SZ,business analysis,1,5,0.04
+SZ,business intelligence,1,5,0.04
+SZ,c,1,5,0.04
+SZ,data-warehouse,1,5,0.04
+SZ,datawarehouse,1,5,0.04
+SZ,dwh,1,5,0.04
+SZ,elasticsearch,1,5,0.04
+SZ,electron,1,5,0.04
+SZ,electronjs,1,5,0.04
+SZ,elt,1,5,0.04
+SZ,etl,1,5,0.04
+SZ,etl/elt,1,5,0.04
+SZ,java,1,5,0.04
+SZ,kotlin,1,5,0.04
+SZ,microservices,1,5,0.04
+SZ,microsoft fabric,1,5,0.04
+SZ,microsoft sql server,1,5,0.04
+SZ,mongodb,1,5,0.04
+SZ,ms sql server,1,5,0.04
+SZ,mssql,1,5,0.04
+SZ,mysql,1,5,0.04
+SZ,postgresql,1,5,0.04
+SZ,power bi,1,5,0.04
+SZ,project management,1,5,0.04
+SZ,requirements analysis,1,5,0.04
+SZ,scala,1,5,0.04
+SZ,simcorp dimension,1,5,0.04
+SZ,terraform,1,5,0.04
+TG,ci_cd,7,1,0.1628
+TG,agile,4,2,0.093
+TG,c++,4,2,0.093
+TG,sql,4,2,0.093
+TG,azure,3,3,0.0698
+TG,devops,3,3,0.0698
+TG,kafka,3,3,0.0698
+TG,csharp,2,4,0.0465
+TG,dotnet,2,4,0.0465
+TG,nosql,2,4,0.0465
+TG,aws,1,5,0.0233
+TG,c,1,5,0.0233
+TG,gcp,1,5,0.0233
+TG,java,1,5,0.0233
+TG,javascript,1,5,0.0233
+TG,kotlin,1,5,0.0233
+TG,kubernetes,1,5,0.0233
+TG,microservices,1,5,0.0233
+TG,mssql,1,5,0.0233
+TG,mysql,1,5,0.0233
+TG,nestjs,1,5,0.0233
+TG,nodejs,1,5,0.0233
+TG,own storage engines,1,5,0.0233
+TG,python,1,5,0.0233
+TG,qt,1,5,0.0233
+TG,rust,1,5,0.0233
+TG,scrum,1,5,0.0233
+TG,symfony,1,5,0.0233
+TG,tdd,1,5,0.0233
+TG,terraform,1,5,0.0233
+TG,typescript,1,5,0.0233
+TI,python,19,1,0.3115
+TI,agile,10,2,0.1639
+TI,java,9,3,0.1475
+TI,ci_cd,8,4,0.1311
+TI,sql,8,4,0.1311
+TI,aws,7,5,0.1148
+TI,gcp,6,6,0.0984
+TI,azure,5,7,0.082
+TI,oracle,5,7,0.082
+TI,test_automation,5,7,0.082
+TI,c++,4,8,0.0656
+TI,devops,4,8,0.0656
+TI,javascript,3,9,0.0492
+TI,microservices,3,9,0.0492
+TI,openshift,3,9,0.0492
+TI,ansible,2,10,0.0328
+TI,bigquery,2,10,0.0328
+TI,dbt,2,10,0.0328
+TI,docker,2,10,0.0328
+TI,etl,2,10,0.0328
+TI,numpy,2,10,0.0328
+TI,pandas,2,10,0.0328
+TI,postgresql,2,10,0.0328
+TI,react,2,10,0.0328
+TI,scrum,2,10,0.0328
+TI,spring,2,10,0.0328
+TI,terraform,2,10,0.0328
+TI,agile/scrum,1,11,0.0164
+TI,airflow,1,11,0.0164
+TI,boost,1,11,0.0164
+TI,clean_code,1,11,0.0164
+TI,csharp,1,11,0.0164
+TI,data analysis,1,11,0.0164
+TI,dotnet,1,11,0.0164
+TI,gitops,1,11,0.0164
+TI,go,1,11,0.0164
+TI,kafka,1,11,0.0164
+TI,langchain,1,11,0.0164
+TI,langgraph,1,11,0.0164
+TI,looker,1,11,0.0164
+TI,mongodb,1,11,0.0164
+TI,ms-excel,1,11,0.0164
+TI,ms-powerbi,1,11,0.0164
+TI,mssql,1,11,0.0164
+TI,nosql,1,11,0.0164
+TI,ollama,1,11,0.0164
+TI,on-premises,1,11,0.0164
+TI,onestream,1,11,0.0164
+TI,oo,1,11,0.0164
+TI,powerpoint,1,11,0.0164
+TI,process optimization,1,11,0.0164
+TI,project management,1,11,0.0164
+TI,pytorch,1,11,0.0164
+TI,quality_by_design,1,11,0.0164
+TI,redis,1,11,0.0164
+TI,ruby,1,11,0.0164
+TI,sap hr,1,11,0.0164
+TI,sas enterprise guide,1,11,0.0164
+TI,scikit_learn,1,11,0.0164
+TI,successfactors,1,11,0.0164
+TI,swift,1,11,0.0164
+TI,typescript,1,11,0.0164
+TI,vba,1,11,0.0164
+TI,vllm,1,11,0.0164
+TI,workday,1,11,0.0164
+TI,wpf,1,11,0.0164
+TI,xaml,1,11,0.0164
+Unknown,python,49,1,0.2121
+Unknown,ci_cd,37,2,0.1602
+Unknown,agile,36,3,0.1558
+Unknown,devops,30,4,0.1299
+Unknown,react,28,5,0.1212
+Unknown,aws,27,6,0.1169
+Unknown,typescript,23,7,0.0996
+Unknown,javascript,22,8,0.0952
+Unknown,sql,22,8,0.0952
+Unknown,rust,19,9,0.0823
+Unknown,gcp,15,10,0.0649
+Unknown,java,14,11,0.0606
+Unknown,terraform,14,11,0.0606
+Unknown,c++,13,12,0.0563
+Unknown,csharp,13,12,0.0563
+Unknown,nodejs,13,12,0.0563
+Unknown,azure,12,13,0.0519
+Unknown,postgresql,11,14,0.0476
+Unknown,test_automation,11,14,0.0476
+Unknown,kafka,9,15,0.039
+Unknown,microservices,9,15,0.039
+Unknown,mysql,9,15,0.039
+Unknown,c,8,16,0.0346
+Unknown,kubernetes,8,16,0.0346
+Unknown,redis,8,16,0.0346
+Unknown,go,7,17,0.0303
+Unknown,elasticsearch,6,18,0.026
+Unknown,etl,6,18,0.026
+Unknown,php,6,18,0.026
+Unknown,snowflake,6,18,0.026
+Unknown,spring,6,18,0.026
+Unknown,angular,5,19,0.0216
+Unknown,ansible,5,19,0.0216
+Unknown,docker,5,19,0.0216
+Unknown,mongodb,5,19,0.0216
+Unknown,scala,5,19,0.0216
+Unknown,swift,5,19,0.0216
+Unknown,vue,5,19,0.0216
+Unknown,databricks,4,20,0.0173
+Unknown,dbt,4,20,0.0173
+Unknown,kotlin,4,20,0.0173
+Unknown,tensorflow,4,20,0.0173
+VD,agile,103,1,0.2594
+VD,python,102,2,0.2569
+VD,ci_cd,77,3,0.194
+VD,devops,70,4,0.1763
+VD,sql,69,5,0.1738
+VD,aws,46,6,0.1159
+VD,java,46,6,0.1159
+VD,azure,34,7,0.0856
+VD,gcp,29,8,0.073
+VD,postgresql,27,9,0.068
+VD,c++,24,10,0.0605
+VD,oracle,21,11,0.0529
+VD,csharp,20,12,0.0504
+VD,kubernetes,20,12,0.0504
+VD,microservices,20,12,0.0504
+VD,test_automation,19,13,0.0479
+VD,react,18,14,0.0453
+VD,etl,17,15,0.0428
+VD,angular,15,16,0.0378
+VD,ansible,15,16,0.0378
+VD,dotnet,15,16,0.0378
+VD,kafka,15,16,0.0378
+VD,spring,15,16,0.0378
+VD,terraform,15,16,0.0378
+VD,typescript,15,16,0.0378
+VD,databricks,14,17,0.0353
+VD,javascript,14,17,0.0353
+VD,mongodb,13,18,0.0327
+VD,mssql,13,18,0.0327
+VD,mysql,13,18,0.0327
+VD,redis,13,18,0.0327
+VD,snowflake,12,19,0.0302
+VD,vue,12,19,0.0302
+VD,pytorch,11,20,0.0277
 VS,react,5,1,0.2632
 VS,ci_cd,4,2,0.2105
 VS,devops,4,2,0.2105
@@ -883,13 +927,14 @@ VS,kubernetes,4,2,0.2105
 VS,agile,3,3,0.1579
 VS,angular,3,3,0.1579
 VS,azure,3,3,0.1579
+VS,databricks,3,3,0.1579
 VS,sql,3,3,0.1579
-VS,test_automation,3,3,0.1579
 VS,typescript,3,3,0.1579
 VS,ansible,2,4,0.1053
 VS,aws,2,4,0.1053
 VS,gcp,2,4,0.1053
 VS,rest_api,2,4,0.1053
+VS,test_automation,2,4,0.1053
 VS,vue,2,4,0.1053
 VS,docker,1,5,0.0526
 VS,git,1,5,0.0526
@@ -907,107 +952,105 @@ VS,slurm,1,5,0.0526
 VS,spring,1,5,0.0526
 VS,sre,1,5,0.0526
 VS,terraform,1,5,0.0526
-ZG,python,18,1,0.2338
-ZG,ci_cd,14,2,0.1818
-ZG,agile,13,3,0.1688
-ZG,devops,13,3,0.1688
-ZG,azure,8,4,0.1039
-ZG,sql,8,4,0.1039
-ZG,rust,7,5,0.0909
-ZG,snowflake,5,6,0.0649
-ZG,aws,4,7,0.0519
-ZG,csharp,4,7,0.0519
-ZG,java,4,7,0.0519
-ZG,typescript,4,7,0.0519
-ZG,ansible,3,8,0.039
-ZG,c++,3,8,0.039
-ZG,databricks,3,8,0.039
-ZG,javascript,3,8,0.039
-ZG,pytorch,3,8,0.039
-ZG,scrum,3,8,0.039
-ZG,spark,3,8,0.039
-ZG,test_automation,3,8,0.039
-ZG,bdd,2,9,0.026
-ZG,c,2,9,0.026
-ZG,dotnet,2,9,0.026
-ZG,etl,2,9,0.026
-ZG,kubernetes,2,9,0.026
-ZG,linux,2,9,0.026
-ZG,oracle,2,9,0.026
-ZG,react,2,9,0.026
-ZG,safe,2,9,0.026
-ZG,tensorflow,2,9,0.026
-ZG,terraform,2,9,0.026
-ZG,angular,1,10,0.013
-ZG,azure data factory,1,10,0.013
-ZG,beta testing,1,10,0.013
-ZG,canoe,1,10,0.013
-ZG,canopen,1,10,0.013
-ZG,capl,1,10,0.013
-ZG,ceph,1,10,0.013
-ZG,ci / cd build server,1,10,0.013
-ZG,cmake,1,10,0.013
-ZG,code_reviews,1,10,0.013
-ZG,conan,1,10,0.013
-ZG,cucumber,1,10,0.013
-ZG,dataiku,1,10,0.013
-ZG,devsecops,1,10,0.013
-ZG,emwin,1,10,0.013
-ZG,feasibility studies,1,10,0.013
-ZG,fivetran,1,10,0.013
-ZG,gcp,1,10,0.013
-ZG,git,1,10,0.013
-ZG,integration_tests,1,10,0.013
-ZG,keras,1,10,0.013
-ZG,kotlin,1,10,0.013
-ZG,lean-agile,1,10,0.013
-ZG,linux (debian),1,10,0.013
-ZG,microsoft fabric,1,10,0.013
-ZG,ms sql,1,10,0.013
-ZG,nodejs,1,10,0.013
-ZG,pair_programming,1,10,0.013
-ZG,postgresql,1,10,0.013
-ZG,product management,1,10,0.013
-ZG,proxmox,1,10,0.013
-ZG,qt,1,10,0.013
-ZG,qt for mcu,1,10,0.013
-ZG,qt/qml,1,10,0.013
-ZG,qt/qml on embedded linux,1,10,0.013
-ZG,requirements engineering,1,10,0.013
-ZG,scikit_learn,1,10,0.013
-ZG,selenium,1,10,0.013
-ZG,specflow,1,10,0.013
-ZG,spring,1,10,0.013
-ZG,sql database,1,10,0.013
-ZG,storage,1,10,0.013
-ZG,swift,1,10,0.013
-ZG,talend,1,10,0.013
-ZG,tofu,1,10,0.013
-ZG,unit_tests,1,10,0.013
-ZG,vt system,1,10,0.013
-ZG,vteststudio,1,10,0.013
-ZG,winui,1,10,0.013
-ZG,xaml,1,10,0.013
-ZG,zfs,1,10,0.013
-ZH,agile,571,1,0.2128
-ZH,python,564,2,0.2102
-ZH,ci_cd,446,3,0.1662
-ZH,devops,405,4,0.151
-ZH,sql,381,5,0.142
-ZH,java,314,6,0.117
-ZH,azure,283,7,0.1055
-ZH,aws,222,8,0.0827
-ZH,typescript,181,9,0.0675
-ZH,react,169,10,0.063
-ZH,javascript,148,11,0.0552
-ZH,kubernetes,148,11,0.0552
-ZH,c++,139,12,0.0518
-ZH,gcp,138,13,0.0514
-ZH,angular,136,14,0.0507
-ZH,csharp,131,15,0.0488
-ZH,spring,121,16,0.0451
-ZH,dotnet,109,17,0.0406
-ZH,microservices,104,18,0.0388
-ZH,postgresql,104,18,0.0388
-ZH,spark,103,19,0.0384
-ZH,test_automation,94,20,0.035
+ZG,python,18,1,0.2169
+ZG,ci_cd,15,2,0.1807
+ZG,agile,14,3,0.1687
+ZG,devops,13,4,0.1566
+ZG,sql,9,5,0.1084
+ZG,azure,8,6,0.0964
+ZG,rust,7,7,0.0843
+ZG,snowflake,5,8,0.0602
+ZG,aws,4,9,0.0482
+ZG,csharp,4,9,0.0482
+ZG,java,4,9,0.0482
+ZG,scrum,4,9,0.0482
+ZG,typescript,4,9,0.0482
+ZG,ansible,3,10,0.0361
+ZG,c++,3,10,0.0361
+ZG,databricks,3,10,0.0361
+ZG,dotnet,3,10,0.0361
+ZG,javascript,3,10,0.0361
+ZG,pytorch,3,10,0.0361
+ZG,spark,3,10,0.0361
+ZG,test_automation,3,10,0.0361
+ZG,bdd,2,11,0.0241
+ZG,c,2,11,0.0241
+ZG,etl,2,11,0.0241
+ZG,kubernetes,2,11,0.0241
+ZG,linux,2,11,0.0241
+ZG,oracle,2,11,0.0241
+ZG,react,2,11,0.0241
+ZG,safe,2,11,0.0241
+ZG,tensorflow,2,11,0.0241
+ZG,terraform,2,11,0.0241
+ZG,angular,1,12,0.012
+ZG,azure data factory,1,12,0.012
+ZG,beta testing,1,12,0.012
+ZG,canoe,1,12,0.012
+ZG,canopen,1,12,0.012
+ZG,capl,1,12,0.012
+ZG,ceph,1,12,0.012
+ZG,ci / cd build server,1,12,0.012
+ZG,cmake,1,12,0.012
+ZG,code_reviews,1,12,0.012
+ZG,conan,1,12,0.012
+ZG,cucumber,1,12,0.012
+ZG,dataiku,1,12,0.012
+ZG,devsecops,1,12,0.012
+ZG,emwin,1,12,0.012
+ZG,feasibility studies,1,12,0.012
+ZG,fivetran,1,12,0.012
+ZG,gcp,1,12,0.012
+ZG,git,1,12,0.012
+ZG,integration_tests,1,12,0.012
+ZG,keras,1,12,0.012
+ZG,kotlin,1,12,0.012
+ZG,lean-agile,1,12,0.012
+ZG,linux (debian),1,12,0.012
+ZG,microsoft fabric,1,12,0.012
+ZG,ms sql,1,12,0.012
+ZG,nodejs,1,12,0.012
+ZG,pair_programming,1,12,0.012
+ZG,postgresql,1,12,0.012
+ZG,product management,1,12,0.012
+ZG,proxmox,1,12,0.012
+ZG,qt,1,12,0.012
+ZG,qt for mcu,1,12,0.012
+ZG,qt/qml,1,12,0.012
+ZG,qt/qml on embedded linux,1,12,0.012
+ZG,requirements engineering,1,12,0.012
+ZG,scikit_learn,1,12,0.012
+ZG,selenium,1,12,0.012
+ZG,specflow,1,12,0.012
+ZG,spring,1,12,0.012
+ZG,sql database,1,12,0.012
+ZG,storage,1,12,0.012
+ZG,swift,1,12,0.012
+ZG,talend,1,12,0.012
+ZG,tofu,1,12,0.012
+ZG,unit_tests,1,12,0.012
+ZG,vt system,1,12,0.012
+ZG,vteststudio,1,12,0.012
+ZG,winui,1,12,0.012
+ZG,xaml,1,12,0.012
+ZG,zfs,1,12,0.012
+ZH,python,659,1,0.2162
+ZH,agile,642,2,0.2106
+ZH,ci_cd,529,3,0.1736
+ZH,devops,481,4,0.1578
+ZH,sql,449,5,0.1473
+ZH,java,360,6,0.1181
+ZH,azure,316,7,0.1037
+ZH,aws,262,8,0.086
+ZH,typescript,198,9,0.065
+ZH,react,188,10,0.0617
+ZH,kubernetes,174,11,0.0571
+ZH,gcp,170,12,0.0558
+ZH,javascript,165,13,0.0541
+ZH,c++,153,14,0.0502
+ZH,angular,149,15,0.0489
+ZH,spring,138,16,0.0453
+ZH,csharp,136,17,0.0446
+ZH,microservices,133,18,0.0436
+ZH,postgresql,118,19,0.0387
+ZH,dotnet,117,20,0.0384
