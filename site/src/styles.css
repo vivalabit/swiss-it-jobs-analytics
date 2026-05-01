@@ -109,6 +109,18 @@ img {
   position: sticky;
   top: 16px;
   z-index: 10;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+  will-change: opacity, transform;
+}
+
+.cy-section-rail.is-hero-active {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 .cy-section-rail-card {
@@ -2280,12 +2292,16 @@ img {
 
 @media (min-width: 1280px) {
   .cy-page-shell-inner {
-    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-columns: 220px minmax(0, 1fr);
     gap: 32px;
   }
 
   .cy-section-rail {
     top: 24px;
+  }
+
+  .cy-section-rail-card {
+    padding-block: 8px;
   }
 
   .cy-section-rail-nav {
@@ -2297,7 +2313,7 @@ img {
   .cy-section-rail-link {
     width: 100%;
     justify-content: flex-start;
-    padding-inline: 12px 16px;
+    padding-inline: 10px 14px;
   }
 }
 

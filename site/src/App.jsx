@@ -1430,8 +1430,14 @@ function PrimaryButton({ children, href, variant = "solid", download }) {
 }
 
 function SectionRail({ sections, activeSectionId }) {
+  const isHeroActive = activeSectionId === "overview";
+
   return (
-    <aside className="cy-section-rail" aria-label="Page sections">
+    <aside
+      className={`cy-section-rail ${isHeroActive ? "is-hero-active" : ""}`}
+      aria-label="Page sections"
+      aria-hidden={isHeroActive}
+    >
       <div className="cy-card cy-section-rail-card">
         <p className="cy-kicker">Navigate</p>
         <nav className="cy-section-rail-nav">
