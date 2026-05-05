@@ -36,7 +36,7 @@ This project is designed to answer practical, data-driven questions about the jo
 
 ***Staffing agencies are excluded.***
 
-## Metodology
+## Methodology
 
 We collect job postings from several sources (LinkedIn, jobs.ch, jobscout24.ch, jobup.ch, swissdevjobs.ch), store them in local SQLite databases for each provider, then map them to a common schema and generate aggregated statistics based on the combined dataset. During the consolidation phase, we use deduplication based on job identity within each source to prevent duplicate imports from inflating the statistics.
 

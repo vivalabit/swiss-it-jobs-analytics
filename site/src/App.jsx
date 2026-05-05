@@ -103,6 +103,7 @@ const CANTON_CAPITAL_CITY_KEYS = new Set([
 const MAP_CITY_LABEL_MIN_VACANCIES = 35;
 const MAP_DETAIL_ROLE_LIMIT = 4;
 const MAP_DETAIL_EMPLOYER_LIMIT = 5;
+const SALARY_RANKING_MIN_COUNT = 10;
 
 const CITY_LOCATIONS = [
   cityLocation("zurich", "Zürich", 47.3769, 8.5417, [
@@ -414,6 +415,7 @@ const SNAPSHOT_SCOPE_ITEMS = [
 const SNAPSHOT_LIMITATIONS = [
   "Public aggregate snapshot, not a full census of the Swiss market.",
   "Salary benchmarks only use vacancies with explicit pay ranges.",
+  "Salary rankings hide groups with fewer than 10 usable salary records.",
   "Coverage is limited to vacancies published from 2026 onward.",
   "Some fields are normalized or AI-assisted from posting text and structured metadata.",
 ];
@@ -620,25 +622,29 @@ function App() {
   const salarySeniorityGroups = (salaryMetrics.by_seniority ?? []).filter(
     (item) => item.seniority && item.seniority !== "Unknown",
   );
+  const rankedSalaryRoleGroups = filterReliableSalaryGroups(salaryRoleGroups);
+  const rankedSalarySeniorityGroups = filterReliableSalaryGroups(salarySeniorityGroups);
   const salaryRoleItems = showAllSalaryGroups
-    ? salaryRoleGroups
-    : selectTopItems(salaryRoleGroups, 6);
+    ? rankedSalaryRoleGroups
+    : selectTopItems(rankedSalaryRoleGroups, 6);
   const salarySeniorityItems = showAllSalaryGroups
-    ? salarySeniorityGroups
-    : selectTopItems(salarySeniorityGroups, 6);
+    ? rankedSalarySeniorityGroups
+    : selectTopItems(rankedSalarySeniorityGroups, 6);
   const salaryChartConfig =
     salaryBreakdown === "seniority"
       ? {
           title: "Seniority ranked by average salary",
-          description: "Seniority levels with normalized CHF yearly salary ranges.",
+          description: "Seniority levels with at least 10 normalized CHF salary records.",
           items: salarySeniorityItems,
           groupKey: "seniority",
+          hiddenCount: salarySeniorityGroups.length - rankedSalarySeniorityGroups.length,
         }
       : {
           title: "Roles ranked by average salary",
-          description: "Role categories with normalized CHF yearly salary ranges.",
+          description: "Role categories with at least 10 normalized CHF salary records.",
           items: salaryRoleItems,
           groupKey: "role_category",
+          hiddenCount: salaryRoleGroups.length - rankedSalaryRoleGroups.length,
         };
   const topCity = cityItems[0] ?? null;
   const leadingRole = roleItems[0] ?? null;
@@ -1054,6 +1060,11 @@ function App() {
                       <h3>{salaryChartConfig.title}</h3>
                       <p className="cy-copy">{salaryChartConfig.description}</p>
                     </div>
+                    <SalaryConfidenceWarning
+                      salaryCount={salarySummary.salary_count}
+                      salaryCoverage={salarySummary.salary_coverage}
+                      hiddenGroupCount={salaryChartConfig.hiddenCount}
+                    />
                     <SalaryRankingChart
                       items={salaryChartConfig.items}
                       summary={salarySummary}
@@ -1530,6 +1541,22 @@ function SalaryStat({ value, label }) {
     <div className="cy-salary-stat">
       <strong>{value}</strong>
       <span>{label}</span>
+    </div>
+  );
+}
+
+function SalaryConfidenceWarning({ salaryCount, salaryCoverage, hiddenGroupCount }) {
+  return (
+    <div className="cy-salary-confidence-warning" role="note">
+      <strong>Low-confidence salary benchmark</strong>
+      <span>
+        Ranking only shows groups with at least {SALARY_RANKING_MIN_COUNT} salary records.
+        {hiddenGroupCount > 0
+          ? ` ${formatInteger(hiddenGroupCount)} thin-sample groups are hidden.`
+          : ""}{" "}
+        Overall salary coverage is {formatPercent(salaryCoverage)} from{" "}
+        {formatInteger(salaryCount)} records.
+      </span>
     </div>
   );
 }
@@ -2619,6 +2646,10 @@ function SalaryRankingChart({ items, summary, groupKey }) {
   );
 }
 
+function filterReliableSalaryGroups(items) {
+  return items.filter((item) => (item.salary_count ?? 0) >= SALARY_RANKING_MIN_COUNT);
+}
+
 function SkillRoleMatrix({ matrix }) {
   if (!matrix.rows.length || !matrix.skills.length) {
     return <p className="cy-copy cy-empty-state">No role skill matrix available.</p>;
@@ -3487,10 +3518,10 @@ function buildKeyFindings({ topCity, leadingRole, fastestGrowingRole, salarySumm
   if (typeof salarySummary?.salary_coverage === "number") {
     findings.push({
       label: "Compensation",
-      title: "Salary coverage is still limited",
+      title: "Salary benchmarks are low-confidence",
       description: `${formatInteger(salarySummary.salary_count)} listings expose usable pay data, or ${formatPercent(
         salarySummary.salary_coverage,
-      )} of the snapshot.`,
+      )} of the snapshot; rankings hide groups below ${SALARY_RANKING_MIN_COUNT} records.`,
     });
   }
 

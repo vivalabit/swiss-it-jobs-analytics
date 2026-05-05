@@ -1503,6 +1503,28 @@ img {
   letter-spacing: -0.06em;
 }
 
+.cy-salary-confidence-warning {
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+  border: 1px solid rgba(180, 83, 9, 0.28);
+  background: rgba(255, 247, 237, 0.82);
+  color: #7c2d12;
+  padding: 14px 16px;
+}
+
+.cy-salary-confidence-warning strong {
+  font-size: 0.76rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.cy-salary-confidence-warning span {
+  color: #9a3412;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .cy-salary-chart {
   position: relative;
   margin-top: 24px;
