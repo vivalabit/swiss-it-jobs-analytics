@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -33,6 +34,30 @@ SOURCE_TO_DB_VALUE = {
     "linked_in": "LinkedIn",
     "swissdevjobs_ch": "swissdevjobs.ch",
 }
+
+
+def load_dotenv(path: Path) -> None:
+    if not path.is_file():
+        return
+
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export ") :].lstrip()
+        key, value = line.split("=", 1)
+        key = key.strip()
+        if not key or key in os.environ:
+            continue
+        value = _strip_dotenv_value(value.strip())
+        os.environ[key] = value
+
+
+def _strip_dotenv_value(value: str) -> str:
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+        return value[1:-1]
+    return value.split(" #", 1)[0].strip()
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -96,6 +121,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    load_dotenv(PROJECT_ROOT / ".env")
+
     parser = build_parser()
     args = parser.parse_args(argv)
 

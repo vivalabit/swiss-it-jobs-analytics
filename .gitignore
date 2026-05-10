@@ -33,6 +33,7 @@ node_modules/
 
 # Logs
 *.log
+.env
 INST.md
 swiss_jobs/providers/jobs_ch/cookies/
 swiss_jobs/providers/jobup_ch/cookies/
@@ -55,4 +56,3 @@ data/private_snapshots/*
 !data/private_snapshots/.gitkeep
 !data/private_snapshots/README.md
 !data/private_snapshots/sample_public_stats_dataset.csv
-

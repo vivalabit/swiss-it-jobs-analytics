@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
 import tempfile
 import unittest
@@ -8,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from market_analytics.io import load_dataset
+from swiss_jobs.cli.analyze_vacancies_llm import load_dotenv
 from swiss_jobs.core.database import JobsDatabase
 from swiss_jobs.core.llm_analysis import (
     OpenAIVacancyAnalyzer,
@@ -91,6 +93,38 @@ def _persist_sample_vacancy(
 
 
 class LlmVacancyAnalysisTests(unittest.TestCase):
+    def test_cli_loads_openai_api_key_from_dotenv(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            dotenv_path = Path(tmpdir) / ".env"
+            dotenv_path.write_text(
+                "\n".join(
+                    [
+                        "# local secrets",
+                        "OPENAI_API_KEY='dotenv-key'",
+                        "IGNORED_WITH_COMMENT=value # comment",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            with patch.dict("os.environ", {}, clear=True):
+                load_dotenv(dotenv_path)
+                analyzer = OpenAIVacancyAnalyzer()
+                self.assertEqual("value", os.environ["IGNORED_WITH_COMMENT"])
+
+        self.assertEqual("dotenv-key", analyzer.api_key)
+
+    def test_cli_dotenv_does_not_override_existing_environment(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            dotenv_path = Path(tmpdir) / ".env"
+            dotenv_path.write_text("OPENAI_API_KEY=dotenv-key\n", encoding="utf-8")
+
+            with patch.dict("os.environ", {"OPENAI_API_KEY": "env-key"}, clear=True):
+                load_dotenv(dotenv_path)
+                analyzer = OpenAIVacancyAnalyzer()
+
+        self.assertEqual("env-key", analyzer.api_key)
+
     def test_analyzer_strips_api_key_whitespace(self) -> None:
         analyzer = OpenAIVacancyAnalyzer(api_key=" test-key\n")
         self.assertEqual("test-key", analyzer.api_key)
