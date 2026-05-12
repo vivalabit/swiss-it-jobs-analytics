@@ -153,6 +153,20 @@ class JobupChExtractorsTests(unittest.TestCase):
         self.assertEqual("YEAR", payload["salary"]["unit"])
         self.assertEqual("CHF 43750-70000 / year", payload["salary_text"])
 
+    def test_extract_detail_payload_extracts_rocken_salary_without_currency_space(self) -> None:
+        html = DETAIL_HTML.replace(
+            "CHF 43'750 - 70'000/an",
+            "Lohn - CHF105'000 - 125'000",
+        )
+
+        payload = extract_detail_payload(html)
+
+        self.assertEqual("CHF", payload["salary"]["currency"])
+        self.assertEqual(105000, payload["salary"]["range"]["minValue"])
+        self.assertEqual(125000, payload["salary"]["range"]["maxValue"])
+        self.assertEqual("YEAR", payload["salary"]["unit"])
+        self.assertEqual("CHF 105000-125000 / year", payload["salary_text"])
+
 
 if __name__ == "__main__":
     unittest.main()

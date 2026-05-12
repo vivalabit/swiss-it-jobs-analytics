@@ -290,6 +290,7 @@ class ParserStats:
     filtered_out: int = 0
     new_jobs: int = 0
     detail_requested: bool = False
+    detail_cached: int = 0
     detail_attempted: int = 0
     detail_enriched: int = 0
 
@@ -303,6 +304,7 @@ class ParserStats:
             "filtered_out": self.filtered_out,
             "new_jobs": self.new_jobs,
             "detail_requested": self.detail_requested,
+            "detail_cached": self.detail_cached,
             "detail_attempted": self.detail_attempted,
             "detail_enriched": self.detail_enriched,
         }

@@ -77,6 +77,7 @@ def _format_summary_line(source: str, payload: dict[str, object]) -> str:
     after_role = int(stats.get("after_role_filters") or 0)
     detail_attempted = int(stats.get("detail_attempted") or 0)
     detail_enriched = int(stats.get("detail_enriched") or 0)
+    detail_cached = int(stats.get("detail_cached") or 0)
     new_jobs = int(stats.get("new_jobs") or 0)
     warnings_count = int(payload.get("warnings_count") or 0)
     errors_count = int(payload.get("errors_count") or 0)
@@ -84,7 +85,7 @@ def _format_summary_line(source: str, payload: dict[str, object]) -> str:
     return (
         f"- {source} ({info.display_name}, {info.domain}): status={status}, "
         f"fetched={total_fetched}, text={after_text}, role={after_role}, "
-        f"detail={detail_enriched}/{detail_attempted}, new={new_jobs}, "
+        f"detail={detail_enriched}/{detail_attempted}, cached={detail_cached}, new={new_jobs}, "
         f"warnings={warnings_count}, errors={errors_count}"
     )
 
@@ -99,6 +100,7 @@ def _print_aggregate_summary(
     total_after_role = 0
     total_detail_attempted = 0
     total_detail_enriched = 0
+    total_detail_cached = 0
     total_new_jobs = 0
     total_warnings = 0
     total_errors = 0
@@ -121,6 +123,7 @@ def _print_aggregate_summary(
         total_after_role += int(stats.get("after_role_filters") or 0)
         total_detail_attempted += int(stats.get("detail_attempted") or 0)
         total_detail_enriched += int(stats.get("detail_enriched") or 0)
+        total_detail_cached += int(stats.get("detail_cached") or 0)
         total_new_jobs += int(stats.get("new_jobs") or 0)
         total_warnings += int(payload.get("warnings_count") or 0)
         total_errors += int(payload.get("errors_count") or 0)
@@ -128,7 +131,8 @@ def _print_aggregate_summary(
     print(
         (
             f"Total: fetched={total_fetched}, text={total_after_text}, role={total_after_role}, "
-            f"detail={total_detail_enriched}/{total_detail_attempted}, new={total_new_jobs}, "
+            f"detail={total_detail_enriched}/{total_detail_attempted}, cached={total_detail_cached}, "
+            f"new={total_new_jobs}, "
             f"warnings={total_warnings}, errors={total_errors}"
         ),
         file=sys.stderr,

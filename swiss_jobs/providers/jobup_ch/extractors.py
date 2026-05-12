@@ -5,6 +5,7 @@ from math import ceil
 from typing import Any
 
 from swiss_jobs.core.models import VacancyFull
+from swiss_jobs.core.salary import parse_salary_range_text
 
 from ..jobs_ch.extractors import (
     ParseError,
@@ -217,62 +218,34 @@ def _string_or_none(value: Any) -> str | None:
 
 
 def _extract_salary_payload(page_html: str) -> dict[str, Any] | None:
-    match = re.search(
-        r"(?P<currency>CHF|EUR|USD|GBP)\s*"
-        r"(?P<minimum>\d[\d\s'.,]*)\s*(?:-|–|—)\s*"
-        r"(?P<maximum>\d[\d\s'.,]*)\s*/\s*"
-        r"(?P<unit>an|year|jahr|mois|month|monat|heure|hour|stunde)",
-        page_html,
-        flags=re.IGNORECASE,
-    )
-    if not match:
+    salary_info = parse_salary_range_text(html_to_text(page_html))
+    if (
+        salary_info is None
+        or salary_info.minimum is None
+        or salary_info.maximum is None
+        or salary_info.currency is None
+    ):
         return None
 
-    currency = str(match.group("currency") or "").upper()
-    minimum = _parse_salary_number(match.group("minimum"))
-    maximum = _parse_salary_number(match.group("maximum"))
-    if minimum is None or maximum is None:
-        return None
-
-    unit = _normalize_salary_unit(str(match.group("unit") or "").strip().lower())
     salary: dict[str, Any] = {
-        "currency": currency,
+        "currency": salary_info.currency,
         "range": {
-            "minValue": minimum,
-            "maxValue": maximum,
+            "minValue": salary_info.minimum,
+            "maxValue": salary_info.maximum,
         },
     }
-    if unit:
-        salary["unit"] = unit
+    if salary_info.unit:
+        salary["unit"] = salary_info.unit
 
     return {
         "salary": salary,
-        "salary_text": _format_salary_text(currency, minimum, maximum, unit),
+        "salary_text": _format_salary_text(
+            salary_info.currency,
+            salary_info.minimum,
+            salary_info.maximum,
+            salary_info.unit,
+        ),
     }
-
-
-def _parse_salary_number(value: str | None) -> int | None:
-    if not value:
-        return None
-    digits = re.sub(r"[^\d]", "", value)
-    if not digits:
-        return None
-    return int(digits)
-
-
-def _normalize_salary_unit(value: str) -> str | None:
-    mapping = {
-        "an": "YEAR",
-        "year": "YEAR",
-        "jahr": "YEAR",
-        "mois": "MONTH",
-        "month": "MONTH",
-        "monat": "MONTH",
-        "heure": "HOUR",
-        "hour": "HOUR",
-        "stunde": "HOUR",
-    }
-    return mapping.get(value) if value else None
 
 
 def _format_salary_text(currency: str, minimum: int, maximum: int, unit: str | None) -> str:

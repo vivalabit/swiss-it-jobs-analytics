@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any, Mapping, TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -77,6 +78,37 @@ def extract_salary_info(vacancy: VacancyFull) -> SalaryInfo:
     return SalaryInfo(text=_extract_salary_text(raw))
 
 
+def parse_salary_range_text(value: str) -> SalaryInfo | None:
+    compact = " ".join(value.split())
+    number_pattern = r"(?:\d{1,3}(?:[\s'’.,]\d{3})+|\d+)"
+    match = re.search(
+        r"(?P<currency>CHF|EUR|USD|GBP)\s*"
+        rf"(?P<minimum>{number_pattern})\s*(?:-|–|—|to|bis)\s*"
+        rf"(?P<maximum>{number_pattern})"
+        r"(?:\s*(?:/|per|pro)\s*(?P<unit>an|year|jahr|mois|month|monat|heure|hour|stunde))?",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+
+    minimum = _parse_salary_number(match.group("minimum"))
+    maximum = _parse_salary_number(match.group("maximum"))
+    if minimum is None or maximum is None:
+        return None
+
+    unit = _normalize_salary_unit(str(match.group("unit") or "").strip().lower())
+    if unit is None and max(minimum, maximum) >= 1000:
+        unit = "YEAR"
+
+    return SalaryInfo(
+        minimum=minimum,
+        maximum=maximum,
+        currency=str(match.group("currency") or "").upper(),
+        unit=unit,
+    )
+
+
 def _extract_salary_range(value: Any) -> tuple[int | None, int | None]:
     if not isinstance(value, Mapping):
         return (None, None)
@@ -98,6 +130,8 @@ def _coerce_optional_int(value: Any) -> int | None:
         return None
     if isinstance(value, (int, float)):
         return int(value)
+    if isinstance(value, str):
+        return _parse_salary_number(value)
     return None
 
 
@@ -106,3 +140,27 @@ def _clean_text(value: Any) -> str | None:
         return None
     clean = value.strip()
     return clean or None
+
+
+def _parse_salary_number(value: str | None) -> int | None:
+    if not value:
+        return None
+    digits = re.sub(r"[^\d]", "", value)
+    if not digits:
+        return None
+    return int(digits)
+
+
+def _normalize_salary_unit(value: str) -> str | None:
+    mapping = {
+        "an": "YEAR",
+        "year": "YEAR",
+        "jahr": "YEAR",
+        "mois": "MONTH",
+        "month": "MONTH",
+        "monat": "MONTH",
+        "heure": "HOUR",
+        "hour": "HOUR",
+        "stunde": "HOUR",
+    }
+    return mapping.get(value) if value else None

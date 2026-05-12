@@ -5,6 +5,7 @@ import json
 import re
 from typing import Any
 
+from swiss_jobs.core.salary import SalaryInfo, parse_salary_range_text
 from swiss_jobs.core.models import VacancyFull
 
 
@@ -116,7 +117,7 @@ def extract_salary_payload(page_html: str) -> dict[str, Any] | None:
         payload = _parse_salary_text(candidate)
         if payload:
             return payload
-    return None
+    return _parse_salary_text(html_to_text(page_html))
 
 
 def html_to_text(value: str) -> str:
@@ -157,58 +158,30 @@ def _find_salary_candidates(page_html: str) -> list[str]:
 
 
 def _parse_salary_text(value: str) -> dict[str, Any] | None:
-    compact = " ".join(value.split())
-    match = re.search(
-        r"(?P<currency>CHF|EUR|USD|GBP)\s*"
-        r"(?P<minimum>\d[\d\s'.,]*)\s*(?:-|–|—)\s*"
-        r"(?P<maximum>\d[\d\s'.,]*)"
-        r"(?:\s*/\s*(?P<unit>year|month|hour))?",
-        compact,
-        flags=re.IGNORECASE,
-    )
-    if not match:
+    salary = parse_salary_range_text(value)
+    if salary is None or salary.minimum is None or salary.maximum is None or salary.currency is None:
         return None
+    return _salary_info_to_payload(salary)
 
-    currency = str(match.group("currency") or "").upper()
-    minimum = _parse_salary_number(match.group("minimum"))
-    maximum = _parse_salary_number(match.group("maximum"))
-    if minimum is None or maximum is None:
-        return None
 
-    unit_text = str(match.group("unit") or "").strip().lower()
-    unit = _normalize_salary_unit(unit_text)
-    salary_text = _format_salary_text(currency, minimum, maximum, unit)
+def _salary_info_to_payload(salary: SalaryInfo) -> dict[str, Any]:
+    assert salary.minimum is not None
+    assert salary.maximum is not None
+    assert salary.currency is not None
+    salary_text = _format_salary_text(salary.currency, salary.minimum, salary.maximum, salary.unit)
     payload: dict[str, Any] = {
         "salary": {
-            "currency": currency,
+            "currency": salary.currency,
             "range": {
-                "minValue": minimum,
-                "maxValue": maximum,
+                "minValue": salary.minimum,
+                "maxValue": salary.maximum,
             },
         },
         "salary_text": salary_text,
     }
-    if unit:
-        payload["salary"]["unit"] = unit
+    if salary.unit:
+        payload["salary"]["unit"] = salary.unit
     return payload
-
-
-def _parse_salary_number(value: str | None) -> int | None:
-    if not value:
-        return None
-    digits = re.sub(r"[^\d]", "", value)
-    if not digits:
-        return None
-    return int(digits)
-
-
-def _normalize_salary_unit(value: str) -> str | None:
-    mapping = {
-        "year": "YEAR",
-        "month": "MONTH",
-        "hour": "HOUR",
-    }
-    return mapping.get(value) if value else None
 
 
 def _format_salary_text(currency: str, minimum: int, maximum: int, unit: str | None) -> str:

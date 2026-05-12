@@ -9,6 +9,7 @@ from urllib.parse import urljoin
 from scrapling.parser import Selector
 
 from swiss_jobs.core.models import VacancyFull
+from swiss_jobs.core.salary import SalaryInfo, parse_salary_range_text
 
 from ..jobs_ch.extractors import html_to_text
 
@@ -56,11 +57,15 @@ def extract_detail_payload(page_html: str) -> dict[str, Any]:
     if not description_html:
         description_html = _extract_job_description_html(document)
 
+    description_text = html_to_text(description_html) if description_html else ""
     detail_attributes = _extract_detail_attributes(document)
+    salary_payload = _extract_salary_payload(description_text)
+    if salary_payload:
+        detail_attributes.update(salary_payload)
     return {
         "job_posting_schema": schema,
         "description_html": description_html,
-        "description_text": html_to_text(description_html) if description_html else "",
+        "description_text": description_text,
         "detail_attributes": detail_attributes,
     }
 
@@ -176,3 +181,29 @@ def _clean_html_text(value: str) -> str:
     text = html.unescape(text.replace("&nbsp;", " "))
     text = re.sub(r"\s+", " ", text)
     return text.strip(" ,\n\t")
+
+
+def _extract_salary_payload(value: str) -> dict[str, Any] | None:
+    salary = parse_salary_range_text(value)
+    if salary is None or salary.minimum is None or salary.maximum is None or salary.currency is None:
+        return None
+    return {
+        "salary": _salary_info_to_raw(salary),
+        "salaryText": salary.display_text,
+    }
+
+
+def _salary_info_to_raw(salary: SalaryInfo) -> dict[str, Any]:
+    assert salary.minimum is not None
+    assert salary.maximum is not None
+    assert salary.currency is not None
+    payload: dict[str, Any] = {
+        "currency": salary.currency,
+        "range": {
+            "minValue": salary.minimum,
+            "maxValue": salary.maximum,
+        },
+    }
+    if salary.unit:
+        payload["unit"] = salary.unit
+    return payload

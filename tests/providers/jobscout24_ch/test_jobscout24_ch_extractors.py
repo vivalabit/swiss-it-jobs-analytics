@@ -99,6 +99,21 @@ class JobScout24ChExtractorsTests(unittest.TestCase):
         self.assertEqual("80% - 100%", payload["detail_attributes"]["employmentGrade"])
         self.assertEqual("permanent position", payload["detail_attributes"]["employmentTypeText"])
 
+    def test_extract_detail_payload_extracts_salary_from_description_text(self) -> None:
+        html = DETAIL_HTML.replace(
+            "Build backend services in Java.",
+            "Lohn - CHF115'000 - 130'000 Build backend services in Java.",
+        )
+
+        payload = extract_detail_payload(html)
+
+        salary = payload["detail_attributes"]["salary"]
+        self.assertEqual("CHF", salary["currency"])
+        self.assertEqual(115000, salary["range"]["minValue"])
+        self.assertEqual(130000, salary["range"]["maxValue"])
+        self.assertEqual("YEAR", salary["unit"])
+        self.assertEqual("CHF 115000-130000 / year", payload["detail_attributes"]["salaryText"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -444,6 +444,48 @@ class JobsDatabase:
             ).fetchall()
         return [str(row["vacancy_id"]) for row in rows if row["vacancy_id"]]
 
+    def load_cached_vacancy_details(self, vacancy_ids: Iterable[str]) -> dict[str, VacancyFull]:
+        ids = [vacancy_id for vacancy_id in dict.fromkeys(vacancy_ids) if vacancy_id]
+        if not ids:
+            return {}
+
+        result: dict[str, VacancyFull] = {}
+        with self._connection() as connection:
+            for offset in range(0, len(ids), 500):
+                chunk = ids[offset : offset + 500]
+                placeholders = ", ".join("?" for _ in chunk)
+                rows = connection.execute(
+                    f"""
+                    SELECT
+                        vacancy_id,
+                        source,
+                        title,
+                        company,
+                        place,
+                        publication_date,
+                        initial_publication_date,
+                        is_new,
+                        url,
+                        role_match,
+                        seniority_match,
+                        keywords_matched_json,
+                        raw_json,
+                        description_html,
+                        description_text,
+                        job_posting_schema_json,
+                        detail_schema_error,
+                        detail_schema_skipped
+                    FROM vacancies
+                    WHERE vacancy_id IN ({placeholders})
+                    """,
+                    chunk,
+                ).fetchall()
+                for row in rows:
+                    vacancy = _row_to_vacancy(row)
+                    if vacancy.id:
+                        result[vacancy.id] = vacancy
+        return result
+
     def mark_seen(self, client_id: str, vacancy_ids: Iterable[str], timestamp: str) -> None:
         values = [vacancy_id for vacancy_id in vacancy_ids if vacancy_id]
         if not values:

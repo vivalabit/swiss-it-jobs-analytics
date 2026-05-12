@@ -233,7 +233,10 @@ class JobsChServiceTests(unittest.TestCase):
             def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
                 self.enrich_calls += 1
                 for item in vacancies:
-                    item.description_text = "This role is for a platform engineer working on cloud systems."
+                    item.description_text = (
+                        "Lohn - CHF115'000 - 130'000. "
+                        "This role is for a platform engineer working on cloud systems."
+                    )
                 return len(vacancies), len(vacancies)
 
         fake_client = EnrichingClient([vacancy])
@@ -257,6 +260,52 @@ class JobsChServiceTests(unittest.TestCase):
             self.assertEqual(1, fake_client.enrich_calls)
             self.assertEqual(1, len(result.output_jobs))
             self.assertEqual(["platform engineer"], result.output_jobs[0]["keywords_matched"])
+
+    def test_second_parse_reuses_cached_detail_before_role_filter(self) -> None:
+        vacancy = VacancyFull(
+            id="vac-6",
+            title="Engineer",
+            company="Acme",
+            place="Zurich",
+            url="https://example.test/jobs/8",
+        )
+
+        class EnrichingClient(FakeJobsChClient):
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+                self.enrich_calls += 1
+                for item in vacancies:
+                    item.description_text = (
+                        "Lohn - CHF115'000 - 130'000. "
+                        "This role is for a platform engineer working on cloud systems."
+                    )
+                return len(vacancies), len(vacancies)
+
+        fake_client = EnrichingClient([vacancy])
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config = make_config(
+                {
+                    "client_id": "client_a",
+                    "database_path": str(Path(tmpdir) / "client-a.sqlite"),
+                    "mode": "search",
+                    "terms": ["engineer"],
+                    "locations": ["zurich"],
+                    "role_keywords": ["platform engineer"],
+                    "output_format": "brief",
+                },
+            )
+
+            service = JobsChParserService(http_client=fake_client, runtime_root=Path(tmpdir))
+            first = service.run(config)
+            second = service.run(config)
+
+            self.assertEqual(1, fake_client.enrich_calls)
+            self.assertEqual(0, second.stats.detail_attempted)
+            self.assertEqual(1, second.stats.detail_cached)
+            self.assertEqual(1, second.stats.after_role_filters)
+            self.assertEqual(115000, second.all_jobs_full[0].salary_min)
+            self.assertEqual(130000, second.all_jobs_full[0].salary_max)
+            self.assertEqual(["platform engineer"], first.output_jobs[0]["keywords_matched"])
 
 
 if __name__ == "__main__":

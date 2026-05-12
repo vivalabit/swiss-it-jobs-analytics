@@ -52,6 +52,25 @@ class JobsChDetailTests(unittest.TestCase):
         self.assertEqual(92000, schema["baseSalary"]["value"]["maxValue"])
         self.assertEqual("YEAR", schema["baseSalary"]["value"]["unitText"])
 
+    def test_extract_detail_payload_parses_salary_from_description_fallback(self) -> None:
+        html = DETAIL_HTML.replace(
+            '<li data-cy="info-salary" class="ai_flex-stx">',
+            '<li class="ai_flex-stx">',
+        ).replace(
+            "<p>Build Python services.</p>",
+            "<p>Lohn - CHF105'000 - 125'000 Build Python services.</p>",
+        )
+
+        payload = extract_detail_payload(html)
+
+        salary = payload["salary"]
+        self.assertIsInstance(salary, dict)
+        assert isinstance(salary, dict)
+        self.assertEqual("CHF", salary["currency"])
+        self.assertEqual(105000, salary["range"]["minValue"])
+        self.assertEqual(125000, salary["range"]["maxValue"])
+        self.assertEqual("YEAR", salary["unit"])
+
     def test_apply_detail_payload_writes_salary_to_vacancy_raw(self) -> None:
         vacancy = VacancyFull(
             id="vac-1",

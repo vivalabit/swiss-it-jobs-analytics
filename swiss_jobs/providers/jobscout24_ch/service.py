@@ -6,6 +6,7 @@ from typing import Any, Mapping, Sequence
 
 from swiss_jobs.core.archive import make_run_id, utc_now_iso
 from swiss_jobs.core.database import JobsDatabase
+from swiss_jobs.core.detail_cache import hydrate_cached_details, vacancies_missing_detail
 from swiss_jobs.core.filters import (
     evaluate_role_seniority_filters,
     normalize_tokens,
@@ -126,11 +127,20 @@ class JobScout24ChParserService:
             stats.after_text_filters = len(text_filtered)
             if not config.skip_detail_schema and text_filtered:
                 stats.detail_requested = True
-                attempted, enriched = self.http_client.enrich_vacancies(
+                stats.detail_cached = hydrate_cached_details(
+                    self._resolve_database_path(config),
                     text_filtered,
-                    detail_limit=config.detail_limit,
-                    detail_workers=config.detail_workers,
-                    show_progress=config.show_progress,
+                )
+                detail_candidates = vacancies_missing_detail(text_filtered)
+                attempted, enriched = (
+                    self.http_client.enrich_vacancies(
+                        detail_candidates,
+                        detail_limit=config.detail_limit,
+                        detail_workers=config.detail_workers,
+                        show_progress=config.show_progress,
+                    )
+                    if detail_candidates
+                    else (0, 0)
                 )
                 stats.detail_attempted = attempted
                 stats.detail_enriched = enriched
