@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sqlite3
 import tempfile
 import unittest
@@ -138,6 +139,52 @@ def make_swissdevjobs_vacancy() -> VacancyFull:
 
 
 class JobsDatabaseSalaryTests(unittest.TestCase):
+    def test_persist_result_sanitizes_runtime_config_paths_and_credentials(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            runtime_path = Path(tmpdir)
+            database_path = runtime_path / "jobs.sqlite"
+            config = ClientConfig(
+                client_id="client-a",
+                name="client-a",
+                cookies_file=str(runtime_path / "private-cookies.txt"),
+                browser_profile_dir=str(runtime_path / "browser-profile"),
+                proxy_url="http://user:password@proxy.example:8080",
+                proxy_file=str(runtime_path / "private-proxies.txt"),
+                csv_path=str(runtime_path / "input.csv"),
+                json_path=str(runtime_path / "output.json"),
+                database_path=str(database_path),
+                client_config_path=str(runtime_path / "config.json"),
+                output_format="brief",
+            )
+            vacancy = make_swissdevjobs_vacancy()
+
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancy))
+
+            with sqlite3.connect(database_path) as connection:
+                row = connection.execute(
+                    "SELECT config_json FROM runs WHERE run_id = ?",
+                    ("run-1",),
+                ).fetchone()
+
+            self.assertIsNotNone(row)
+            assert row is not None
+            stored_config = json.loads(row[0])
+            omitted_fields = {
+                "cookies_file",
+                "browser_profile_dir",
+                "proxy_url",
+                "proxy_file",
+                "csv_path",
+                "json_path",
+                "database_path",
+                "client_config_path",
+            }
+            self.assertFalse(omitted_fields.intersection(stored_config))
+            for field_name in omitted_fields:
+                self.assertTrue(stored_config[f"has_{field_name}"])
+            self.assertNotIn(str(runtime_path), row[0])
+            self.assertNotIn("password", row[0])
+
     def test_persist_result_writes_normalized_salary_columns(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "jobs.sqlite"

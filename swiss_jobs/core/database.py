@@ -171,10 +171,22 @@ def _json_dumps(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True)
 
 
+_CONFIG_STORAGE_PRESENCE_FIELDS = (
+    "cookies_file",
+    "browser_profile_dir",
+    "proxy_url",
+    "proxy_file",
+    "csv_path",
+    "json_path",
+    "database_path",
+    "client_config_path",
+)
+
+
 def _redact_config_secrets(config: ClientConfig) -> dict[str, Any]:
     data = config.to_dict()
-    if data.get("proxy_url"):
-        data["proxy_url"] = "<redacted>"
+    for field_name in _CONFIG_STORAGE_PRESENCE_FIELDS:
+        data[f"has_{field_name}"] = bool(data.pop(field_name, None))
     return data
 
 
