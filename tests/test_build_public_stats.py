@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import importlib.util
 import json
 import tempfile
@@ -411,6 +412,50 @@ class BuildPublicStatsTests(unittest.TestCase):
             self.assertTrue((copy_csv_dir / "vacancy_trends_segments_weekly.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_summary.csv").exists())
             self.assertTrue((copy_csv_dir / "salary_by_seniority.csv").exists())
+
+    def test_build_public_snapshots_escapes_copied_csv_without_changing_json(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            csv_dir = temp_path / "analytics_output"
+            output_dir = temp_path / "public_stats" / "data"
+            copy_csv_dir = temp_path / "public_stats" / "csv"
+            csv_dir.mkdir(parents=True)
+
+            pd.DataFrame(
+                [
+                    {
+                        "company": "=IMPORTXML",
+                        "vacancy_count": 1,
+                        "share": 1.0,
+                    },
+                    {
+                        "company": "@malicious",
+                        "vacancy_count": 1,
+                        "share": 1.0,
+                    },
+                ]
+            ).to_csv(csv_dir / "distribution_company.csv", index=False)
+
+            build_public_stats.build_public_snapshots(
+                csv_dir=csv_dir,
+                output_dir=output_dir,
+                copy_csv_dir=copy_csv_dir,
+            )
+
+            company_distribution = json.loads(
+                (output_dir / "distributions_company.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual("=IMPORTXML", company_distribution["items"][0]["key"])
+            self.assertEqual("@malicious", company_distribution["items"][1]["key"])
+
+            with (copy_csv_dir / "distribution_company.csv").open(
+                newline="",
+                encoding="utf-8",
+            ) as handle:
+                rows = list(csv.DictReader(handle))
+
+            self.assertEqual("'=IMPORTXML", rows[0]["company"])
+            self.assertEqual("'@malicious", rows[1]["company"])
 
     def test_build_public_snapshots_marks_missing_csv_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

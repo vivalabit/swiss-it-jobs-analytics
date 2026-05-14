@@ -7,6 +7,8 @@ from typing import Any
 
 import pandas as pd
 
+from .reporting import write_public_csv
+
 EXPECTED_CSV_FILES: tuple[str, ...] = (
     "overview_metrics.csv",
     "city_map_details.csv",
@@ -66,7 +68,7 @@ def build_public_snapshots(
         for file_name, frame in csv_frames.items():
             if frame is None:
                 continue
-            frame.to_csv(copy_csv_dir / file_name, index=False)
+            write_public_csv(frame, copy_csv_dir / file_name)
 
     snapshots: dict[str, dict[str, Any]] = {
         "metadata.json": _build_metadata_snapshot(

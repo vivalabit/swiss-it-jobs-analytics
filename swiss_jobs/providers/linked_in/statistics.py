@@ -55,7 +55,11 @@ def rebuild_runtime_statistics(
         top_skills_limit=top_skills_limit,
         top_skill_pairs_limit=top_skill_pairs_limit,
     )
-    analytics_paths = save_analytics_outputs(outputs, analytics_output_path)
+    analytics_paths = save_analytics_outputs(
+        outputs,
+        analytics_output_path,
+        escape_csv_formulas=False,
+    )
     public_paths = build_public_snapshots(
         csv_dir=analytics_output_path,
         output_dir=public_stats_path,

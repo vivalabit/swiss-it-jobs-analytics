@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import tempfile
 import unittest
 from pathlib import Path
@@ -423,6 +424,44 @@ class MarketAnalyticsTests(unittest.TestCase):
 
             self.assertTrue(saved_files)
             self.assertTrue((temp_path / "results" / "overview_metrics.csv").exists())
+
+    def test_save_analytics_outputs_escapes_formula_like_public_csv_cells(self) -> None:
+        outputs = {
+            "malicious_vacancies": pd.DataFrame(
+                [
+                    {
+                        "title": "=IMPORTXML",
+                        "company": "@malicious",
+                        "salary": -120000,
+                    },
+                    {
+                        "title": "+SUM(1,1)",
+                        "company": "-Finance AG",
+                        "salary": 120000,
+                    },
+                    {
+                        "title": " Data Engineer",
+                        "company": " =cmd",
+                        "salary": 0,
+                    },
+                ]
+            )
+        }
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            save_analytics_outputs(outputs, temp_path)
+
+            with (temp_path / "malicious_vacancies.csv").open(newline="", encoding="utf-8") as handle:
+                rows = list(csv.DictReader(handle))
+
+        self.assertEqual("'=IMPORTXML", rows[0]["title"])
+        self.assertEqual("'@malicious", rows[0]["company"])
+        self.assertEqual("-120000", rows[0]["salary"])
+        self.assertEqual("'+SUM(1,1)", rows[1]["title"])
+        self.assertEqual("'-Finance AG", rows[1]["company"])
+        self.assertEqual(" Data Engineer", rows[2]["title"])
+        self.assertEqual("' =cmd", rows[2]["company"])
 
     def test_load_and_validate_dataset_from_sqlite(self) -> None:
         analytics_json = """

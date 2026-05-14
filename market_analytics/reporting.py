@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC
 from pathlib import Path
-from typing import Mapping
+from typing import Any, Mapping
 
 import pandas as pd
 
@@ -35,6 +35,30 @@ PUBLIC_ANALYTICS_MIN_PUBLICATION_TIMESTAMP = pd.Timestamp(
     PUBLIC_ANALYTICS_MIN_PUBLICATION_DATE,
     tz=UTC,
 )
+
+CSV_FORMULA_PREFIX = "'"
+CSV_FORMULA_TRIGGER_CHARS = ("=", "+", "-", "@")
+
+
+def escape_csv_formula_value(value: Any) -> Any:
+    if not isinstance(value, str):
+        return value
+    if not value:
+        return value
+    if value.lstrip().startswith(CSV_FORMULA_TRIGGER_CHARS):
+        return f"{CSV_FORMULA_PREFIX}{value}"
+    return value
+
+
+def escape_csv_formula_values(frame: pd.DataFrame) -> pd.DataFrame:
+    escaped = frame.copy()
+    for column in escaped.columns:
+        escaped[column] = escaped[column].map(escape_csv_formula_value)
+    return escaped
+
+
+def write_public_csv(frame: pd.DataFrame, target_path: str | Path) -> None:
+    escape_csv_formula_values(frame).to_csv(target_path, index=False)
 
 
 def build_analytics_outputs(
@@ -111,6 +135,8 @@ def _filter_dataset_to_public_coverage(dataset: pd.DataFrame) -> pd.DataFrame:
 def save_analytics_outputs(
     outputs: Mapping[str, pd.DataFrame],
     output_directory: str | Path,
+    *,
+    escape_csv_formulas: bool = True,
 ) -> list[Path]:
     output_path = Path(output_directory)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -118,6 +144,9 @@ def save_analytics_outputs(
     saved_paths: list[Path] = []
     for output_name, frame in outputs.items():
         target_path = output_path / f"{output_name}.csv"
-        frame.to_csv(target_path, index=False)
+        if escape_csv_formulas:
+            write_public_csv(frame, target_path)
+        else:
+            frame.to_csv(target_path, index=False)
         saved_paths.append(target_path)
     return saved_paths

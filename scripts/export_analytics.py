@@ -48,7 +48,11 @@ def main() -> int:
         top_skills_limit=args.top_skills,
         top_skill_pairs_limit=args.top_pairs,
     )
-    saved_paths = save_analytics_outputs(outputs, args.output_dir)
+    saved_paths = save_analytics_outputs(
+        outputs,
+        args.output_dir,
+        escape_csv_formulas=False,
+    )
 
     print(f"Processed {len(dataset)} vacancies from {len(args.dataset_paths)} dataset(s).")
     print(f"Saved {len(saved_paths)} analytics files to {args.output_dir.resolve()}")
