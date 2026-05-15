@@ -641,11 +641,20 @@ class JobsDatabase:
             vacancy
         )
         existing = connection.execute(
-            "SELECT first_seen_at, first_run_id FROM vacancies WHERE vacancy_id = ?",
+            """
+            SELECT first_seen_at, first_run_id, llm_analysis_json
+            FROM vacancies
+            WHERE vacancy_id = ?
+            """,
             (vacancy.id,),
         ).fetchone()
         first_seen_at = str(existing["first_seen_at"]) if existing else result.timestamp
         first_run_id = str(existing["first_run_id"]) if existing else result.run_id
+        analytics = vacancy.extra.get("analytics")
+        if not isinstance(analytics, dict):
+            analytics = {}
+        llm_analysis = _loads_json_object(existing["llm_analysis_json"]) if existing else {}
+        merged_analytics = merge_analytics_payloads(analytics, llm_analysis)
 
         connection.execute(
             """
@@ -740,7 +749,7 @@ class JobsDatabase:
                 _json_dumps(vacancy.job_posting_schema) if vacancy.job_posting_schema is not None else None,
                 vacancy.detail_schema_error,
                 1 if vacancy.detail_schema_skipped else 0,
-                _json_dumps(vacancy.extra.get("analytics", {})),
+                _json_dumps(analytics),
                 None,
                 None,
                 None,
@@ -757,7 +766,10 @@ class JobsDatabase:
             INSERT INTO vacancy_terms (vacancy_id, term_type, term_value)
             VALUES (?, ?, ?)
             """,
-            [(vacancy.id, term_type, term_value) for term_type, term_value in extract_term_rows(vacancy)],
+            [
+                (vacancy.id, term_type, term_value)
+                for term_type, term_value in extract_term_rows_from_analytics(merged_analytics)
+            ],
         )
 
 

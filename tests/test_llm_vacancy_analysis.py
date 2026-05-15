@@ -313,6 +313,109 @@ class LlmVacancyAnalysisTests(unittest.TestCase):
             self.assertEqual("Bern", dataset.iloc[0]["city"])
             self.assertEqual("BE", dataset.iloc[0]["canton"])
 
+    def test_followup_crawl_preserves_llm_enriched_terms(self) -> None:
+        llm_analysis = {
+            "role_family_primary": "software_engineering",
+            "role_family_matches": ["software_engineering"],
+            "seniority_labels": ["senior"],
+            "programming_languages": ["python"],
+            "frameworks_libraries": [],
+            "cloud_platforms": [],
+            "data_platforms": [],
+            "databases": [],
+            "platforms": [],
+            "tools": ["terraform"],
+            "methodologies": ["devops"],
+            "remote_mode": "hybrid",
+            "job_location": {"locality": "Bern", "region": "BE"},
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "swissdevjobs.sqlite"
+            _persist_sample_vacancy(database_path)
+            database = JobsDatabase(database_path)
+            database.save_llm_analysis(
+                "swissdevjobs:1",
+                llm_analysis=llm_analysis,
+                model="gpt-5-nano",
+                analyzed_at="2026-04-24T12:00:00+00:00",
+            )
+
+            vacancy = VacancyFull(
+                id="swissdevjobs:1",
+                title="Platform Engineer",
+                company="Acme",
+                place="Zurich",
+                publication_date="2026-04-20T10:00:00+02:00",
+                url="https://swissdevjobs.ch/jobs/platform-engineer",
+                source="swissdevjobs.ch",
+                description_text="Rule based crawl without LLM-enriched Python terms.",
+                raw={"employmentType": "Full-time"},
+            )
+            vacancy.extra["analytics"] = {
+                "role_family_primary": "devops_cloud_platform",
+                "role_family_matches": ["devops_cloud_platform"],
+                "seniority_labels": ["mid"],
+                "remote_mode": "onsite",
+                "job_location": {"locality": "Zurich"},
+            }
+            config = ClientConfig.from_dict(
+                {
+                    "client_id": "test",
+                    "name": "test",
+                    "mode": "new",
+                    "database_path": str(database_path),
+                    "output_format": "brief",
+                },
+                source="<test>",
+                default_client_id="test",
+            )
+            result = ClientRunResult(
+                run_id="run-2",
+                client_id="test",
+                timestamp="2026-04-25T10:00:00+00:00",
+                effective_config=config,
+                stats=ParserStats(total_fetched=1, after_text_filters=1, after_role_filters=1),
+                new_jobs_full=[],
+                all_jobs_full=[vacancy],
+                output_jobs=[vacancy.to_dict()],
+            )
+
+            database.persist_result(config, result)
+
+            connection = sqlite3.connect(database_path)
+            connection.row_factory = sqlite3.Row
+            try:
+                row = connection.execute(
+                    """
+                    SELECT llm_analysis_json
+                    FROM vacancies
+                    WHERE vacancy_id = 'swissdevjobs:1'
+                    """
+                ).fetchone()
+                terms = {
+                    (term_type, term_value)
+                    for term_type, term_value in connection.execute(
+                        """
+                        SELECT term_type, term_value
+                        FROM vacancy_terms
+                        WHERE vacancy_id = 'swissdevjobs:1'
+                        """
+                    ).fetchall()
+                }
+            finally:
+                connection.close()
+
+            self.assertIsNotNone(row)
+            self.assertEqual(
+                ["python"],
+                json.loads(row["llm_analysis_json"])["programming_languages"],
+            )
+            self.assertIn(("seniority", "senior"), terms)
+            self.assertIn(("programming_language", "python"), terms)
+            self.assertIn(("tool", "terraform"), terms)
+            self.assertNotIn(("seniority", "mid"), terms)
+
     def test_estimate_cost_works_for_small_swissdevjobs_sample(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "swissdevjobs.sqlite"
