@@ -619,6 +619,8 @@ def _collect_skills_from_analytics(analytics: dict[str, Any]) -> list[str]:
         "cloud_platforms",
         "data_platforms",
         "databases",
+        "platforms",
+        "tools",
         "tools_platforms",
         "methodologies",
     )

@@ -473,7 +473,10 @@ class MarketAnalyticsTests(unittest.TestCase):
           "job_location": {"locality": "Zurich", "region": "ZH"},
           "programming_languages": ["python", "sql"],
           "frameworks_libraries": ["airflow"],
-          "cloud_platforms": ["aws"]
+          "cloud_platforms": ["aws"],
+          "platforms": ["kubernetes"],
+          "tools": ["terraform"],
+          "tools_platforms": ["legacy-tool"]
         }
         """.strip()
 
@@ -537,7 +540,18 @@ class MarketAnalyticsTests(unittest.TestCase):
             self.assertEqual(5, loaded.loc[0, "experience_years_min"])
             self.assertEqual(["python", "sql"], loaded.loc[0, "programming_languages_list"])
             self.assertEqual(["airflow"], loaded.loc[0, "frameworks_libraries_list"])
-            self.assertEqual(["python", "sql", "airflow", "aws"], loaded.loc[0, "skills_list"])
+            self.assertEqual(
+                [
+                    "python",
+                    "sql",
+                    "airflow",
+                    "aws",
+                    "kubernetes",
+                    "terraform",
+                    "legacy-tool",
+                ],
+                loaded.loc[0, "skills_list"],
+            )
             self.assertEqual(100000, loaded.loc[0, "salary_min"])
             self.assertEqual("CHF", loaded.loc[0, "salary_currency"])
 
