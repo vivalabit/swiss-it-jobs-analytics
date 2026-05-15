@@ -10,6 +10,7 @@ from urllib.parse import quote
 import requests
 
 from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
+from swiss_jobs.core.throttle import RequestThrottle
 
 from .detail import apply_detail_payload
 from .extractors import ParseError, extract_detail_payload, parse_jobs_from_search_page
@@ -48,6 +49,7 @@ class JobScout24ChHttpClient:
         successful_queries = 0
 
         with self._new_session() as session:
+            throttle = RequestThrottle.from_config(config)
             for query in queries:
                 if config.show_progress:
                     print(f"[progress] start {query.label}", file=sys.stderr)
@@ -61,6 +63,7 @@ class JobScout24ChHttpClient:
                             max_pages=config.max_pages,
                             show_progress=config.show_progress,
                             query_label=query.label,
+                            throttle=throttle,
                         )
                     )
                     successful_queries += 1
@@ -77,6 +80,8 @@ class JobScout24ChHttpClient:
         detail_limit: int | None,
         detail_workers: int,
         show_progress: bool,
+        request_delay_min_seconds: float = 0.0,
+        request_delay_max_seconds: float = 0.0,
     ) -> tuple[int, int]:
         if not vacancies:
             return 0, 0
@@ -95,6 +100,10 @@ class JobScout24ChHttpClient:
             )
 
         session_local = threading.local()
+        throttle = RequestThrottle(
+            min_seconds=request_delay_min_seconds,
+            max_seconds=request_delay_max_seconds,
+        )
 
         def get_session() -> requests.Session:
             session = getattr(session_local, "session", None)
@@ -106,7 +115,7 @@ class JobScout24ChHttpClient:
         def fetch_payload(vacancy: VacancyFull) -> tuple[dict[str, Any] | None, str | None]:
             try:
                 session = get_session()
-                return self._fetch_detail_payload(session, vacancy), None
+                return self._fetch_detail_payload(session, vacancy, throttle=throttle), None
             except Exception as exc:  # pragma: no cover
                 return None, str(exc)
 
@@ -151,6 +160,7 @@ class JobScout24ChHttpClient:
         max_pages: int,
         show_progress: bool,
         query_label: str,
+        throttle: RequestThrottle | None = None,
     ) -> list[VacancyFull]:
         all_jobs: list[VacancyFull] = []
         page = 1
@@ -161,6 +171,8 @@ class JobScout24ChHttpClient:
             params = {"p": page} if page > 1 else None
 
             try:
+                if throttle is not None:
+                    throttle.wait()
                 response = session.get(url, params=params, timeout=self.timeout)
                 response.raise_for_status()
             except requests.RequestException as exc:
@@ -213,11 +225,14 @@ class JobScout24ChHttpClient:
         self,
         session: requests.Session,
         vacancy: VacancyFull,
+        throttle: RequestThrottle | None = None,
     ) -> dict[str, Any]:
         last_error: Exception | None = None
         headers = self._detail_headers(vacancy)
         for attempt in range(3):
             try:
+                if throttle is not None:
+                    throttle.wait()
                 response = session.get(vacancy.url, headers=headers, timeout=self.timeout)
                 response.raise_for_status()
                 payload = extract_detail_payload(response.text)

@@ -36,7 +36,7 @@ class FakeBackfillClient:
         self.cookies_file = cookies_file
         self.show_progress = show_progress
 
-    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **_):  # noqa: ANN001
         for vacancy in vacancies:
             vacancy.job_posting_schema = {
                 "@type": "JobPosting",

@@ -9,6 +9,7 @@ from typing import Any, Sequence
 import requests
 
 from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
+from swiss_jobs.core.throttle import RequestThrottle
 
 from .detail import apply_detail_payload
 from .extractors import ParseError, extract_detail_payload, parse_jobs_from_feed
@@ -48,6 +49,8 @@ class SwissDevJobsChHttpClient:
 
         try:
             with self._new_session() as session:
+                throttle = RequestThrottle.from_config(config)
+                throttle.wait()
                 feed_payload = self._fetch_jobs_feed(session)
                 for query in queries:
                     if config.show_progress:
@@ -93,6 +96,8 @@ class SwissDevJobsChHttpClient:
         detail_limit: int | None,
         detail_workers: int,
         show_progress: bool,
+        request_delay_min_seconds: float = 0.0,
+        request_delay_max_seconds: float = 0.0,
     ) -> tuple[int, int]:
         if not vacancies:
             return 0, 0
@@ -114,6 +119,10 @@ class SwissDevJobsChHttpClient:
             )
 
         session_local = threading.local()
+        throttle = RequestThrottle(
+            min_seconds=request_delay_min_seconds,
+            max_seconds=request_delay_max_seconds,
+        )
 
         def get_session() -> requests.Session:
             session = getattr(session_local, "session", None)
@@ -125,7 +134,7 @@ class SwissDevJobsChHttpClient:
         def fetch_payload(vacancy: VacancyFull) -> tuple[dict[str, Any] | None, str | None]:
             try:
                 session = get_session()
-                return self._fetch_detail_payload(session, vacancy), None
+                return self._fetch_detail_payload(session, vacancy, throttle=throttle), None
             except Exception as exc:  # pragma: no cover
                 return None, str(exc)
 
@@ -181,11 +190,14 @@ class SwissDevJobsChHttpClient:
         self,
         session: requests.Session,
         vacancy: VacancyFull,
+        throttle: RequestThrottle | None = None,
     ) -> dict[str, Any]:
         last_error: Exception | None = None
         headers = self._detail_headers(vacancy)
         for attempt in range(3):
             try:
+                if throttle is not None:
+                    throttle.wait()
                 response = session.get(vacancy.url, headers=headers, timeout=self.timeout)
                 response.raise_for_status()
                 return extract_detail_payload(response.text, page_url=vacancy.url)

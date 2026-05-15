@@ -21,7 +21,7 @@ class FakeJobScout24ChClient:
     def search(self, config: ClientConfig, queries):  # noqa: ANN001
         return [VacancyFull.from_dict(item) for item in self._vacancies], [], len(queries)
 
-    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **_):  # noqa: ANN001
         self.enrich_calls += 1
         for vacancy in vacancies:
             vacancy.description_text = vacancy.description_text or "Detailed description"
@@ -120,7 +120,7 @@ class JobScout24ChServiceTests(unittest.TestCase):
         )
 
         class EnrichingClient(FakeJobScout24ChClient):
-            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **_):  # noqa: ANN001
                 self.enrich_calls += 1
                 for item in vacancies:
                     item.description_text = "Platform engineer role focused on automation."

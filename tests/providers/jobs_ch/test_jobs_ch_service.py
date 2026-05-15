@@ -15,12 +15,14 @@ class FakeJobsChClient:
     def __init__(self, vacancies: list[VacancyFull]) -> None:
         self._vacancies = [vacancy.to_dict() for vacancy in vacancies]
         self.enrich_calls = 0
+        self.enrich_kwargs: dict = {}
 
     def search(self, config: ClientConfig, queries):  # noqa: ANN001
         return [VacancyFull.from_dict(item) for item in self._vacancies], [], len(queries)
 
-    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+    def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **kwargs):  # noqa: ANN001
         self.enrich_calls += 1
+        self.enrich_kwargs = dict(kwargs)
         for vacancy in vacancies:
             vacancy.description_text = vacancy.description_text or "Detailed description"
         return len(vacancies), len(vacancies)
@@ -187,6 +189,37 @@ class JobsChServiceTests(unittest.TestCase):
             self.assertEqual("brief", result.effective_config.output_format)
             self.assertEqual(1, len(result.output_jobs))
 
+    def test_detail_fetch_receives_request_delay_config(self) -> None:
+        vacancy = VacancyFull(
+            id="vac-delay",
+            title="Platform Engineer",
+            company="Acme",
+            place="Zurich",
+            url="https://example.test/jobs/delay",
+        )
+        fake_client = FakeJobsChClient([vacancy])
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config = make_config(
+                {
+                    "client_id": "client_a",
+                    "database_path": str(Path(tmpdir) / "client-a.sqlite"),
+                    "mode": "search",
+                    "terms": ["platform engineer"],
+                    "locations": ["zurich"],
+                    "output_format": "brief",
+                    "request_delay_min_seconds": 0.25,
+                    "request_delay_max_seconds": 0.75,
+                },
+            )
+
+            service = JobsChParserService(http_client=fake_client, runtime_root=Path(tmpdir))
+            service.run(config)
+
+            self.assertEqual(1, fake_client.enrich_calls)
+            self.assertEqual(0.25, fake_client.enrich_kwargs["request_delay_min_seconds"])
+            self.assertEqual(0.75, fake_client.enrich_kwargs["request_delay_max_seconds"])
+
     def test_full_output_contains_analytics(self) -> None:
         vacancy = VacancyFull(
             id="vac-4",
@@ -230,7 +263,7 @@ class JobsChServiceTests(unittest.TestCase):
         )
 
         class EnrichingClient(FakeJobsChClient):
-            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **_):  # noqa: ANN001
                 self.enrich_calls += 1
                 for item in vacancies:
                     item.description_text = (
@@ -271,7 +304,7 @@ class JobsChServiceTests(unittest.TestCase):
         )
 
         class EnrichingClient(FakeJobsChClient):
-            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress):  # noqa: ANN001
+            def enrich_vacancies(self, vacancies, *, detail_limit, detail_workers, show_progress, **_):  # noqa: ANN001
                 self.enrich_calls += 1
                 for item in vacancies:
                     item.description_text = (

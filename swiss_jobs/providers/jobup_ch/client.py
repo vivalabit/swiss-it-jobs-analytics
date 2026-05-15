@@ -9,6 +9,7 @@ from typing import Any, Sequence
 import requests
 
 from swiss_jobs.core.models import ClientConfig, QuerySpec, VacancyFull
+from swiss_jobs.core.throttle import RequestThrottle
 
 from .detail import apply_detail_payload
 from .extractors import ParseError, extract_detail_payload, parse_jobs_from_search_page
@@ -54,6 +55,7 @@ class JobupChHttpClient:
         )
 
         with self._new_session() as session:
+            throttle = RequestThrottle.from_config(config)
             for query in queries:
                 if config.show_progress:
                     print(f"[progress] start {query.label}", file=sys.stderr)
@@ -67,6 +69,7 @@ class JobupChHttpClient:
                             max_pages=config.max_pages,
                             show_progress=config.show_progress,
                             query_label=query.label,
+                            throttle=throttle,
                         )
                     )
                     successful_queries += 1
@@ -83,6 +86,8 @@ class JobupChHttpClient:
         detail_limit: int | None,
         detail_workers: int,
         show_progress: bool,
+        request_delay_min_seconds: float = 0.0,
+        request_delay_max_seconds: float = 0.0,
     ) -> tuple[int, int]:
         if not vacancies:
             return 0, 0
@@ -101,6 +106,10 @@ class JobupChHttpClient:
             )
 
         session_local = threading.local()
+        throttle = RequestThrottle(
+            min_seconds=request_delay_min_seconds,
+            max_seconds=request_delay_max_seconds,
+        )
 
         def get_session() -> requests.Session:
             session = getattr(session_local, "session", None)
@@ -113,6 +122,7 @@ class JobupChHttpClient:
             try:
                 session = get_session()
                 headers = self._detail_headers(vacancy)
+                throttle.wait()
                 response = session.get(vacancy.url, headers=headers, timeout=self.timeout)
                 response.raise_for_status()
                 return extract_detail_payload(response.text), None
@@ -160,6 +170,7 @@ class JobupChHttpClient:
         max_pages: int,
         show_progress: bool,
         query_label: str,
+        throttle: RequestThrottle | None = None,
     ) -> list[VacancyFull]:
         all_jobs: list[VacancyFull] = []
         page = 1
@@ -170,6 +181,8 @@ class JobupChHttpClient:
             params = self._build_query_params(mode=mode, term=term, location=location, page=page)
 
             try:
+                if throttle is not None:
+                    throttle.wait()
                 response = session.get(url, params=params, timeout=self.timeout)
                 response.raise_for_status()
             except requests.RequestException as exc:

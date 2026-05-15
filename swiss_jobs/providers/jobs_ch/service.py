@@ -138,6 +138,8 @@ class JobsChParserService:
                         detail_limit=config.detail_limit,
                         detail_workers=config.detail_workers,
                         show_progress=config.show_progress,
+                        request_delay_min_seconds=config.request_delay_min_seconds,
+                        request_delay_max_seconds=config.request_delay_max_seconds,
                     )
                     if detail_candidates
                     else (0, 0)
