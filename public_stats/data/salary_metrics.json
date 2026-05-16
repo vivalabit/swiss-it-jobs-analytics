@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-05-10T19:42:42Z",
+  "generated_at": "2026-05-16T20:01:27Z",
   "available": true,
   "summary": {
-    "salary_count": 261,
-    "salary_coverage": 0.0409,
-    "average_salary": 99375,
-    "median_salary": 98062,
+    "salary_count": 265,
+    "salary_coverage": 0.0714,
+    "average_salary": 99518,
+    "median_salary": 99000,
     "p25_salary": 89066,
-    "p75_salary": 110824,
+    "p75_salary": 110920,
     "min_salary": 40000,
     "max_salary": 180000,
     "currency": "CHF",
@@ -26,7 +26,7 @@
     {
       "role_category": "security",
       "salary_count": 22,
-      "average_salary": 109599,
+      "average_salary": 109145,
       "median_salary": 110759,
       "min_salary": 40000,
       "max_salary": 180000,
@@ -34,9 +34,9 @@
     },
     {
       "role_category": "product_project_analysis",
-      "salary_count": 26,
-      "average_salary": 103775,
-      "median_salary": 104281,
+      "salary_count": 29,
+      "average_salary": 105161,
+      "median_salary": 108644,
       "min_salary": 62389,
       "max_salary": 135000,
       "rank": 3
@@ -52,17 +52,17 @@
     },
     {
       "role_category": "software_engineering",
-      "salary_count": 99,
-      "average_salary": 100772,
-      "median_salary": 99000,
+      "salary_count": 97,
+      "average_salary": 100556,
+      "median_salary": 96937,
       "min_salary": 40000,
       "max_salary": 148000,
       "rank": 5
     },
     {
       "role_category": "devops_cloud_platform",
-      "salary_count": 46,
-      "average_salary": 100144,
+      "salary_count": 48,
+      "average_salary": 100497,
       "median_salary": 97451,
       "min_salary": 78000,
       "max_salary": 135000,
@@ -79,8 +79,8 @@
     },
     {
       "role_category": "support_operations",
-      "salary_count": 27,
-      "average_salary": 83861,
+      "salary_count": 28,
+      "average_salary": 84402,
       "median_salary": 80000,
       "min_salary": 51750,
       "max_salary": 108000,
@@ -99,8 +99,8 @@
   "by_seniority": [
     {
       "seniority": "senior",
-      "salary_count": 110,
-      "average_salary": 103759,
+      "salary_count": 107,
+      "average_salary": 103731,
       "median_salary": 100000,
       "min_salary": 70000,
       "max_salary": 148000,
@@ -108,17 +108,17 @@
     },
     {
       "seniority": "manager",
-      "salary_count": 56,
-      "average_salary": 101294,
-      "median_salary": 100015,
+      "salary_count": 60,
+      "average_salary": 102291,
+      "median_salary": 103438,
       "min_salary": 55000,
       "max_salary": 180000,
       "rank": 2
     },
     {
       "seniority": "mid",
-      "salary_count": 51,
-      "average_salary": 101185,
+      "salary_count": 53,
+      "average_salary": 100353,
       "median_salary": 96751,
       "min_salary": 51750,
       "max_salary": 152125,
@@ -135,11 +135,11 @@
     },
     {
       "seniority": "junior",
-      "salary_count": 17,
-      "average_salary": 83911,
-      "median_salary": 85854,
+      "salary_count": 18,
+      "average_salary": 86260,
+      "median_salary": 87427,
       "min_salary": 42000,
-      "max_salary": 106853,
+      "max_salary": 120000,
       "rank": 5
     },
     {

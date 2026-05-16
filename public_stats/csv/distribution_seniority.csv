@@ -1,7 +1,7 @@
 seniority,vacancy_count,share
-senior,3217,0.5035
-manager,1496,0.2342
-mid,696,0.1089
-junior,502,0.0786
-Unknown,344,0.0538
-intern,134,0.021
+senior,1562,0.4211
+manager,1077,0.2904
+mid,557,0.1502
+Unknown,256,0.069
+junior,183,0.0493
+intern,74,0.02
