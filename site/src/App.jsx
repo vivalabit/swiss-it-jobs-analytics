@@ -3487,7 +3487,13 @@ function getComparableExperienceYears(item) {
 }
 
 function getMissingValueLabel(locale = "en-CH") {
-  return String(locale).startsWith("de") ? "k.A." : "n/a";
+  if (String(locale).startsWith("de")) {
+    return "k.A.";
+  }
+  if (String(locale).startsWith("fr")) {
+    return "n.d.";
+  }
+  return "n/a";
 }
 
 function formatInteger(value, locale = "en-CH") {
@@ -3555,9 +3561,14 @@ function formatYears(value, locale = "en-CH") {
   if (typeof value !== "number") {
     return getMissingValueLabel(locale);
   }
+  const suffix = String(locale).startsWith("de")
+    ? "J."
+    : String(locale).startsWith("fr")
+      ? "ans"
+      : "yrs";
   return `${new Intl.NumberFormat(locale, {
     maximumFractionDigits: value >= 10 ? 0 : 1,
-  }).format(value)} ${String(locale).startsWith("de") ? "J." : "yrs"}`;
+  }).format(value)} ${suffix}`;
 }
 
 function formatCantonCode(value) {
@@ -3779,6 +3790,38 @@ const LABEL_DICTIONARIES = {
     nodejs: "Node.js",
     pytorch: "PyTorch",
     zürich: "Zürich",
+    genève: "Genève",
+  },
+  fr: {
+    unknown: "Inconnu",
+    ci_cd: "CI/CD",
+    qa_testing: "QA Testing",
+    ux_ui_design: "UX/UI Design",
+    data_ai: "Données / IA",
+    devops_cloud_platform: "DevOps / Cloud / Plateforme",
+    software_engineering: "Développement logiciel",
+    support_operations: "Support / Opérations",
+    product_project_analysis: "Produit / Projet / Analyse",
+    erp_business_systems: "ERP / Systèmes métier",
+    security: "Sécurité",
+    senior: "Senior",
+    manager: "Management",
+    mid: "Confirmé",
+    junior: "Junior",
+    intern: "Stage",
+    hybrid: "Hybride",
+    onsite: "Sur site",
+    remote: "Remote",
+    agile: "Agile",
+    rest_api: "REST API",
+    dotnet: ".NET",
+    csharp: "C#",
+    sql: "SQL",
+    javascript: "JavaScript",
+    typescript: "TypeScript",
+    nodejs: "Node.js",
+    pytorch: "PyTorch",
+    zürich: "Zurich",
     genève: "Genève",
   },
 };
