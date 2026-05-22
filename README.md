@@ -1,5 +1,7 @@
 # Swiss IT Jobs Analytics
 
+[English](README.md) | [Deutsch](local/docs/README.de.md) | [Français](local/docs/README.fr.md) | [Italiano](local/docs/README.it.md)
+
 Swiss IT Jobs Analytics is a tool that analyzes thousands of job postings across the Swiss market to identify the most in-demand skills, technologies, and career paths, helping you understand what to learn today to stay competitive tomorrow.
 
 See right now - https://vivalabit.github.io/swiss-it-jobs-analytics/
