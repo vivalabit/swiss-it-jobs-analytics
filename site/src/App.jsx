@@ -3493,6 +3493,9 @@ function getMissingValueLabel(locale = "en-CH") {
   if (String(locale).startsWith("fr")) {
     return "n.d.";
   }
+  if (String(locale).startsWith("it")) {
+    return "n.d.";
+  }
   return "n/a";
 }
 
@@ -3565,6 +3568,8 @@ function formatYears(value, locale = "en-CH") {
     ? "J."
     : String(locale).startsWith("fr")
       ? "ans"
+      : String(locale).startsWith("it")
+        ? "anni"
       : "yrs";
   return `${new Intl.NumberFormat(locale, {
     maximumFractionDigits: value >= 10 ? 0 : 1,
@@ -3823,6 +3828,38 @@ const LABEL_DICTIONARIES = {
     pytorch: "PyTorch",
     zürich: "Zurich",
     genève: "Genève",
+  },
+  it: {
+    unknown: "Sconosciuto",
+    ci_cd: "CI/CD",
+    qa_testing: "QA Testing",
+    ux_ui_design: "UX/UI Design",
+    data_ai: "Dati / IA",
+    devops_cloud_platform: "DevOps / Cloud / Piattaforma",
+    software_engineering: "Sviluppo software",
+    support_operations: "Supporto / Operazioni",
+    product_project_analysis: "Prodotto / Progetto / Analisi",
+    erp_business_systems: "ERP / Sistemi aziendali",
+    security: "Sicurezza",
+    senior: "Senior",
+    manager: "Management",
+    mid: "Intermedio",
+    junior: "Junior",
+    intern: "Stage",
+    hybrid: "Ibrido",
+    onsite: "In sede",
+    remote: "Remote",
+    agile: "Agile",
+    rest_api: "REST API",
+    dotnet: ".NET",
+    csharp: "C#",
+    sql: "SQL",
+    javascript: "JavaScript",
+    typescript: "TypeScript",
+    nodejs: "Node.js",
+    pytorch: "PyTorch",
+    zürich: "Zurigo",
+    genève: "Ginevra",
   },
 };
 
