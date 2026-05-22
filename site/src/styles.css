@@ -363,6 +363,59 @@ img {
   max-width: 840px;
 }
 
+.cy-hero-toolbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 28px;
+}
+
+.cy-language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 4px 5px 4px 14px;
+  color: var(--muted-foreground);
+  box-shadow: 0 12px 26px rgba(16, 24, 40, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.cy-language-switcher > span {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+}
+
+.cy-language-switcher-options {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.cy-language-switcher button {
+  min-width: 38px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cy-language-switcher button:hover,
+.cy-language-switcher button.is-active {
+  background: #101828;
+  color: #fff;
+}
+
 .cy-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -2399,6 +2452,16 @@ img {
 
   .cy-hero-copy {
     max-width: none;
+  }
+
+  .cy-hero-toolbar {
+    justify-content: flex-start;
+    margin-bottom: 22px;
+  }
+
+  .cy-language-switcher {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .cy-hero-title {

@@ -31,6 +31,8 @@ This project is designed to answer practical, data-driven questions about the jo
 - How comparable salary ranges differ across role categories
 - Which skills the market is actually valued by employers
 
+<img src="local/img/image.png" width="900">
+
 **The statistics cover vacancies published from 2026 onward.** 
 
 

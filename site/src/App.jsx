@@ -1,8 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 import dotUrl from "./assets/images/arrow-badge-right.svg";
 import flagUrl from "./assets/images/flag.png";
 import swissMapUrl from "./assets/images/swiss-map.png";
+import {
+  DEFAULT_LANGUAGE,
+  LANGUAGE_OPTIONS,
+  getCopy,
+  getInitialLanguage,
+  getLocale,
+  normalizeLanguage,
+} from "./i18n";
 const dividerTextureUrl =
   "https://cdn.prod.website-files.com/6961d185cb919d4c701e9c24/69630552b7b6bb94e9f5f655_section%20(1).png";
 const footerShapeUrl =
@@ -25,6 +33,7 @@ const SNAPSHOT_FILES = {
   seniorityDistribution: "distributions_seniority.json",
   workModeDistribution: "distributions_work_mode.json",
 };
+const SNAPSHOT_FETCH_ERROR = "snapshotFetchError";
 
 const PAGE_SECTION_LINKS = [
   { id: "overview", label: "Overview" },
@@ -353,20 +362,6 @@ const TREND_PERIOD_OPTIONS = [
   { label: "1Y", days: 365 },
   { label: "ALL", days: null },
 ];
-const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
 const TREND_ROLE_COLORS = [
   "#1f65b7",
   "#cc3b86",
@@ -404,23 +399,48 @@ const PUBLIC_SNAPSHOT_SOURCES = [
   "jobup.ch",
   "swissdevjobs.ch",
 ];
-const SNAPSHOT_SCOPE_ITEMS = [
-  "Vacancy volume",
-  "Salary benchmarks",
-  "Role and seniority mix",
-  "City and canton demand",
-  "Work mode split",
-  "Skill and stack trends",
-];
-const SNAPSHOT_LIMITATIONS = [
-  "Public aggregate snapshot, not a full census of the Swiss market.",
-  "Salary benchmarks only use vacancies with explicit pay ranges.",
-  "Salary rankings hide groups with fewer than 10 usable salary records.",
-  "Coverage is limited to vacancies published from 2026 onward.",
-  "Some fields are normalized or AI-assisted from posting text and structured metadata.",
-];
-
 function App() {
+  const [language, setLanguage] = useState(getInitialLanguage);
+  const normalizedLanguage = normalizeLanguage(language) ?? DEFAULT_LANGUAGE;
+  const copy = getCopy(normalizedLanguage);
+  const locale = getLocale(normalizedLanguage);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.title = copy.documentTitle;
+    window.localStorage.setItem("swiss-it-jobs-language", normalizedLanguage);
+  }, [copy.documentTitle, locale, normalizedLanguage]);
+
+  const i18n = useMemo(
+    () => ({
+      copy,
+      language: normalizedLanguage,
+      locale,
+      setLanguage,
+    }),
+    [copy, locale, normalizedLanguage],
+  );
+
+  return (
+    <I18nContext.Provider value={i18n}>
+      <Dashboard />
+    </I18nContext.Provider>
+  );
+}
+
+const I18nContext = createContext({
+  copy: getCopy(DEFAULT_LANGUAGE),
+  language: DEFAULT_LANGUAGE,
+  locale: getLocale(DEFAULT_LANGUAGE),
+  setLanguage: () => {},
+});
+
+function useI18n() {
+  return useContext(I18nContext);
+}
+
+function Dashboard() {
+  const { copy, language, locale } = useI18n();
   const [state, setState] = useState({
     status: "loading",
     data: null,
@@ -431,6 +451,14 @@ function App() {
   const [showMoreCompanyItems, setShowMoreCompanyItems] = useState(false);
   const [activeSectionId, setActiveSectionId] = useState(PAGE_SECTION_LINKS[0].id);
   const [selectedMapCityKey, setSelectedMapCityKey] = useState(null);
+  const formatLabel = (value) => prettifyLabel(value, language);
+  const formatCount = (value) => formatInteger(value, locale);
+  const formatShare = (value) => formatPercent(value, locale);
+  const formatMoney = (value) => formatCurrency(value, locale);
+  const pageSectionLinks = PAGE_SECTION_LINKS.map((section) => ({
+    ...section,
+    label: copy.sections[section.id] ?? section.label,
+  }));
 
   useEffect(() => {
     let cancelled = false;
@@ -456,10 +484,7 @@ function App() {
           setState({
             status: "error",
             data: null,
-            error:
-              error instanceof Error
-                ? error.message
-                : "Failed to load public statistics snapshots.",
+            error: SNAPSHOT_FETCH_ERROR,
           });
         }
       }
@@ -525,8 +550,8 @@ function App() {
   if (state.status === "loading") {
     return (
       <StatusScreen
-        title="Loading public snapshots"
-        message="Fetching Swiss IT market statistics from generated JSON exports."
+        title={copy.status.loadingTitle}
+        message={copy.status.loadingMessage}
       />
     );
   }
@@ -534,8 +559,12 @@ function App() {
   if (state.status === "error" || !state.data) {
     return (
       <StatusScreen
-        title="Snapshot data unavailable"
-        message={state.error ?? "The public snapshots could not be loaded."}
+        title={copy.status.errorTitle}
+        message={
+          state.error === SNAPSHOT_FETCH_ERROR
+            ? copy.status.fetchError
+            : state.error ?? copy.status.errorFallback
+        }
       />
     );
   }
@@ -633,15 +662,15 @@ function App() {
   const salaryChartConfig =
     salaryBreakdown === "seniority"
       ? {
-          title: "Seniority ranked by average salary",
-          description: "Seniority levels with at least 10 normalized CHF salary records.",
+          title: copy.salary.seniorityChartTitle,
+          description: copy.salary.seniorityChartDescription,
           items: salarySeniorityItems,
           groupKey: "seniority",
           hiddenCount: salarySeniorityGroups.length - rankedSalarySeniorityGroups.length,
         }
       : {
-          title: "Roles ranked by average salary",
-          description: "Role categories with at least 10 normalized CHF salary records.",
+          title: copy.salary.roleChartTitle,
+          description: copy.salary.roleChartDescription,
           items: salaryRoleItems,
           groupKey: "role_category",
           hiddenCount: salaryRoleGroups.length - rankedSalaryRoleGroups.length,
@@ -658,20 +687,14 @@ function App() {
     jsonArchive: `${import.meta.env.BASE_URL}downloads/swiss-it-jobs-json-snapshots.zip`,
     csvArchive: `${import.meta.env.BASE_URL}downloads/swiss-it-jobs-csv-exports.zip`,
   };
-  const methodologySteps = [
-    "Collect processed vacancy exports from the multi-source analytics pipeline.",
-    "Deduplicate and normalize companies, locations, work mode, seniority, and salary fields.",
-    "Run AI-assisted vacancy analysis to improve classification accuracy and recover details that rule-based filters can miss.",
-    "Convert salary data to comparable yearly CHF ranges before aggregation.",
-    "Publish compact JSON snapshots and mirrored CSV extracts for the public dashboard.",
-  ];
-  const trustLimitations = [...SNAPSHOT_LIMITATIONS];
+  const methodologySteps = copy.methodology.steps;
+  const trustLimitations = copy.snapshot.limitationItems;
   const keyFindings = buildKeyFindings({
     topCity,
     leadingRole,
     fastestGrowingRole,
     salarySummary,
-  });
+  }, copy, language, locale);
 
   return (
     <main className="cy-app">
@@ -681,47 +704,50 @@ function App() {
             <div className="cy-hero-accent-line" />
             <div className="cy-hero-grid">
               <div className="cy-hero-copy">
+                <div className="cy-hero-toolbar">
+                  <LanguageSwitcher />
+                </div>
                 <img src={flagUrl} alt="" className="cy-hero-copy-flag" />
                 <h1 className="cy-heading cy-hero-title">
-                  <span className="cy-hero-title-accent">Swiss</span> IT Job Market
+                  <span className="cy-hero-title-accent">{copy.hero.titleAccent}</span>{" "}
+                  {copy.hero.titleRest}
                 </h1>
-                <p className="cy-copy cy-hero-text">
-                  Track hiring volume, salary benchmarks, and location hotspots from the
-                  latest public Swiss IT vacancy data.
-                </p>
+                <p className="cy-copy cy-hero-text">{copy.hero.text}</p>
                 <div className="cy-button-row cy-hero-actions">
-                  <PrimaryButton href="#vacancy-trends">Explore the dashboard</PrimaryButton>
+                  <PrimaryButton href="#vacancy-trends">{copy.hero.dashboardCta}</PrimaryButton>
                   <PrimaryButton href="#methodology" variant="outline">
-                    Read methodology
+                    {copy.hero.methodologyCta}
                   </PrimaryButton>
                 </div>
                 <div className="cy-kpi-grid">
                   <ProductKpiCard
-                    label="Vacancies tracked"
-                    value={formatInteger(overviewMetrics.total_vacancies)}
+                    label={copy.hero.vacanciesTracked}
+                    value={formatCount(overviewMetrics.total_vacancies)}
                     trendValue={vacancyTrends.summary?.growth_30d ?? null}
                     trendText={
                       vacancyTrends.summary?.published_30d
-                        ? `${formatInteger(vacancyTrends.summary.published_30d)} published in 30 days`
-                        : "current market coverage"
+                        ? copy.hero.published30d(formatCount(vacancyTrends.summary.published_30d))
+                        : copy.hero.currentCoverage
                     }
                   />
                   <ProductKpiCard
-                    label="Median salary"
-                    value={formatCurrency(salarySummary.median_salary)}
+                    label={copy.hero.medianSalary}
+                    value={formatMoney(salarySummary.median_salary)}
                     trendValue={salarySummary.salary_coverage}
                     trendText={
                       salarySummary.salary_count
-                        ? `${formatInteger(salarySummary.salary_count)} listings with salary data`
-                        : "salary benchmark coverage"
+                        ? copy.hero.salaryListings(formatCount(salarySummary.salary_count))
+                        : copy.hero.salaryCoverage
                     }
                   />
                   <ProductKpiCard
-                    label="Top hiring city"
-                    value={prettifyLabel(topCity?.label)}
+                    label={copy.hero.topHiringCity}
+                    value={formatLabel(topCity?.label)}
                     trendValue={topCity?.share}
                     trendText={
-                      topCity ? `${formatInteger(topCity.vacancy_count)} active vacancies` : "city demand"
+                      topCity
+                        ? copy.hero.activeVacancies(formatCount(topCity.vacancy_count))
+                        : copy.hero.cityDemand
                     }
                   />
                 </div>
@@ -733,7 +759,7 @@ function App() {
 
       <div className="cy-page-shell">
         <div className="cy-page-shell-inner">
-          <SectionRail sections={PAGE_SECTION_LINKS} activeSectionId={activeSectionId} />
+          <SectionRail sections={pageSectionLinks} activeSectionId={activeSectionId} />
 
           <div className="cy-page-content">
             <section className="cy-section cy-trust-section" id="snapshot" aria-labelledby="snapshot-context">
@@ -741,19 +767,16 @@ function App() {
                 <article className="cy-card cy-trust-panel">
                   <div className="cy-data-panel-head cy-trust-panel-head">
                     <div>
-                      <p className="cy-kicker">Snapshot context</p>
-                      <h2 id="snapshot-context">What this page is built on</h2>
+                      <p className="cy-kicker">{copy.snapshot.kicker}</p>
+                      <h2 id="snapshot-context">{copy.snapshot.title}</h2>
                     </div>
-                    <p className="cy-copy">
-                      Quick context on freshness, sample size, coverage, and what the public export
-                      does not claim to measure.
-                    </p>
+                    <p className="cy-copy">{copy.snapshot.description}</p>
                   </div>
 
                   <div className="cy-trust-grid">
                     <TrustInfoCard
-                      label="Sources"
-                      title={`${PUBLIC_SNAPSHOT_SOURCES.length} public job boards`}
+                      label={copy.snapshot.sources}
+                      title={copy.snapshot.sourceTitle(PUBLIC_SNAPSHOT_SOURCES.length)}
                     >
                       <div className="cy-chip-list cy-trust-chip-list">
                         {PUBLIC_SNAPSHOT_SOURCES.map((source) => (
@@ -762,38 +785,42 @@ function App() {
                           </span>
                         ))}
                       </div>
-                      <p className="cy-copy">
-                        Deduplicated at vacancy level before the public aggregate is published.
-                      </p>
-                    </TrustInfoCard>
-
-                    <TrustInfoCard label="Updated" title={formatShortDate(metadata.generated_at)}>
-                      <p className="cy-copy">{formatDateTime(metadata.generated_at)}</p>
+                      <p className="cy-copy">{copy.snapshot.sourcesDescription}</p>
                     </TrustInfoCard>
 
                     <TrustInfoCard
-                      label="Sample size"
-                      title={formatInteger(overviewMetrics.total_vacancies)}
+                      label={copy.snapshot.updated}
+                      title={formatShortDate(metadata.generated_at, locale)}
+                    >
+                      <p className="cy-copy">{formatDateTime(metadata.generated_at, locale)}</p>
+                    </TrustInfoCard>
+
+                    <TrustInfoCard
+                      label={copy.snapshot.sampleSize}
+                      title={formatCount(overviewMetrics.total_vacancies)}
                     >
                       <p className="cy-copy">
-                        {formatInteger(overviewMetrics.total_companies)} direct employers after agency
-                        filtering.
+                        {copy.snapshot.directEmployers(formatCount(overviewMetrics.total_companies))}
                       </p>
                     </TrustInfoCard>
 
                     <TrustInfoCard
-                      label="Salary coverage"
-                      title={formatPercent(salarySummary.salary_coverage)}
+                      label={copy.snapshot.salaryCoverage}
+                      title={formatShare(salarySummary.salary_coverage)}
                     >
                       <p className="cy-copy">
-                        {formatInteger(salarySummary.salary_count)} listings with normalized CHF yearly
-                        salary data.
+                        {copy.snapshot.salaryCoverageDescription(
+                          formatCount(salarySummary.salary_count),
+                        )}
                       </p>
                     </TrustInfoCard>
 
-                    <TrustInfoCard label="Snapshot includes" title="Core market signals">
+                    <TrustInfoCard
+                      label={copy.snapshot.includes}
+                      title={copy.snapshot.coreSignals}
+                    >
                       <div className="cy-chip-list cy-trust-chip-list">
-                        {SNAPSHOT_SCOPE_ITEMS.map((item) => (
+                        {copy.snapshot.scopeItems.map((item) => (
                           <span key={item} className="cy-chip">
                             {item}
                           </span>
@@ -801,7 +828,10 @@ function App() {
                       </div>
                     </TrustInfoCard>
 
-                    <TrustInfoCard label="Main limitations" title="Read before comparing numbers">
+                    <TrustInfoCard
+                      label={copy.snapshot.limitations}
+                      title={copy.snapshot.limitationsTitle}
+                    >
                       <div className="cy-trust-note-list">
                         {trustLimitations.map((item) => (
                           <p key={item} className="cy-copy">
@@ -820,8 +850,8 @@ function App() {
                 <article className="cy-card cy-findings-panel">
                   <div className="cy-data-panel-head cy-findings-head">
                     <div>
-                      <p className="cy-kicker">Key findings</p>
-                      <h2 id="key-findings">What stands out right now</h2>
+                      <p className="cy-kicker">{copy.findings.kicker}</p>
+                      <h2 id="key-findings">{copy.findings.title}</h2>
                     </div>
                   </div>
 
@@ -843,24 +873,26 @@ function App() {
               <div className="cy-container">
                 <div className="cy-metrics-grid cy-product-summary-grid">
                   <MetricCard
-                    label="Vacancies tracked"
-                    value={formatInteger(overviewMetrics.total_vacancies)}
-                    description="Current public export size across the Swiss tech market."
+                    label={copy.hero.vacanciesTracked}
+                    value={formatCount(overviewMetrics.total_vacancies)}
+                    description={copy.summary.vacanciesDescription}
                   />
                   <MetricCard
-                    label="Direct employers"
-                    value={formatInteger(overviewMetrics.total_companies)}
-                    description="Distinct hiring companies after excluding recruiting agencies."
+                    label={copy.summary.employersLabel}
+                    value={formatCount(overviewMetrics.total_companies)}
+                    description={copy.summary.employersDescription}
                   />
                   <MetricCard
-                    label="Published in 30d"
-                    value={formatInteger(vacancyTrends.summary?.published_30d)}
-                    description="Latest rolling-month intake of newly published vacancies."
+                    label={copy.summary.publishedLabel}
+                    value={formatCount(vacancyTrends.summary?.published_30d)}
+                    description={copy.summary.publishedDescription}
                   />
                   <MetricCard
-                    label="Salary coverage"
-                    value={formatPercent(salarySummary.salary_coverage)}
-                    description={`${formatInteger(salarySummary.salary_count)} vacancies with normalized yearly salary data.`}
+                    label={copy.salary.salaryCoverage}
+                    value={formatShare(salarySummary.salary_coverage)}
+                    description={copy.summary.salaryCoverageDescription(
+                      formatCount(salarySummary.salary_count),
+                    )}
                   />
                 </div>
               </div>
@@ -880,7 +912,8 @@ function App() {
               <div className="cy-container">
                 <div className="cy-section-intro cy-section-intro-compact">
                   <h2 className="cy-heading cy-section-title">
-                    Swiss vacancy <span className="cy-hero-title-accent">map</span>
+                    {copy.charts.mapTitlePrefix}{" "}
+                    <span className="cy-hero-title-accent">{copy.charts.mapTitleAccent}</span>
                   </h2>
                 </div>
 
@@ -901,14 +934,17 @@ function App() {
               <div className="cy-container">
                 <div className="cy-section-intro cy-section-intro-compact">
                   <h2 className="cy-heading cy-section-title">
-                    Analysis <span className="cy-hero-title-accent">dashboard</span>
+                    {copy.charts.dashboardTitlePrefix}{" "}
+                    <span className="cy-hero-title-accent">
+                      {copy.charts.dashboardTitleAccent}
+                    </span>
                   </h2>
                 </div>
 
                 <div className="cy-dashboard-grid">
                   <article className="cy-card cy-dashboard-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Role category share</h3>
+                      <h3>{copy.charts.roleShare}</h3>
                     </div>
                     <HorizontalBarChart
                       items={roleItems}
@@ -920,7 +956,7 @@ function App() {
 
                   <article className="cy-card cy-dashboard-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Leading cantons</h3>
+                      <h3>{copy.charts.leadingCantons}</h3>
                     </div>
                     <HorizontalBarChart
                       items={cantonItems}
@@ -933,21 +969,21 @@ function App() {
 
                   <article className="cy-card cy-dashboard-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Work mode distribution</h3>
+                      <h3>{copy.charts.workMode}</h3>
                     </div>
                     <SegmentChart items={workModeItems} />
                   </article>
 
                   <article className="cy-card cy-dashboard-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Seniority mix</h3>
+                      <h3>{copy.charts.seniorityMix}</h3>
                     </div>
                     <SegmentChart items={seniorityItems} />
                   </article>
 
                   <article className="cy-card cy-dashboard-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Top cities</h3>
+                      <h3>{copy.charts.topCities}</h3>
                     </div>
                     <HorizontalBarChart
                       items={cityItems}
@@ -959,8 +995,8 @@ function App() {
 
                   <article className="cy-card cy-dashboard-panel cy-company-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Top direct employers</h3>
-                      <p className="cy-copy">Recruiting agencies and job boards are excluded.</p>
+                      <h3>{copy.charts.topEmployers}</h3>
+                      <p className="cy-copy">{copy.charts.topEmployersDescription}</p>
                     </div>
                     <HorizontalBarChart
                       items={companyItems}
@@ -974,7 +1010,9 @@ function App() {
                         className="cy-data-more-button"
                         onClick={() => setShowMoreCompanyItems((value) => !value)}
                       >
-                        {showMoreCompanyItems ? "LESS" : "MORE"}
+                        {showMoreCompanyItems
+                          ? copy.common.less.toLocaleUpperCase(locale)
+                          : copy.common.more.toLocaleUpperCase(locale)}
                       </button>
                     ) : null}
                   </article>
@@ -1000,50 +1038,55 @@ function App() {
               <div className="cy-container">
                 <div className="cy-section-intro cy-section-intro-compact">
                   <h2 className="cy-heading cy-section-title">
-                    Salary <span className="cy-hero-title-accent">metrics</span>
+                    {copy.salary.sectionTitlePrefix}
+                    {copy.salary.sectionTitleSeparator}
+                    <span className="cy-hero-title-accent">
+                      {copy.salary.sectionTitleAccent}
+                    </span>
                   </h2>
                 </div>
 
                 <div className="cy-salary-layout">
                   <article className="cy-card cy-data-panel cy-salary-summary-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Compensation snapshot</h3>
-                      <p className="cy-copy">
-                        Comparable CHF salaries normalized to yearly values.
-                      </p>
+                      <h3>{copy.salary.snapshotTitle}</h3>
+                      <p className="cy-copy">{copy.salary.snapshotDescription}</p>
                     </div>
 
-                    <div className="cy-salary-toggle" aria-label="Salary breakdown">
+                    <div className="cy-salary-toggle" aria-label={copy.salary.breakdownAria}>
                       <button
                         type="button"
                         className={salaryBreakdown === "role_category" ? "is-active" : ""}
                         onClick={() => setSalaryBreakdown("role_category")}
                       >
-                        Roles
+                        {copy.salary.roles}
                       </button>
                       <button
                         type="button"
                         className={salaryBreakdown === "seniority" ? "is-active" : ""}
                         onClick={() => setSalaryBreakdown("seniority")}
                       >
-                        Seniority
+                        {copy.salary.seniority}
                       </button>
                     </div>
 
                     <div className="cy-salary-stat-grid">
                       <SalaryStat
-                        value={formatCurrency(salarySummary.average_salary)}
-                        label="Average yearly"
+                        value={formatMoney(salarySummary.average_salary)}
+                        label={copy.salary.averageYearly}
                       />
                       <SalaryStat
-                        value={formatCurrency(salarySummary.median_salary)}
-                        label="Median yearly"
+                        value={formatMoney(salarySummary.median_salary)}
+                        label={copy.salary.medianYearly}
                       />
                       <SalaryStat
-                        value={formatPercent(salarySummary.salary_coverage)}
-                        label="Salary coverage"
+                        value={formatShare(salarySummary.salary_coverage)}
+                        label={copy.salary.salaryCoverage}
                       />
-                      <SalaryStat value={formatInteger(salarySummary.salary_count)} label="Records" />
+                      <SalaryStat
+                        value={formatCount(salarySummary.salary_count)}
+                        label={copy.salary.records}
+                      />
                     </div>
 
                     <button
@@ -1051,7 +1094,7 @@ function App() {
                       className="cy-salary-more-button"
                       onClick={() => setShowAllSalaryGroups((value) => !value)}
                     >
-                      {showAllSalaryGroups ? "Less" : "More"}
+                      {showAllSalaryGroups ? copy.common.less : copy.common.more}
                     </button>
                   </article>
 
@@ -1081,32 +1124,34 @@ function App() {
               <div className="cy-container">
                 <div className="cy-section-intro cy-section-intro-compact">
                   <h2 className="cy-heading cy-section-title">
-                    Top <span className="cy-hero-title-accent">skills</span> and{" "}
-                    <span className="cy-hero-title-accent">pairings</span>
+                    {copy.skills.sectionTitlePrefix}{" "}
+                    <span className="cy-hero-title-accent">{copy.skills.sectionTitleMiddle}</span>{" "}
+                    {copy.skills.sectionTitleSuffix}{" "}
+                    <span className="cy-hero-title-accent">{copy.skills.sectionTitleLast}</span>
                   </h2>
                 </div>
 
                 <div className="cy-data-grid">
                   <article className="cy-card cy-data-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Top overall skills</h3>
-                      <p className="cy-copy">Ranked by vacancy frequency.</p>
+                      <h3>{copy.skills.topOverall}</h3>
+                      <p className="cy-copy">{copy.skills.topOverallDescription}</p>
                     </div>
                     <div className="cy-table-shell">
                       <table className="cy-data-table">
                         <thead>
                           <tr>
-                            <th>Skill</th>
-                            <th>Vacancies</th>
-                            <th>Share</th>
+                            <th>{copy.skills.skill}</th>
+                            <th>{copy.skills.vacancies}</th>
+                            <th>{copy.skills.share}</th>
                           </tr>
                         </thead>
                         <tbody>
                           {topSkillsItems.map((item) => (
                             <tr key={item.skill}>
-                              <td>{prettifyLabel(item.skill)}</td>
-                              <td>{formatInteger(item.vacancy_count)}</td>
-                              <td>{formatPercent(item.share)}</td>
+                              <td>{formatLabel(item.skill)}</td>
+                              <td>{formatCount(item.vacancy_count)}</td>
+                              <td>{formatShare(item.share)}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1116,18 +1161,18 @@ function App() {
 
                   <article className="cy-card cy-data-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Frequent pairings</h3>
-                      <p className="cy-copy">Technologies that often appear together.</p>
+                      <h3>{copy.skills.frequentPairings}</h3>
+                      <p className="cy-copy">{copy.skills.frequentPairingsDescription}</p>
                     </div>
                     <div className="cy-pair-list">
                       {topPairs.map((pair) => (
                         <div key={`${pair.skill_1}-${pair.skill_2}`} className="cy-pair-item">
                           <div>
                             <strong>
-                              {prettifyLabel(pair.skill_1)} + {prettifyLabel(pair.skill_2)}
+                              {formatLabel(pair.skill_1)} + {formatLabel(pair.skill_2)}
                             </strong>
                             <p className="cy-copy">
-                              {formatInteger(pair.vacancy_count)} shared vacancies
+                              {copy.skills.sharedVacancies(formatCount(pair.vacancy_count))}
                             </p>
                           </div>
                           <div className="cy-pair-meter">
@@ -1148,11 +1193,11 @@ function App() {
                     <div className="cy-role-highlight-grid">
                       {topRoleGroups.map((group) => (
                         <div key={group.group} className="cy-role-highlight-card">
-                          <p className="cy-kicker">{prettifyLabel(group.group)}</p>
+                          <p className="cy-kicker">{formatLabel(group.group)}</p>
                           <div className="cy-chip-list">
                             {selectTopItems(group.items ?? [], 4).map((item) => (
                               <span key={`${group.group}-${item.skill}`} className="cy-chip">
-                                {prettifyLabel(item.skill)} · {formatPercent(item.share_within_group)}
+                                {formatLabel(item.skill)} · {formatShare(item.share_within_group)}
                               </span>
                             ))}
                           </div>
@@ -1164,21 +1209,19 @@ function App() {
 
                 <article className="cy-card cy-data-panel cy-programming-language-panel">
                   <div className="cy-data-panel-head">
-                    <h3>Top programming languages</h3>
-                    <p className="cy-copy">
-                      Language mentions extracted from the current vacancy snapshot.
-                    </p>
+                    <h3>{copy.skills.topLanguages}</h3>
+                    <p className="cy-copy">{copy.skills.topLanguagesDescription}</p>
                   </div>
 
                   <div className="cy-summary-chip-row">
                     <span className="cy-chip">
-                      Coverage · {formatPercent(programmingLanguageSummary.vacancy_coverage)}
+                      {copy.skills.coverage} · {formatShare(programmingLanguageSummary.vacancy_coverage)}
                     </span>
                     <span className="cy-chip">
-                      Vacancies · {formatInteger(programmingLanguageSummary.vacancies_with_items)}
+                      {copy.skills.vacancies} · {formatCount(programmingLanguageSummary.vacancies_with_items)}
                     </span>
                     <span className="cy-chip">
-                      Distinct languages · {formatInteger(programmingLanguageSummary.distinct_items)}
+                      {copy.skills.distinctLanguages} · {formatCount(programmingLanguageSummary.distinct_items)}
                     </span>
                   </div>
 
@@ -1186,17 +1229,17 @@ function App() {
                     <table className="cy-data-table">
                       <thead>
                         <tr>
-                          <th>Language</th>
-                          <th>Vacancies</th>
-                          <th>Share</th>
+                          <th>{copy.skills.language}</th>
+                          <th>{copy.skills.vacancies}</th>
+                          <th>{copy.skills.share}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {topProgrammingLanguages.map((item) => (
                           <tr key={item.programming_language}>
-                            <td>{prettifyLabel(item.programming_language)}</td>
-                            <td>{formatInteger(item.vacancy_count)}</td>
-                            <td>{formatPercent(item.share)}</td>
+                            <td>{formatLabel(item.programming_language)}</td>
+                            <td>{formatCount(item.vacancy_count)}</td>
+                            <td>{formatShare(item.share)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -1206,21 +1249,19 @@ function App() {
 
                 <article className="cy-card cy-data-panel cy-programming-language-panel">
                   <div className="cy-data-panel-head">
-                    <h3>Top frameworks & libraries</h3>
-                    <p className="cy-copy">
-                      Framework and library mentions extracted from the current vacancy snapshot.
-                    </p>
+                    <h3>{copy.skills.topFrameworks}</h3>
+                    <p className="cy-copy">{copy.skills.topFrameworksDescription}</p>
                   </div>
 
                   <div className="cy-summary-chip-row">
                     <span className="cy-chip">
-                      Coverage · {formatPercent(frameworksSummary.vacancy_coverage)}
+                      {copy.skills.coverage} · {formatShare(frameworksSummary.vacancy_coverage)}
                     </span>
                     <span className="cy-chip">
-                      Vacancies · {formatInteger(frameworksSummary.vacancies_with_items)}
+                      {copy.skills.vacancies} · {formatCount(frameworksSummary.vacancies_with_items)}
                     </span>
                     <span className="cy-chip">
-                      Distinct items · {formatInteger(frameworksSummary.distinct_items)}
+                      {copy.skills.distinctItems} · {formatCount(frameworksSummary.distinct_items)}
                     </span>
                   </div>
 
@@ -1228,17 +1269,17 @@ function App() {
                     <table className="cy-data-table">
                       <thead>
                         <tr>
-                          <th>Framework / Library</th>
-                          <th>Vacancies</th>
-                          <th>Share</th>
+                          <th>{copy.skills.frameworkLibrary}</th>
+                          <th>{copy.skills.vacancies}</th>
+                          <th>{copy.skills.share}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {topFrameworksLibraries.map((item) => (
                           <tr key={item.framework_library}>
-                            <td>{prettifyLabel(item.framework_library)}</td>
-                            <td>{formatInteger(item.vacancy_count)}</td>
-                            <td>{formatPercent(item.share)}</td>
+                            <td>{formatLabel(item.framework_library)}</td>
+                            <td>{formatCount(item.vacancy_count)}</td>
+                            <td>{formatShare(item.share)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -1248,11 +1289,8 @@ function App() {
 
                 <article className="cy-card cy-data-panel cy-skill-matrix-panel">
                   <div className="cy-data-panel-head">
-                    <h3>Job skills by role</h3>
-                    <p className="cy-copy">
-                      Skill mix within the leading role categories. Segment width is normalized inside
-                      each role.
-                    </p>
+                    <h3>{copy.skills.jobSkillsByRole}</h3>
+                    <p className="cy-copy">{copy.skills.jobSkillsByRoleDescription}</p>
                   </div>
 
                   <SkillRoleMatrix matrix={skillRoleMatrix} />
@@ -1266,22 +1304,19 @@ function App() {
               <div className="cy-container">
                 <div id="methodology" className="cy-section-intro cy-section-intro-compact">
                   <h2 className="cy-heading cy-section-title">
-                    Read <span className="cy-hero-title-accent">methodology</span>
+                    {copy.methodology.sectionTitlePrefix}{" "}
+                    <span className="cy-hero-title-accent">
+                      {copy.methodology.sectionTitleAccent}
+                    </span>
                   </h2>
-                  <p className="cy-copy cy-section-copy">
-                    How the public snapshot is assembled, normalized, and published for the
-                    dashboard.
-                  </p>
+                  <p className="cy-copy cy-section-copy">{copy.methodology.sectionDescription}</p>
                 </div>
 
                 <div className="cy-meta-strip">
                   <article className="cy-card cy-data-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Pipeline overview</h3>
-                      <p className="cy-copy">
-                        The dashboard is built from aggregated vacancy exports, AI-assisted vacancy
-                        enrichment, and compact public snapshot files.
-                      </p>
+                      <h3>{copy.methodology.pipelineTitle}</h3>
+                      <p className="cy-copy">{copy.methodology.pipelineDescription}</p>
                     </div>
 
                     <div className="cy-methodology-step-list">
@@ -1297,35 +1332,33 @@ function App() {
 
                   <article className="cy-card cy-data-panel">
                     <div className="cy-data-panel-head">
-                      <h3>Snapshot coverage</h3>
-                      <p className="cy-copy">
-                        Current build metadata for the export powering this page.
-                      </p>
+                      <h3>{copy.methodology.coverageTitle}</h3>
+                      <p className="cy-copy">{copy.methodology.coverageDescription}</p>
                     </div>
 
                     <div className="cy-meta-strip-grid">
                       <MetricCard
-                        label="Generated"
-                        value={formatShortDate(metadata.generated_at)}
-                        description={formatDateTime(metadata.generated_at)}
+                        label={copy.methodology.generated}
+                        value={formatShortDate(metadata.generated_at, locale)}
+                        description={formatDateTime(metadata.generated_at, locale)}
                       />
                       <MetricCard
-                        label="JSON snapshots"
-                        value={formatInteger(generatedSnapshots.length)}
-                        description="Public files published to the dashboard."
+                        label={copy.methodology.jsonSnapshots}
+                        value={formatCount(generatedSnapshots.length)}
+                        description={copy.methodology.jsonDescription}
                       />
                       <MetricCard
-                        label="CSV inputs"
-                        value={formatInteger(availableCsvFiles.length)}
-                        description="Analytics exports available for this build."
+                        label={copy.methodology.csvInputs}
+                        value={formatCount(availableCsvFiles.length)}
+                        description={copy.methodology.csvDescription}
                       />
                       <MetricCard
-                        label="Missing inputs"
-                        value={formatInteger(missingCsvFiles.length)}
+                        label={copy.methodology.missingInputs}
+                        value={formatCount(missingCsvFiles.length)}
                         description={
                           missingCsvFiles.length
                             ? missingCsvFiles.join(", ")
-                            : "All expected CSV inputs are present."
+                            : copy.common.allInputsPresent
                         }
                       />
                     </div>
@@ -1337,7 +1370,9 @@ function App() {
                         </span>
                       ))}
                       {generatedSnapshots.length > 8 ? (
-                        <span className="cy-chip">+{generatedSnapshots.length - 8} more</span>
+                        <span className="cy-chip">
+                          {copy.common.moreFiles(generatedSnapshots.length - 8)}
+                        </span>
                       ) : null}
                     </div>
 
@@ -1347,7 +1382,7 @@ function App() {
                           href={downloadLinks.jsonArchive}
                           download="swiss-it-jobs-json-snapshots.zip"
                         >
-                          Download JSON snapshots
+                          {copy.methodology.downloadJson}
                         </PrimaryButton>
                       ) : null}
                       {availableCsvFiles.length ? (
@@ -1356,7 +1391,7 @@ function App() {
                           variant="outline"
                           download="swiss-it-jobs-csv-exports.zip"
                         >
-                          Download CSV exports
+                          {copy.methodology.downloadCsv}
                         </PrimaryButton>
                       ) : null}
                     </div>
@@ -1416,6 +1451,9 @@ function StatusScreen({ title, message }) {
           <div className="cy-hero-shell cy-grid">
             <div className="cy-hero-grid">
               <div className="cy-hero-copy">
+                <div className="cy-hero-toolbar">
+                  <LanguageSwitcher />
+                </div>
                 <SectionEyebrow label="Swiss IT Jobs" />
                 <h1 className="cy-heading cy-hero-title">{title}</h1>
                 <p className="cy-copy cy-hero-text">{message}</p>
@@ -1425,6 +1463,29 @@ function StatusScreen({ title, message }) {
         </div>
       </section>
     </main>
+  );
+}
+
+function LanguageSwitcher() {
+  const { copy, language, setLanguage } = useI18n();
+
+  return (
+    <div className="cy-language-switcher" aria-label={copy.languageSwitcher.ariaLabel}>
+      <span>{copy.languageSwitcher.label}</span>
+      <div className="cy-language-switcher-options">
+        {LANGUAGE_OPTIONS.map((option) => (
+          <button
+            key={option.code}
+            type="button"
+            className={option.code === language ? "is-active" : ""}
+            aria-pressed={option.code === language}
+            onClick={() => setLanguage(option.code)}
+          >
+            {option.shortLabel}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -1441,16 +1502,17 @@ function PrimaryButton({ children, href, variant = "solid", download }) {
 }
 
 function SectionRail({ sections, activeSectionId }) {
+  const { copy } = useI18n();
   const isHeroActive = activeSectionId === "overview";
 
   return (
     <aside
       className={`cy-section-rail ${isHeroActive ? "is-hero-active" : ""}`}
-      aria-label="Page sections"
+      aria-label={copy.navigation.ariaLabel}
       aria-hidden={isHeroActive}
     >
       <div className="cy-card cy-section-rail-card">
-        <p className="cy-kicker">Navigate</p>
+        <p className="cy-kicker">{copy.navigation.title}</p>
         <nav className="cy-section-rail-nav">
           {sections.map((section, index) => (
             <a
@@ -1488,6 +1550,7 @@ function SectionDivider() {
 }
 
 function ProductKpiCard({ label, value, trendValue, trendText }) {
+  const { copy, locale } = useI18n();
   const direction = typeof trendValue === "number" ? (trendValue < 0 ? "down" : "up") : "flat";
   const trendArrow = direction === "down" ? "↓" : direction === "up" ? "↑" : "•";
 
@@ -1499,7 +1562,11 @@ function ProductKpiCard({ label, value, trendValue, trendText }) {
         <span className="cy-kpi-trend-arrow" aria-hidden="true">
           {trendArrow}
         </span>
-        <strong>{typeof trendValue === "number" ? formatSignedPercent(trendValue) : "Live"}</strong>
+        <strong>
+          {typeof trendValue === "number"
+            ? formatSignedPercent(trendValue, locale)
+            : copy.common.live}
+        </strong>
         <span>{trendText}</span>
       </div>
     </article>
@@ -1546,22 +1613,25 @@ function SalaryStat({ value, label }) {
 }
 
 function SalaryConfidenceWarning({ salaryCount, salaryCoverage, hiddenGroupCount }) {
+  const { copy, locale } = useI18n();
+
   return (
     <div className="cy-salary-confidence-warning" role="note">
-      <strong>Low-confidence salary benchmark</strong>
+      <strong>{copy.salary.confidenceTitle}</strong>
       <span>
-        Ranking only shows groups with at least {SALARY_RANKING_MIN_COUNT} salary records.
-        {hiddenGroupCount > 0
-          ? ` ${formatInteger(hiddenGroupCount)} thin-sample groups are hidden.`
-          : ""}{" "}
-        Overall salary coverage is {formatPercent(salaryCoverage)} from{" "}
-        {formatInteger(salaryCount)} records.
+        {copy.salary.confidenceText(
+          SALARY_RANKING_MIN_COUNT,
+          hiddenGroupCount > 0 ? formatInteger(hiddenGroupCount, locale) : null,
+          formatPercent(salaryCoverage, locale),
+          formatInteger(salaryCount, locale),
+        )}
       </span>
     </div>
   );
 }
 
 function ExperienceRequirementsPanel({ summary, bySeniority }) {
+  const { copy, language, locale } = useI18n();
   const topSeniorityItems = selectTopItems(
     bySeniority.filter((item) => (item.experience_years_count ?? 0) > 0),
     5,
@@ -1582,33 +1652,30 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
   return (
     <article className="cy-card cy-data-panel cy-experience-panel">
       <div className="cy-data-panel-head">
-        <h3>Experience requirements</h3>
-        <p className="cy-copy">
-          Explicit years of experience requested in vacancy text, grouped by inferred seniority.
-          Averages by seniority require at least {EXPERIENCE_MIN_SAMPLE_SIZE} year mentions.
-        </p>
+        <h3>{copy.experience.title}</h3>
+        <p className="cy-copy">{copy.experience.description(EXPERIENCE_MIN_SAMPLE_SIZE)}</p>
       </div>
 
       <div className="cy-experience-stat-grid">
         <SalaryStat
-          value={formatPercent(knownSeniorityMentionShare)}
-          label={`${formatInteger(
-            knownSeniorityMentionCount,
-          )} year mentions with seniority`}
+          value={formatPercent(knownSeniorityMentionShare, locale)}
+          label={copy.experience.seniorityMentionLabel(
+            formatInteger(knownSeniorityMentionCount, locale),
+          )}
         />
         <SalaryStat
-          value={formatPercent(summary.experience_years_mentioned_share)}
-          label={`${formatInteger(
-            summary.experience_years_mentioned_count,
-          )} mention years of experience`}
+          value={formatPercent(summary.experience_years_mentioned_share, locale)}
+          label={copy.experience.yearsMentionedLabel(
+            formatInteger(summary.experience_years_mentioned_count, locale),
+          )}
         />
         <SalaryStat
-          value={formatYears(summary.average_min_experience_years)}
-          label="Average minimum requested"
+          value={formatYears(summary.average_min_experience_years, locale)}
+          label={copy.experience.averageMinimum}
         />
         <SalaryStat
-          value={formatYears(summary.median_min_experience_years)}
-          label="Median minimum requested"
+          value={formatYears(summary.median_min_experience_years, locale)}
+          label={copy.experience.medianMinimum}
         />
       </div>
 
@@ -1617,13 +1684,14 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
           {topSeniorityItems.map((item) => (
             <div key={item.seniority} className="cy-experience-row">
               <div className="cy-experience-row-head">
-                <strong>{prettifyLabel(item.seniority)}</strong>
+                <strong>{prettifyLabel(item.seniority, language)}</strong>
                 <span>
-                  {formatInteger(item.experience_years_count)} ·{" "}
+                  {formatInteger(item.experience_years_count, locale)} ·{" "}
                   {formatPercent(
                     totalMentionCount
                       ? (item.experience_years_count ?? 0) / totalMentionCount
                       : 0,
+                    locale,
                   )}
                 </span>
               </div>
@@ -1643,26 +1711,26 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
 
         <div className="cy-table-shell cy-experience-table-shell">
           <div className="cy-data-panel-head cy-experience-table-head">
-            <h4>Experience mentions by seniority</h4>
+            <h4>{copy.experience.mentionsBySeniority}</h4>
           </div>
           <table className="cy-data-table">
             <thead>
               <tr>
-                <th>Seniority</th>
-                <th>Avg. min exp.</th>
-                <th>Mentions</th>
+                <th>{copy.experience.seniority}</th>
+                <th>{copy.experience.averageMinExperience}</th>
+                <th>{copy.experience.mentions}</th>
               </tr>
             </thead>
             <tbody>
               {topSeniorityItems.map((item) => (
                 <tr key={`${item.seniority}-experience`}>
-                  <td>{prettifyLabel(item.seniority)}</td>
+                  <td>{prettifyLabel(item.seniority, language)}</td>
                   <td>
                     {item.experience_years_count >= EXPERIENCE_MIN_SAMPLE_SIZE
-                      ? formatYears(item.average_min_experience_years)
-                      : "n/a"}
+                      ? formatYears(item.average_min_experience_years, locale)
+                      : copy.common.na}
                   </td>
-                  <td>{formatInteger(item.experience_years_count)}</td>
+                  <td>{formatInteger(item.experience_years_count, locale)}</td>
                 </tr>
               ))}
             </tbody>
@@ -1674,30 +1742,30 @@ function ExperienceRequirementsPanel({ summary, bySeniority }) {
 }
 
 function SeniorityDistributionPanel({ items }) {
+  const { copy, language, locale } = useI18n();
+
   return (
     <article className="cy-card cy-data-panel cy-seniority-distribution-panel">
       <div className="cy-data-panel-head">
-        <h3>Seniority distribution</h3>
-        <p className="cy-copy">
-          Overall inferred seniority mix across vacancies, independent of explicit experience mentions.
-        </p>
+        <h3>{copy.experience.distributionTitle}</h3>
+        <p className="cy-copy">{copy.experience.distributionDescription}</p>
       </div>
 
       <div className="cy-table-shell cy-seniority-distribution-table-shell">
         <table className="cy-data-table">
           <thead>
             <tr>
-              <th>Seniority</th>
-              <th>Vacancies</th>
-              <th>Share</th>
+              <th>{copy.experience.seniority}</th>
+              <th>{copy.experience.vacancies}</th>
+              <th>{copy.experience.share}</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item) => (
               <tr key={`${item.key ?? item.label}-distribution`}>
-                <td>{prettifyLabel(item.label ?? item.key)}</td>
-                <td>{formatInteger(item.vacancy_count)}</td>
-                <td>{formatPercent(item.share)}</td>
+                <td>{prettifyLabel(item.label ?? item.key, language)}</td>
+                <td>{formatInteger(item.vacancy_count, locale)}</td>
+                <td>{formatPercent(item.share, locale)}</td>
               </tr>
             ))}
           </tbody>
@@ -1708,6 +1776,7 @@ function SeniorityDistributionPanel({ items }) {
 }
 
 function VacancyTrendsPanel({ trends }) {
+  const { copy, language, locale } = useI18n();
   const [periodDays, setPeriodDays] = useState(90);
   const [granularity, setGranularity] = useState("weekly");
   const [selectedCantons, setSelectedCantons] = useState([]);
@@ -1742,28 +1811,26 @@ function VacancyTrendsPanel({ trends }) {
   );
   const locationLabel = selectedCantons.length
     ? selectedCantons.join(", ")
-    : "Switzerland";
+    : copy.trends.switzerland;
 
   return (
     <article className="cy-card cy-data-panel cy-trend-panel">
       <div className="cy-trend-title-block">
-        <p className="cy-kicker">Publication date index</p>
-        <h3>Job postings in {locationLabel}</h3>
-        <p className="cy-copy">
-          Role-category posting trend with canton filters, inferred closures and seasonality.
-        </p>
+        <p className="cy-kicker">{copy.trends.kicker}</p>
+        <h3>{copy.trends.title(locationLabel)}</h3>
+        <p className="cy-copy">{copy.trends.description}</p>
       </div>
 
-      <div className="cy-trend-filter-grid" aria-label="Vacancy trend filters">
+      <div className="cy-trend-filter-grid" aria-label={copy.trends.filtersAria}>
         <div className="cy-trend-filter-card">
-          <span>Region</span>
+          <span>{copy.trends.region}</span>
           <div className="cy-trend-chip-row">
             <button
               type="button"
               className={selectedCantons.length === 0 ? "is-active" : ""}
               onClick={() => setSelectedCantons([])}
             >
-              Switzerland
+              {copy.trends.switzerland}
             </button>
             {cantonOptions.map((canton) => (
               <button
@@ -1785,7 +1852,7 @@ function VacancyTrendsPanel({ trends }) {
         </div>
 
         <div className="cy-trend-filter-card">
-          <span>Professions</span>
+          <span>{copy.trends.professions}</span>
           <div className="cy-trend-chip-row">
             {roleOptions.map((role, index) => (
               <button
@@ -1806,15 +1873,15 @@ function VacancyTrendsPanel({ trends }) {
                   });
                 }}
               >
-                {prettifyLabel(role)}
+                {prettifyLabel(role, language)}
               </button>
             ))}
           </div>
         </div>
 
         <div className="cy-trend-filter-card cy-trend-filter-card-compact">
-          <span>Period</span>
-          <div className="cy-trend-toggle" aria-label="Period">
+          <span>{copy.trends.period}</span>
+          <div className="cy-trend-toggle" aria-label={copy.trends.periodAria}>
             {TREND_PERIOD_OPTIONS.map((option) => (
               <button
                 key={option.label}
@@ -1826,44 +1893,55 @@ function VacancyTrendsPanel({ trends }) {
               </button>
             ))}
           </div>
-          <div className="cy-trend-toggle" aria-label="Granularity">
+          <div className="cy-trend-toggle" aria-label={copy.trends.granularityAria}>
             <button
               type="button"
               className={granularity === "daily" ? "is-active" : ""}
               onClick={() => setGranularity("daily")}
             >
-              Days
+              {copy.trends.days}
             </button>
             <button
               type="button"
               className={granularity === "weekly" ? "is-active" : ""}
               onClick={() => setGranularity("weekly")}
             >
-              Weeks
+              {copy.trends.weeks}
             </button>
           </div>
         </div>
       </div>
 
       <div className="cy-trend-stat-grid">
-        <SalaryStat value={formatInteger(publishedCount)} label="Published in selection" />
-        <SalaryStat value={formatSignedPercent(growth)} label="Growth vs previous period" />
-        <SalaryStat value={formatInteger(closedCount)} label="Closed / disappeared" />
         <SalaryStat
-          value={strongestMonth ? MONTH_NAMES[strongestMonth.month - 1] : "n/a"}
+          value={formatInteger(publishedCount, locale)}
+          label={copy.trends.publishedSelection}
+        />
+        <SalaryStat
+          value={formatSignedPercent(growth, locale)}
+          label={copy.trends.growthPrevious}
+        />
+        <SalaryStat
+          value={formatInteger(closedCount, locale)}
+          label={copy.trends.closedDisappeared}
+        />
+        <SalaryStat
+          value={strongestMonth ? copy.trends.monthNames[strongestMonth.month - 1] : copy.common.na}
           label={
             strongestMonth && weakestMonth
-              ? `Seasonality high / low: ${MONTH_NAMES[weakestMonth.month - 1]}`
-              : "Seasonality high / low"
+              ? copy.trends.seasonalityHighLowWithMonth(
+                  copy.trends.monthNames[weakestMonth.month - 1],
+                )
+              : copy.trends.seasonalityHighLow
           }
         />
       </div>
 
-      <div className="cy-trend-legend" aria-label="Profession legend">
+      <div className="cy-trend-legend" aria-label={copy.trends.legendAria}>
         {chartData.series.map((series, index) => (
           <span key={series.role}>
             <i style={{ background: getTrendRoleColor(index) }} />
-            {prettifyLabel(series.role)}
+            {prettifyLabel(series.role, language)}
           </span>
         ))}
       </div>
@@ -1873,14 +1951,15 @@ function VacancyTrendsPanel({ trends }) {
       </div>
 
       <div className="cy-trend-footnote">
-        <span>Closed means last seen before the latest crawl.</span>
-        <span>Trend uses vacancy publication dates.</span>
+        <span>{copy.trends.closedFootnote}</span>
+        <span>{copy.trends.trendFootnote}</span>
       </div>
     </article>
   );
 }
 
 function TrendLineChart({ chartData, granularity }) {
+  const { copy, language, locale } = useI18n();
   const [hoverIndex, setHoverIndex] = useState(null);
   const width = getTrendChartWidth(chartData.labels.length, granularity);
   const height = 430;
@@ -1921,7 +2000,7 @@ function TrendLineChart({ chartData, granularity }) {
   const tooltipY = margin.top + 8;
 
   if (!chartData.labels.length || !chartData.series.length) {
-    return <p className="cy-copy cy-empty-state">No trend data for this selection.</p>;
+    return <p className="cy-copy cy-empty-state">{copy.trends.empty}</p>;
   }
 
   function handlePointerMove(event) {
@@ -1934,7 +2013,7 @@ function TrendLineChart({ chartData, granularity }) {
 
   return (
     <svg className="cy-trend-line-chart" viewBox={`0 0 ${width} ${height}`} role="img">
-      <title>Vacancy trend by profession</title>
+      <title>{copy.trends.chartTitle}</title>
       <defs>
         <filter id="trendTooltipShadow" x="-10%" y="-10%" width="120%" height="140%">
           <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#101828" floodOpacity="0.16" />
@@ -1947,7 +2026,7 @@ function TrendLineChart({ chartData, granularity }) {
             <g key={tick} className="cy-trend-grid-line">
               <line x1="0" x2={innerWidth} y1={y} y2={y} />
               <text x="-14" y={y + 4} textAnchor="end">
-                {formatInteger(tick)}
+                {formatInteger(tick, locale)}
               </text>
             </g>
           );
@@ -1970,7 +2049,7 @@ function TrendLineChart({ chartData, granularity }) {
               textAnchor="end"
               transform={`rotate(-45 ${x} ${innerHeight + 34})`}
             >
-              {formatTrendAxisLabel(label, granularity)}
+              {formatTrendAxisLabel(label, granularity, locale)}
             </text>
           );
         })}
@@ -2004,7 +2083,7 @@ function TrendLineChart({ chartData, granularity }) {
                   fill={getTrendRoleColor(index)}
                 >
                   <title>
-                    {prettifyLabel(series.role)}: {formatInteger(value)}
+                    {prettifyLabel(series.role, language)}: {formatInteger(value, locale)}
                   </title>
                 </circle>
               );
@@ -2059,16 +2138,23 @@ function TrendLineChart({ chartData, granularity }) {
             ry="8"
           />
           <text className="cy-trend-tooltip-title" x="16" y="25">
-            {formatTrendTooltipDate(chartData.labels[activeHoverIndex], granularity)}
+            {formatTrendTooltipDate(
+              chartData.labels[activeHoverIndex],
+              granularity,
+              copy,
+              locale,
+            )}
           </text>
           <text className="cy-trend-tooltip-total" x={tooltipWidth - 16} y="25" textAnchor="end">
-            Total {formatInteger(tooltipRows.reduce((sum, row) => sum + row.value, 0))}
+            {copy.trends.tooltipTotal(
+              formatInteger(tooltipRows.reduce((sum, row) => sum + row.value, 0), locale),
+            )}
           </text>
           {tooltipRows.map((row, index) => (
             <g key={row.role} transform={`translate(16 ${50 + index * 22})`}>
               <circle cx="4" cy="-4" r="4" fill={row.color} />
               <text className="cy-trend-tooltip-label" x="16" y="0">
-                {prettifyLabel(row.role)}
+                {prettifyLabel(row.role, language)}
               </text>
               <text
                 className="cy-trend-tooltip-value"
@@ -2076,7 +2162,7 @@ function TrendLineChart({ chartData, granularity }) {
                 y="0"
                 textAnchor="end"
               >
-                {formatInteger(row.value)}
+                {formatInteger(row.value, locale)}
               </text>
             </g>
           ))}
@@ -2094,6 +2180,7 @@ function SwissVacancyMap({
   cityOptions,
   onSelectCity,
 }) {
+  const { copy, locale } = useI18n();
   const maxValue = Math.max(...items.map((item) => item.vacancy_count), 1);
   const markerItems = [...items].sort((a, b) => a.vacancy_count - b.vacancy_count);
   const labelItems = items.filter(
@@ -2105,8 +2192,8 @@ function SwissVacancyMap({
     return (
       <article className="cy-card cy-map-panel">
         <div className="cy-data-panel-head">
-          <h3>Vacancies by Swiss city</h3>
-          <p className="cy-copy cy-empty-state">No mappable Swiss city metrics available.</p>
+          <h3>{copy.map.emptyTitle}</h3>
+          <p className="cy-copy cy-empty-state">{copy.map.emptyDescription}</p>
         </div>
       </article>
     );
@@ -2116,37 +2203,38 @@ function SwissVacancyMap({
     <article className="cy-card cy-map-panel">
       <div className="cy-map-panel-head">
         <div className="cy-data-panel-head">
-          <h3>Vacancies by Swiss city</h3>
-          <p className="cy-copy">
-            Red bubbles are scaled by vacancy count. Darker and larger bubbles represent stronger
-            city concentration.
-          </p>
+          <h3>{copy.map.title}</h3>
+          <p className="cy-copy">{copy.map.description}</p>
           {coverage ? (
             <p className="cy-copy cy-map-coverage-copy">
-              {formatInteger(Math.round(coverage.mappedVacancies))} of{" "}
-              {formatInteger(Math.round(coverage.totalVacancies))} tracked vacancies are placed on
-              the city map ({formatPercent(coverage.mappedShare)} coverage).
+              {copy.map.coverageDescription(
+                formatInteger(Math.round(coverage.mappedVacancies), locale),
+                formatInteger(Math.round(coverage.totalVacancies), locale),
+                formatPercent(coverage.mappedShare, locale),
+              )}
             </p>
           ) : null}
         </div>
-        <div className="cy-map-summary" aria-label="Mapped vacancy summary">
-          <span>{formatInteger(items.length)} cities</span>
-          <strong>{formatInteger(Math.round(coverage?.mappedVacancies ?? 0))} mapped vacancies</strong>
+        <div className="cy-map-summary" aria-label={copy.map.summaryAria}>
+          <span>{copy.map.cities(formatInteger(items.length, locale))}</span>
+          <strong>
+            {copy.map.mappedVacancies(
+              formatInteger(Math.round(coverage?.mappedVacancies ?? 0), locale),
+            )}
+          </strong>
           {coverage ? (
             <div className="cy-map-summary-breakdown">
+              <p>{copy.map.multiCity(formatInteger(Math.round(coverage.multiCityVacancies), locale))}</p>
               <p>
-                <strong>{formatInteger(Math.round(coverage.multiCityVacancies))}</strong> mention
-                multiple cities and are split across bubbles.
+                {copy.map.broadLocation(
+                  formatInteger(Math.round(coverage.broadLocationVacancies), locale),
+                )}
               </p>
               <p>
-                <strong>{formatInteger(Math.round(coverage.broadLocationVacancies))}</strong> use
-                nationwide, regional, or remote-style location labels.
-              </p>
-              <p>
-                <strong>{formatInteger(Math.round(coverage.missingLocationVacancies))}</strong>{" "}
-                are unknown and{" "}
-                <strong>{formatInteger(Math.round(coverage.unmatchedLocationVacancies))}</strong>{" "}
-                more still use labels not mapped to a city.
+                {copy.map.unmapped(
+                  formatInteger(Math.round(coverage.missingLocationVacancies), locale),
+                  formatInteger(Math.round(coverage.unmatchedLocationVacancies), locale),
+                )}
               </p>
             </div>
           ) : null}
@@ -2161,10 +2249,9 @@ function SwissVacancyMap({
             role="img"
             aria-labelledby="swiss-vacancy-map-title swiss-vacancy-map-description"
           >
-            <title id="swiss-vacancy-map-title">Swiss IT job vacancies by city</title>
+            <title id="swiss-vacancy-map-title">{copy.map.svgTitle}</title>
             <desc id="swiss-vacancy-map-description">
-              Switzerland outline with red translucent circles over cities. Circle size and opacity
-              increase with vacancy count.
+              {copy.map.svgDescription}
             </desc>
             <defs>
               <filter id="mapBubbleShadow" x="-40%" y="-40%" width="180%" height="180%">
@@ -2213,7 +2300,10 @@ function SwissVacancyMap({
                       filter="url(#mapBubbleShadow)"
                     >
                       <title>
-                        {item.label}: {formatInteger(Math.round(item.vacancy_count))} vacancies
+                        {copy.map.markerTitle(
+                          item.label,
+                          formatInteger(Math.round(item.vacancy_count), locale),
+                        )}
                       </title>
                     </circle>
                     <circle className="cy-map-city-dot" r="2.6" />
@@ -2238,7 +2328,7 @@ function SwissVacancyMap({
                   >
                     <tspan className="cy-map-label-name">{item.label}</tspan>
                     <tspan className="cy-map-label-value" x={x + dx} dy="13">
-                      {formatInteger(Math.round(item.vacancy_count))}
+                      {formatInteger(Math.round(item.vacancy_count), locale)}
                     </tspan>
                   </text>
                 );
@@ -2258,15 +2348,14 @@ function SwissVacancyMap({
 }
 
 function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
+  const { copy, locale } = useI18n();
+
   if (!details) {
     return (
       <aside className="cy-map-detail-panel">
-        <p className="cy-kicker">City detail</p>
-        <h3>Select a city bubble</h3>
-        <p className="cy-copy">
-          Click a bubble on the map to inspect local hiring volume, share of the market, top roles,
-          employers, and work mode mix.
-        </p>
+        <p className="cy-kicker">{copy.map.detailKicker}</p>
+        <h3>{copy.map.selectCityTitle}</h3>
+        <p className="cy-copy">{copy.map.selectCityDescription}</p>
       </aside>
     );
   }
@@ -2285,10 +2374,10 @@ function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
     <aside className="cy-map-detail-panel" aria-live="polite">
       <div className="cy-map-detail-head">
         <div>
-          <p className="cy-kicker">City detail</p>
+          <p className="cy-kicker">{copy.map.detailKicker}</p>
           <h3>{details.label}</h3>
         </div>
-        <span className="cy-map-detail-rank">#{details.rank} mapped city</span>
+        <span className="cy-map-detail-rank">{copy.map.rank(details.rank)}</span>
       </div>
 
       <MapCityPicker
@@ -2299,15 +2388,15 @@ function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
 
       <div className="cy-map-detail-stats">
         <MapDetailStat
-          label="Vacancies"
-          value={formatInteger(Math.round(details.vacancy_count))}
+          label={copy.map.vacancies}
+          value={formatInteger(Math.round(details.vacancy_count), locale)}
         />
-        <MapDetailStat label="Market share" value={formatPercent(details.share)} />
+        <MapDetailStat label={copy.map.marketShare} value={formatPercent(details.share, locale)} />
       </div>
 
       <div className="cy-map-detail-block">
         <div className="cy-data-panel-head">
-          <h4>Top roles</h4>
+          <h4>{copy.map.topRoles}</h4>
         </div>
         {topRoles.length ? (
           <HorizontalBarChart
@@ -2317,13 +2406,13 @@ function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
             shareKey="share"
           />
         ) : (
-          <p className="cy-copy cy-empty-state">No role breakdown available.</p>
+          <p className="cy-copy cy-empty-state">{copy.map.noRoles}</p>
         )}
       </div>
 
       <div className="cy-map-detail-block">
         <div className="cy-data-panel-head">
-          <h4>Top employers</h4>
+          <h4>{copy.map.topEmployers}</h4>
         </div>
         {topEmployers.length ? (
           <HorizontalBarChart
@@ -2331,21 +2420,21 @@ function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
             labelKey="company"
             valueKey="vacancy_count"
             shareKey="share"
-            labelFormatter={(value) => value || "n/a"}
+            labelFormatter={(value) => value || copy.common.na}
           />
         ) : (
-          <p className="cy-copy cy-empty-state">No employer breakdown available.</p>
+          <p className="cy-copy cy-empty-state">{copy.map.noEmployers}</p>
         )}
       </div>
 
       <div className="cy-map-detail-block">
         <div className="cy-data-panel-head">
-          <h4>Work mode split</h4>
+          <h4>{copy.map.workMode}</h4>
         </div>
         {workModeItems.length ? (
           <SegmentChart items={workModeItems} />
         ) : (
-          <p className="cy-copy cy-empty-state">No work mode breakdown available.</p>
+          <p className="cy-copy cy-empty-state">{copy.map.noWorkMode}</p>
         )}
       </div>
     </aside>
@@ -2353,6 +2442,7 @@ function MapCityDetailPanel({ details, cityOptions, onSelectCity }) {
 }
 
 function MapCityPicker({ selectedCityKey, cityOptions, onSelectCity }) {
+  const { copy, locale } = useI18n();
   const containerRef = useRef(null);
   const inputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -2467,8 +2557,8 @@ function MapCityPicker({ selectedCityKey, cityOptions, onSelectCity }) {
   return (
     <div className="cy-map-city-picker" ref={containerRef}>
       <div className="cy-map-city-picker-head">
-        <span>Choose another city</span>
-        <p>Type to search or use arrow keys.</p>
+        <span>{copy.map.chooseCity}</span>
+        <p>{copy.map.searchHelp}</p>
       </div>
 
       <div className="cy-map-city-picker-field">
@@ -2477,7 +2567,7 @@ function MapCityPicker({ selectedCityKey, cityOptions, onSelectCity }) {
           className="cy-map-city-picker-input"
           type="text"
           value={query}
-          placeholder="Search city"
+          placeholder={copy.map.searchPlaceholder}
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={isOpen}
@@ -2512,12 +2602,12 @@ function MapCityPicker({ selectedCityKey, cityOptions, onSelectCity }) {
                   onClick={() => handleSelect(item)}
                 >
                   <span>{item.label}</span>
-                  <strong>{formatInteger(Math.round(item.vacancy_count))}</strong>
+                  <strong>{formatInteger(Math.round(item.vacancy_count), locale)}</strong>
                 </button>
               );
             })
           ) : (
-            <p className="cy-map-city-picker-empty">No matching city found.</p>
+            <p className="cy-map-city-picker-empty">{copy.map.noCity}</p>
           )}
         </div>
       ) : null}
@@ -2535,16 +2625,19 @@ function MapDetailStat({ label, value }) {
 }
 
 function HorizontalBarChart({ items, labelKey, valueKey, shareKey, labelFormatter = prettifyLabel }) {
+  const { language, locale } = useI18n();
   const maxValue = Math.max(...items.map((item) => item[valueKey] ?? 0), 1);
+  const formatLabel = (value) =>
+    labelFormatter === prettifyLabel ? prettifyLabel(value, language) : labelFormatter(value);
 
   return (
     <div className="cy-bar-list">
       {items.map((item) => (
         <div key={item.key ?? item[labelKey]} className="cy-bar-list-row">
           <div className="cy-bar-list-head">
-            <span>{labelFormatter(item[labelKey])}</span>
+            <span>{formatLabel(item[labelKey])}</span>
             <strong>
-              {formatInteger(item[valueKey])} · {formatPercent(item[shareKey])}
+              {formatInteger(item[valueKey], locale)} · {formatPercent(item[shareKey], locale)}
             </strong>
           </div>
           <div className="cy-bar-list-track">
@@ -2560,6 +2653,8 @@ function HorizontalBarChart({ items, labelKey, valueKey, shareKey, labelFormatte
 }
 
 function SegmentChart({ items }) {
+  const { language, locale } = useI18n();
+
   return (
     <div className="cy-segment-chart">
       <div className="cy-segment-bar">
@@ -2568,7 +2663,7 @@ function SegmentChart({ items }) {
             key={item.key}
             className={`cy-segment-slice cy-segment-slice-${index + 1}`}
             style={{ width: `${Math.max(item.share * 100, 6)}%` }}
-            title={`${prettifyLabel(item.label)}: ${formatPercent(item.share)}`}
+            title={`${prettifyLabel(item.label, language)}: ${formatPercent(item.share, locale)}`}
           />
         ))}
       </div>
@@ -2576,9 +2671,9 @@ function SegmentChart({ items }) {
         {items.map((item, index) => (
           <div key={item.key} className="cy-segment-legend-row">
             <span className={`cy-segment-dot cy-segment-slice-${index + 1}`} />
-            <span>{prettifyLabel(item.label)}</span>
+            <span>{prettifyLabel(item.label, language)}</span>
             <strong>
-              {formatInteger(item.vacancy_count)} · {formatPercent(item.share)}
+              {formatInteger(item.vacancy_count, locale)} · {formatPercent(item.share, locale)}
             </strong>
           </div>
         ))}
@@ -2588,18 +2683,19 @@ function SegmentChart({ items }) {
 }
 
 function SalaryRankingChart({ items, summary, groupKey }) {
+  const { copy, language, locale } = useI18n();
   const maxValue = Math.max(
     ...items.map((item) => item.average_salary ?? 0),
     summary.median_salary ?? 0,
     1,
   );
   const referenceValues = [
-    { label: "Median", value: summary.median_salary },
+    { label: copy.salary.median, value: summary.median_salary },
   ].filter((item) => typeof item.value === "number");
   const lastIndex = Math.max(items.length - 1, 1);
 
   if (!items.length) {
-    return <p className="cy-copy cy-empty-state">No comparable salary metrics available.</p>;
+    return <p className="cy-copy cy-empty-state">{copy.salary.noMetrics}</p>;
   }
 
   return (
@@ -2613,7 +2709,7 @@ function SalaryRankingChart({ items, summary, groupKey }) {
               style={{ left: `${Math.min((reference.value / maxValue) * 100, 100)}%` }}
             >
               <span>
-                {reference.label} · {formatSalaryShort(reference.value)}
+                {reference.label} · {formatSalaryShort(reference.value, locale)}
               </span>
             </div>
           ))}
@@ -2624,8 +2720,10 @@ function SalaryRankingChart({ items, summary, groupKey }) {
         {items.map((item, index) => (
           <div key={item[groupKey]} className="cy-salary-row">
             <div className="cy-salary-role">
-              <strong>{prettifyLabel(item[groupKey])}</strong>
-              <span>{formatInteger(item.salary_count)} salaries</span>
+              <strong>{prettifyLabel(item[groupKey], language)}</strong>
+              <span>
+                {formatInteger(item.salary_count, locale)} {copy.salary.salaries}
+              </span>
             </div>
             <div className="cy-salary-bar-cell">
               <div className="cy-salary-track">
@@ -2638,7 +2736,7 @@ function SalaryRankingChart({ items, summary, groupKey }) {
                 />
               </div>
             </div>
-            <span className="cy-salary-value">{formatCurrency(item.average_salary)}</span>
+            <span className="cy-salary-value">{formatCurrency(item.average_salary, locale)}</span>
           </div>
         ))}
       </div>
@@ -2651,26 +2749,28 @@ function filterReliableSalaryGroups(items) {
 }
 
 function SkillRoleMatrix({ matrix }) {
+  const { copy, language, locale } = useI18n();
+
   if (!matrix.rows.length || !matrix.skills.length) {
-    return <p className="cy-copy cy-empty-state">No role skill matrix available.</p>;
+    return <p className="cy-copy cy-empty-state">{copy.skills.noMatrix}</p>;
   }
 
   return (
     <div className="cy-skill-matrix">
-      <div className="cy-skill-matrix-legend" aria-label="Skill legend">
+      <div className="cy-skill-matrix-legend" aria-label={copy.skills.skillLegend}>
         {matrix.skills.map((skill) => (
           <span key={skill.skill}>
             <i style={{ background: skill.color }} />
-            {prettifyLabel(skill.skill)}
+            {prettifyLabel(skill.skill, language)}
           </span>
         ))}
       </div>
 
-      <div className="cy-skill-matrix-grid" role="table" aria-label="Skills by role">
+      <div className="cy-skill-matrix-grid" role="table" aria-label={copy.skills.skillsByRole}>
         {matrix.rows.map((row) => (
           <div key={row.role} className="cy-skill-matrix-row" role="row">
             <div className="cy-skill-matrix-role" role="rowheader">
-              {prettifyLabel(row.role)}
+              {prettifyLabel(row.role, language)}
             </div>
             <div className="cy-skill-matrix-track" role="cell">
               {row.segments.map((segment) => (
@@ -2681,10 +2781,14 @@ function SkillRoleMatrix({ matrix }) {
                     flexGrow: Math.max(segment.normalizedShare * 100, 1.2),
                     background: segment.color,
                   }}
-                  title={`${prettifyLabel(row.role)} · ${prettifyLabel(
+                  title={`${prettifyLabel(row.role, language)} · ${prettifyLabel(
                     segment.skill,
-                  )}: ${formatInteger(segment.vacancy_count)} vacancies, ${formatPercent(
+                    language,
+                  )}: ${formatInteger(segment.vacancy_count, locale)} ${
+                    copy.skills.vacancies
+                  }, ${formatPercent(
                     segment.share_within_group,
+                    locale,
                   )}`}
                 />
               ))}
@@ -3283,31 +3387,31 @@ function buildTrendXAxisStep(labelCount, innerWidth, granularity) {
   return Math.max(Math.ceil(labelCount / tickCapacity), 1);
 }
 
-function formatTrendAxisLabel(value, granularity) {
+function formatTrendAxisLabel(value, granularity, locale = "en-CH") {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value ?? "";
   }
-  return new Intl.DateTimeFormat("en-CH", {
+  return new Intl.DateTimeFormat(locale, {
     month: "short",
     day: granularity === "daily" ? "numeric" : undefined,
     timeZone: "Europe/Zurich",
   }).format(date);
 }
 
-function formatTrendTooltipDate(value, granularity) {
+function formatTrendTooltipDate(value, granularity, copy = getCopy(DEFAULT_LANGUAGE), locale = "en-CH") {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value ?? "";
   }
 
-  const formattedDate = new Intl.DateTimeFormat("en-CH", {
+  const formattedDate = new Intl.DateTimeFormat(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
     timeZone: "Europe/Zurich",
   }).format(date);
-  return granularity === "weekly" ? `Week of ${formattedDate}` : formattedDate;
+  return granularity === "weekly" ? copy.trends.weekOf(formattedDate) : formattedDate;
 }
 
 async function fetchSnapshot(fileName) {
@@ -3382,65 +3486,78 @@ function getComparableExperienceYears(item) {
   return item.average_min_experience_years;
 }
 
-function formatInteger(value) {
-  if (typeof value !== "number") {
-    return "n/a";
-  }
-  return new Intl.NumberFormat("en-CH", { maximumFractionDigits: 0 }).format(value);
+function getMissingValueLabel(locale = "en-CH") {
+  return String(locale).startsWith("de") ? "k.A." : "n/a";
 }
 
-function formatDecimal(value) {
+function formatInteger(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
-  return new Intl.NumberFormat("en-CH", {
+  return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(value);
+}
+
+function formatDecimal(value, locale = "en-CH") {
+  if (typeof value !== "number") {
+    return getMissingValueLabel(locale);
+  }
+  return new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
 }
 
-function formatPercent(value) {
+function formatPercent(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
-  return `${(value * 100).toFixed(value >= 0.1 ? 1 : 2)}%`;
+  const digits = Math.abs(value) >= 0.1 ? 1 : 2;
+  return new Intl.NumberFormat(locale, {
+    style: "percent",
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value);
 }
 
-function formatSignedPercent(value) {
+function formatSignedPercent(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
-  const sign = value > 0 ? "+" : "";
   const absoluteValue = Math.abs(value);
   const digits = absoluteValue >= 0.1 ? 1 : 2;
-  return `${sign}${(value * 100).toFixed(digits)}%`;
+  const formattedValue = new Intl.NumberFormat(locale, {
+    style: "percent",
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value);
+  return value > 0 ? `+${formattedValue}` : formattedValue;
 }
 
-function formatCurrency(value) {
+function formatCurrency(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
-  return new Intl.NumberFormat("en-CH", {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "CHF",
     maximumFractionDigits: 0,
   }).format(value);
 }
 
-function formatSalaryShort(value) {
+function formatSalaryShort(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
   return `CHF ${Math.round(value / 1000)}k`;
 }
 
-function formatYears(value) {
+function formatYears(value, locale = "en-CH") {
   if (typeof value !== "number") {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
-  return `${new Intl.NumberFormat("en-CH", {
+  return `${new Intl.NumberFormat(locale, {
     maximumFractionDigits: value >= 10 ? 0 : 1,
-  }).format(value)} yrs`;
+  }).format(value)} ${String(locale).startsWith("de") ? "J." : "yrs"}`;
 }
 
 function formatCantonCode(value) {
@@ -3459,34 +3576,34 @@ function getSalaryBarColor(progress) {
   return `rgb(${channel(0)}, ${channel(1)}, ${channel(2)})`;
 }
 
-function formatDateTime(value) {
+function formatDateTime(value, locale = "en-CH") {
   if (!value) {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
 
-  return new Intl.DateTimeFormat("en-CH", {
+  return new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
     timeStyle: "short",
     timeZone: "Europe/Zurich",
   }).format(date);
 }
 
-function formatShortDate(value) {
+function formatShortDate(value, locale = "en-CH") {
   if (!value) {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    return "n/a";
+    return getMissingValueLabel(locale);
   }
 
-  return new Intl.DateTimeFormat("en-CH", {
+  return new Intl.DateTimeFormat(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -3494,42 +3611,50 @@ function formatShortDate(value) {
   }).format(date);
 }
 
-function buildKeyFindings({ topCity, leadingRole, fastestGrowingRole, salarySummary }) {
+function buildKeyFindings(
+  { topCity, leadingRole, fastestGrowingRole, salarySummary },
+  copy,
+  language,
+  locale,
+) {
   const findings = [];
 
   if (topCity) {
     findings.push({
-      label: "Location",
-      title: `${prettifyLabel(topCity.label)} keeps the largest share`,
-      description: `${formatPercent(topCity.share)} of tracked vacancies are clustered there.`,
+      label: copy.findings.location,
+      title: copy.findings.locationTitle(prettifyLabel(topCity.label, language)),
+      description: copy.findings.locationDescription(formatPercent(topCity.share, locale)),
     });
   }
 
   if (fastestGrowingRole) {
     findings.push({
-      label: "Momentum",
-      title: `${prettifyLabel(fastestGrowingRole.role)} is growing fastest`,
-      description: `${formatInteger(fastestGrowingRole.current)} postings in the last 30 days, ${formatMultiplier(
-        fastestGrowingRole.growth,
-      )} vs the previous 30-day window.`,
+      label: copy.findings.momentum,
+      title: copy.findings.momentumTitle(prettifyLabel(fastestGrowingRole.role, language)),
+      description: copy.findings.momentumDescription(
+        formatInteger(fastestGrowingRole.current, locale),
+        formatMultiplier(fastestGrowingRole.growth),
+      ),
     });
   }
 
   if (typeof salarySummary?.salary_coverage === "number") {
     findings.push({
-      label: "Compensation",
-      title: "Salary benchmarks are low-confidence",
-      description: `${formatInteger(salarySummary.salary_count)} listings expose usable pay data, or ${formatPercent(
-        salarySummary.salary_coverage,
-      )} of the snapshot; rankings hide groups below ${SALARY_RANKING_MIN_COUNT} records.`,
+      label: copy.findings.compensation,
+      title: copy.findings.compensationTitle,
+      description: copy.findings.compensationDescription(
+        formatInteger(salarySummary.salary_count, locale),
+        formatPercent(salarySummary.salary_coverage, locale),
+        SALARY_RANKING_MIN_COUNT,
+      ),
     });
   }
 
   if (leadingRole) {
     findings.push({
-      label: "Demand",
-      title: `${prettifyLabel(leadingRole.label)} still anchors hiring`,
-      description: `${formatPercent(leadingRole.share)} of tracked vacancies fall into this role category.`,
+      label: copy.findings.demand,
+      title: copy.findings.demandTitle(prettifyLabel(leadingRole.label, language)),
+      description: copy.findings.demandDescription(formatPercent(leadingRole.share, locale)),
     });
   }
 
@@ -3602,14 +3727,8 @@ function formatMultiplier(value) {
   return `${(value + 1).toFixed(value >= 1 ? 1 : 2)}x`;
 }
 
-function prettifyLabel(value) {
-  if (!value) {
-    return "n/a";
-  }
-
-  const normalizedValue = String(value).normalize("NFC");
-  const normalizedKey = normalizedValue.toLocaleLowerCase("en-US");
-  const dictionary = {
+const LABEL_DICTIONARIES = {
+  en: {
     ci_cd: "CI/CD",
     qa_testing: "QA Testing",
     ux_ui_design: "UX/UI Design",
@@ -3629,6 +3748,51 @@ function prettifyLabel(value) {
     pytorch: "PyTorch",
     zürich: "Zürich",
     genève: "Genève",
+  },
+  de: {
+    unknown: "Unbekannt",
+    ci_cd: "CI/CD",
+    qa_testing: "QA Testing",
+    ux_ui_design: "UX/UI Design",
+    data_ai: "Daten / KI",
+    devops_cloud_platform: "DevOps / Cloud / Platform",
+    software_engineering: "Softwareentwicklung",
+    support_operations: "Support / Betrieb",
+    product_project_analysis: "Produkt / Projekt / Analyse",
+    erp_business_systems: "ERP / Business-Systeme",
+    security: "Security",
+    senior: "Senior",
+    manager: "Management",
+    mid: "Mid-Level",
+    junior: "Junior",
+    intern: "Praktikum",
+    hybrid: "Hybrid",
+    onsite: "Vor Ort",
+    remote: "Remote",
+    agile: "Agile",
+    rest_api: "REST API",
+    dotnet: ".NET",
+    csharp: "C#",
+    sql: "SQL",
+    javascript: "JavaScript",
+    typescript: "TypeScript",
+    nodejs: "Node.js",
+    pytorch: "PyTorch",
+    zürich: "Zürich",
+    genève: "Genève",
+  },
+};
+
+function prettifyLabel(value, language = DEFAULT_LANGUAGE) {
+  if (!value) {
+    return getCopy(language).common.na;
+  }
+
+  const normalizedValue = String(value).normalize("NFC");
+  const normalizedKey = normalizedValue.toLocaleLowerCase("en-US");
+  const dictionary = {
+    ...LABEL_DICTIONARIES.en,
+    ...(LABEL_DICTIONARIES[language] ?? {}),
   };
 
   if (dictionary[normalizedKey]) {
@@ -3643,8 +3807,9 @@ function prettifyLabel(value) {
         return part;
       }
 
-      const lowerPart = part.toLocaleLowerCase("en-US");
-      return lowerPart.charAt(0).toLocaleUpperCase("en-US") + lowerPart.slice(1);
+      const locale = getLocale(language);
+      const lowerPart = part.toLocaleLowerCase(locale);
+      return lowerPart.charAt(0).toLocaleUpperCase(locale) + lowerPart.slice(1);
     })
     .join("");
 }
