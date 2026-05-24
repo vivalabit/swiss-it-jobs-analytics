@@ -1,567 +1,649 @@
 city,vacancy_count,share
-Zürich,775,0.209
-Bern,217,0.0585
-Genève,197,0.0531
-Basel,137,0.0369
-Lausanne,121,0.0326
-Luzern,77,0.0208
-Winterthur,65,0.0175
-Aarau,46,0.0124
-Wallisellen,45,0.0121
-St. Gallen,39,0.0105
-Zug,36,0.0097
-Baden,34,0.0092
-Mägenwil,33,0.0089
-Berne,32,0.0086
-Thun,32,0.0086
-Herisau,30,0.0081
-Olten,26,0.007
-Sursee,25,0.0067
-Lenzburg,24,0.0065
-Schlieren,22,0.0059
-Reinach,21,0.0057
-Baar,19,0.0051
-Dübendorf,19,0.0051
-Emmen,19,0.0051
-Schaffhausen,19,0.0051
-Volketswil,19,0.0051
-Chur,18,0.0049
-Frauenfeld,18,0.0049
-Fribourg,18,0.0049
-Solothurn,16,0.0043
-Spreitenbach,16,0.0043
-Allschwil,15,0.004
-Biel/Bienne,15,0.004
-Kloten,15,0.004
-Rothenburg,15,0.004
-Zürich Seebach,15,0.004
-Dietikon,14,0.0038
-Glattbrugg,14,0.0038
-Neuchâtel,14,0.0038
-Rotkreuz,14,0.0038
-Yverdon-les-Bains,14,0.0038
-Chiasso,13,0.0035
-Urdorf,13,0.0035
-Meyrin,12,0.0032
-Balzers,11,0.003
-Gland,11,0.003
-Kemptthal,11,0.003
-Moosseedorf,11,0.003
-Steinhausen,11,0.003
-Aarburg,10,0.0027
-Bülach,10,0.0027
-Jona,10,0.0027
-Kriens,10,0.0027
-Lugano,10,0.0027
-Pully,10,0.0027
-Unknown,10,0.0027
-CH - Zürich,9,0.0024
-Hinwil,9,0.0024
-Horgen,9,0.0024
-Opfikon,9,0.0024
-Rapperswil-Jona,9,0.0024
-Sion,9,0.0024
-Wetzikon,9,0.0024
-Bonaduz,8,0.0022
-Fully,8,0.0022
-Langenthal,8,0.0022
-Schwyz,8,0.0022
-Stans,8,0.0022
-Aargau,7,0.0019
-Altishofen,7,0.0019
-Biel,7,0.0019
-Bubendorf,7,0.0019
-Bubikon,7,0.0019
-Bulle,7,0.0019
-Burgdorf,7,0.0019
-Bussnang,7,0.0019
-Cham,7,0.0019
-Coppet,7,0.0019
-Dättwil,7,0.0019
-Ecublens,7,0.0019
-Gümligen,7,0.0019
-Landquart,7,0.0019
-Ostermundigen,7,0.0019
-Paudex,7,0.0019
-Staefa,7,0.0019
-Stäfa,7,0.0019
-Bellach,6,0.0016
-Bellevue,6,0.0016
-Bendern,6,0.0016
-"Czech Republic, Hungary, Slovakia",6,0.0016
-Dietlikon,6,0.0016
-Eschen,6,0.0016
-Hard,6,0.0016
-Muttenz,6,0.0016
-Männedorf,6,0.0016
-Pfäffikon,6,0.0016
-Stein,6,0.0016
-Uzwil,6,0.0016
-Weggis,6,0.0016
-Wil,6,0.0016
-Aadorf,5,0.0013
-Basel (City),5,0.0013
-Bioggio,5,0.0013
-Bottighofen,5,0.0013
-Bussigny,5,0.0013
-Davos Platz,5,0.0013
-"Geneva, Zurich",5,0.0013
-Glattpark,5,0.0013
-Grand-Lancy,5,0.0013
-Lindau,5,0.0013
-Lupfig,5,0.0013
-Nidau,5,0.0013
-Plan-les-Ouates,5,0.0013
-Pratteln,5,0.0013
-Prilly,5,0.0013
-Rapperswi-Jona,5,0.0013
-Rapperswil,5,0.0013
-Region Bern Mittelland (BE/SO/AG),5,0.0013
-Schaan,5,0.0013
-St.Gallen,5,0.0013
-Stabio,5,0.0013
-Switzerland,5,0.0013
-Thun (Gwatt),5,0.0013
-Tägerwilen,5,0.0013
-Würenlingen,5,0.0013
-Zollikofen,5,0.0013
-Aigle,4,0.0011
-Appenzell,4,0.0011
-Beringen,4,0.0011
-Bienne,4,0.0011
-Bilten,4,0.0011
-Brig,4,0.0011
-Brugg,4,0.0011
-Eschlikon,4,0.0011
-Fehraltorf,4,0.0011
-Hauptsitz Zollikofen,4,0.0011
-Heerbrugg,4,0.0011
-Kaiseraugst,4,0.0011
-Kirchberg,4,0.0011
-Liestal,4,0.0011
-Marin-Epagnier,4,0.0011
-Meggen,4,0.0011
-Meilen,4,0.0011
-Meiringen,4,0.0011
-Muhen,4,0.0011
-Münchenstein,4,0.0011
-Münsingen,4,0.0011
-Otelfingen,4,0.0011
-Paderborn/Büren,4,0.0011
-Regensdorf,4,0.0011
-Renens,4,0.0011
-Rheinfelden,4,0.0011
-Ruswil,4,0.0011
-Sachseln,4,0.0011
-Schweiz,4,0.0011
-Schwerzenbach,4,0.0011
-Sempach,4,0.0011
-Seuzach,4,0.0011
-"Stabio, Switzerland",4,0.0011
-Triesen,4,0.0011
-Wettingen,4,0.0011
-Yverdon,4,0.0011
-Zofingen,4,0.0011
-Zwingen,4,0.0011
-Zürich-Flughafen,4,0.0011
-Altendorf,3,0.0008
-Amriswil,3,0.0008
-Baden-Dättwil,3,0.0008
-"Basel, Geneva, Zurich",3,0.0008
-Biel/bienne,3,0.0008
-Domat/Ems,3,0.0008
-Dällikon,3,0.0008
-Ebikon,3,0.0008
-Effretikon,3,0.0008
-Fahrweid,3,0.0008
-Gerlafingen,3,0.0008
-Gisikon,3,0.0008
-Granges-Paccot,3,0.0008
-Kägiswil,3,0.0008
-Le Brassus,3,0.0008
-Lützelflüh-Goldbach,3,0.0008
-Martigny,3,0.0008
-Mendrisio,3,0.0008
-Molinazzo di Monteggio,3,0.0008
-Muri b. Bern,3,0.0008
-Nottwil,3,0.0008
-Nänikon-Greifensee,3,0.0008
-Oberrohrdorf,3,0.0008
-Port,3,0.0008
-Reiden,3,0.0008
-Roggwil,3,0.0008
-Seengen,3,0.0008
-Sulgen,3,0.0008
-Thalwil,3,0.0008
-Thurgau,3,0.0008
-Turgi,3,0.0008
-Unterentfelden,3,0.0008
-Vernier,3,0.0008
-"Weinfelden, Landquart, St. Gallen",3,0.0008
-Wimmis,3,0.0008
-Wollerau,3,0.0008
-Worblaufen,3,0.0008
-Zizers,3,0.0008
-Zuchwil,3,0.0008
-Zürich Altstetten,3,0.0008
-Zürich Flughafen,3,0.0008
-Adelboden,2,0.0005
-Adliswil,2,0.0005
-Affoltern am Albis,2,0.0005
-Altstätten,2,0.0005
-Andermatt,2,0.0005
-Arlesheim,2,0.0005
-Bad Ragaz,2,0.0005
-Basel-Stadt,2,0.0005
-Bellinzona,2,0.0005
-Bellinzone,2,0.0005
-Bern und Homeoffice,2,0.0005
-Birmensdorf,2,0.0005
-Buchs,2,0.0005
-Bürglen,2,0.0005
-Canton de Vaud,2,0.0005
-Cressier,2,0.0005
-Crissier,2,0.0005
-DWL T,2,0.0005
-Dabei,2,0.0005
-Degersheim,2,0.0005
-Deutschschweiz,2,0.0005
-Dotzigen,2,0.0005
-Farnern,2,0.0005
-Flawil,2,0.0005
-Flughafen Zürich,2,0.0005
-Freienbach,2,0.0005
-Frick,2,0.0005
-Gamprin-Bendern,2,0.0005
-Geneva area,2,0.0005
-Genf,2,0.0005
-Genève 6,2,0.0005
-Glarus,2,0.0005
-Gontenschwil,2,0.0005
-Grenchen,2,0.0005
-Grüsch,2,0.0005
-Haag,2,0.0005
-Härkingen,2,0.0005
-Hölstein,2,0.0005
-Immensee,2,0.0005
-Innerschweiz,2,0.0005
-Jegenstorf,2,0.0005
-Jura,2,0.0005
-Kriegstetten,2,0.0005
-Küsnacht,2,0.0005
-Küssnacht am Rigi,2,0.0005
-Laufen,2,0.0005
-Laufenburg,2,0.0005
-Le Châble,2,0.0005
-Les Acacias,2,0.0005
-Liebefeld,2,0.0005
-Long,2,0.0005
-Losone,2,0.0005
-"Losone, Meyrin or Biel",2,0.0005
-Lyss,2,0.0005
-Meisterschwanden,2,0.0005
-Mittelland,2,0.0005
-Morges,2,0.0005
-Muri,2,0.0005
-"Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",2,0.0005
-"Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",2,0.0005
-Möhlin,2,0.0005
-Niederwangen,2,0.0005
-Oberbüren,2,0.0005
-Oberrüti,2,0.0005
-Ostschweiz/Liechtenstein,2,0.0005
-Petit-Lancy,2,0.0005
-Pfaeffikon,2,0.0005
-Region Bern,2,0.0005
-Region Ostschweiz.,2,0.0005
-Reichenburg,2,0.0005
-Risch,2,0.0005
-Root,2,0.0005
-Région du Nord Vaudois,2,0.0005
-Rümlang,2,0.0005
-Sankt Gallen,2,0.0005
-Schindellegi,2,0.0005
-Sissach,2,0.0005
-Sonceboz,2,0.0005
-Spiez,2,0.0005
-St-Sulpice,2,0.0005
-St. Gallen / Mägenwil,2,0.0005
-St. Margrethen,2,0.0005
-St. Urban,2,0.0005
-Suhr,2,0.0005
-Suisse,2,0.0005
-Sursee / Pratteln,2,0.0005
-Teufen,2,0.0005
-Thörishaus,2,0.0005
-Unterengstringen,2,0.0005
-Unterhörstetten,2,0.0005
-Unterkulm,2,0.0005
-Uster,2,0.0005
-Visp,2,0.0005
-Wangen b. Dübendorf,2,0.0005
-Wilderswil,2,0.0005
-Winterthur / Smart Working,2,0.0005
-Wohlen,2,0.0005
-Zentralschweiz,2,0.0005
-Zumikon,2,0.0005
-Zurich (Headquarter),2,0.0005
-Zurich Seebach,2,0.0005
-Zürich Oerlikon,2,0.0005
-Zürich und/oder Mägenwil,2,0.0005
-Zürich und/oder Mägenwil und Homeoffice,2,0.0005
-100% remote - Wohnsitz in der Schweiz,1,0.0003
-AG,1,0.0003
-Aarau Rohr,1,0.0003
-Aesch,1,0.0003
-Allwschwil,1,0.0003
-Altdorf,1,0.0003
-"Andermatt, Altdorf & Homeoffice",1,0.0003
-Arosa,1,0.0003
-Au,1,0.0003
-Aurangabad,1,0.0003
-BAD IR,1,0.0003
-"Baar, Zürich, Lausanne",1,0.0003
-Bad Zurzach,1,0.0003
-Baden-Daettwil,1,0.0003
-Bahnhofstrasse 40 Aarburg,1,0.0003
-Baldegg,1,0.0003
-Balgach,1,0.0003
-Basel (Hauptsitz),1,0.0003
-"Basel, Zurich",1,0.0003
-Basel-Land,1,0.0003
-"Basel-Land, Basel",1,0.0003
-Belp,1,0.0003
-Bendern (LI),1,0.0003
-Benken,1,0.0003
-"Bern (bis Ende 2026), anschliessend Zimmerwald",1,0.0003
-Bern / Zürich,1,0.0003
-Bern oder Frauenfeld,1,0.0003
-Bern und Zürich,1,0.0003
-"Bern, Engehaldenstrasse",1,0.0003
-"Bern, Luzern und Zürich",1,0.0003
-"Bern, Zimmerwald",1,0.0003
-"Bern, Zürich",1,0.0003
-Bern-Liebefeld,1,0.0003
-Bern/Schweiz,1,0.0003
-Bern/Zürich,1,0.0003
-"Berne, Zurich",1,0.0003
-"Berne, Zürich",1,0.0003
-Binningen,1,0.0003
-Birsfelden,1,0.0003
-"Bleichemattstrasse 31, Aarau",1,0.0003
-Blonay,1,0.0003
-Boudevilliers,1,0.0003
-Bourg-en-Lavaux,1,0.0003
-Bremgarten,1,0.0003
-Bremgarten b. Bern,1,0.0003
-Brügg,1,0.0003
-Brügg b. Biel,1,0.0003
-Bussigny und Homeoffice,1,0.0003
-Bussigny-près-Lausanne,1,0.0003
-CH &lt;/span,1,0.0003
-CH - Crissier,1,0.0003
-CHE - Neuchatel,1,0.0003
-CHE-CLIENT Geneva-Amazon Web Services,1,0.0003
-"CHE-CORP Zürich-Hardstrasse 201, Prime Tower",1,0.0003
-Chesières (VD),1,0.0003
-Corgémont,1,0.0003
-Corminboeuf,1,0.0003
-Crans-Montana,1,0.0003
-Crans-Montana 1,1,0.0003
-Den Haag,1,0.0003
-"Dielsdorf (Zürich), Lupfig (Aargau)",1,0.0003
-Dintikon,1,0.0003
-Dottikon,1,0.0003
-Dübendorf-Stettbach,1,0.0003
-Dübendorf-Stettbach & Homeoffice,1,0.0003
-Dürrenäsch,1,0.0003
-EMEA &gt; CHE &gt; Stabio &gt; VF Campus VF1,1,0.0003
-Egerkingen,1,0.0003
-Erlinsbach,1,0.0003
-Falkenstrasse 11,1,0.0003
-Fehraltorf (Zurich),1,0.0003
-"Fehraltorf (Zurich), Switzerland",1,0.0003
-Feldbach,1,0.0003
-Feldmeilen,1,0.0003
-Flamatt,1,0.0003
-Frauefeld,1,0.0003
-Friesencham,1,0.0003
-Fällanden,1,0.0003
-Füllinsdorf,1,0.0003
-GENEVE CORP,1,0.0003
-Ganze Schweiz,1,0.0003
-Genolier,1,0.0003
-Genève 21,1,0.0003
-"Germany, Koblenz",1,0.0003
-"Glattpark, Opfikon",1,0.0003
-Goldach,1,0.0003
-Granges (Veveyse),1,0.0003
-Grossdietwil,1,0.0003
-Grosshöchstetten,1,0.0003
-Gwatt,1,0.0003
-Hagendorn,1,0.0003
-Hauptsitz Zollikofen (BE),1,0.0003
-Hergiswil,1,0.0003
-"Herisau (AR), Pfäffikon (ZH)",1,0.0003
-Herzogenbuchsee,1,0.0003
-Hettlingen,1,0.0003
-Home Worker – CHE – Baar,1,0.0003
-Innertkirchen,1,0.0003
-Interlaken,1,0.0003
-Inwil,1,0.0003
-Ittigen,1,0.0003
-Julia,1,0.0003
-Kehrsatz,1,0.0003
-Kilchberg,1,0.0003
-Killwangen,1,0.0003
-Kirchlindach,1,0.0003
-Konolfingen,1,0.0003
-Kreuzlingen,1,0.0003
-Köniz,1,0.0003
-Küssnacht,1,0.0003
-La Chaux-de-Fonds,1,0.0003
-Lage,1,0.0003
-Lancy,1,0.0003
-Langnau am Albis,1,0.0003
-Lausanne 25,1,0.0003
-Le Grand-Saconnex,1,0.0003
-Le Lignon,1,0.0003
-Locarno,1,0.0003
-Log,1,0.0003
-Lupfig (Aargau),1,0.0003
-"Luzern, Hochdorf, Zug",1,0.0003
-Lyssach,1,0.0003
-Malters,1,0.0003
-Manno,1,0.0003
-Matten bei Interlaken,1,0.0003
-Mels,1,0.0003
-Menziken,1,0.0003
-Mittelland AG &,1,0.0003
-Mon,1,0.0003
-Monthey,1,0.0003
-Munich,1,0.0003
-Murten,1,0.0003
-Murtens,1,0.0003
-Muttenz and/or Zurich,1,0.0003
-Môtiers,1,0.0003
-Münchenstein oder Olten,1,0.0003
-Münsterlingen,1,0.0003
-Neuenburg,1,0.0003
-Neuenegg,1,0.0003
-Neunkirch,1,0.0003
-Nice,1,0.0003
-Niederweningen,1,0.0003
-Niederönz,1,0.0003
-Nänikon,1,0.0003
-Obbürgen,1,0.0003
-Oberhasli,1,0.0003
-Oberhausen,1,0.0003
-Obernau,1,0.0003
-Oberwangen (BE),1,0.0003
-Oetwil am See,1,0.0003
-Office Cham,1,0.0003
-Oftringen,1,0.0003
-Ostschweiz,1,0.0003
-Ostschweiz + FL,1,0.0003
-Othmarsingen,1,0.0003
-Pilatus Kulm,1,0.0003
-Porto,1,0.0003
-Porto Ronco,1,0.0003
-Praz Buchilly,1,0.0003
-Quartino,1,0.0003
-ROTKREUZ,1,0.0003
-Region Basel / Ganze Schweiz,1,0.0003
-Region Bern Mittelland,1,0.0003
-"Region Bern Mittelland (BE/SO/AG),Ostschweiz (AR/A",1,0.0003
-Region Deutschschweiz,1,0.0003
-Region Genf,1,0.0003
-Region Region Zürich,1,0.0003
-Region Zentralschweiz,1,0.0003
-"Region Zürich (Kloten, Glattbrugg)",1,0.0003
-"Region Zürich (Kloten, Glattbrugg, Rümlang)",1,0.0003
-Region Zürich / Schaffhausen,1,0.0003
-Remote / Office Baar oder Bern,1,0.0003
-Remote-Switzerland -City of Zurich/ Lakeside,1,0.0003
-Reussbühl,1,0.0003
-Richterswil,1,0.0003
-Riedt b. Erlen,1,0.0003
-Riviera / Chablais,1,0.0003
-Rolle,1,0.0003
-Root / hybrid,1,0.0003
-Root D4,1,0.0003
-Rudolfstetten,1,0.0003
-Ruggell,1,0.0003
-Région de St-Imier,1,0.0003
-Région du nord vaudois,1,0.0003
-Saint-Blaise,1,0.0003
-Samstagern oder Zürich (Neuaufbau Filiale),1,0.0003
-San Jose,1,0.0003
-Sarnen,1,0.0003
-Schachen,1,0.0003
-Schmitten,1,0.0003
-Schwarzenburg,1,0.0003
-Schönbühl Einkaufszentrum,1,0.0003
-Schönbühl-Urtenen,1,0.0003
-Schönenwerd,1,0.0003
-Siebnen,1,0.0003
-Sins,1,0.0003
-Sitten,1,0.0003
-Sonceboz-Sombeval,1,0.0003
-St Gallen,1,0.0003
-St Imier,1,0.0003
-St-Imier,1,0.0003
-Stadel,1,0.0003
-Stadt Zürich,1,0.0003
-Steckborn,1,0.0003
-Steffisburg,1,0.0003
-Steinach,1,0.0003
-Steinengraben 36,1,0.0003
-Studen,1,0.0003
-Suisse romande,1,0.0003
-Sumiswald,1,0.0003
-Switzerland &gt; Basel : H-127 A2,1,0.0003
-Switzerland + FL,1,0.0003
-Switzerland : Technoparkstrass 1 CH 8005,1,0.0003
-Tafers,1,0.0003
-Tagelswangen,1,0.0003
-"Thun, Bern",1,0.0003
-Thunersee,1,0.0003
-Thônex,1,0.0003
-Ticino,1,0.0003
-Tramelan,1,0.0003
-Universitäre Psychiatrische Kliniken Basel (UPK),1,0.0003
-Unterseen,1,0.0003
-Untersiggenthal,1,0.0003
-Urtenen-Schönbühl,1,0.0003
-Uznach,1,0.0003
-Vallorbe,1,0.0003
-Vaud,1,0.0003
-Versoix,1,0.0003
-Vevey,1,0.0003
-Villeneuve,1,0.0003
-Villmergen,1,0.0003
-Visp Zustellung,1,0.0003
-Vitznau,1,0.0003
-Wattwil,1,0.0003
-"Weinfelden, Landquart oder St. Gallen",1,0.0003
-"Weinfelden, Landquart, St. Gallen, Mägenwil",1,0.0003
-Westschweiz,1,0.0003
-Wiesendangen,1,0.0003
-Wil SG Paketbasis,1,0.0003
-Wiler b. Seedorf,1,0.0003
-Willisau,1,0.0003
-Würenlos,1,0.0003
-Zimmerwald,1,0.0003
-Zollikon,1,0.0003
-Zurich (KCH51659) Service Office,1,0.0003
-Zurich (ZNLZ) (CH),1,0.0003
-"Zurich, Basel",1,0.0003
-Zweigbüro Mels,1,0.0003
-Zürcher Oberland,1,0.0003
-Zürich (CH),1,0.0003
-Zürich Headquarter,1,0.0003
-Zürich Tiefenbrunnen,1,0.0003
-Zürich-Altstetten,1,0.0003
-Zürich-Oerlikon,1,0.0003
-Zürich-Schlieren,1,0.0003
-Zürich/Kloten,1,0.0003
+Zürich,968,0.2157
+Genève,266,0.0593
+Bern,262,0.0584
+Basel,151,0.0336
+Lausanne,140,0.0312
+Luzern,89,0.0198
+Winterthur,81,0.018
+Wallisellen,53,0.0118
+Aarau,51,0.0114
+Zug,47,0.0105
+St. Gallen,44,0.0098
+Baden,43,0.0096
+Berne,36,0.008
+Herisau,34,0.0076
+Mägenwil,32,0.0071
+Lenzburg,31,0.0069
+Thun,30,0.0067
+Sursee,29,0.0065
+Olten,28,0.0062
+Switzerland,28,0.0062
+Schlieren,26,0.0058
+Reinach,25,0.0056
+Baar,23,0.0051
+Frauenfeld,22,0.0049
+Dübendorf,21,0.0047
+Fribourg,21,0.0047
+Chur,20,0.0045
+Emmen,20,0.0045
+Volketswil,20,0.0045
+Schaffhausen,19,0.0042
+Solothurn,19,0.0042
+Allschwil,18,0.004
+Chiasso,18,0.004
+Dietikon,18,0.004
+Glattbrugg,18,0.004
+Spreitenbach,18,0.004
+Kloten,17,0.0038
+Rotkreuz,17,0.0038
+Neuchâtel,15,0.0033
+Rothenburg,15,0.0033
+Zürich Seebach,15,0.0033
+Biel/Bienne,14,0.0031
+Gland,14,0.0031
+Urdorf,14,0.0031
+Yverdon-les-Bains,14,0.0031
+Meyrin,13,0.0029
+Moosseedorf,13,0.0029
+Opfikon,13,0.0029
+Pully,13,0.0029
+Aarburg,12,0.0027
+Kemptthal,12,0.0027
+Lugano,12,0.0027
+Schwyz,12,0.0027
+Balzers,11,0.0025
+Bussnang,11,0.0025
+Horgen,11,0.0025
+Kriens,11,0.0025
+Langenthal,11,0.0025
+Rapperswil-Jona,11,0.0025
+Steinhausen,11,0.0025
+Burgdorf,10,0.0022
+Bülach,10,0.0022
+CH - Zürich,10,0.0022
+Cham,10,0.0022
+Jona,10,0.0022
+Landquart,10,0.0022
+Stans,10,0.0022
+Unknown,10,0.0022
+"Zurich, Zurich, Switzerland",10,0.0022
+Zürich Metropolitan Area,10,0.0022
+Biel,9,0.002
+Bonaduz,9,0.002
+Fully,9,0.002
+Hinwil,9,0.002
+Pfäffikon,9,0.002
+Sion,9,0.002
+Stäfa,9,0.002
+Wetzikon,9,0.002
+"Zurich, Switzerland",9,0.002
+Bubendorf,8,0.0018
+Bulle,8,0.0018
+Muttenz,8,0.0018
+Ostermundigen,8,0.0018
+Stabio,8,0.0018
+Staefa,8,0.0018
+Aargau,7,0.0016
+Altishofen,7,0.0016
+Bottighofen,7,0.0016
+Bubikon,7,0.0016
+Coppet,7,0.0016
+Dietlikon,7,0.0016
+Dättwil,7,0.0016
+Ecublens,7,0.0016
+Eschen,7,0.0016
+Gümligen,7,0.0016
+Kaiseraugst,7,0.0016
+Münchenstein,7,0.0016
+Paudex,7,0.0016
+St Gallen,7,0.0016
+Stein,7,0.0016
+Uzwil,7,0.0016
+Basel (City),6,0.0013
+Bellach,6,0.0013
+Bellevue,6,0.0013
+Bendern,6,0.0013
+Bioggio,6,0.0013
+Brugg,6,0.0013
+Bussigny,6,0.0013
+Fehraltorf,6,0.0013
+Glattpark,6,0.0013
+Grand-Lancy,6,0.0013
+Hard,6,0.0013
+Lupfig,6,0.0013
+Männedorf,6,0.0013
+Prilly,6,0.0013
+Rapperswil,6,0.0013
+Region Bern Mittelland (BE/SO/AG),6,0.0013
+Schaan,6,0.0013
+Schwerzenbach,6,0.0013
+Weggis,6,0.0013
+Wil,6,0.0013
+Aadorf,5,0.0011
+Bienne,5,0.0011
+Davos Platz,5,0.0011
+"Geneva, Zurich",5,0.0011
+Lindau,5,0.0011
+Nidau,5,0.0011
+Plan-les-Ouates,5,0.0011
+Pratteln,5,0.0011
+Rapperswi-Jona,5,0.0011
+Reiden,5,0.0011
+Renens,5,0.0011
+Ruswil,5,0.0011
+Schweiz,5,0.0011
+St.Gallen,5,0.0011
+Thalwil,5,0.0011
+Thun (Gwatt),5,0.0011
+Triesen,5,0.0011
+Tägerwilen,5,0.0011
+Wohlen,5,0.0011
+Würenlingen,5,0.0011
+Zofingen,5,0.0011
+Aigle,4,0.0009
+Appenzell,4,0.0009
+"Basel, Geneva, Zurich",4,0.0009
+Beringen,4,0.0009
+Bilten,4,0.0009
+Brig,4,0.0009
+Deutschschweiz,4,0.0009
+Eschlikon,4,0.0009
+Geneva Metropolitan Area,4,0.0009
+Granges-Paccot,4,0.0009
+Grenchen,4,0.0009
+Hauptsitz Zollikofen,4,0.0009
+Heerbrugg,4,0.0009
+Kirchberg,4,0.0009
+Liestal,4,0.0009
+Marin-Epagnier,4,0.0009
+Martigny,4,0.0009
+Meggen,4,0.0009
+Meilen,4,0.0009
+Meiringen,4,0.0009
+Mendrisio,4,0.0009
+Muhen,4,0.0009
+Münsingen,4,0.0009
+Otelfingen,4,0.0009
+Paderborn/Büren,4,0.0009
+Regensdorf,4,0.0009
+Region Bern,4,0.0009
+Rheinfelden,4,0.0009
+Sempach,4,0.0009
+Seuzach,4,0.0009
+"Stabio, Switzerland",4,0.0009
+Unterentfelden,4,0.0009
+Visp,4,0.0009
+Wettingen,4,0.0009
+Yverdon,4,0.0009
+Zizers,4,0.0009
+Zollikofen,4,0.0009
+Zurich (Headquarter),4,0.0009
+Zwingen,4,0.0009
+Zürich-Flughafen,4,0.0009
+Altendorf,3,0.0007
+Amriswil,3,0.0007
+Baden-Dättwil,3,0.0007
+"Berne, Switzerland",3,0.0007
+Biel/bienne,3,0.0007
+Cressier,3,0.0007
+"Czech Republic, Hungary, Slovakia",3,0.0007
+Domat/Ems,3,0.0007
+Dällikon,3,0.0007
+Ebikon,3,0.0007
+Effretikon,3,0.0007
+Fahrweid,3,0.0007
+"Geneva, Switzerland",3,0.0007
+Gerlafingen,3,0.0007
+Gisikon,3,0.0007
+Kägiswil,3,0.0007
+Laufen,3,0.0007
+Lausanne Metropolitan Area,3,0.0007
+Le Brassus,3,0.0007
+Les Acacias,3,0.0007
+Lützelflüh-Goldbach,3,0.0007
+Molinazzo di Monteggio,3,0.0007
+Muri b. Bern,3,0.0007
+Niederönz,3,0.0007
+Nottwil,3,0.0007
+Nyon,3,0.0007
+Nänikon-Greifensee,3,0.0007
+Oberrohrdorf,3,0.0007
+Port,3,0.0007
+Roggwil,3,0.0007
+Root,3,0.0007
+Sachseln,3,0.0007
+Seengen,3,0.0007
+"St Gallen, Switzerland",3,0.0007
+St-Sulpice,3,0.0007
+Sulgen,3,0.0007
+Thurgau,3,0.0007
+Turgi,3,0.0007
+Vernier,3,0.0007
+"Weinfelden, Landquart, St. Gallen",3,0.0007
+Wimmis,3,0.0007
+Wollerau,3,0.0007
+Zuchwil,3,0.0007
+"Zug, Switzerland",3,0.0007
+"Zug, Zug, Switzerland",3,0.0007
+Zürich Altstetten,3,0.0007
+Zürich Flughafen,3,0.0007
+Aarau Rohr,2,0.0004
+Adelboden,2,0.0004
+Adliswil,2,0.0004
+Aesch,2,0.0004
+Affoltern am Albis,2,0.0004
+Altstätten,2,0.0004
+Andermatt,2,0.0004
+Arlesheim,2,0.0004
+Au,2,0.0004
+"Baar, Zug, Switzerland",2,0.0004
+Bad Ragaz,2,0.0004
+Basel Metropolitan Area,2,0.0004
+"Basel, Basel, Switzerland",2,0.0004
+"Basel, Switzerland",2,0.0004
+Basel-Stadt,2,0.0004
+Bellinzona,2,0.0004
+Bellinzone,2,0.0004
+Bern und Homeoffice,2,0.0004
+"Bern-Mittelland, Berne, Switzerland",2,0.0004
+Birmensdorf,2,0.0004
+Bremgarten,2,0.0004
+Buchs,2,0.0004
+"Buchs (SG), St Gallen, Switzerland",2,0.0004
+Bürglen,2,0.0004
+Canton de Vaud,2,0.0004
+Crissier,2,0.0004
+DWL T,2,0.0004
+Dabei,2,0.0004
+Dagmersellen,2,0.0004
+Degersheim,2,0.0004
+Dottikon,2,0.0004
+Dotzigen,2,0.0004
+Egerkingen,2,0.0004
+Farnern,2,0.0004
+Flawil,2,0.0004
+Flughafen Zürich,2,0.0004
+Freienbach,2,0.0004
+Frick,2,0.0004
+"Fully, Valais, Switzerland",2,0.0004
+Gamprin-Bendern,2,0.0004
+Geneva area,2,0.0004
+Genf,2,0.0004
+Genève 6,2,0.0004
+"Gland, Vaud, Switzerland",2,0.0004
+Glarus,2,0.0004
+Gontenschwil,2,0.0004
+Grüsch,2,0.0004
+Haag,2,0.0004
+Härkingen,2,0.0004
+Hölstein,2,0.0004
+Immensee,2,0.0004
+Innerschweiz,2,0.0004
+Jegenstorf,2,0.0004
+Jura,2,0.0004
+Kriegstetten,2,0.0004
+Küsnacht,2,0.0004
+Küssnacht am Rigi,2,0.0004
+Lancy,2,0.0004
+Laufenburg,2,0.0004
+Le Châble,2,0.0004
+Liebefeld,2,0.0004
+Losone,2,0.0004
+"Losone, Meyrin or Biel",2,0.0004
+Lyss,2,0.0004
+Meisterschwanden,2,0.0004
+Mittelland,2,0.0004
+Monthey,2,0.0004
+Morges,2,0.0004
+Muri,2,0.0004
+Murten,2,0.0004
+"Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",2,0.0004
+"Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",2,0.0004
+Möhlin,2,0.0004
+Niederwangen,2,0.0004
+Oberbüren,2,0.0004
+Obernau,2,0.0004
+Oberrüti,2,0.0004
+Ostschweiz/Liechtenstein,2,0.0004
+Othmarsingen,2,0.0004
+Petit-Lancy,2,0.0004
+Pfaeffikon,2,0.0004
+Region Ostschweiz.,2,0.0004
+Reichenburg,2,0.0004
+Risch,2,0.0004
+Région du Nord Vaudois,2,0.0004
+Rümlang,2,0.0004
+Sale,2,0.0004
+Sankt Gallen,2,0.0004
+Schindellegi,2,0.0004
+Sissach,2,0.0004
+"Solothurn, Switzerland",2,0.0004
+Sonceboz,2,0.0004
+Spiez,2,0.0004
+St. Gallen / Mägenwil,2,0.0004
+St. Margrethen,2,0.0004
+St. Urban,2,0.0004
+Suhr,2,0.0004
+Suisse,2,0.0004
+Suisse romande,2,0.0004
+Sursee / Pratteln,2,0.0004
+Teufen,2,0.0004
+Thörishaus,2,0.0004
+Unterengstringen,2,0.0004
+Unterhörstetten,2,0.0004
+Unterkulm,2,0.0004
+Urtenen-Schönbühl,2,0.0004
+Uster,2,0.0004
+Vaud,2,0.0004
+Vevey,2,0.0004
+Wangen b. Dübendorf,2,0.0004
+Wilderswil,2,0.0004
+Wiler b. Seedorf,2,0.0004
+Winterthur / Smart Working,2,0.0004
+Worblaufen,2,0.0004
+Zentralschweiz,2,0.0004
+Zumikon,2,0.0004
+"Zürich Linkes, Zurich, Switzerland",2,0.0004
+Zürich Oerlikon,2,0.0004
+Zürich und/oder Mägenwil,2,0.0004
+Zürich und/oder Mägenwil und Homeoffice,2,0.0004
+Écublens,2,0.0004
+100% remote - Wohnsitz in der Schweiz,1,0.0002
+AG,1,0.0002
+"Aargau, Switzerland",1,0.0002
+Acacias,1,0.0002
+Allwschwil,1,0.0002
+Altdorf,1,0.0002
+"Andermatt, Altdorf & Homeoffice",1,0.0002
+Arosa,1,0.0002
+Aubonne,1,0.0002
+Aurangabad,1,0.0002
+BAD IR,1,0.0002
+"Baar, Zürich, Lausanne",1,0.0002
+Bad Zurzach,1,0.0002
+Baden-Daettwil,1,0.0002
+Bahnhofstrasse 40 Aarburg,1,0.0002
+Baldegg,1,0.0002
+Balgach,1,0.0002
+Basel (Hauptsitz),1,0.0002
+"Basel, Zurich",1,0.0002
+"Basel-Country, Switzerland",1,0.0002
+Basel-Land,1,0.0002
+"Basel-Land, Basel",1,0.0002
+Belp,1,0.0002
+Bendern (LI),1,0.0002
+Benken,1,0.0002
+"Bern (bis Ende 2026), anschliessend Zimmerwald",1,0.0002
+Bern / Zürich,1,0.0002
+Bern oder Frauenfeld,1,0.0002
+Bern und Biel,1,0.0002
+Bern und Zürich,1,0.0002
+"Bern, Berne, Switzerland",1,0.0002
+"Bern, Engehaldenstrasse",1,0.0002
+"Bern, Luzern und Zürich",1,0.0002
+"Bern, Zimmerwald",1,0.0002
+"Bern, Zürich",1,0.0002
+Bern-Liebefeld,1,0.0002
+Bern/Schweiz,1,0.0002
+Bern/Zürich,1,0.0002
+"Berne, Zurich",1,0.0002
+"Berne, Zürich",1,0.0002
+"Biel, Berne, Switzerland",1,0.0002
+Binningen,1,0.0002
+Birr-Lupfig,1,0.0002
+Birsfelden,1,0.0002
+"Bleichemattstrasse 31, Aarau",1,0.0002
+Blonay,1,0.0002
+Boudevilliers,1,0.0002
+Bourg-en-Lavaux,1,0.0002
+Bremgarten b. Bern,1,0.0002
+"Brugg,",1,0.0002
+Brügg,1,0.0002
+Brügg b. Biel,1,0.0002
+Bussigny und Homeoffice,1,0.0002
+Bussigny-près-Lausanne,1,0.0002
+CH &lt;/span,1,0.0002
+CH - Crissier,1,0.0002
+CHE - Neuchatel,1,0.0002
+CHE-CLIENT Geneva-Amazon Web Services,1,0.0002
+"CHE-CORP Zürich-Hardstrasse 201, Prime Tower",1,0.0002
+Carouge,1,0.0002
+Castione,1,0.0002
+"Central Switzerland, Switzerland",1,0.0002
+"Cham, Zug, Switzerland",1,0.0002
+Chesières (VD),1,0.0002
+Commerce,1,0.0002
+Corgémont,1,0.0002
+Corminboeuf,1,0.0002
+Crans-Montana,1,0.0002
+Crans-Montana 1,1,0.0002
+Den Haag,1,0.0002
+"Dielsdorf (Zürich), Lupfig (Aargau)",1,0.0002
+Dintikon,1,0.0002
+Dübendorf-Stettbach,1,0.0002
+Dübendorf-Stettbach & Homeoffice,1,0.0002
+Dürrenäsch,1,0.0002
+EMEA &gt; CHE &gt; Stabio &gt; VF Campus VF1,1,0.0002
+Eastern Switzerland (AI/AR/GL/SG/SH/TG),1,0.0002
+Epalinges,1,0.0002
+Erlinsbach,1,0.0002
+Falkenstrasse 11,1,0.0002
+Fehraltorf (Zurich),1,0.0002
+"Fehraltorf (Zurich), Switzerland",1,0.0002
+Feldbach,1,0.0002
+Feldmeilen,1,0.0002
+Flamatt,1,0.0002
+Frauefeld,1,0.0002
+Friesencham,1,0.0002
+"Fully, Valais",1,0.0002
+Fällanden,1,0.0002
+Füllinsdorf,1,0.0002
+GENEVE CORP,1,0.0002
+Ganze Schweiz,1,0.0002
+"Geneve - Vernier, Chemin des Coquelicots 16",1,0.0002
+Genolier,1,0.0002
+Genève 21,1,0.0002
+"Germany, Koblenz",1,0.0002
+"Glarus Nord, Switzerland",1,0.0002
+"Glattpark, Opfikon",1,0.0002
+Goldach,1,0.0002
+Gossau,1,0.0002
+"Gossau, St Gallen, Switzerland",1,0.0002
+Grabs,1,0.0002
+Granges (Veveyse),1,0.0002
+"Granges, Fribourg, Switzerland",1,0.0002
+Greater Bern Area,1,0.0002
+Grossdietwil,1,0.0002
+Grosshöchstetten,1,0.0002
+Gwatt,1,0.0002
+"Gümligen, Berne, Switzerland",1,0.0002
+Hagendorn,1,0.0002
+Hauptsitz Zollikofen (BE),1,0.0002
+Hergiswil,1,0.0002
+"Herisau (AR), Pfäffikon (ZH)",1,0.0002
+Herzogenbuchsee,1,0.0002
+Hettlingen,1,0.0002
+Home Worker – CHE – Baar,1,0.0002
+Innertkirchen,1,0.0002
+Interlaken,1,0.0002
+Inwil,1,0.0002
+Ittigen,1,0.0002
+Julia,1,0.0002
+"Kaiseraugst, Aargau, Switzerland",1,0.0002
+Kanton Schaffhausen,1,0.0002
+Kehrsatz,1,0.0002
+Kilchberg,1,0.0002
+Killwangen,1,0.0002
+Kirchlindach,1,0.0002
+Konolfingen,1,0.0002
+Köniz,1,0.0002
+Küssnacht,1,0.0002
+La Chaux-de-Fonds,1,0.0002
+Lage,1,0.0002
+Langnau am Albis,1,0.0002
+Lausanne 25,1,0.0002
+Le Grand-Saconnex,1,0.0002
+Le Lignon,1,0.0002
+Locarno,1,0.0002
+Lodrino,1,0.0002
+Log,1,0.0002
+Long,1,0.0002
+Lupfig (Aargau),1,0.0002
+"Luzern, Bern und Solothurn",1,0.0002
+"Luzern, Hochdorf, Zug",1,0.0002
+Lyssach,1,0.0002
+Malters,1,0.0002
+Manno,1,0.0002
+Matten bei Interlaken,1,0.0002
+Mels,1,0.0002
+Menziken,1,0.0002
+Mettmenstetten,1,0.0002
+"Mex, Vaud, Switzerland",1,0.0002
+Mittelland AG &,1,0.0002
+Mon,1,0.0002
+Munich,1,0.0002
+Murtens,1,0.0002
+Muttenz and/or Zurich,1,0.0002
+Môtiers,1,0.0002
+Münchenstein oder Olten,1,0.0002
+Münsterlingen,1,0.0002
+"Neuchâtel, La Côte, Nord vaudois, Région lausannoi",1,0.0002
+Neuenburg,1,0.0002
+Neuenegg,1,0.0002
+Neunkirch,1,0.0002
+Nice,1,0.0002
+Niederweningen,1,0.0002
+Nänikon,1,0.0002
+Obbürgen,1,0.0002
+Oberentfelden,1,0.0002
+Oberhasli,1,0.0002
+Oberhausen,1,0.0002
+Oberwangen (BE),1,0.0002
+Oensingen,1,0.0002
+Oetwil am See,1,0.0002
+Office Cham,1,0.0002
+Oftringen,1,0.0002
+Oftringen / Mittelland,1,0.0002
+Ostschweiz,1,0.0002
+Ostschweiz + FL,1,0.0002
+Pilatus Kulm,1,0.0002
+Porto,1,0.0002
+Porto Ronco,1,0.0002
+Praz Buchilly,1,0.0002
+Quartino,1,0.0002
+ROTKREUZ,1,0.0002
+Rancate,1,0.0002
+"Rapperswil-Jona, St Gallen, Switzerland",1,0.0002
+Region Basel / Ganze Schweiz,1,0.0002
+Region Bern Mittelland,1,0.0002
+"Region Bern Mittelland (BE/SO/AG),Ostschweiz (AR/A",1,0.0002
+Region Deutschschweiz,1,0.0002
+Region Genf,1,0.0002
+Region Region Zürich,1,0.0002
+Region Zentralschweiz,1,0.0002
+"Region Zürich (Kloten, Glattbrugg)",1,0.0002
+"Region Zürich (Kloten, Glattbrugg, Rümlang)",1,0.0002
+Region Zürich / Schaffhausen,1,0.0002
+Remote / Office Baar oder Bern,1,0.0002
+Remote-Switzerland -City of Zurich/ Lakeside,1,0.0002
+Reussbühl,1,0.0002
+Richterswil,1,0.0002
+Riedt b. Erlen,1,0.0002
+"Risch-Rotkreuz, Zug, Switzerland",1,0.0002
+Riviera / Chablais,1,0.0002
+Rolle,1,0.0002
+Root / hybrid,1,0.0002
+Root D4,1,0.0002
+Rudolfstetten,1,0.0002
+Ruggell,1,0.0002
+Région de St-Imier,1,0.0002
+Région du nord vaudois,1,0.0002
+SG,1,0.0002
+Saint-Blaise,1,0.0002
+Samstagern,1,0.0002
+Samstagern oder Zürich (Neuaufbau Filiale),1,0.0002
+San Jose,1,0.0002
+Sankt Gallen Metropolitan Area,1,0.0002
+Sarnen,1,0.0002
+Satigny,1,0.0002
+Schachen,1,0.0002
+"Schaffhausen, Schaffhausen, Switzerland",1,0.0002
+Schafisheim,1,0.0002
+"Schlieren, Zurich, Switzerland",1,0.0002
+Schmitten,1,0.0002
+Schwarzenburg,1,0.0002
+Schönbühl Einkaufszentrum,1,0.0002
+Schönbühl-Urtenen,1,0.0002
+Schönenwerd,1,0.0002
+Siebnen,1,0.0002
+Signy-Centre,1,0.0002
+Sins,1,0.0002
+Sitten,1,0.0002
+Sonceboz-Sombeval,1,0.0002
+"St Gallen, St Gallen, Switzerland",1,0.0002
+St Imier,1,0.0002
+St-Imier,1,0.0002
+Stadel,1,0.0002
+Stadt Zürich,1,0.0002
+Steckborn,1,0.0002
+Steffisburg,1,0.0002
+Steinach,1,0.0002
+Steinengraben 36,1,0.0002
+Studen,1,0.0002
+Sumiswald,1,0.0002
+Switzerland &gt; Basel : H-127 A2,1,0.0002
+Switzerland + FL,1,0.0002
+Switzerland : Technoparkstrass 1 CH 8005,1,0.0002
+Tafers,1,0.0002
+Tagelswangen,1,0.0002
+"Thun, Bern",1,0.0002
+Thunersee,1,0.0002
+Thônex,1,0.0002
+Ticino,1,0.0002
+"Ticino, Switzerland",1,0.0002
+Tramelan,1,0.0002
+Universitäre Psychiatrische Kliniken Basel (UPK),1,0.0002
+Unterseen,1,0.0002
+Untersiggenthal,1,0.0002
+"Uri, Switzerland",1,0.0002
+Uznach,1,0.0002
+Vallorbe,1,0.0002
+Versoix,1,0.0002
+Villars-sur-Glâne,1,0.0002
+"Villars-sur-Glâne, Fribourg, Switzerland",1,0.0002
+Villeneuve,1,0.0002
+Villmergen,1,0.0002
+Visp Zustellung,1,0.0002
+Vitznau,1,0.0002
+Vuadens,1,0.0002
+Walenstadt,1,0.0002
+Wattwil,1,0.0002
+"Weinfelden, Landquart oder St. Gallen",1,0.0002
+"Weinfelden, Landquart, St. Gallen, Mägenwil",1,0.0002
+Westschweiz,1,0.0002
+Wiesendangen,1,0.0002
+Wil SG Paketbasis,1,0.0002
+Willisau,1,0.0002
+"Winterthur, Schweiz",1,0.0002
+"Wohlen, Berne, Switzerland",1,0.0002
+Würenlos,1,0.0002
+Zimmerwald,1,0.0002
+Zollikon,1,0.0002
+"Zug, Zug",1,0.0002
+Zurich (KCH51659) Service Office,1,0.0002
+Zurich (ZNLZ) (CH),1,0.0002
+Zurich Metropolitan Area,1,0.0002
+Zurich Seebach,1,0.0002
+"Zurich, Basel",1,0.0002
+"Zurich, Zurich",1,0.0002
+Zweigbüro Mels,1,0.0002
+Zürcher Oberland,1,0.0002
+Zürich (CH),1,0.0002
+Zürich Headquarter,1,0.0002
+Zürich Tiefenbrunnen,1,0.0002
+Zürich-Altstetten,1,0.0002
+"Zürich-Flughafen, Zurich, Switzerland",1,0.0002
+Zürich-Oerlikon,1,0.0002
+Zürich-Schlieren,1,0.0002
+Zürich/Kloten,1,0.0002

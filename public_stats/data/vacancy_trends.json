@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-05-16T20:01:27Z",
+  "generated_at": "2026-05-24T15:16:45Z",
   "available": true,
   "summary": {
-    "published_total": 3709,
-    "closed_total": 1951,
-    "latest_publication_date": "2026-05-16",
-    "published_30d": 1582,
-    "published_previous_30d": 1484,
-    "growth_30d": 0.066,
-    "published_90d": 3459,
-    "published_previous_90d": 250,
-    "growth_90d": 12.836,
-    "published_180d": 3709,
+    "published_total": 4488,
+    "closed_total": 2285,
+    "latest_publication_date": "2026-05-24",
+    "published_30d": 1917,
+    "published_previous_30d": 1652,
+    "growth_30d": 0.1604,
+    "published_90d": 4184,
+    "published_previous_90d": 304,
+    "growth_90d": 12.7632,
+    "published_180d": 4488,
     "published_previous_180d": 0,
     "growth_180d": null,
-    "published_365d": 3709,
+    "published_365d": 4488,
     "published_previous_365d": 0,
     "growth_365d": null
   },
@@ -70,31 +70,31 @@
     },
     {
       "date": "2026-01-10",
-      "published_count": 5,
+      "published_count": 6,
       "closed_count": 0,
-      "net_change": 5,
-      "growth_rate": 0.0
+      "net_change": 6,
+      "growth_rate": 0.2
     },
     {
       "date": "2026-01-11",
       "published_count": 2,
       "closed_count": 0,
       "net_change": 2,
-      "growth_rate": -0.6
+      "growth_rate": -0.6667
     },
     {
       "date": "2026-01-13",
-      "published_count": 8,
+      "published_count": 9,
       "closed_count": 0,
-      "net_change": 8,
-      "growth_rate": 3.0
+      "net_change": 9,
+      "growth_rate": 3.5
     },
     {
       "date": "2026-01-14",
       "published_count": 7,
       "closed_count": 0,
       "net_change": 7,
-      "growth_rate": -0.125
+      "growth_rate": -0.2222
     },
     {
       "date": "2026-01-15",
@@ -140,17 +140,17 @@
     },
     {
       "date": "2026-01-21",
-      "published_count": 6,
+      "published_count": 8,
       "closed_count": 0,
-      "net_change": 6,
-      "growth_rate": 0.5
+      "net_change": 8,
+      "growth_rate": 1.0
     },
     {
       "date": "2026-01-22",
       "published_count": 6,
       "closed_count": 0,
       "net_change": 6,
-      "growth_rate": 0.0
+      "growth_rate": -0.25
     },
     {
       "date": "2026-01-23",
@@ -161,17 +161,17 @@
     },
     {
       "date": "2026-01-24",
-      "published_count": 6,
+      "published_count": 7,
       "closed_count": 0,
-      "net_change": 6,
-      "growth_rate": 0.5
+      "net_change": 7,
+      "growth_rate": 0.75
     },
     {
       "date": "2026-01-25",
       "published_count": 5,
       "closed_count": 0,
       "net_change": 5,
-      "growth_rate": -0.1667
+      "growth_rate": -0.2857
     },
     {
       "date": "2026-01-26",
@@ -189,17 +189,17 @@
     },
     {
       "date": "2026-01-29",
-      "published_count": 17,
+      "published_count": 18,
       "closed_count": 0,
-      "net_change": 17,
-      "growth_rate": 0.8889
+      "net_change": 18,
+      "growth_rate": 1.0
     },
     {
       "date": "2026-01-30",
       "published_count": 8,
       "closed_count": 0,
       "net_change": 8,
-      "growth_rate": -0.5294
+      "growth_rate": -0.5556
     },
     {
       "date": "2026-01-31",
@@ -217,17 +217,17 @@
     },
     {
       "date": "2026-02-02",
-      "published_count": 4,
+      "published_count": 3,
       "closed_count": 0,
-      "net_change": 4,
-      "growth_rate": 0.0
+      "net_change": 3,
+      "growth_rate": -0.25
     },
     {
       "date": "2026-02-03",
       "published_count": 9,
       "closed_count": 0,
       "net_change": 9,
-      "growth_rate": 1.25
+      "growth_rate": 2.0
     },
     {
       "date": "2026-02-04",
@@ -315,17 +315,17 @@
     },
     {
       "date": "2026-02-17",
-      "published_count": 7,
+      "published_count": 6,
       "closed_count": 0,
-      "net_change": 7,
-      "growth_rate": 0.4
+      "net_change": 6,
+      "growth_rate": 0.2
     },
     {
       "date": "2026-02-18",
       "published_count": 9,
       "closed_count": 0,
       "net_change": 9,
-      "growth_rate": 0.2857
+      "growth_rate": 0.5
     },
     {
       "date": "2026-02-19",
@@ -427,17 +427,17 @@
     },
     {
       "date": "2026-03-06",
-      "published_count": 41,
+      "published_count": 42,
       "closed_count": 0,
-      "net_change": 41,
-      "growth_rate": 3.5556
+      "net_change": 42,
+      "growth_rate": 3.6667
     },
     {
       "date": "2026-03-07",
       "published_count": 9,
       "closed_count": 0,
       "net_change": 9,
-      "growth_rate": -0.7805
+      "growth_rate": -0.7857
     },
     {
       "date": "2026-03-09",
@@ -455,17 +455,17 @@
     },
     {
       "date": "2026-03-11",
-      "published_count": 25,
+      "published_count": 26,
       "closed_count": 0,
-      "net_change": 25,
-      "growth_rate": 0.3158
+      "net_change": 26,
+      "growth_rate": 0.3684
     },
     {
       "date": "2026-03-12",
       "published_count": 32,
       "closed_count": 0,
       "net_change": 32,
-      "growth_rate": 0.28
+      "growth_rate": 0.2308
     },
     {
       "date": "2026-03-13",
@@ -504,17 +504,17 @@
     },
     {
       "date": "2026-03-19",
-      "published_count": 32,
+      "published_count": 34,
       "closed_count": 0,
-      "net_change": 32,
-      "growth_rate": -0.4074
+      "net_change": 34,
+      "growth_rate": -0.3704
     },
     {
       "date": "2026-03-20",
       "published_count": 37,
       "closed_count": 0,
       "net_change": 37,
-      "growth_rate": 0.1562
+      "growth_rate": 0.0882
     },
     {
       "date": "2026-03-21",
@@ -595,17 +595,17 @@
     },
     {
       "date": "2026-04-01",
-      "published_count": 152,
+      "published_count": 153,
       "closed_count": 0,
-      "net_change": 152,
-      "growth_rate": 3.2222
+      "net_change": 153,
+      "growth_rate": 3.25
     },
     {
       "date": "2026-04-02",
       "published_count": 83,
       "closed_count": 0,
       "net_change": 83,
-      "growth_rate": -0.4539
+      "growth_rate": -0.4575
     },
     {
       "date": "2026-04-03",
@@ -616,17 +616,17 @@
     },
     {
       "date": "2026-04-04",
-      "published_count": 10,
+      "published_count": 9,
       "closed_count": 0,
-      "net_change": 10,
-      "growth_rate": -0.6154
+      "net_change": 9,
+      "growth_rate": -0.6538
     },
     {
       "date": "2026-04-05",
       "published_count": 4,
       "closed_count": 0,
       "net_change": 4,
-      "growth_rate": -0.6
+      "growth_rate": -0.5556
     },
     {
       "date": "2026-04-06",
@@ -637,17 +637,17 @@
     },
     {
       "date": "2026-04-07",
-      "published_count": 66,
+      "published_count": 64,
       "closed_count": 0,
-      "net_change": 66,
-      "growth_rate": 3.125
+      "net_change": 64,
+      "growth_rate": 3.0
     },
     {
       "date": "2026-04-08",
       "published_count": 60,
       "closed_count": 0,
       "net_change": 60,
-      "growth_rate": -0.0909
+      "growth_rate": -0.0625
     },
     {
       "date": "2026-04-09",
@@ -679,87 +679,87 @@
     },
     {
       "date": "2026-04-13",
-      "published_count": 92,
+      "published_count": 89,
       "closed_count": 0,
-      "net_change": 92,
-      "growth_rate": 2.5385
+      "net_change": 89,
+      "growth_rate": 2.4231
     },
     {
       "date": "2026-04-14",
-      "published_count": 77,
+      "published_count": 74,
       "closed_count": 250,
-      "net_change": -173,
-      "growth_rate": -0.163
+      "net_change": -176,
+      "growth_rate": -0.1685
     },
     {
       "date": "2026-04-15",
-      "published_count": 85,
+      "published_count": 79,
       "closed_count": 0,
-      "net_change": 85,
-      "growth_rate": 0.1039
+      "net_change": 79,
+      "growth_rate": 0.0676
     },
     {
       "date": "2026-04-16",
-      "published_count": 85,
+      "published_count": 79,
       "closed_count": 0,
-      "net_change": 85,
+      "net_change": 79,
       "growth_rate": 0.0
     },
     {
       "date": "2026-04-17",
-      "published_count": 74,
+      "published_count": 72,
       "closed_count": 221,
-      "net_change": -147,
-      "growth_rate": -0.1294
+      "net_change": -149,
+      "growth_rate": -0.0886
     },
     {
       "date": "2026-04-18",
-      "published_count": 31,
+      "published_count": 29,
       "closed_count": 0,
-      "net_change": 31,
-      "growth_rate": -0.5811
+      "net_change": 29,
+      "growth_rate": -0.5972
     },
     {
       "date": "2026-04-19",
-      "published_count": 22,
+      "published_count": 18,
       "closed_count": 0,
-      "net_change": 22,
-      "growth_rate": -0.2903
+      "net_change": 18,
+      "growth_rate": -0.3793
     },
     {
       "date": "2026-04-20",
-      "published_count": 68,
+      "published_count": 64,
       "closed_count": 0,
-      "net_change": 68,
-      "growth_rate": 2.0909
+      "net_change": 64,
+      "growth_rate": 2.5556
     },
     {
       "date": "2026-04-21",
       "published_count": 63,
-      "closed_count": 365,
-      "net_change": -302,
-      "growth_rate": -0.0735
+      "closed_count": 363,
+      "net_change": -300,
+      "growth_rate": -0.0156
     },
     {
       "date": "2026-04-22",
-      "published_count": 89,
+      "published_count": 88,
       "closed_count": 0,
-      "net_change": 89,
-      "growth_rate": 0.4127
+      "net_change": 88,
+      "growth_rate": 0.3968
     },
     {
       "date": "2026-04-23",
-      "published_count": 48,
+      "published_count": 47,
       "closed_count": 0,
-      "net_change": 48,
-      "growth_rate": -0.4607
+      "net_change": 47,
+      "growth_rate": -0.4659
     },
     {
       "date": "2026-04-24",
       "published_count": 75,
       "closed_count": 0,
       "net_change": 75,
-      "growth_rate": 0.5625
+      "growth_rate": 0.5957
     },
     {
       "date": "2026-04-25",
@@ -777,17 +777,17 @@
     },
     {
       "date": "2026-04-27",
-      "published_count": 62,
+      "published_count": 60,
       "closed_count": 221,
-      "net_change": -159,
-      "growth_rate": 4.6364
+      "net_change": -161,
+      "growth_rate": 4.4545
     },
     {
       "date": "2026-04-28",
       "published_count": 86,
       "closed_count": 0,
       "net_change": 86,
-      "growth_rate": 0.3871
+      "growth_rate": 0.4333
     },
     {
       "date": "2026-04-29",
@@ -799,23 +799,23 @@
     {
       "date": "2026-04-30",
       "published_count": 56,
-      "closed_count": 556,
-      "net_change": -500,
+      "closed_count": 554,
+      "net_change": -498,
       "growth_rate": -0.2632
     },
     {
       "date": "2026-05-01",
-      "published_count": 50,
+      "published_count": 51,
       "closed_count": 0,
-      "net_change": 50,
-      "growth_rate": -0.1071
+      "net_change": 51,
+      "growth_rate": -0.0893
     },
     {
       "date": "2026-05-02",
       "published_count": 13,
       "closed_count": 0,
       "net_change": 13,
-      "growth_rate": -0.74
+      "growth_rate": -0.7451
     },
     {
       "date": "2026-05-03",
@@ -833,87 +833,143 @@
     },
     {
       "date": "2026-05-05",
-      "published_count": 78,
+      "published_count": 77,
       "closed_count": 0,
-      "net_change": 78,
-      "growth_rate": 0.56
+      "net_change": 77,
+      "growth_rate": 0.54
     },
     {
       "date": "2026-05-06",
-      "published_count": 72,
+      "published_count": 71,
       "closed_count": 0,
-      "net_change": 72,
-      "growth_rate": -0.0769
+      "net_change": 71,
+      "growth_rate": -0.0779
     },
     {
       "date": "2026-05-07",
-      "published_count": 62,
+      "published_count": 59,
       "closed_count": 0,
-      "net_change": 62,
-      "growth_rate": -0.1389
+      "net_change": 59,
+      "growth_rate": -0.169
     },
     {
       "date": "2026-05-08",
-      "published_count": 87,
+      "published_count": 84,
       "closed_count": 0,
-      "net_change": 87,
-      "growth_rate": 0.4032
+      "net_change": 84,
+      "growth_rate": 0.4237
     },
     {
       "date": "2026-05-09",
-      "published_count": 25,
+      "published_count": 24,
       "closed_count": 0,
-      "net_change": 25,
-      "growth_rate": -0.7126
+      "net_change": 24,
+      "growth_rate": -0.7143
     },
     {
       "date": "2026-05-10",
       "published_count": 13,
-      "closed_count": 338,
-      "net_change": -325,
-      "growth_rate": -0.48
+      "closed_count": 324,
+      "net_change": -311,
+      "growth_rate": -0.4583
     },
     {
       "date": "2026-05-11",
-      "published_count": 69,
+      "published_count": 60,
       "closed_count": 0,
-      "net_change": 69,
-      "growth_rate": 4.3077
+      "net_change": 60,
+      "growth_rate": 3.6154
     },
     {
       "date": "2026-05-12",
-      "published_count": 83,
+      "published_count": 78,
       "closed_count": 0,
-      "net_change": 83,
-      "growth_rate": 0.2029
+      "net_change": 78,
+      "growth_rate": 0.3
     },
     {
       "date": "2026-05-13",
-      "published_count": 99,
+      "published_count": 95,
       "closed_count": 0,
-      "net_change": 99,
-      "growth_rate": 0.1928
+      "net_change": 95,
+      "growth_rate": 0.2179
     },
     {
       "date": "2026-05-14",
-      "published_count": 35,
+      "published_count": 30,
       "closed_count": 0,
-      "net_change": 35,
-      "growth_rate": -0.6465
+      "net_change": 30,
+      "growth_rate": -0.6842
     },
     {
       "date": "2026-05-15",
-      "published_count": 42,
+      "published_count": 32,
       "closed_count": 0,
-      "net_change": 42,
-      "growth_rate": 0.2
+      "net_change": 32,
+      "growth_rate": 0.0667
     },
     {
       "date": "2026-05-16",
-      "published_count": 4,
+      "published_count": 13,
+      "closed_count": 352,
+      "net_change": -339,
+      "growth_rate": -0.5938
+    },
+    {
+      "date": "2026-05-17",
+      "published_count": 12,
       "closed_count": 0,
-      "net_change": 4,
-      "growth_rate": -0.9048
+      "net_change": 12,
+      "growth_rate": -0.0769
+    },
+    {
+      "date": "2026-05-18",
+      "published_count": 99,
+      "closed_count": 0,
+      "net_change": 99,
+      "growth_rate": 7.25
+    },
+    {
+      "date": "2026-05-19",
+      "published_count": 142,
+      "closed_count": 0,
+      "net_change": 142,
+      "growth_rate": 0.4343
+    },
+    {
+      "date": "2026-05-20",
+      "published_count": 132,
+      "closed_count": 0,
+      "net_change": 132,
+      "growth_rate": -0.0704
+    },
+    {
+      "date": "2026-05-21",
+      "published_count": 140,
+      "closed_count": 0,
+      "net_change": 140,
+      "growth_rate": 0.0606
+    },
+    {
+      "date": "2026-05-22",
+      "published_count": 171,
+      "closed_count": 0,
+      "net_change": 171,
+      "growth_rate": 0.2214
+    },
+    {
+      "date": "2026-05-23",
+      "published_count": 137,
+      "closed_count": 0,
+      "net_change": 137,
+      "growth_rate": -0.1988
+    },
+    {
+      "date": "2026-05-24",
+      "published_count": 6,
+      "closed_count": 0,
+      "net_change": 6,
+      "growth_rate": -0.9562
     }
   ],
   "weekly": [
@@ -926,87 +982,87 @@
     },
     {
       "week_start": "2026-01-05",
-      "published_count": 27,
+      "published_count": 28,
       "closed_count": 0,
-      "net_change": 27,
-      "growth_rate": 12.5
+      "net_change": 28,
+      "growth_rate": 13.0
     },
     {
       "week_start": "2026-01-12",
-      "published_count": 37,
+      "published_count": 38,
       "closed_count": 0,
-      "net_change": 37,
-      "growth_rate": 0.3704
+      "net_change": 38,
+      "growth_rate": 0.3571
     },
     {
       "week_start": "2026-01-19",
-      "published_count": 32,
+      "published_count": 35,
       "closed_count": 0,
-      "net_change": 32,
-      "growth_rate": -0.1351
+      "net_change": 35,
+      "growth_rate": -0.0789
     },
     {
       "week_start": "2026-01-26",
-      "published_count": 47,
+      "published_count": 48,
       "closed_count": 0,
-      "net_change": 47,
-      "growth_rate": 0.4688
+      "net_change": 48,
+      "growth_rate": 0.3714
     },
     {
       "week_start": "2026-02-02",
-      "published_count": 50,
+      "published_count": 49,
       "closed_count": 0,
-      "net_change": 50,
-      "growth_rate": 0.0638
+      "net_change": 49,
+      "growth_rate": 0.0208
     },
     {
       "week_start": "2026-02-09",
       "published_count": 55,
       "closed_count": 0,
       "net_change": 55,
-      "growth_rate": 0.1
+      "growth_rate": 0.1224
     },
     {
       "week_start": "2026-02-16",
-      "published_count": 50,
+      "published_count": 49,
       "closed_count": 0,
-      "net_change": 50,
-      "growth_rate": -0.0909
+      "net_change": 49,
+      "growth_rate": -0.1091
     },
     {
       "week_start": "2026-02-23",
       "published_count": 53,
       "closed_count": 0,
       "net_change": 53,
-      "growth_rate": 0.06
+      "growth_rate": 0.0816
     },
     {
       "week_start": "2026-03-02",
-      "published_count": 90,
+      "published_count": 91,
       "closed_count": 0,
-      "net_change": 90,
-      "growth_rate": 0.6981
+      "net_change": 91,
+      "growth_rate": 0.717
     },
     {
       "week_start": "2026-03-09",
-      "published_count": 126,
+      "published_count": 127,
       "closed_count": 0,
-      "net_change": 126,
-      "growth_rate": 0.4
+      "net_change": 127,
+      "growth_rate": 0.3956
     },
     {
       "week_start": "2026-03-16",
-      "published_count": 210,
+      "published_count": 212,
       "closed_count": 0,
-      "net_change": 210,
-      "growth_rate": 0.6667
+      "net_change": 212,
+      "growth_rate": 0.6693
     },
     {
       "week_start": "2026-03-23",
       "published_count": 267,
       "closed_count": 0,
       "net_change": 267,
-      "growth_rate": 0.2714
+      "growth_rate": 0.2594
     },
     {
       "week_start": "2026-03-30",
@@ -1017,45 +1073,52 @@
     },
     {
       "week_start": "2026-04-06",
-      "published_count": 355,
+      "published_count": 353,
       "closed_count": 0,
-      "net_change": 355,
-      "growth_rate": -0.0827
+      "net_change": 353,
+      "growth_rate": -0.0879
     },
     {
       "week_start": "2026-04-13",
-      "published_count": 466,
+      "published_count": 440,
       "closed_count": 471,
-      "net_change": -5,
-      "growth_rate": 0.3127
+      "net_change": -31,
+      "growth_rate": 0.2465
     },
     {
       "week_start": "2026-04-20",
-      "published_count": 380,
-      "closed_count": 365,
-      "net_change": 15,
-      "growth_rate": -0.1845
+      "published_count": 374,
+      "closed_count": 363,
+      "net_change": 11,
+      "growth_rate": -0.15
     },
     {
       "week_start": "2026-04-27",
-      "published_count": 356,
-      "closed_count": 777,
-      "net_change": -421,
-      "growth_rate": -0.0632
+      "published_count": 355,
+      "closed_count": 775,
+      "net_change": -420,
+      "growth_rate": -0.0508
     },
     {
       "week_start": "2026-05-04",
-      "published_count": 387,
-      "closed_count": 338,
-      "net_change": 49,
-      "growth_rate": 0.0871
+      "published_count": 378,
+      "closed_count": 324,
+      "net_change": 54,
+      "growth_rate": 0.0648
     },
     {
       "week_start": "2026-05-11",
-      "published_count": 332,
+      "published_count": 320,
+      "closed_count": 352,
+      "net_change": -32,
+      "growth_rate": -0.1534
+    },
+    {
+      "week_start": "2026-05-18",
+      "published_count": 827,
       "closed_count": 0,
-      "net_change": 332,
-      "growth_rate": -0.1421
+      "net_change": 827,
+      "growth_rate": 1.5844
     }
   ],
   "segments": {
@@ -1248,9 +1311,9 @@
         "date": "2026-01-10",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-01-11",
@@ -1312,9 +1375,9 @@
         "date": "2026-01-13",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 3
       },
       {
         "date": "2026-01-14",
@@ -1512,9 +1575,9 @@
         "date": "2026-01-21",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 4
       },
       {
         "date": "2026-01-21",
@@ -1608,9 +1671,9 @@
         "date": "2026-01-24",
         "canton": "BS",
         "role_category": "data_ai",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-01-24",
@@ -1776,9 +1839,9 @@
         "date": "2026-01-29",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-01-29",
@@ -1928,14 +1991,6 @@
         "date": "2026-02-02",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-02-02",
-        "canton": "ZH",
-        "role_category": "software_engineering",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -2464,9 +2519,9 @@
         "date": "2026-02-17",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-02-18",
@@ -3376,9 +3431,9 @@
         "date": "2026-03-06",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 12,
+        "published_count": 13,
         "closed_count": 0,
-        "net_change": 12
+        "net_change": 13
       },
       {
         "date": "2026-03-07",
@@ -3664,9 +3719,9 @@
         "date": "2026-03-11",
         "canton": "ZH",
         "role_category": "data_ai",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-03-11",
@@ -3854,14 +3909,6 @@
       },
       {
         "date": "2026-03-13",
-        "canton": "AG",
-        "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-03-13",
         "canton": "BE",
         "role_category": "product_project_analysis",
         "published_count": 1,
@@ -3928,9 +3975,9 @@
         "date": "2026-03-13",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 6,
+        "published_count": 7,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 7
       },
       {
         "date": "2026-03-13",
@@ -4647,10 +4694,18 @@
       {
         "date": "2026-03-19",
         "canton": "ZH",
-        "role_category": "support_operations",
-        "published_count": 2,
+        "role_category": "software_engineering",
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
+      },
+      {
+        "date": "2026-03-19",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
       },
       {
         "date": "2026-03-20",
@@ -6456,9 +6511,9 @@
         "date": "2026-04-01",
         "canton": "LU",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-04-01",
@@ -7134,14 +7189,6 @@
       },
       {
         "date": "2026-04-04",
-        "canton": "SO",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-04",
         "canton": "Unknown",
         "role_category": "software_engineering",
         "published_count": 1,
@@ -7439,14 +7486,6 @@
       {
         "date": "2026-04-07",
         "canton": "SG",
-        "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-07",
-        "canton": "SG",
         "role_category": "software_engineering",
         "published_count": 2,
         "closed_count": 0,
@@ -7512,9 +7551,9 @@
         "date": "2026-04-07",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "date": "2026-04-07",
@@ -7966,6 +8005,14 @@
       },
       {
         "date": "2026-04-09",
+        "canton": "TG",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-04-09",
         "canton": "TI",
         "role_category": "product_project_analysis",
         "published_count": 1,
@@ -8096,9 +8143,9 @@
         "date": "2026-04-09",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 7,
+        "published_count": 6,
         "closed_count": 0,
-        "net_change": 7
+        "net_change": 6
       },
       {
         "date": "2026-04-10",
@@ -8128,14 +8175,6 @@
         "date": "2026-04-10",
         "canton": "BE",
         "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-10",
-        "canton": "BE",
-        "role_category": "qa_testing",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -8376,9 +8415,9 @@
         "date": "2026-04-10",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 6,
+        "published_count": 7,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 7
       },
       {
         "date": "2026-04-11",
@@ -8718,14 +8757,6 @@
       },
       {
         "date": "2026-04-13",
-        "canton": "FR",
-        "role_category": "qa_testing",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-13",
         "canton": "GE",
         "role_category": "qa_testing",
         "published_count": 1,
@@ -8856,9 +8887,9 @@
         "date": "2026-04-13",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 10,
+        "published_count": 9,
         "closed_count": 0,
-        "net_change": 10
+        "net_change": 9
       },
       {
         "date": "2026-04-13",
@@ -8888,9 +8919,9 @@
         "date": "2026-04-13",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-04-13",
@@ -8968,9 +8999,9 @@
         "date": "2026-04-14",
         "canton": "BE",
         "role_category": "product_project_analysis",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 6,
-        "net_change": -3
+        "net_change": -4
       },
       {
         "date": "2026-04-14",
@@ -9064,14 +9095,6 @@
         "date": "2026-04-14",
         "canton": "BS",
         "role_category": "support_operations",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-14",
-        "canton": "FR",
-        "role_category": "qa_testing",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -9496,9 +9519,9 @@
         "date": "2026-04-14",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 17,
+        "published_count": 16,
         "closed_count": 52,
-        "net_change": -35
+        "net_change": -36
       },
       {
         "date": "2026-04-14",
@@ -9536,9 +9559,9 @@
         "date": "2026-04-15",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "date": "2026-04-15",
@@ -9560,9 +9583,9 @@
         "date": "2026-04-15",
         "canton": "BS",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-04-15",
@@ -9632,14 +9655,6 @@
         "date": "2026-04-15",
         "canton": "SG",
         "role_category": "data_ai",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-15",
-        "canton": "SG",
-        "role_category": "software_engineering",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -9720,9 +9735,9 @@
         "date": "2026-04-15",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-04-15",
@@ -9736,9 +9751,9 @@
         "date": "2026-04-15",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 5,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 5
+        "net_change": 4
       },
       {
         "date": "2026-04-15",
@@ -9760,9 +9775,9 @@
         "date": "2026-04-15",
         "canton": "ZH",
         "role_category": "ux_ui_design",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "date": "2026-04-16",
@@ -9784,9 +9799,9 @@
         "date": "2026-04-16",
         "canton": "BE",
         "role_category": "devops_cloud_platform",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-04-16",
@@ -9936,9 +9951,9 @@
         "date": "2026-04-16",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 9,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 9
+        "net_change": 8
       },
       {
         "date": "2026-04-16",
@@ -9976,17 +9991,17 @@
         "date": "2026-04-16",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 20,
+        "published_count": 18,
         "closed_count": 0,
-        "net_change": 20
+        "net_change": 18
       },
       {
         "date": "2026-04-16",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 10,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 10
+        "net_change": 8
       },
       {
         "date": "2026-04-16",
@@ -10320,9 +10335,9 @@
         "date": "2026-04-17",
         "canton": "SG",
         "role_category": "software_engineering",
-        "published_count": 1,
+        "published_count": 0,
         "closed_count": 4,
-        "net_change": -3
+        "net_change": -4
       },
       {
         "date": "2026-04-17",
@@ -10504,9 +10519,9 @@
         "date": "2026-04-17",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 8,
+        "published_count": 7,
         "closed_count": 11,
-        "net_change": -3
+        "net_change": -4
       },
       {
         "date": "2026-04-17",
@@ -10606,6 +10621,14 @@
       },
       {
         "date": "2026-04-18",
+        "canton": "BL",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-04-18",
         "canton": "BS",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
@@ -10664,9 +10687,9 @@
         "date": "2026-04-18",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-04-18",
@@ -10688,17 +10711,17 @@
         "date": "2026-04-18",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-04-18",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-04-18",
@@ -10734,14 +10757,6 @@
       },
       {
         "date": "2026-04-19",
-        "canton": "VD",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-19",
         "canton": "ZH",
         "role_category": "data_ai",
         "published_count": 1,
@@ -10752,9 +10767,9 @@
         "date": "2026-04-19",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 4
+        "net_change": 3
       },
       {
         "date": "2026-04-19",
@@ -10776,9 +10791,9 @@
         "date": "2026-04-19",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 6,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 4
       },
       {
         "date": "2026-04-19",
@@ -10894,14 +10909,6 @@
       },
       {
         "date": "2026-04-20",
-        "canton": "GR",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-20",
         "canton": "LU",
         "role_category": "software_engineering",
         "published_count": 1,
@@ -10923,14 +10930,6 @@
         "published_count": 3,
         "closed_count": 0,
         "net_change": 3
-      },
-      {
-        "date": "2026-04-20",
-        "canton": "Unknown",
-        "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
       },
       {
         "date": "2026-04-20",
@@ -10992,9 +10991,9 @@
         "date": "2026-04-20",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 4
+        "net_change": 3
       },
       {
         "date": "2026-04-20",
@@ -11024,9 +11023,9 @@
         "date": "2026-04-20",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 4
+        "net_change": 3
       },
       {
         "date": "2026-04-20",
@@ -11129,8 +11128,8 @@
         "canton": "BE",
         "role_category": "qa_testing",
         "published_count": 2,
-        "closed_count": 2,
-        "net_change": 0
+        "closed_count": 1,
+        "net_change": 1
       },
       {
         "date": "2026-04-21",
@@ -11275,6 +11274,14 @@
         "published_count": 0,
         "closed_count": 1,
         "net_change": -1
+      },
+      {
+        "date": "2026-04-21",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
       },
       {
         "date": "2026-04-21",
@@ -11544,9 +11551,9 @@
         "date": "2026-04-21",
         "canton": "VD",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 11,
-        "net_change": -9
+        "net_change": -10
       },
       {
         "date": "2026-04-21",
@@ -11609,8 +11616,8 @@
         "canton": "ZH",
         "role_category": "erp_business_systems",
         "published_count": 2,
-        "closed_count": 13,
-        "net_change": -11
+        "closed_count": 12,
+        "net_change": -10
       },
       {
         "date": "2026-04-21",
@@ -11624,9 +11631,9 @@
         "date": "2026-04-21",
         "canton": "ZH",
         "role_category": "qa_testing",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 6,
-        "net_change": -4
+        "net_change": -5
       },
       {
         "date": "2026-04-21",
@@ -11648,9 +11655,9 @@
         "date": "2026-04-21",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 5,
+        "published_count": 6,
         "closed_count": 21,
-        "net_change": -16
+        "net_change": -15
       },
       {
         "date": "2026-04-21",
@@ -11776,9 +11783,9 @@
         "date": "2026-04-22",
         "canton": "LU",
         "role_category": "devops_cloud_platform",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "date": "2026-04-22",
@@ -12007,14 +12014,6 @@
       {
         "date": "2026-04-23",
         "canton": "VD",
-        "role_category": "qa_testing",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-04-23",
-        "canton": "VD",
         "role_category": "software_engineering",
         "published_count": 2,
         "closed_count": 0,
@@ -12032,9 +12031,9 @@
         "date": "2026-04-23",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 3,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 4
       },
       {
         "date": "2026-04-23",
@@ -12072,9 +12071,9 @@
         "date": "2026-04-23",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 3,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "date": "2026-04-24",
@@ -12256,9 +12255,9 @@
         "date": "2026-04-24",
         "canton": "ZH",
         "role_category": "erp_business_systems",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-04-24",
@@ -12296,9 +12295,9 @@
         "date": "2026-04-24",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 7,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 7
+        "net_change": 8
       },
       {
         "date": "2026-04-25",
@@ -12648,9 +12647,9 @@
         "date": "2026-04-27",
         "canton": "GE",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 0,
         "closed_count": 1,
-        "net_change": 1
+        "net_change": -1
       },
       {
         "date": "2026-04-27",
@@ -13264,9 +13263,9 @@
         "date": "2026-04-29",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 4
+        "net_change": 3
       },
       {
         "date": "2026-04-29",
@@ -13288,6 +13287,14 @@
         "date": "2026-04-29",
         "canton": "GE",
         "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-04-29",
+        "canton": "GE",
+        "role_category": "software_engineering",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -13713,8 +13720,8 @@
         "canton": "GE",
         "role_category": "security",
         "published_count": 1,
-        "closed_count": 7,
-        "net_change": -6
+        "closed_count": 8,
+        "net_change": -7
       },
       {
         "date": "2026-04-30",
@@ -13737,8 +13744,8 @@
         "canton": "GR",
         "role_category": "product_project_analysis",
         "published_count": 0,
-        "closed_count": 2,
-        "net_change": -2
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "date": "2026-04-30",
@@ -14153,8 +14160,8 @@
         "canton": "ZH",
         "role_category": "product_project_analysis",
         "published_count": 6,
-        "closed_count": 43,
-        "net_change": -37
+        "closed_count": 42,
+        "net_change": -36
       },
       {
         "date": "2026-04-30",
@@ -14169,8 +14176,8 @@
         "canton": "ZH",
         "role_category": "security",
         "published_count": 1,
-        "closed_count": 30,
-        "net_change": -29
+        "closed_count": 29,
+        "net_change": -28
       },
       {
         "date": "2026-04-30",
@@ -14343,6 +14350,14 @@
       {
         "date": "2026-05-01",
         "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-01",
+        "canton": "ZH",
         "role_category": "product_project_analysis",
         "published_count": 10,
         "closed_count": 0,
@@ -14960,9 +14975,9 @@
         "date": "2026-05-05",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 13,
+        "published_count": 12,
         "closed_count": 0,
-        "net_change": 13
+        "net_change": 12
       },
       {
         "date": "2026-05-05",
@@ -15024,14 +15039,6 @@
         "date": "2026-05-06",
         "canton": "BS",
         "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-06",
-        "canton": "GE",
-        "role_category": "devops_cloud_platform",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -15151,6 +15158,14 @@
       {
         "date": "2026-05-06",
         "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-06",
+        "canton": "ZH",
         "role_category": "erp_business_systems",
         "published_count": 1,
         "closed_count": 0,
@@ -15160,9 +15175,9 @@
         "date": "2026-05-06",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 10,
+        "published_count": 9,
         "closed_count": 0,
-        "net_change": 10
+        "net_change": 9
       },
       {
         "date": "2026-05-06",
@@ -15246,19 +15261,11 @@
       },
       {
         "date": "2026-05-07",
-        "canton": "FR",
-        "role_category": "software_engineering",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-07",
         "canton": "GE",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "date": "2026-05-07",
@@ -15302,14 +15309,6 @@
       },
       {
         "date": "2026-05-07",
-        "canton": "NE",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-07",
         "canton": "SO",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
@@ -15336,14 +15335,6 @@
         "date": "2026-05-07",
         "canton": "VD",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-07",
-        "canton": "VD",
-        "role_category": "software_engineering",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -15368,9 +15359,9 @@
         "date": "2026-05-07",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 7,
+        "published_count": 6,
         "closed_count": 0,
-        "net_change": 7
+        "net_change": 6
       },
       {
         "date": "2026-05-07",
@@ -15415,14 +15406,6 @@
       {
         "date": "2026-05-08",
         "canton": "BE",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-08",
-        "canton": "BE",
         "role_category": "security",
         "published_count": 2,
         "closed_count": 0,
@@ -15432,9 +15415,9 @@
         "date": "2026-05-08",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-05-08",
@@ -15624,9 +15607,9 @@
         "date": "2026-05-08",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 24,
+        "published_count": 23,
         "closed_count": 0,
-        "net_change": 24
+        "net_change": 23
       },
       {
         "date": "2026-05-08",
@@ -15679,14 +15662,6 @@
       {
         "date": "2026-05-09",
         "canton": "LU",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-09",
-        "canton": "Unknown",
         "role_category": "product_project_analysis",
         "published_count": 1,
         "closed_count": 0,
@@ -15833,8 +15808,8 @@
         "canton": "BE",
         "role_category": "product_project_analysis",
         "published_count": 0,
-        "closed_count": 4,
-        "net_change": -4
+        "closed_count": 3,
+        "net_change": -3
       },
       {
         "date": "2026-05-10",
@@ -15849,8 +15824,8 @@
         "canton": "BE",
         "role_category": "software_engineering",
         "published_count": 0,
-        "closed_count": 7,
-        "net_change": -7
+        "closed_count": 6,
+        "net_change": -6
       },
       {
         "date": "2026-05-10",
@@ -15943,14 +15918,6 @@
       {
         "date": "2026-05-10",
         "canton": "GE",
-        "role_category": "devops_cloud_platform",
-        "published_count": 0,
-        "closed_count": 1,
-        "net_change": -1
-      },
-      {
-        "date": "2026-05-10",
-        "canton": "GE",
         "role_category": "product_project_analysis",
         "published_count": 0,
         "closed_count": 2,
@@ -15977,8 +15944,8 @@
         "canton": "GE",
         "role_category": "software_engineering",
         "published_count": 1,
-        "closed_count": 4,
-        "net_change": -3
+        "closed_count": 3,
+        "net_change": -2
       },
       {
         "date": "2026-05-10",
@@ -16145,8 +16112,8 @@
         "canton": "Unknown",
         "role_category": "product_project_analysis",
         "published_count": 0,
-        "closed_count": 3,
-        "net_change": -3
+        "closed_count": 2,
+        "net_change": -2
       },
       {
         "date": "2026-05-10",
@@ -16249,16 +16216,16 @@
         "canton": "ZH",
         "role_category": "data_ai",
         "published_count": 0,
-        "closed_count": 21,
-        "net_change": -21
+        "closed_count": 22,
+        "net_change": -22
       },
       {
         "date": "2026-05-10",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
         "published_count": 0,
-        "closed_count": 36,
-        "net_change": -36
+        "closed_count": 34,
+        "net_change": -34
       },
       {
         "date": "2026-05-10",
@@ -16273,8 +16240,8 @@
         "canton": "ZH",
         "role_category": "product_project_analysis",
         "published_count": 3,
-        "closed_count": 34,
-        "net_change": -31
+        "closed_count": 31,
+        "net_change": -28
       },
       {
         "date": "2026-05-10",
@@ -16297,8 +16264,8 @@
         "canton": "ZH",
         "role_category": "software_engineering",
         "published_count": 1,
-        "closed_count": 69,
-        "net_change": -68
+        "closed_count": 64,
+        "net_change": -63
       },
       {
         "date": "2026-05-10",
@@ -16336,9 +16303,9 @@
         "date": "2026-05-11",
         "canton": "AG",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-05-11",
@@ -16446,14 +16413,6 @@
       },
       {
         "date": "2026-05-11",
-        "canton": "TG",
-        "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-11",
         "canton": "Unknown",
         "role_category": "software_engineering",
         "published_count": 1,
@@ -16471,18 +16430,10 @@
       {
         "date": "2026-05-11",
         "canton": "VD",
-        "role_category": "devops_cloud_platform",
+        "role_category": "product_project_analysis",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
-      },
-      {
-        "date": "2026-05-11",
-        "canton": "VD",
-        "role_category": "product_project_analysis",
-        "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
       },
       {
         "date": "2026-05-11",
@@ -16520,9 +16471,9 @@
         "date": "2026-05-11",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 9,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 9
+        "net_change": 8
       },
       {
         "date": "2026-05-11",
@@ -16536,17 +16487,9 @@
         "date": "2026-05-11",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 8,
+        "published_count": 7,
         "closed_count": 0,
-        "net_change": 8
-      },
-      {
-        "date": "2026-05-11",
-        "canton": "ZH",
-        "role_category": "qa_testing",
-        "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
+        "net_change": 7
       },
       {
         "date": "2026-05-11",
@@ -16560,9 +16503,9 @@
         "date": "2026-05-11",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 9,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 9
+        "net_change": 8
       },
       {
         "date": "2026-05-11",
@@ -16584,9 +16527,9 @@
         "date": "2026-05-12",
         "canton": "BE",
         "role_category": "data_ai",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-05-12",
@@ -16647,14 +16590,6 @@
       {
         "date": "2026-05-12",
         "canton": "GE",
-        "role_category": "product_project_analysis",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-12",
-        "canton": "GE",
         "role_category": "support_operations",
         "published_count": 2,
         "closed_count": 0,
@@ -16686,24 +16621,8 @@
       },
       {
         "date": "2026-05-12",
-        "canton": "NE",
-        "role_category": "support_operations",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-12",
         "canton": "SO",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-12",
-        "canton": "Unknown",
-        "role_category": "security",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -16744,17 +16663,17 @@
         "date": "2026-05-12",
         "canton": "ZH",
         "role_category": "data_ai",
-        "published_count": 5,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 5
+        "net_change": 3
       },
       {
         "date": "2026-05-12",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 12,
+        "published_count": 11,
         "closed_count": 0,
-        "net_change": 12
+        "net_change": 11
       },
       {
         "date": "2026-05-12",
@@ -16792,9 +16711,9 @@
         "date": "2026-05-12",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 17,
+        "published_count": 19,
         "closed_count": 0,
-        "net_change": 17
+        "net_change": 19
       },
       {
         "date": "2026-05-12",
@@ -16824,14 +16743,6 @@
         "date": "2026-05-13",
         "canton": "BE",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-13",
-        "canton": "BE",
-        "role_category": "product_project_analysis",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -16888,9 +16799,9 @@
         "date": "2026-05-13",
         "canton": "GE",
         "role_category": "devops_cloud_platform",
-        "published_count": 3,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 3
+        "net_change": 4
       },
       {
         "date": "2026-05-13",
@@ -16976,9 +16887,9 @@
         "date": "2026-05-13",
         "canton": "VD",
         "role_category": "software_engineering",
-        "published_count": 5,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 5
+        "net_change": 4
       },
       {
         "date": "2026-05-13",
@@ -16990,11 +16901,19 @@
       },
       {
         "date": "2026-05-13",
+        "canton": "ZG",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-13",
         "canton": "ZH",
         "role_category": "data_ai",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-05-13",
@@ -17032,25 +16951,25 @@
         "date": "2026-05-13",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 5,
+        "published_count": 4,
         "closed_count": 0,
-        "net_change": 5
+        "net_change": 4
       },
       {
         "date": "2026-05-13",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 13,
+        "published_count": 12,
         "closed_count": 0,
-        "net_change": 13
+        "net_change": 12
       },
       {
         "date": "2026-05-13",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 8,
+        "published_count": 7,
         "closed_count": 0,
-        "net_change": 8
+        "net_change": 7
       },
       {
         "date": "2026-05-14",
@@ -17086,22 +17005,6 @@
       },
       {
         "date": "2026-05-14",
-        "canton": "OW",
-        "role_category": "software_engineering",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-14",
-        "canton": "Unknown",
-        "role_category": "software_engineering",
-        "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
-      },
-      {
-        "date": "2026-05-14",
         "canton": "VD",
         "role_category": "product_project_analysis",
         "published_count": 2,
@@ -17115,14 +17018,6 @@
         "published_count": 2,
         "closed_count": 0,
         "net_change": 2
-      },
-      {
-        "date": "2026-05-14",
-        "canton": "VS",
-        "role_category": "software_engineering",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
       },
       {
         "date": "2026-05-14",
@@ -17160,17 +17055,17 @@
         "date": "2026-05-14",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 3
       },
       {
         "date": "2026-05-14",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-05-14",
@@ -17184,9 +17079,9 @@
         "date": "2026-05-15",
         "canton": "BE",
         "role_category": "devops_cloud_platform",
-        "published_count": 4,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 4
+        "net_change": 1
       },
       {
         "date": "2026-05-15",
@@ -17208,9 +17103,9 @@
         "date": "2026-05-15",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "date": "2026-05-15",
@@ -17278,27 +17173,11 @@
       },
       {
         "date": "2026-05-15",
-        "canton": "Unknown",
-        "role_category": "software_engineering",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "date": "2026-05-15",
         "canton": "VD",
         "role_category": "product_project_analysis",
         "published_count": 2,
         "closed_count": 0,
         "net_change": 2
-      },
-      {
-        "date": "2026-05-15",
-        "canton": "VS",
-        "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
       },
       {
         "date": "2026-05-15",
@@ -17312,9 +17191,9 @@
         "date": "2026-05-15",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 6,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 3
       },
       {
         "date": "2026-05-15",
@@ -17336,9 +17215,9 @@
         "date": "2026-05-15",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "date": "2026-05-15",
@@ -17350,22 +17229,566 @@
       },
       {
         "date": "2026-05-16",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "AG",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "AG",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "AG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "AR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "AR",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
         "canton": "BE",
         "role_category": "data_ai",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 7,
+        "net_change": -7
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 10,
+        "net_change": -10
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BE",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 5,
+        "net_change": -5
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BL",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BL",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BS",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "BS",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "FR",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 4,
+        "net_change": -4
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 1,
+        "net_change": 0
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 3,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 4,
+        "net_change": -4
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GE",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GR",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "GR",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "LU",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "LU",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "LU",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "LU",
+        "role_category": "ux_ui_design",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SH",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SO",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SO",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SO",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "SZ",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "TG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "TI",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "Unknown",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "Unknown",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 1,
+        "net_change": 0
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "erp_business_systems",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 6,
+        "net_change": -6
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 7,
+        "net_change": -6
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VD",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 6,
+        "net_change": -6
       },
       {
         "date": "2026-05-16",
         "canton": "VD",
         "role_category": "ux_ui_design",
         "published_count": 1,
+        "closed_count": 1,
+        "net_change": 0
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "VS",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZG",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 19,
+        "net_change": -19
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 32,
+        "net_change": -31
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 0,
+        "closed_count": 8,
+        "net_change": -8
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 32,
+        "net_change": -31
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 13,
+        "net_change": -12
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 27,
+        "net_change": -25
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 60,
+        "net_change": -58
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 33,
+        "net_change": -33
+      },
+      {
+        "date": "2026-05-16",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
         "closed_count": 0,
         "net_change": 1
       },
       {
-        "date": "2026-05-16",
+        "date": "2026-05-17",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "BS",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "FR",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-17",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
@@ -17373,9 +17796,2049 @@
         "net_change": 1
       },
       {
-        "date": "2026-05-16",
+        "date": "2026-05-17",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-17",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "AG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "AG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "AR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "AR",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "FR",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "GE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "LU",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "LU",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "NE",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "SO",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "SZ",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "SZ",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "VD",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 12,
+        "closed_count": 0,
+        "net_change": 12
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
         "canton": "ZH",
         "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 16,
+        "closed_count": 0,
+        "net_change": 16
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "AG",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "AG",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "AG",
+        "role_category": "software_engineering",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BE",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BE",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "BS",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "FR",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "FR",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "GE",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "GR",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "LU",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "SZ",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "TG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "TI",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "TI",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "TI",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "Unknown",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "Unknown",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "Unknown",
+        "role_category": "qa_testing",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 14,
+        "closed_count": 0,
+        "net_change": 14
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 18,
+        "closed_count": 0,
+        "net_change": 18
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 24,
+        "closed_count": 0,
+        "net_change": 24
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-19",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "AG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "AG",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BL",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BL",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BL",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BL",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BL",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "BS",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "FR",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "FR",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "FR",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "GR",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "LU",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "NE",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "TI",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "Unknown",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "VD",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "VS",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 21,
+        "closed_count": 0,
+        "net_change": 21
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 20,
+        "closed_count": 0,
+        "net_change": 20
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-20",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "AG",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "data_ai",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BL",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "BL",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "FR",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "GR",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "GR",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "SG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "SG",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "SO",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "SO",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "TI",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "TI",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "VD",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "VS",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZG",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 10,
+        "closed_count": 0,
+        "net_change": 10
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 14,
+        "closed_count": 0,
+        "net_change": 14
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 8,
+        "closed_count": 0,
+        "net_change": 8
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 10,
+        "closed_count": 0,
+        "net_change": 10
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 34,
+        "closed_count": 0,
+        "net_change": 34
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-21",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "AG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "AG",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BL",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "BS",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "FR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "GR",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "NE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "NW",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "SG",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "VD",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 8,
+        "closed_count": 0,
+        "net_change": 8
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "VD",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZG",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 8,
+        "closed_count": 0,
+        "net_change": 8
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 24,
+        "closed_count": 0,
+        "net_change": 24
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 18,
+        "closed_count": 0,
+        "net_change": 18
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 12,
+        "closed_count": 0,
+        "net_change": 12
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 35,
+        "closed_count": 0,
+        "net_change": 35
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-22",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "AG",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "data_ai",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BS",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BS",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "BS",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "GR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "LU",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SO",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SO",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SO",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "SO",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "TI",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "Unknown",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "VD",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 9,
+        "closed_count": 0,
+        "net_change": 9
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 15,
+        "closed_count": 0,
+        "net_change": 15
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 11,
+        "closed_count": 0,
+        "net_change": 11
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 11,
+        "closed_count": 0,
+        "net_change": 11
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 29,
+        "closed_count": 0,
+        "net_change": 29
+      },
+      {
+        "date": "2026-05-23",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "date": "2026-05-24",
+        "canton": "BS",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "date": "2026-05-24",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-24",
+        "canton": "VD",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-24",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "date": "2026-05-24",
+        "canton": "ZH",
+        "role_category": "support_operations",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -17514,9 +19977,9 @@
         "week_start": "2026-01-05",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "week_start": "2026-01-12",
@@ -17602,9 +20065,9 @@
         "week_start": "2026-01-12",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 8,
+        "published_count": 9,
         "closed_count": 0,
-        "net_change": 8
+        "net_change": 9
       },
       {
         "week_start": "2026-01-12",
@@ -17634,9 +20097,9 @@
         "week_start": "2026-01-19",
         "canton": "BS",
         "role_category": "data_ai",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "week_start": "2026-01-19",
@@ -17730,9 +20193,9 @@
         "week_start": "2026-01-19",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 7,
+        "published_count": 9,
         "closed_count": 0,
-        "net_change": 7
+        "net_change": 9
       },
       {
         "week_start": "2026-01-19",
@@ -17898,9 +20361,9 @@
         "week_start": "2026-01-26",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 2,
+        "published_count": 3,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 3
       },
       {
         "week_start": "2026-01-26",
@@ -18034,9 +20497,9 @@
         "week_start": "2026-02-02",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 12,
+        "published_count": 11,
         "closed_count": 0,
-        "net_change": 12
+        "net_change": 11
       },
       {
         "week_start": "2026-02-02",
@@ -18386,9 +20849,9 @@
         "week_start": "2026-02-16",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 12,
+        "published_count": 11,
         "closed_count": 0,
-        "net_change": 12
+        "net_change": 11
       },
       {
         "week_start": "2026-02-16",
@@ -18802,9 +21265,9 @@
         "week_start": "2026-03-02",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 21,
+        "published_count": 22,
         "closed_count": 0,
-        "net_change": 21
+        "net_change": 22
       },
       {
         "week_start": "2026-03-02",
@@ -18834,9 +21297,9 @@
         "week_start": "2026-03-09",
         "canton": "AG",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-03-09",
@@ -19058,9 +21521,9 @@
         "week_start": "2026-03-09",
         "canton": "ZH",
         "role_category": "data_ai",
-        "published_count": 7,
+        "published_count": 8,
         "closed_count": 0,
-        "net_change": 7
+        "net_change": 8
       },
       {
         "week_start": "2026-03-09",
@@ -19098,9 +21561,9 @@
         "week_start": "2026-03-09",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 10,
+        "published_count": 11,
         "closed_count": 0,
-        "net_change": 10
+        "net_change": 11
       },
       {
         "week_start": "2026-03-09",
@@ -19586,17 +22049,17 @@
         "week_start": "2026-03-16",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 35,
+        "published_count": 36,
         "closed_count": 0,
-        "net_change": 35
+        "net_change": 36
       },
       {
         "week_start": "2026-03-16",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 16,
+        "published_count": 17,
         "closed_count": 0,
-        "net_change": 16
+        "net_change": 17
       },
       {
         "week_start": "2026-03-16",
@@ -20354,9 +22817,9 @@
         "week_start": "2026-03-30",
         "canton": "LU",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "week_start": "2026-03-30",
@@ -20458,9 +22921,9 @@
         "week_start": "2026-03-30",
         "canton": "SO",
         "role_category": "product_project_analysis",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-03-30",
@@ -20850,9 +23313,9 @@
         "week_start": "2026-04-06",
         "canton": "BE",
         "role_category": "qa_testing",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-04-06",
@@ -21066,9 +23529,9 @@
         "week_start": "2026-04-06",
         "canton": "SG",
         "role_category": "devops_cloud_platform",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-04-06",
@@ -21154,6 +23617,14 @@
         "week_start": "2026-04-06",
         "canton": "TG",
         "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-04-06",
+        "canton": "TG",
+        "role_category": "support_operations",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -21354,9 +23825,9 @@
         "week_start": "2026-04-06",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 31,
+        "published_count": 30,
         "closed_count": 0,
-        "net_change": 31
+        "net_change": 30
       },
       {
         "week_start": "2026-04-06",
@@ -21466,9 +23937,9 @@
         "week_start": "2026-04-13",
         "canton": "BE",
         "role_category": "devops_cloud_platform",
-        "published_count": 9,
+        "published_count": 8,
         "closed_count": 9,
-        "net_change": 0
+        "net_change": -1
       },
       {
         "week_start": "2026-04-13",
@@ -21482,9 +23953,9 @@
         "week_start": "2026-04-13",
         "canton": "BE",
         "role_category": "product_project_analysis",
-        "published_count": 9,
+        "published_count": 8,
         "closed_count": 7,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-04-13",
@@ -21506,9 +23977,9 @@
         "week_start": "2026-04-13",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 12,
+        "published_count": 11,
         "closed_count": 14,
-        "net_change": -2
+        "net_change": -3
       },
       {
         "week_start": "2026-04-13",
@@ -21554,9 +24025,9 @@
         "week_start": "2026-04-13",
         "canton": "BL",
         "role_category": "software_engineering",
-        "published_count": 0,
+        "published_count": 1,
         "closed_count": 4,
-        "net_change": -4
+        "net_change": -3
       },
       {
         "week_start": "2026-04-13",
@@ -21610,9 +24081,9 @@
         "week_start": "2026-04-13",
         "canton": "BS",
         "role_category": "software_engineering",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 2,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-04-13",
@@ -21629,14 +24100,6 @@
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
-      },
-      {
-        "week_start": "2026-04-13",
-        "canton": "FR",
-        "role_category": "qa_testing",
-        "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
       },
       {
         "week_start": "2026-04-13",
@@ -21890,9 +24353,9 @@
         "week_start": "2026-04-13",
         "canton": "SG",
         "role_category": "software_engineering",
-        "published_count": 3,
+        "published_count": 1,
         "closed_count": 7,
-        "net_change": -4
+        "net_change": -6
       },
       {
         "week_start": "2026-04-13",
@@ -22114,9 +24577,9 @@
         "week_start": "2026-04-13",
         "canton": "VD",
         "role_category": "product_project_analysis",
-        "published_count": 8,
+        "published_count": 7,
         "closed_count": 3,
-        "net_change": 5
+        "net_change": 4
       },
       {
         "week_start": "2026-04-13",
@@ -22242,9 +24705,9 @@
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 51,
+        "published_count": 46,
         "closed_count": 32,
-        "net_change": 19
+        "net_change": 14
       },
       {
         "week_start": "2026-04-13",
@@ -22258,9 +24721,9 @@
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 33,
+        "published_count": 32,
         "closed_count": 28,
-        "net_change": 5
+        "net_change": 4
       },
       {
         "week_start": "2026-04-13",
@@ -22274,33 +24737,33 @@
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 34,
+        "published_count": 31,
         "closed_count": 23,
-        "net_change": 11
+        "net_change": 8
       },
       {
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 93,
+        "published_count": 87,
         "closed_count": 92,
-        "net_change": 1
+        "net_change": -5
       },
       {
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 32,
+        "published_count": 30,
         "closed_count": 26,
-        "net_change": 6
+        "net_change": 4
       },
       {
         "week_start": "2026-04-13",
         "canton": "ZH",
         "role_category": "ux_ui_design",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 0,
-        "net_change": 6
+        "net_change": 5
       },
       {
         "week_start": "2026-04-20",
@@ -22395,8 +24858,8 @@
         "canton": "BE",
         "role_category": "qa_testing",
         "published_count": 4,
-        "closed_count": 2,
-        "net_change": 2
+        "closed_count": 1,
+        "net_change": 3
       },
       {
         "week_start": "2026-04-20",
@@ -22570,9 +25033,9 @@
         "week_start": "2026-04-20",
         "canton": "GE",
         "role_category": "security",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "week_start": "2026-04-20",
@@ -22602,9 +25065,9 @@
         "week_start": "2026-04-20",
         "canton": "GR",
         "role_category": "product_project_analysis",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-04-20",
@@ -22626,9 +25089,9 @@
         "week_start": "2026-04-20",
         "canton": "LU",
         "role_category": "devops_cloud_platform",
-        "published_count": 7,
+        "published_count": 6,
         "closed_count": 4,
-        "net_change": 3
+        "net_change": 2
       },
       {
         "week_start": "2026-04-20",
@@ -22889,14 +25352,6 @@
       {
         "week_start": "2026-04-20",
         "canton": "Unknown",
-        "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "week_start": "2026-04-20",
-        "canton": "Unknown",
         "role_category": "software_engineering",
         "published_count": 1,
         "closed_count": 4,
@@ -22946,9 +25401,9 @@
         "week_start": "2026-04-20",
         "canton": "VD",
         "role_category": "qa_testing",
-        "published_count": 1,
+        "published_count": 0,
         "closed_count": 2,
-        "net_change": -1
+        "net_change": -2
       },
       {
         "week_start": "2026-04-20",
@@ -22962,9 +25417,9 @@
         "week_start": "2026-04-20",
         "canton": "VD",
         "role_category": "software_engineering",
-        "published_count": 4,
+        "published_count": 3,
         "closed_count": 11,
-        "net_change": -7
+        "net_change": -8
       },
       {
         "week_start": "2026-04-20",
@@ -23042,8 +25497,8 @@
         "week_start": "2026-04-20",
         "canton": "ZH",
         "role_category": "erp_business_systems",
-        "published_count": 9,
-        "closed_count": 13,
+        "published_count": 8,
+        "closed_count": 12,
         "net_change": -4
       },
       {
@@ -23058,17 +25513,17 @@
         "week_start": "2026-04-20",
         "canton": "ZH",
         "role_category": "qa_testing",
-        "published_count": 6,
+        "published_count": 5,
         "closed_count": 6,
-        "net_change": 0
+        "net_change": -1
       },
       {
         "week_start": "2026-04-20",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 26,
+        "published_count": 25,
         "closed_count": 16,
-        "net_change": 10
+        "net_change": 9
       },
       {
         "week_start": "2026-04-20",
@@ -23082,9 +25537,9 @@
         "week_start": "2026-04-20",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 26,
+        "published_count": 27,
         "closed_count": 21,
-        "net_change": 5
+        "net_change": 6
       },
       {
         "week_start": "2026-04-20",
@@ -23226,9 +25681,9 @@
         "week_start": "2026-04-27",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 14,
+        "published_count": 13,
         "closed_count": 27,
-        "net_change": -13
+        "net_change": -14
       },
       {
         "week_start": "2026-04-27",
@@ -23386,17 +25841,17 @@
         "week_start": "2026-04-27",
         "canton": "GE",
         "role_category": "security",
-        "published_count": 4,
-        "closed_count": 8,
-        "net_change": -4
+        "published_count": 2,
+        "closed_count": 9,
+        "net_change": -7
       },
       {
         "week_start": "2026-04-27",
         "canton": "GE",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 3,
         "closed_count": 17,
-        "net_change": -15
+        "net_change": -14
       },
       {
         "week_start": "2026-04-27",
@@ -23411,8 +25866,8 @@
         "canton": "GR",
         "role_category": "product_project_analysis",
         "published_count": 0,
-        "closed_count": 2,
-        "net_change": -2
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-04-27",
@@ -23938,17 +26393,17 @@
         "week_start": "2026-04-27",
         "canton": "ZH",
         "role_category": "erp_business_systems",
-        "published_count": 5,
+        "published_count": 6,
         "closed_count": 11,
-        "net_change": -6
+        "net_change": -5
       },
       {
         "week_start": "2026-04-27",
         "canton": "ZH",
         "role_category": "product_project_analysis",
         "published_count": 36,
-        "closed_count": 58,
-        "net_change": -22
+        "closed_count": 57,
+        "net_change": -21
       },
       {
         "week_start": "2026-04-27",
@@ -23963,8 +26418,8 @@
         "canton": "ZH",
         "role_category": "security",
         "published_count": 21,
-        "closed_count": 34,
-        "net_change": -13
+        "closed_count": 33,
+        "net_change": -12
       },
       {
         "week_start": "2026-04-27",
@@ -24090,8 +26545,8 @@
         "week_start": "2026-05-04",
         "canton": "BE",
         "role_category": "product_project_analysis",
-        "published_count": 7,
-        "closed_count": 4,
+        "published_count": 6,
+        "closed_count": 3,
         "net_change": 3
       },
       {
@@ -24106,8 +26561,8 @@
         "week_start": "2026-05-04",
         "canton": "BE",
         "role_category": "software_engineering",
-        "published_count": 10,
-        "closed_count": 7,
+        "published_count": 9,
+        "closed_count": 6,
         "net_change": 3
       },
       {
@@ -24194,9 +26649,9 @@
         "week_start": "2026-05-04",
         "canton": "FR",
         "role_category": "software_engineering",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 1,
-        "net_change": 1
+        "net_change": 0
       },
       {
         "week_start": "2026-05-04",
@@ -24219,8 +26674,8 @@
         "canton": "GE",
         "role_category": "devops_cloud_platform",
         "published_count": 3,
-        "closed_count": 1,
-        "net_change": 2
+        "closed_count": 0,
+        "net_change": 3
       },
       {
         "week_start": "2026-05-04",
@@ -24259,8 +26714,8 @@
         "canton": "GE",
         "role_category": "software_engineering",
         "published_count": 6,
-        "closed_count": 4,
-        "net_change": 2
+        "closed_count": 3,
+        "net_change": 3
       },
       {
         "week_start": "2026-05-04",
@@ -24370,14 +26825,6 @@
         "week_start": "2026-05-04",
         "canton": "NE",
         "role_category": "devops_cloud_platform",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "week_start": "2026-05-04",
-        "canton": "NE",
-        "role_category": "product_project_analysis",
         "published_count": 1,
         "closed_count": 0,
         "net_change": 1
@@ -24522,8 +26969,8 @@
         "week_start": "2026-05-04",
         "canton": "Unknown",
         "role_category": "product_project_analysis",
-        "published_count": 2,
-        "closed_count": 3,
+        "published_count": 1,
+        "closed_count": 2,
         "net_change": -1
       },
       {
@@ -24594,9 +27041,9 @@
         "week_start": "2026-05-04",
         "canton": "VD",
         "role_category": "software_engineering",
-        "published_count": 11,
+        "published_count": 10,
         "closed_count": 4,
-        "net_change": 7
+        "net_change": 6
       },
       {
         "week_start": "2026-05-04",
@@ -24659,16 +27106,16 @@
         "canton": "ZH",
         "role_category": "data_ai",
         "published_count": 15,
-        "closed_count": 21,
-        "net_change": -6
+        "closed_count": 22,
+        "net_change": -7
       },
       {
         "week_start": "2026-05-04",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
         "published_count": 28,
-        "closed_count": 36,
-        "net_change": -8
+        "closed_count": 34,
+        "net_change": -6
       },
       {
         "week_start": "2026-05-04",
@@ -24682,9 +27129,9 @@
         "week_start": "2026-05-04",
         "canton": "ZH",
         "role_category": "product_project_analysis",
-        "published_count": 31,
-        "closed_count": 34,
-        "net_change": -3
+        "published_count": 30,
+        "closed_count": 31,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-04",
@@ -24706,9 +27153,9 @@
         "week_start": "2026-05-04",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 89,
-        "closed_count": 69,
-        "net_change": 20
+        "published_count": 87,
+        "closed_count": 64,
+        "net_change": 23
       },
       {
         "week_start": "2026-05-04",
@@ -24731,96 +27178,128 @@
         "canton": "AG",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "AG",
         "role_category": "security",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "AG",
         "role_category": "software_engineering",
-        "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "published_count": 2,
+        "closed_count": 3,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "AG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
         "canton": "AR",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "AR",
         "role_category": "software_engineering",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 3,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "data_ai",
-        "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "published_count": 2,
+        "closed_count": 1,
+        "net_change": 1
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "devops_cloud_platform",
-        "published_count": 8,
-        "closed_count": 0,
-        "net_change": 8
+        "published_count": 5,
+        "closed_count": 7,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "product_project_analysis",
         "published_count": 5,
-        "closed_count": 0,
-        "net_change": 5
+        "closed_count": 3,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "security",
         "published_count": 5,
-        "closed_count": 0,
-        "net_change": 5
+        "closed_count": 3,
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "software_engineering",
         "published_count": 6,
-        "closed_count": 0,
-        "net_change": 6
+        "closed_count": 10,
+        "net_change": -4
       },
       {
         "week_start": "2026-05-11",
         "canton": "BE",
         "role_category": "support_operations",
         "published_count": 6,
-        "closed_count": 0,
-        "net_change": 6
+        "closed_count": 5,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "BL",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "BL",
         "role_category": "support_operations",
         "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
+        "closed_count": 3,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "BS",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
@@ -24834,81 +27313,121 @@
         "week_start": "2026-05-11",
         "canton": "BS",
         "role_category": "software_engineering",
-        "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "published_count": 4,
+        "closed_count": 3,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "FR",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "FR",
         "role_category": "software_engineering",
-        "published_count": 1,
+        "published_count": 2,
         "closed_count": 0,
-        "net_change": 1
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "data_ai",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 1,
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "devops_cloud_platform",
-        "published_count": 4,
-        "closed_count": 0,
-        "net_change": 4
+        "published_count": 5,
+        "closed_count": 4,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "GE",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "product_project_analysis",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 3,
+        "net_change": -2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "GE",
+        "role_category": "qa_testing",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "security",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "software_engineering",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 4,
+        "net_change": -3
       },
       {
         "week_start": "2026-05-11",
         "canton": "GE",
         "role_category": "support_operations",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 3,
+        "net_change": 0
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "GR",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "GR",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "LU",
         "role_category": "devops_cloud_platform",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 2,
+        "net_change": 1
       },
       {
         "week_start": "2026-05-11",
         "canton": "LU",
         "role_category": "product_project_analysis",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 1,
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
@@ -24923,16 +27442,16 @@
         "canton": "LU",
         "role_category": "security",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 1,
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
         "canton": "LU",
         "role_category": "software_engineering",
         "published_count": 5,
-        "closed_count": 0,
-        "net_change": 5
+        "closed_count": 1,
+        "net_change": 4
       },
       {
         "week_start": "2026-05-11",
@@ -24944,27 +27463,51 @@
       },
       {
         "week_start": "2026-05-11",
-        "canton": "NE",
-        "role_category": "support_operations",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "week_start": "2026-05-11",
-        "canton": "OW",
-        "role_category": "software_engineering",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "canton": "LU",
+        "role_category": "ux_ui_design",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "SG",
         "role_category": "devops_cloud_platform",
         "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
+        "closed_count": 1,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SH",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SO",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
@@ -24995,8 +27538,24 @@
         "canton": "SO",
         "role_category": "software_engineering",
         "published_count": 3,
-        "closed_count": 0,
-        "net_change": 3
+        "closed_count": 2,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SO",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "SZ",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
@@ -25010,77 +27569,165 @@
         "week_start": "2026-05-11",
         "canton": "TG",
         "role_category": "devops_cloud_platform",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "TG",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "TI",
+        "role_category": "data_ai",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "Unknown",
+        "role_category": "product_project_analysis",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
         "canton": "Unknown",
         "role_category": "security",
-        "published_count": 2,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 2
+        "net_change": 1
       },
       {
         "week_start": "2026-05-11",
         "canton": "Unknown",
         "role_category": "software_engineering",
-        "published_count": 5,
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 5
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "Unknown",
+        "role_category": "support_operations",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "data_ai",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 3,
+        "net_change": -2
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "devops_cloud_platform",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "erp_business_systems",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "product_project_analysis",
-        "published_count": 11,
-        "closed_count": 0,
-        "net_change": 11
+        "published_count": 10,
+        "closed_count": 6,
+        "net_change": 4
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "security",
         "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
+        "closed_count": 1,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
         "role_category": "software_engineering",
         "published_count": 9,
-        "closed_count": 0,
-        "net_change": 9
+        "closed_count": 7,
+        "net_change": 2
       },
       {
         "week_start": "2026-05-11",
         "canton": "VD",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 6,
+        "net_change": -5
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "VD",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 1,
+        "net_change": 0
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "VS",
+        "role_category": "devops_cloud_platform",
+        "published_count": 0,
+        "closed_count": 1,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "VS",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "ZG",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "ZG",
+        "role_category": "security",
+        "published_count": 0,
+        "closed_count": 3,
+        "net_change": -3
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 0,
+        "closed_count": 2,
+        "net_change": -2
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "ZG",
         "role_category": "support_operations",
         "published_count": 1,
         "closed_count": 0,
@@ -25088,7 +27735,7 @@
       },
       {
         "week_start": "2026-05-11",
-        "canton": "VD",
+        "canton": "ZG",
         "role_category": "ux_ui_design",
         "published_count": 1,
         "closed_count": 0,
@@ -25096,99 +27743,891 @@
       },
       {
         "week_start": "2026-05-11",
-        "canton": "VS",
-        "role_category": "security",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "week_start": "2026-05-11",
-        "canton": "VS",
-        "role_category": "software_engineering",
-        "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
-      },
-      {
-        "week_start": "2026-05-11",
-        "canton": "ZG",
-        "role_category": "product_project_analysis",
-        "published_count": 2,
-        "closed_count": 0,
-        "net_change": 2
-      },
-      {
-        "week_start": "2026-05-11",
-        "canton": "ZG",
-        "role_category": "support_operations",
-        "published_count": 1,
-        "closed_count": 0,
-        "net_change": 1
-      },
-      {
-        "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "data_ai",
-        "published_count": 16,
-        "closed_count": 0,
-        "net_change": 16
+        "published_count": 14,
+        "closed_count": 19,
+        "net_change": -5
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "devops_cloud_platform",
-        "published_count": 39,
-        "closed_count": 0,
-        "net_change": 39
+        "published_count": 35,
+        "closed_count": 32,
+        "net_change": 3
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "erp_business_systems",
         "published_count": 12,
-        "closed_count": 0,
-        "net_change": 12
+        "closed_count": 8,
+        "net_change": 4
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "product_project_analysis",
         "published_count": 32,
-        "closed_count": 0,
-        "net_change": 32
+        "closed_count": 32,
+        "net_change": 0
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "qa_testing",
-        "published_count": 9,
-        "closed_count": 0,
-        "net_change": 9
+        "published_count": 7,
+        "closed_count": 13,
+        "net_change": -6
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "security",
-        "published_count": 14,
-        "closed_count": 0,
-        "net_change": 14
+        "published_count": 17,
+        "closed_count": 27,
+        "net_change": -10
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "software_engineering",
-        "published_count": 51,
-        "closed_count": 0,
-        "net_change": 51
+        "published_count": 53,
+        "closed_count": 60,
+        "net_change": -7
       },
       {
         "week_start": "2026-05-11",
         "canton": "ZH",
         "role_category": "support_operations",
-        "published_count": 26,
+        "published_count": 27,
+        "closed_count": 33,
+        "net_change": -6
+      },
+      {
+        "week_start": "2026-05-11",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 2,
+        "net_change": -1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "data_ai",
+        "published_count": 1,
         "closed_count": 0,
-        "net_change": 26
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "qa_testing",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "software_engineering",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AG",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "AR",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "data_ai",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 12,
+        "closed_count": 0,
+        "net_change": 12
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "erp_business_systems",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "product_project_analysis",
+        "published_count": 24,
+        "closed_count": 0,
+        "net_change": 24
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "qa_testing",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "security",
+        "published_count": 12,
+        "closed_count": 0,
+        "net_change": 12
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "software_engineering",
+        "published_count": 19,
+        "closed_count": 0,
+        "net_change": 19
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BL",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BL",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BL",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BL",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BL",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BS",
+        "role_category": "devops_cloud_platform",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BS",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BS",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BS",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "BS",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "qa_testing",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "FR",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "data_ai",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "devops_cloud_platform",
+        "published_count": 13,
+        "closed_count": 0,
+        "net_change": 13
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "product_project_analysis",
+        "published_count": 15,
+        "closed_count": 0,
+        "net_change": 15
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "security",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "software_engineering",
+        "published_count": 8,
+        "closed_count": 0,
+        "net_change": 8
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GE",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GR",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GR",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GR",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "GR",
+        "role_category": "support_operations",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "LU",
+        "role_category": "devops_cloud_platform",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "LU",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "LU",
+        "role_category": "software_engineering",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "LU",
+        "role_category": "support_operations",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "NE",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "NE",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "NE",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "NW",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SG",
+        "role_category": "product_project_analysis",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SG",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SG",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SG",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SO",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SO",
+        "role_category": "product_project_analysis",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SO",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SO",
+        "role_category": "software_engineering",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SO",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SZ",
+        "role_category": "devops_cloud_platform",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SZ",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "SZ",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TG",
+        "role_category": "software_engineering",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TI",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TI",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TI",
+        "role_category": "qa_testing",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TI",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "TI",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "data_ai",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "product_project_analysis",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "qa_testing",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "security",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "software_engineering",
+        "published_count": 17,
+        "closed_count": 0,
+        "net_change": 17
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "Unknown",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "data_ai",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "devops_cloud_platform",
+        "published_count": 7,
+        "closed_count": 0,
+        "net_change": 7
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "erp_business_systems",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "product_project_analysis",
+        "published_count": 18,
+        "closed_count": 0,
+        "net_change": 18
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "qa_testing",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "security",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "software_engineering",
+        "published_count": 30,
+        "closed_count": 0,
+        "net_change": 30
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "support_operations",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VD",
+        "role_category": "ux_ui_design",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "VS",
+        "role_category": "software_engineering",
+        "published_count": 3,
+        "closed_count": 0,
+        "net_change": 3
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZG",
+        "role_category": "devops_cloud_platform",
+        "published_count": 5,
+        "closed_count": 0,
+        "net_change": 5
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZG",
+        "role_category": "product_project_analysis",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZG",
+        "role_category": "security",
+        "published_count": 2,
+        "closed_count": 0,
+        "net_change": 2
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZG",
+        "role_category": "software_engineering",
+        "published_count": 4,
+        "closed_count": 0,
+        "net_change": 4
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZG",
+        "role_category": "support_operations",
+        "published_count": 1,
+        "closed_count": 0,
+        "net_change": 1
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "data_ai",
+        "published_count": 47,
+        "closed_count": 0,
+        "net_change": 47
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "devops_cloud_platform",
+        "published_count": 101,
+        "closed_count": 0,
+        "net_change": 101
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "erp_business_systems",
+        "published_count": 9,
+        "closed_count": 0,
+        "net_change": 9
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "product_project_analysis",
+        "published_count": 64,
+        "closed_count": 0,
+        "net_change": 64
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "qa_testing",
+        "published_count": 13,
+        "closed_count": 0,
+        "net_change": 13
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "security",
+        "published_count": 54,
+        "closed_count": 0,
+        "net_change": 54
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "software_engineering",
+        "published_count": 158,
+        "closed_count": 0,
+        "net_change": 158
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "support_operations",
+        "published_count": 27,
+        "closed_count": 0,
+        "net_change": 27
+      },
+      {
+        "week_start": "2026-05-18",
+        "canton": "ZH",
+        "role_category": "ux_ui_design",
+        "published_count": 6,
+        "closed_count": 0,
+        "net_change": 6
       }
     ]
   },
@@ -25196,28 +28635,28 @@
     "monthly": [
       {
         "month": 1,
-        "vacancy_count": 141,
-        "share": 0.038
+        "vacancy_count": 147,
+        "share": 0.0328
       },
       {
         "month": 2,
-        "vacancy_count": 211,
-        "share": 0.0569
+        "vacancy_count": 209,
+        "share": 0.0466
       },
       {
         "month": 3,
-        "vacancy_count": 806,
-        "share": 0.2173
+        "vacancy_count": 810,
+        "share": 0.1805
       },
       {
         "month": 4,
-        "vacancy_count": 1756,
-        "share": 0.4734
+        "vacancy_count": 1720,
+        "share": 0.3832
       },
       {
         "month": 5,
-        "vacancy_count": 795,
-        "share": 0.2143
+        "vacancy_count": 1602,
+        "share": 0.357
       }
     ]
   }
