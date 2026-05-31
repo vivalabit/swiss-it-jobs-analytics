@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-24T15:16:45Z",
+  "generated_at": "2026-05-31T16:16:42Z",
   "available": true,
   "metrics": {
-    "total_vacancies": 4488,
-    "total_companies": 1525,
-    "average_vacancies_per_company": 2.94
+    "total_vacancies": 5180,
+    "total_companies": 1725,
+    "average_vacancies_per_company": 3.0
   }
 }

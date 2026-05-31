@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-05-24T15:16:45Z",
+  "generated_at": "2026-05-31T16:16:42Z",
   "available": true,
   "summary": {
-    "salary_count": 269,
-    "salary_coverage": 0.0599,
-    "average_salary": 100036,
-    "median_salary": 100000,
-    "p25_salary": 89260,
-    "p75_salary": 112832,
+    "salary_count": 272,
+    "salary_coverage": 0.0525,
+    "average_salary": 99895,
+    "median_salary": 99500,
+    "p25_salary": 89066,
+    "p75_salary": 112500,
     "min_salary": 40000,
     "max_salary": 180000,
     "currency": "CHF",
@@ -15,22 +15,13 @@
   },
   "by_role_category": [
     {
-      "role_category": "erp_business_systems",
-      "salary_count": 4,
-      "average_salary": 112375,
-      "median_salary": 124000,
-      "min_salary": 74000,
-      "max_salary": 127500,
-      "rank": 1
-    },
-    {
       "role_category": "security",
-      "salary_count": 23,
-      "average_salary": 112226,
+      "salary_count": 21,
+      "average_salary": 112438,
       "median_salary": 110824,
       "min_salary": 40000,
       "max_salary": 180000,
-      "rank": 2
+      "rank": 1
     },
     {
       "role_category": "product_project_analysis",
@@ -39,13 +30,22 @@
       "median_salary": 110000,
       "min_salary": 62389,
       "max_salary": 135000,
+      "rank": 2
+    },
+    {
+      "role_category": "erp_business_systems",
+      "salary_count": 6,
+      "average_salary": 105633,
+      "median_salary": 115250,
+      "min_salary": 74000,
+      "max_salary": 127500,
       "rank": 3
     },
     {
       "role_category": "software_engineering",
-      "salary_count": 97,
-      "average_salary": 101020,
-      "median_salary": 99000,
+      "salary_count": 99,
+      "average_salary": 101100,
+      "median_salary": 100000,
       "min_salary": 40000,
       "max_salary": 148000,
       "rank": 4
@@ -62,7 +62,7 @@
     {
       "role_category": "devops_cloud_platform",
       "salary_count": 47,
-      "average_salary": 100401,
+      "average_salary": 100614,
       "median_salary": 97402,
       "min_salary": 78000,
       "max_salary": 135000,
@@ -79,8 +79,8 @@
     },
     {
       "role_category": "support_operations",
-      "salary_count": 28,
-      "average_salary": 84402,
+      "salary_count": 29,
+      "average_salary": 84164,
       "median_salary": 80000,
       "min_salary": 51750,
       "max_salary": 108000,
@@ -99,17 +99,17 @@
   "by_seniority": [
     {
       "seniority": "manager",
-      "salary_count": 63,
-      "average_salary": 104285,
-      "median_salary": 108000,
+      "salary_count": 64,
+      "average_salary": 103983,
+      "median_salary": 107750,
       "min_salary": 55000,
       "max_salary": 180000,
       "rank": 1
     },
     {
       "seniority": "senior",
-      "salary_count": 106,
-      "average_salary": 103813,
+      "salary_count": 107,
+      "average_salary": 103514,
       "median_salary": 100000,
       "min_salary": 70000,
       "max_salary": 148000,
@@ -126,9 +126,9 @@
     },
     {
       "seniority": "Unknown",
-      "salary_count": 19,
-      "average_salary": 94260,
-      "median_salary": 94544,
+      "salary_count": 20,
+      "average_salary": 94797,
+      "median_salary": 95047,
       "min_salary": 70000,
       "max_salary": 125278,
       "rank": 4

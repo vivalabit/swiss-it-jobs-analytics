@@ -1,485 +1,551 @@
 company,vacancy_count,share
-Bank Julius Bär & Co. AG,57,0.0127
-RUAG AG,56,0.0125
-ti&m AG,54,0.012
-ViaSat Antenna Systems SA,49,0.0109
-CERN,38,0.0085
-Hitachi Energy AG,37,0.0082
-Elca informatique SA,30,0.0067
-Deloitte,29,0.0065
-Siemens Schweiz AG,29,0.0065
-Stadler Rail Group,28,0.0062
-Amaris Consulting Sàrl,25,0.0056
-Kanton Zürich,25,0.0056
-Zürcher Kantonalbank und ihre Tochtergesellschaften,25,0.0056
-BRACK.CH AG,23,0.0051
-On AG,23,0.0051
-"UMB AG, Zweigniederlassung Volketswil",23,0.0051
-CISTEC AG,22,0.0049
-SonarSource SA,22,0.0049
-Axept Business Software AG,21,0.0047
-SBB CFF FFS,21,0.0047
-clavis IT ag,21,0.0047
-Banque Cantonale Vaudoise,20,0.0045
-Bison Schweiz AG,20,0.0045
-KPMG,20,0.0045
-SMG Swiss Marketplace Group,18,0.004
-adesso Schweiz AG,18,0.004
-BROMsolutions AG Biel,17,0.0038
-finnova AG Bankware,17,0.0038
-Red Commerce Schweiz GmbH,16,0.0036
-infomaniak | The Ethical Cloud,16,0.0036
-univativ Schweiz AG,16,0.0036
-AXA Versicherungen AG,15,0.0033
-Geberit AG,15,0.0033
-VZ VermögensZentrum,15,0.0033
-Zürich Versicherungs-Gesellschaft AG / Zurich Insurance Company Ltd / Zurich Compagnie d'Assurances SA,15,0.0033
-"Bechtle Schweiz AG, Systemhaus Deutschschweiz",14,0.0031
-Deloitte AG,14,0.0031
-EFG Bank AG,14,0.0031
-Nexthink,14,0.0031
-Open Systems AG,14,0.0031
-SIX Group AG,14,0.0031
-AXA,13,0.0029
-Auctae Switzerland Sàrl,13,0.0029
-Banque Lombard Odier & Cie SA,13,0.0029
-Brack.Alltron AG,13,0.0029
-Eraneos Switzerland AG,13,0.0029
-Unknown,13,0.0029
-Franke Group,12,0.0027
-Kanton Graubünden,12,0.0027
-Metrohm AG,12,0.0027
-Schweizer Armee - Kommando Cyber Kdo Cy,12,0.0027
-Sunrise GmbH,12,0.0027
-Transgourmet Schweiz AG,12,0.0027
-VF International Sagl,12,0.0027
-Avaloq Group AG,11,0.0025
-Bank Frick AG,11,0.0025
-Endress+Hauser,11,0.0025
-Evergreen Human Resources AG,11,0.0025
-Migros-Genossenschafts-Bund,11,0.0025
-SpeciTec SA,11,0.0025
-Swisslinx AG,11,0.0025
-VAUDOISE ASSURANCES HOLDING SA,11,0.0025
-swissgrid ag,11,0.0025
-BairesDev,10,0.0022
-Banque Pictet & Cie SA,10,0.0022
-C5I,10,0.0022
-CSS,10,0.0022
-Digitec Galaxus AG,10,0.0022
-EY (Ernst & Young AG),10,0.0022
-Helbling Technik,10,0.0022
-Hirslanden AG,10,0.0022
-IT ADVANCED CONSULTING SA,10,0.0022
-Kantonale Verwaltung Zürich,10,0.0022
-MTF Solutions AG,10,0.0022
-SAP (Schweiz) AG,10,0.0022
-Schweizerische Nationalbank,10,0.0022
-Zühlke Engineering AG,10,0.0022
-AO Foundation,9,0.002
-Business & Decision (Suisse) SA,9,0.002
-COOP,9,0.002
-DV Bern AG,9,0.002
-Equans Switzerland Process Automation AG,9,0.002
-ITRIS One AG,9,0.002
-LGT,9,0.002
-Luzerner Kantonsspital,9,0.002
-MGI Consultants SA,9,0.002
-PRODYNA (Schweiz) AG,9,0.002
-Pilatus Flugzeugwerke AG,9,0.002
-SWICA Gesundheitsorganisation,9,0.002
-Sonova AG,9,0.002
-Vangard AG,9,0.002
-Vaudoise Assurances,9,0.002
-Academic Work Switzerland SA,8,0.0018
-Akros AG,8,0.0018
-Aveniq AG,8,0.0018
-Bachem AG,8,0.0018
-Code Compass 🧭,8,0.0018
-ETH Zürich,8,0.0018
-Ergon Informatik AG,8,0.0018
-Google,8,0.0018
-Hochschule Luzern,8,0.0018
-Informaticon AG,8,0.0018
-Julius Baer,8,0.0018
-Kanton Luzern,8,0.0018
-KastGroup GmbH,8,0.0018
-Novartis AG,8,0.0018
-Sensirion AG,8,0.0018
-Source Group International GmbH,8,0.0018
-Stadt Zürich – Organisation und Informatik,8,0.0018
-Sumex AG,8,0.0018
-Swisscom Digital Technology SA,8,0.0018
-Swissquote Bank SA,8,0.0018
-Vitol,8,0.0018
-isolutions AG,8,0.0018
-AEW Energie AG,7,0.0016
-Axpo Gruppe,7,0.0016
-BKW Energie AG,7,0.0016
-BOBST MEX SA,7,0.0016
-Baumer Group,7,0.0016
-Bühler AG,7,0.0016
-CSL Behring AG,7,0.0016
-Centris AG,7,0.0016
-Concordia,7,0.0016
-ERNI Schweiz AG,7,0.0016
-EY,7,0.0016
-Erni Schweiz AG,7,0.0016
-Galenica AG,7,0.0016
-Galliker Transport AG,7,0.0016
-Hochschule Luzern (HSLU),7,0.0016
-ITRIS AG,7,0.0016
-Kanton Basel-Stadt Finanzdepartement,7,0.0016
-LHH,7,0.0016
-LLB - Liechtensteinische Landesbank AG,7,0.0016
-Noir,7,0.0016
-Oettinger Davidoff AG,7,0.0016
-Psychiatrische Universitätsklinik Zürich,7,0.0016
-RUAG MRO Holding AG,7,0.0016
-SCOR Services Switzerland AG,7,0.0016
-Securiton AG,7,0.0016
-Sozialversicherungsanstalt des Kantons Zürich SVA,7,0.0016
-Swiss Federal Administration,7,0.0016
-Swiss International Air Lines AG,7,0.0016
-Swisscom,7,0.0016
-Switch,7,0.0016
-Thoratec Switzerland GmbH,7,0.0016
-Turing,7,0.0016
-Universitätsspital Basel,7,0.0016
-Viseca Payment Services SA,7,0.0016
-Winterthur Gas & Diesel AG,7,0.0016
-ZHAW Zürcher Hochschule für Angewandte Wissenschaften,7,0.0016
-Ärztekasse Genossenschaft,7,0.0016
-Abbott AG,6,0.0013
-Axians Amanox AG,6,0.0013
-Bank J. Safra Sarasin,6,0.0013
-Bechtle Suisse SA,6,0.0013
-Bobst Mex SA,6,0.0013
-Carrosserie HESS AG,6,0.0013
-CodeWay SA,6,0.0013
-Comfone AG,6,0.0013
-Dentsu International Switzerland AG,6,0.0013
-Equans Switzerland AG,6,0.0013
-Equans Switzerland Facility Management AG,6,0.0013
-FORUM MONDIAL DE L'ECONOMIE,6,0.0013
-Green,6,0.0013
-InfoGuard AG,6,0.0013
-JOB WATCH SA,6,0.0013
-LGT Capital Partners AG,6,0.0013
-MOTOREX AG,6,0.0013
-NOVO Business Consultants AG,6,0.0013
-Nexplore AG,6,0.0013
-PQM Consulting AG,6,0.0013
-Planzer,6,0.0013
-Pro Informatik AG,6,0.0013
-SIGA Services AG,6,0.0013
-Sopra Steria,6,0.0013
-Swiss Medical Network,6,0.0013
-Swisslinx,6,0.0013
-Sympany,6,0.0013
-Tecan Schweiz AG,6,0.0013
-Thermoplan AG,6,0.0013
-Universität Bern,6,0.0013
-untersee AG,6,0.0013
-A. Baggenstos & Co AG,5,0.0011
-AGRIDEA Schweizerische Vereinigung für die Entwicklung der Landwirtschaft und des ländlichen Raums,5,0.0011
-Academic Work Switzerland,5,0.0011
-Aequor Consulting GmbH,5,0.0011
-Bedag Informatik AG,5,0.0011
-Bergauer AG,5,0.0011
-Besi Switzerland AG,5,0.0011
-CTC Analytics AG,5,0.0011
-Curaden AG,5,0.0011
-EBP Schweiz AG,5,0.0011
-ELCA Group,5,0.0011
-EPFL,5,0.0011
-ERNE AG Holzbau,5,0.0011
-Eidg. Nuklearsicherheitsinspektorat,5,0.0011
-Eidgenössische Finanzmarktaufsicht (FINMA),5,0.0011
-Energy Vault SA,5,0.0011
-Equans Switzerland,5,0.0011
-Ernst & Young AG,5,0.0011
-Fincons Group AG,5,0.0011
-Hamilton Medical AG,5,0.0011
-Hamilton Services AG,5,0.0011
-Helvetia Versicherungen,5,0.0011
-Hostpoint AG,5,0.0011
-Implenia Schweiz AG,5,0.0011
-International Service Group (Schweiz) GmbH,5,0.0011
-Jörg Lienert AG,5,0.0011
-Kantonale Verwaltung Schwyz,5,0.0011
-Letec IT Solutions AG,5,0.0011
-Liebherr Machines Bulle SA,5,0.0011
-Luzerner Kantonalbank,5,0.0011
-MF Group AG,5,0.0011
-Noser Engineering AG,5,0.0011
-Performance Consultant SA,5,0.0011
-PwC,5,0.0011
-SIGMALIS Sàrl,5,0.0011
-Scalera AG,5,0.0011
-Schweizer Electronic AG,5,0.0011
-Skysec Defence GmbH,5,0.0011
-Swisscard AECS GmbH,5,0.0011
-TCS Touring Club Schweiz,5,0.0011
-V-ZUG AG,5,0.0011
-Valora Group,5,0.0011
-Viessmann (Schweiz) GmbH,5,0.0011
-Zürcher Kantonalbank,5,0.0011
-die Mobiliar,5,0.0011
-esolva ag,5,0.0011
-lastminute.com group,5,0.0011
-AARK Tech Solutions GmbH,4,0.0009
-API S.A.,4,0.0009
-AeroVisto Interior Services AG,4,0.0009
-Agoda,4,0.0009
-Alltitude SA,4,0.0009
-Ammann Schweiz AG,4,0.0009
-Arcade Solutions AG,4,0.0009
-Atlas Copco (Schweiz) AG,4,0.0009
-Avalect GmbH,4,0.0009
-BELIMO Automation AG,4,0.0009
-Bank CIC (Schweiz) AG,4,0.0009
-"Bechtle Schweiz AG, Onsite Services",4,0.0009
-Bexio,4,0.0009
-Beyond Gravity Schweiz AG,4,0.0009
-BlueCare AG,4,0.0009
-CWS-boco Suisse SA,4,0.0009
-Centre Patronal,4,0.0009
-Daedalean AG,4,0.0009
-Die Securitas Gruppe,4,0.0009
-ELCA Cloud Services SA,4,0.0009
-Ecorobotix SA,4,0.0009
-Elektrizitätswerke des Kantons Zürich,4,0.0009
-Energie Service Biel/Bienne (ESB),4,0.0009
-Experis Switzerland,4,0.0009
-Ferag AG,4,0.0009
-Fonds des Nations Unies pour l'enfance (UNICEF),4,0.0009
-GetYourGuide AG,4,0.0009
-Groupe E SA,4,0.0009
-H55 SA,4,0.0009
-Harmattan AI,4,0.0009
-Helsana Versicherungen AG,4,0.0009
-Holcim AG,4,0.0009
-IT Di-Visions AG,4,0.0009
-Inventx AG,4,0.0009
-KPT Krankenkasse AG,4,0.0009
-Kanadevia Inova,4,0.0009
-Kanton Appenzell Innerrhoden,4,0.0009
-Klinik Im Hasel AG,4,0.0009
-Knowledge Lab AG,4,0.0009
-LANDERT Group AG,4,0.0009
-Leclanché e-Mobility SA,4,0.0009
-Loomis Schweiz AG Kloten,4,0.0009
-Losinger Marazzi SA,4,0.0009
-Läderach (Schweiz) AG,4,0.0009
-Meanquest,4,0.0009
-Mettler Toledo,4,0.0009
-NVIDIA,4,0.0009
-OTTO'S AG,4,0.0009
-PMS SCHÖNENBERGER AG,4,0.0009
-ROLEX,4,0.0009
-SFS Group Schweiz AG,4,0.0009
-SKAN AG,4,0.0009
-SOLIT Group AG,4,0.0009
-SSI Schäfer AG,4,0.0009
-Salt Mobile SA,4,0.0009
-Schweizer Paraplegiker-Zentrum,4,0.0009
-Sika Gesellschaften in der Schweiz,4,0.0009
-SkyCell AG,4,0.0009
-Sonepar Suisse AG,4,0.0009
-Sonic Suisse SSD,4,0.0009
-Spitalzentrum Biel / Centre hospitalier Bienne,4,0.0009
-Stadt Winterthur,4,0.0009
-Swiss GRC AG,4,0.0009
-SwissPeak Partners,4,0.0009
-Swissgrid AG,4,0.0009
-Swissquote Bank,4,0.0009
-Syntegon Packaging Systems AG,4,0.0009
-T&N Telekom & Netzwerk AG,4,0.0009
-Trafag AG,4,0.0009
-UNITY Schweiz AG,4,0.0009
-United Machining,4,0.0009
-"Urs Ledermann & Partner AG, Bern",4,0.0009
-VP Bank AG,4,0.0009
-Valjob,4,0.0009
-Visana Services AG,4,0.0009
-Vontobel Beteiligungen AG,4,0.0009
-Walo Bertschinger AG,4,0.0009
-Zettaplan AG,4,0.0009
-adidas sport gmbh,4,0.0009
-comparis.ch AG,4,0.0009
-emineo AG,4,0.0009
-maxon motor ag,4,0.0009
-mobilezone ag,4,0.0009
-p3b ag,4,0.0009
-p4b ag,4,0.0009
-staff.ch,4,0.0009
-swisspro AG,4,0.0009
-u-blox AG,4,0.0009
-uniQconsulting ag,4,0.0009
-ÖKK Versicherungen AG,4,0.0009
-ABB Schweiz AG,3,0.0007
-Albedis AG,3,0.0007
-Aquantic AG,3,0.0007
-Assura,3,0.0007
-Audemars Piguet,3,0.0007
-Axians Somnitec AG,3,0.0007
-Axpo Group,3,0.0007
-B. Braun Medical AG,3,0.0007
-BVK Personalvorsorge des Kantons Zürich,3,0.0007
-Baloise Versicherung AG,3,0.0007
-Banque Syz SA,3,0.0007
-Basellandschaftliche Kantonalbank,3,0.0007
-Belimed Life Science AG,3,0.0007
-Bell Food Group AG,3,0.0007
-Beltronic IT AG,3,0.0007
-Berner Fachhochschule,3,0.0007
-Blackroll AG,3,0.0007
-Blaser Swisslube AG,3,0.0007
-CH Media Holding AG,3,0.0007
-CHUV - Centre Hospitalier Universitaire Vaudois Lausanne,3,0.0007
-CMSA Management SA,3,0.0007
-Celerion Switzerland AG,3,0.0007
-Chestonag Automation AG,3,0.0007
-Climeworks AG,3,0.0007
-Convotis,3,0.0007
-Debiopharm International SA,3,0.0007
-Dentsply Sirona,3,0.0007
-Diartis AG,3,0.0007
-Digt AG,3,0.0007
-EKZ Eltop AG,3,0.0007
-ELCA Security SA,3,0.0007
-Eidgenössische Finanzmarktaufsicht FINMA,3,0.0007
-Elize Partners,3,0.0007
-Emil Frey Gruppe Schweiz,3,0.0007
-EnableMe Foundation,3,0.0007
-Eugster/Frismag AG,3,0.0007
-Eversys Digitronics AG,3,0.0007
-Expleo Group,3,0.0007
-Fachkraft.ch GmbH,3,0.0007
-Flexsis AG,3,0.0007
-Flyability SA,3,0.0007
-Fusion Consulting,3,0.0007
-Fust | Swiss Household Services AG,3,0.0007
-"G. et F. Châtelain, succursale de Chanel SARL",3,0.0007
-HINT AG,3,0.0007
-Hamilton Bonaduz AG,3,0.0007
-Health Info Net AG,3,0.0007
-Hilti (Schweiz) AG,3,0.0007
-Humanis AG,3,0.0007
-Hyperio AG,3,0.0007
-Hypothekarbank Lenzburg AG,3,0.0007
-ICM Image & Concepts Management AG,3,0.0007
-ITRIS Management AG,3,0.0007
-Ingram Micro GmbH,3,0.0007
-Insel Gruppe,3,0.0007
-Integraal Data Services,3,0.0007
-Jones Lang LaSalle AG,3,0.0007
-Justitia 4.0,3,0.0007
-KEMARO AG,3,0.0007
-Kanadevia Inova AG,3,0.0007
-Kanton St.Gallen,3,0.0007
-Kanton Thurgau,3,0.0007
-Keyrock,3,0.0007
-Kinderspital Zürich,3,0.0007
-Kite AG,3,0.0007
-L'Occitane International (Suisse) SA,3,0.0007
-Loomis Schweiz AG,3,0.0007
-Luota AG,3,0.0007
-Lyncée Tec SA,3,0.0007
-M-Industrie,3,0.0007
-MAZARS SA,3,0.0007
-MEGGITT SA,3,0.0007
-McKinsey & Company,3,0.0007
-Netrics AG,3,0.0007
-Nitrochemie Wimmis AG,3,0.0007
-Oniko AG,3,0.0007
-Onyx Circle AG,3,0.0007
-Opacc Software AG,3,0.0007
-"Pax, Schweizerische Lebensversicherungs-Gesellschaft AG",3,0.0007
-Permjobs Sadiku,3,0.0007
-Philippe Lebert GmbH,3,0.0007
-Primeo Energie,3,0.0007
-Publicare AG,3,0.0007
-Raiffeisen Schweiz,3,0.0007
-Randstad Digital,3,0.0007
-Ricola AG,3,0.0007
-Rieter,3,0.0007
-SGI,3,0.0007
-SOCIETE GENERALE Private Banking (Suisse) SA,3,0.0007
-Sabag AG,3,0.0007
-Sanitas Krankenversicherung,3,0.0007
-Snowflake,3,0.0007
-Sonceboz Automotive S.A.,3,0.0007
-Sonio AG,3,0.0007
-SpeedCom (Schweiz) AG,3,0.0007
-St. Galler Kantonalbank,3,0.0007
-St.Galler Stadtwerke,3,0.0007
-Stöcklin Logistik AG,3,0.0007
-Suva,3,0.0007
-Swiss Casinos,3,0.0007
-Swissquote,3,0.0007
-Sécheron SA,3,0.0007
-Talan,3,0.0007
-Talan SA,3,0.0007
-Telus Digital,3,0.0007
-Tempobrain AG,3,0.0007
-Tocco AG,3,0.0007
-UDITIS SA,3,0.0007
-Ubique Innovation AG,3,0.0007
-Universität St. Gallen,3,0.0007
-Université de Lausanne,3,0.0007
-Varian Medical Systems Imaging Laboratory GmbH,3,0.0007
-Verein Schweizerisches Rotes Kreuz,3,0.0007
-WAGNER AG,3,0.0007
-Wingtra AG,3,0.0007
-Wüest Partner AG,3,0.0007
-Ypsomed AG,3,0.0007
-Ziemer Ophthalmic Systems AG,3,0.0007
-Zürcher Hochschule der Künste,3,0.0007
-Zürich Versicherungs-Gesellschaft AG,3,0.0007
-allvaco group AG,3,0.0007
-at rete ag,3,0.0007
-bossinfo.ch AG,3,0.0007
-enersuisse ag,3,0.0007
-exedra ag,3,0.0007
-iTrust AG,3,0.0007
-punkt personal AG,3,0.0007
-redIT Services AG,3,0.0007
-skyguide,3,0.0007
-the i-engineers AG,3,0.0007
-ÖKK Holding AG,3,0.0007
+Bank Julius Bär & Co. AG,60,0.0116
+RUAG AG,60,0.0116
+adesso Schweiz AG,54,0.0104
+ti&m AG,54,0.0104
+ViaSat Antenna Systems SA,50,0.0097
+CERN,43,0.0083
+Hitachi Energy AG,34,0.0066
+Elca informatique SA,32,0.0062
+Deloitte,31,0.006
+Siemens Schweiz AG,31,0.006
+Stadler Rail Group,30,0.0058
+Amaris Consulting Sàrl,29,0.0056
+On AG,26,0.005
+Zürcher Kantonalbank und ihre Tochtergesellschaften,26,0.005
+Kanton Zürich,25,0.0048
+BRACK.CH AG,24,0.0046
+SBB CFF FFS,24,0.0046
+clavis IT ag,24,0.0046
+Agoda,23,0.0044
+SonarSource SA,23,0.0044
+Axept Business Software AG,22,0.0042
+"UMB AG, Zweigniederlassung Volketswil",22,0.0042
+KPMG,21,0.0041
+Banque Cantonale Vaudoise,20,0.0039
+Bison Schweiz AG,20,0.0039
+CISTEC AG,20,0.0039
+SMG Swiss Marketplace Group,19,0.0037
+univativ Schweiz AG,19,0.0037
+BROMsolutions AG Biel,18,0.0035
+Open Systems AG,18,0.0035
+infomaniak | The Ethical Cloud,18,0.0035
+ABB Schweiz AG,17,0.0033
+finnova AG Bankware,17,0.0033
+SIX Group AG,16,0.0031
+Zürich Versicherungs-Gesellschaft AG / Zurich Insurance Company Ltd / Zurich Compagnie d'Assurances SA,16,0.0031
+AXA Versicherungen AG,15,0.0029
+Banque Lombard Odier & Cie SA,15,0.0029
+"Bechtle Schweiz AG, Systemhaus Deutschschweiz",15,0.0029
+Code Compass 🧭,15,0.0029
+Geberit AG,15,0.0029
+Google,15,0.0029
+Nexthink,15,0.0029
+Red Commerce Schweiz GmbH,15,0.0029
+VZ VermögensZentrum,15,0.0029
+AXA,14,0.0027
+Deloitte AG,14,0.0027
+EFG Bank AG,14,0.0027
+Eraneos Switzerland AG,14,0.0027
+Evergreen Human Resources AG,14,0.0027
+Sunrise GmbH,14,0.0027
+Swisslinx AG,14,0.0027
+Unknown,14,0.0027
+Auctae Switzerland Sàrl,13,0.0025
+BairesDev,13,0.0025
+Brack.Alltron AG,13,0.0025
+Endress+Hauser,13,0.0025
+Metrohm AG,13,0.0025
+Migros-Genossenschafts-Bund,13,0.0025
+Schweizer Armee - Kommando Cyber Kdo Cy,13,0.0025
+Schweizerische Nationalbank,13,0.0025
+CSS,12,0.0023
+Digitec Galaxus AG,12,0.0023
+Franke Group,12,0.0023
+Kanton Graubünden,12,0.0023
+Noir,12,0.0023
+Swisscom,12,0.0023
+Transgourmet Schweiz AG,12,0.0023
+VF International Sagl,12,0.0023
+Zühlke Engineering AG,12,0.0023
+Avaloq Group AG,11,0.0021
+Bank Frick AG,11,0.0021
+Banque Pictet & Cie SA,11,0.0021
+Julius Baer,11,0.0021
+Kantonale Verwaltung Zürich,11,0.0021
+LLB - Liechtensteinische Landesbank AG,11,0.0021
+Novartis AG,11,0.0021
+SAP (Schweiz) AG,11,0.0021
+SpeciTec SA,11,0.0021
+VAUDOISE ASSURANCES HOLDING SA,11,0.0021
+swissgrid ag,11,0.0021
+Aveniq AG,10,0.0019
+C5I,10,0.0019
+COOP,10,0.0019
+DV Bern AG,10,0.0019
+EY,10,0.0019
+EY (Ernst & Young AG),10,0.0019
+Helbling Technik,10,0.0019
+Hirslanden AG,10,0.0019
+IT ADVANCED CONSULTING SA,10,0.0019
+MGI Consultants SA,10,0.0019
+MTF Solutions AG,10,0.0019
+Vaudoise Assurances,10,0.0019
+AO Foundation,9,0.0017
+Bachem AG,9,0.0017
+Baumer Group,9,0.0017
+Business & Decision (Suisse) SA,9,0.0017
+Centris AG,9,0.0017
+Equans Switzerland Process Automation AG,9,0.0017
+Expleo Group,9,0.0017
+Hochschule Luzern,9,0.0017
+ITRIS One AG,9,0.0017
+LGT,9,0.0017
+LHH,9,0.0017
+Luzerner Kantonsspital,9,0.0017
+PRODYNA (Schweiz) AG,9,0.0017
+Pilatus Flugzeugwerke AG,9,0.0017
+SWICA Gesundheitsorganisation,9,0.0017
+Sonova AG,9,0.0017
+Stadt Zürich – Organisation und Informatik,9,0.0017
+Swiss Federal Administration,9,0.0017
+Thoratec Switzerland GmbH,9,0.0017
+Vangard AG,9,0.0017
+Academic Work Switzerland SA,8,0.0015
+Akros AG,8,0.0015
+Bobst Mex SA,8,0.0015
+ETH Zürich,8,0.0015
+FORUM MONDIAL DE L'ECONOMIE,8,0.0015
+Hochschule Luzern (HSLU),8,0.0015
+Informaticon AG,8,0.0015
+Kanton Luzern,8,0.0015
+KastGroup GmbH,8,0.0015
+PQM Consulting AG,8,0.0015
+PwC,8,0.0015
+Sensirion AG,8,0.0015
+Sumex AG,8,0.0015
+Swiss International Air Lines AG,8,0.0015
+Swisscom Digital Technology SA,8,0.0015
+Swissquote Bank SA,8,0.0015
+Viseca Payment Services SA,8,0.0015
+Vitol,8,0.0015
+isolutions AG,8,0.0015
+Ärztekasse Genossenschaft,8,0.0015
+AEW Energie AG,7,0.0014
+BKW Energie AG,7,0.0014
+BOBST MEX SA,7,0.0014
+Bühler AG,7,0.0014
+CSL Behring AG,7,0.0014
+Carrosserie HESS AG,7,0.0014
+Concordia,7,0.0014
+Dentsu International Switzerland AG,7,0.0014
+ERNI Schweiz AG,7,0.0014
+Ergon Informatik AG,7,0.0014
+Erni Schweiz AG,7,0.0014
+Galenica AG,7,0.0014
+Galliker Transport AG,7,0.0014
+ITRIS AG,7,0.0014
+Kanton Basel-Stadt Finanzdepartement,7,0.0014
+Liebherr Machines Bulle SA,7,0.0014
+Oettinger Davidoff AG,7,0.0014
+Pro Informatik AG,7,0.0014
+Psychiatrische Universitätsklinik Zürich,7,0.0014
+RUAG MRO Holding AG,7,0.0014
+SCOR Services Switzerland AG,7,0.0014
+Securiton AG,7,0.0014
+Sozialversicherungsanstalt des Kantons Zürich SVA,7,0.0014
+Spitalzentrum Biel / Centre hospitalier Bienne,7,0.0014
+Switch,7,0.0014
+Sympany,7,0.0014
+Turing,7,0.0014
+Universitätsspital Basel,7,0.0014
+Viessmann (Schweiz) GmbH,7,0.0014
+Winterthur Gas & Diesel AG,7,0.0014
+Workmanagement AG,7,0.0014
+ZHAW Zürcher Hochschule für Angewandte Wissenschaften,7,0.0014
+Zürcher Kantonalbank,7,0.0014
+die Mobiliar,7,0.0014
+emineo AG,7,0.0014
+A. Baggenstos & Co AG,6,0.0012
+AGRIDEA Schweizerische Vereinigung für die Entwicklung der Landwirtschaft und des ländlichen Raums,6,0.0012
+Abbott AG,6,0.0012
+Abraxas Informatik AG,6,0.0012
+AeroVisto Interior Services AG,6,0.0012
+Ammann Schweiz AG,6,0.0012
+Axians Amanox AG,6,0.0012
+Axpo Gruppe,6,0.0012
+Bank J. Safra Sarasin,6,0.0012
+Bechtle Suisse SA,6,0.0012
+CodeWay SA,6,0.0012
+Comfone AG,6,0.0012
+ELCA Group,6,0.0012
+ERNE AG Holzbau,6,0.0012
+Eidgenössische Finanzmarktaufsicht (FINMA),6,0.0012
+Equans Switzerland AG,6,0.0012
+Equans Switzerland Facility Management AG,6,0.0012
+Experis Switzerland,6,0.0012
+Green,6,0.0012
+InfoGuard AG,6,0.0012
+JOB WATCH SA,6,0.0012
+LGT Capital Partners AG,6,0.0012
+Losinger Marazzi SA,6,0.0012
+MF Group AG,6,0.0012
+MOTOREX AG,6,0.0012
+NOVO Business Consultants AG,6,0.0012
+NVIDIA,6,0.0012
+Nexplore AG,6,0.0012
+Planzer,6,0.0012
+ROLEX,6,0.0012
+SIGA Services AG,6,0.0012
+Sonic Suisse SSD,6,0.0012
+Sopra Steria,6,0.0012
+Swisslinx,6,0.0012
+Tecan Schweiz AG,6,0.0012
+Thermoplan AG,6,0.0012
+Universität Bern,6,0.0012
+"Urs Ledermann & Partner AG, Bern",6,0.0012
+V-ZUG AG,6,0.0012
+Zühlke Group,6,0.0012
+p4b ag,6,0.0012
+untersee AG,6,0.0012
+Academic Work Switzerland,5,0.001
+Aequor Consulting GmbH,5,0.001
+Assura,5,0.001
+Bank CIC (Schweiz) AG,5,0.001
+Bedag Informatik AG,5,0.001
+Bergauer AG,5,0.001
+Besi Switzerland AG,5,0.001
+CTC Analytics AG,5,0.001
+Cartier,5,0.001
+Curaden AG,5,0.001
+Die Securitas Gruppe,5,0.001
+EBP Schweiz AG,5,0.001
+EPAM Systems,5,0.001
+EPFL,5,0.001
+Ecorobotix SA,5,0.001
+Eidg. Nuklearsicherheitsinspektorat,5,0.001
+Emil Frey Gruppe Schweiz,5,0.001
+Energy Vault SA,5,0.001
+Equans Switzerland,5,0.001
+Ernst & Young AG,5,0.001
+Fincons Group AG,5,0.001
+GetYourGuide AG,5,0.001
+Hamilton Medical AG,5,0.001
+Hamilton Services AG,5,0.001
+Health Info Net AG,5,0.001
+Helvetia Versicherungen,5,0.001
+Hostpoint AG,5,0.001
+Implenia Schweiz AG,5,0.001
+International Service Group (Schweiz) GmbH,5,0.001
+Inventx AG,5,0.001
+Jörg Lienert AG,5,0.001
+Kantonale Verwaltung Schwyz,5,0.001
+Letec IT Solutions AG,5,0.001
+Luzerner Kantonalbank,5,0.001
+Läderach (Schweiz) AG,5,0.001
+Manexperts (Schweiz) GmbH,5,0.001
+Meanquest,5,0.001
+Noser Engineering AG,5,0.001
+Opacc Software AG,5,0.001
+PMS SCHÖNENBERGER AG,5,0.001
+Richemont,5,0.001
+Roche,5,0.001
+SIGMALIS Sàrl,5,0.001
+SSI Schäfer AG,5,0.001
+Salt Mobile SA,5,0.001
+Scalera AG,5,0.001
+Schweizer Electronic AG,5,0.001
+Skysec Defence GmbH,5,0.001
+Sonepar Suisse AG,5,0.001
+Source Group International GmbH,5,0.001
+St. Galler Kantonalbank,5,0.001
+Swiss Medical Network,5,0.001
+SwissPeak Partners,5,0.001
+Swisscard AECS GmbH,5,0.001
+TCS Touring Club Schweiz,5,0.001
+United Machining,5,0.001
+Valora Group,5,0.001
+Zürich Versicherungs-Gesellschaft AG,5,0.001
+dormakaba Schweiz AG,5,0.001
+esolva ag,5,0.001
+lastminute.com group,5,0.001
+p3b ag,5,0.001
+punkt personal AG,5,0.001
+A1,4,0.0008
+AARK Tech Solutions GmbH,4,0.0008
+ALTEN,4,0.0008
+API S.A.,4,0.0008
+Acquism SARL,4,0.0008
+Albedis AG,4,0.0008
+Alltitude SA,4,0.0008
+Aquantic AG,4,0.0008
+Arcade Solutions AG,4,0.0008
+Artefact,4,0.0008
+Atlas Copco (Schweiz) AG,4,0.0008
+BELIMO Automation AG,4,0.0008
+"Bechtle Schweiz AG, Onsite Services",4,0.0008
+Bexio,4,0.0008
+Beyond Gravity Schweiz AG,4,0.0008
+BlueCare AG,4,0.0008
+CWS-boco Suisse SA,4,0.0008
+Centre Patronal,4,0.0008
+Convotis,4,0.0008
+Daedalean AG,4,0.0008
+ELCA Cloud Services SA,4,0.0008
+Elektrizitätswerke des Kantons Zürich,4,0.0008
+Elize Partners,4,0.0008
+Energie Service Biel/Bienne (ESB),4,0.0008
+Ferag AG,4,0.0008
+Fonds des Nations Unies pour l'enfance (UNICEF),4,0.0008
+Groupe E SA,4,0.0008
+H55 SA,4,0.0008
+Hamilton Bonaduz AG,4,0.0008
+Harmattan AI,4,0.0008
+Helsana Versicherungen AG,4,0.0008
+Holcim AG,4,0.0008
+IT Di-Visions AG,4,0.0008
+ITRIS Management AG,4,0.0008
+KPT Krankenkasse AG,4,0.0008
+Kanadevia Inova,4,0.0008
+Kanton Appenzell Innerrhoden,4,0.0008
+Klinik Im Hasel AG,4,0.0008
+Knowledge Lab AG,4,0.0008
+LANDERT Group AG,4,0.0008
+Leclanché e-Mobility SA,4,0.0008
+Loomis Schweiz AG Kloten,4,0.0008
+Mettler Toledo,4,0.0008
+Nitrochemie Wimmis AG,4,0.0008
+OTTO'S AG,4,0.0008
+Proton,4,0.0008
+Raiffeisen Schweiz,4,0.0008
+Randstad Digital,4,0.0008
+SCHNEEBERGER AG Lineartechnik,4,0.0008
+SFS Group Schweiz AG,4,0.0008
+SKAN AG,4,0.0008
+SOCIETE GENERALE Private Banking (Suisse) SA,4,0.0008
+SOLIT Group AG,4,0.0008
+Schweizer Paraplegiker-Zentrum,4,0.0008
+Sika Gesellschaften in der Schweiz,4,0.0008
+SkyCell AG,4,0.0008
+Sonceboz Automotive S.A.,4,0.0008
+Specialized Bicycle Components,4,0.0008
+Stadler,4,0.0008
+Stadt Winterthur,4,0.0008
+Suva,4,0.0008
+Swiss GRC AG,4,0.0008
+Swissgrid AG,4,0.0008
+Swissquote Bank,4,0.0008
+Syntegon Packaging Systems AG,4,0.0008
+T&N Telekom & Netzwerk AG,4,0.0008
+TXT GROUP,4,0.0008
+TechFirm Information Systems,4,0.0008
+Trafag AG,4,0.0008
+UNITY Schweiz AG,4,0.0008
+VP Bank AG,4,0.0008
+Valjob,4,0.0008
+Vontobel Beteiligungen AG,4,0.0008
+Walo Bertschinger AG,4,0.0008
+Wavestone,4,0.0008
+Zettaplan AG,4,0.0008
+adidas sport gmbh,4,0.0008
+comparis.ch AG,4,0.0008
+maxon motor ag,4,0.0008
+mobilezone ag,4,0.0008
+skyguide,4,0.0008
+staff.ch,4,0.0008
+swisspro AG,4,0.0008
+u-blox AG,4,0.0008
+uniQconsulting ag,4,0.0008
+ÖKK Versicherungen AG,4,0.0008
+ALSO Schweiz AG,3,0.0006
+Adnovum,3,0.0006
+Agnostic Intelligence,3,0.0006
+Albedis SA,3,0.0006
+Ansaldo Energia Switzerland AG,3,0.0006
+Apco Technologies S.A.,3,0.0006
+Audemars Piguet,3,0.0006
+Avalect GmbH,3,0.0006
+Avaloq,3,0.0006
+Axians Somnitec AG,3,0.0006
+Axpo Group,3,0.0006
+B. Braun Medical AG,3,0.0006
+BVK Personalvorsorge des Kantons Zürich,3,0.0006
+Baloise Versicherung AG,3,0.0006
+Banque Syz SA,3,0.0006
+Basellandschaftliche Kantonalbank,3,0.0006
+Belimed Life Science AG,3,0.0006
+Bell Food Group AG,3,0.0006
+Beltronic IT AG,3,0.0006
+Berner Fachhochschule,3,0.0006
+Blackroll AG,3,0.0006
+Blaser Swisslube AG,3,0.0006
+CH Media Holding AG,3,0.0006
+CHUV - Centre Hospitalier Universitaire Vaudois Lausanne,3,0.0006
+CLEEVEN,3,0.0006
+CMSA Management SA,3,0.0006
+Celerion Switzerland AG,3,0.0006
+Chestonag Automation AG,3,0.0006
+Climeworks AG,3,0.0006
+Computer Futures,3,0.0006
+Debiopharm International SA,3,0.0006
+Delica AG,3,0.0006
+Dentsply Sirona,3,0.0006
+Diartis AG,3,0.0006
+Digital Asset,3,0.0006
+Digt AG,3,0.0006
+EKZ Eltop AG,3,0.0006
+ELCA Security SA,3,0.0006
+Eidgenössische Finanzmarktaufsicht FINMA,3,0.0006
+Ekkiden,3,0.0006
+EnableMe Foundation,3,0.0006
+Eugster/Frismag AG,3,0.0006
+Eversys Digitronics AG,3,0.0006
+EveryWare AG,3,0.0006
+FISBA AG,3,0.0006
+Fachkraft.ch GmbH,3,0.0006
+Finders,3,0.0006
+Fit1Job SA,3,0.0006
+Flexsis AG,3,0.0006
+Flyability SA,3,0.0006
+Fusion Consulting,3,0.0006
+Fust | Swiss Household Services AG,3,0.0006
+"G. et F. Châtelain, succursale de Chanel SARL",3,0.0006
+Geneva,3,0.0006
+HINT AG,3,0.0006
+Helvetica Partners,3,0.0006
+Hexagon AB,3,0.0006
+Hilti (Schweiz) AG,3,0.0006
+HolidayCheck AG,3,0.0006
+Humanis AG,3,0.0006
+Hyperio AG,3,0.0006
+Hypothekarbank Lenzburg AG,3,0.0006
+ICM Image & Concepts Management AG,3,0.0006
+Infopro AG,3,0.0006
+Ingram Micro GmbH,3,0.0006
+Insel Gruppe,3,0.0006
+Interdiscount,3,0.0006
+Jones Lang LaSalle AG,3,0.0006
+Justitia 4.0,3,0.0006
+KEMARO AG,3,0.0006
+Kanadevia Inova AG,3,0.0006
+Kanton Basel-Stadt,3,0.0006
+Kanton St.Gallen,3,0.0006
+Kanton Thurgau,3,0.0006
+Keyrock,3,0.0006
+Kinderspital Zürich,3,0.0006
+Kite AG,3,0.0006
+L'Occitane International (Suisse) SA,3,0.0006
+Loomis Schweiz AG,3,0.0006
+Luota AG,3,0.0006
+Lyncée Tec SA,3,0.0006
+M-Industrie,3,0.0006
+MAZARS SA,3,0.0006
+MEGGITT SA,3,0.0006
+McKinsey & Company,3,0.0006
+Netrics AG,3,0.0006
+Nicoll Curtin,3,0.0006
+Oniko AG,3,0.0006
+OnlineDoctor AG,3,0.0006
+Onyx Circle AG,3,0.0006
+Orange Business,3,0.0006
+Pascal Dietrich Consulting AG,3,0.0006
+"Pax, Schweizerische Lebensversicherungs-Gesellschaft AG",3,0.0006
+Performance Consultant SA,3,0.0006
+Permjobs Sadiku,3,0.0006
+Philippe Lebert GmbH,3,0.0006
+Pictet Group,3,0.0006
+Primeo Energie,3,0.0006
+Publicare AG,3,0.0006
+RM Group (Switzerland),3,0.0006
+Ricola AG,3,0.0006
+Rieter,3,0.0006
+SGI,3,0.0006
+SR Technics Switzerland AG,3,0.0006
+"SUISA, Genossenschaft der Urheber und Verleger von Musik",3,0.0006
+SV (Schweiz) AG,3,0.0006
+Sabag AG,3,0.0006
+Sanitas Krankenversicherung,3,0.0006
+Siemens,3,0.0006
+Skydio,3,0.0006
+Snowflake,3,0.0006
+Sonar,3,0.0006
+Sonio AG,3,0.0006
+SpeedCom (Schweiz) AG,3,0.0006
+Spital Emmental AG,3,0.0006
+St.Galler Stadtwerke,3,0.0006
+Stanzwerk AG,3,0.0006
+Stöcklin Logistik AG,3,0.0006
+Swiss Casinos,3,0.0006
+Swiss Post Digital Government AG,3,0.0006
+Swissquote,3,0.0006
+Sécheron SA,3,0.0006
+TORMAX,3,0.0006
+Talan,3,0.0006
+Talan SA,3,0.0006
+Telus Digital,3,0.0006
+Tempobrain AG,3,0.0006
+Tocco AG,3,0.0006
+Touring Club Suisse (TCS),3,0.0006
+Transports publics genevois (TPG),3,0.0006
+Ubique Innovation AG,3,0.0006
+United Machining Solutions,3,0.0006
+Universität St. Gallen,3,0.0006
+Université de Lausanne,3,0.0006
+Varian Medical Systems Imaging Laboratory GmbH,3,0.0006
+Verein Schweizerisches Rotes Kreuz,3,0.0006
+Visana Services AG,3,0.0006
+WAGNER AG,3,0.0006
+Wingtra AG,3,0.0006
+Wüest Partner AG,3,0.0006
+Ypsomed AG,3,0.0006
+Ziemer Ophthalmic Systems AG,3,0.0006
+Zur Rose Suisse AG,3,0.0006
+Zurich Insurance,3,0.0006
+Zürcher Hochschule der Künste,3,0.0006
+allvaco group AG,3,0.0006
+at rete ag,3,0.0006
+bossinfo.ch AG,3,0.0006
+coni+partner AG,3,0.0006
+enersuisse ag,3,0.0006
+exedra ag,3,0.0006
+ipt Innovation Process Technology,3,0.0006
+redIT Services AG,3,0.0006
+the i-engineers AG,3,0.0006
+valantic,3,0.0006
+ÖKK Holding AG,3,0.0006
 3ap,2,0.0004
 AGILITA,2,0.0004
 ALBEDIS - GENEVE,2,0.0004
-ALSO Schweiz AG,2,0.0004
 ALSTOM Schweiz AG,2,0.0004
-ALTEN,2,0.0004
 ALTIS Groupe SA,2,0.0004
 AMAG Group,2,0.0004
 APCO Technologies SA,2,0.0004
 Aargauische Gebäudeversicherung,2,0.0004
-Abraxas Informatik AG,2,0.0004
-Acquism SARL,2,0.0004
 Actemium Schweiz AG,2,0.0004
-Albedis SA,2,0.0004
+Adone Conseil,2,0.0004
 Allgemeine Plakatgesellschaft AG,2,0.0004
+Amazon RIVR,2,0.0004
 Ambit Group AG,2,0.0004
 Ampstek,2,0.0004
 Andeo AG,2,0.0004
-Ansaldo Energia Switzerland AG,2,0.0004
-Apco Technologies S.A.,2,0.0004
 Arcomed AG,2,0.0004
 "Arrow ECS GmbH, Linz, Zweigniederlassung Wallisellen",2,0.0004
-Artefact,2,0.0004
 Auriga Informatik GmbH,2,0.0004
+Autexis AG,2,0.0004
 AutoForm Development GmbH,2,0.0004
 Aventit AG,2,0.0004
 Axia AG,2,0.0004
 Axon Lab AG,2,0.0004
 Axpo Systems AG,2,0.0004
+BCG Platinion,2,0.0004
+BCV - Banque Cantonale Vaudoise,2,0.0004
+BJAK,2,0.0004
 BMK Recruitment,2,0.0004
+BOBST,2,0.0004
 BOLL Engineering AG,2,0.0004
+BSI,2,0.0004
+BaXian AG,2,0.0004
+Bachem,2,0.0004
 Bank Cler AG,2,0.0004
 Barry Callebaut Schweiz AG,2,0.0004
 Basler Kantonalbank,2,0.0004
@@ -487,52 +553,66 @@ Baumer,2,0.0004
 Bavarian Nordic Berna GmbH,2,0.0004
 Berner Fachhochschule BFH,2,0.0004
 BitHawk AG,2,0.0004
+BlueNetwork Systems AG,2,0.0004
+Board,2,0.0004
 Boehringer Ingelheim (Schweiz) GmbH,2,0.0004
+Bornhauser People's Management AG,2,0.0004
+Bosshard & Partner Unternehmensberatung AG,2,0.0004
 Bundesamt für Statistik BFS,2,0.0004
 Burckhardt Architektur AG,2,0.0004
 Burkhalter Technics AG,2,0.0004
 Bystronic Laser AG,2,0.0004
+CDDS,2,0.0004
 CH Media,2,0.0004
-CLEEVEN,2,0.0004
+CNT Management Consulting,2,0.0004
+CSCS,2,0.0004
 CSD,2,0.0004
-Cartier,2,0.0004
+CSEM,2,0.0004
+Cargill,2,0.0004
 Casale SA,2,0.0004
 Cenit (Schweiz) AG,2,0.0004
 Climeworks,2,0.0004
 Coca-Cola HBC Schweiz AG,2,0.0004
 Coders Connect,2,0.0004
-Computer Futures,2,0.0004
 Consulteer AG,2,0.0004
+Coop,2,0.0004
 Coopers Group AG,2,0.0004
 Crans-Montana Food & Beverage SA,2,0.0004
 Crypto Finance AG,2,0.0004
+Cytrus AG,2,0.0004
+DXC Technology,2,0.0004
 Daimler Truck Schweiz AG,2,0.0004
 Datahouse,2,0.0004
-Delica AG,2,0.0004
 Denner AG,2,0.0004
+"Derendinger AG, Zweigniederlassung Dietlikon",2,0.0004
 Dietrich engineering consultants S.A.,2,0.0004
-Dottikon Exclusive Synthesis AG,2,0.0004
-EPAM Systems,2,0.0004
+DonTouch SA,2,0.0004
+EBL (Genossenschaft Elektra Baselland),2,0.0004
+EHL Group,2,0.0004
+ETA SA Manufacture Horlogère Suisse,2,0.0004
 EVTEC AG,2,0.0004
-Ekkiden,2,0.0004
 Emmi Schweiz AG,2,0.0004
 Energie 360° AG,2,0.0004
 Energie Wasser Bern,2,0.0004
+Energy Schweiz AG,2,0.0004
 Ente Ospedaliero Cantonale (EOC),2,0.0004
 Eraneos,2,0.0004
+Etat de Fribourg,2,0.0004
+Etat du canton de Fribourg,2,0.0004
 Europartner Consulting GmbH,2,0.0004
+Exeon Analytics AG,2,0.0004
 F24 Schweiz AG,2,0.0004
 FELFEL AG,2,0.0004
 FHV Informatique,2,0.0004
-FISBA AG,2,0.0004
-FUTURA Vorsorgestiftung,2,0.0004
+Fachhochschule Graubünden,2,0.0004
+Faigle AG,2,0.0004
 Ficoba SA,2,0.0004
-Finders,2,0.0004
 Finders SA,2,0.0004
-Fit1Job SA,2,0.0004
 Flexdental Services SA,2,0.0004
+Flughafen Zürich AG,2,0.0004
 Flying Teachers GmbH,2,0.0004
 Forschungsstiftung für Informationstechnologie und Gesellschaft,2,0.0004
+Frontify,2,0.0004
 GEOWERKSTATT GmbH,2,0.0004
 GLANDON Apartments AG,2,0.0004
 GRITEC AG,2,0.0004
@@ -540,7 +620,6 @@ GSI Consultants GmbH,2,0.0004
 Galileo Financial Technologies,2,0.0004
 Geberit Schweiz,2,0.0004
 Gemeinsame Einrichtung KVG,2,0.0004
-Geneva,2,0.0004
 Georg Fischer,2,0.0004
 Gi Life Sciences Basel,2,0.0004
 Glarner Kantonalbank,2,0.0004
@@ -549,38 +628,44 @@ Grossenbacher Systeme AG,2,0.0004
 Groupe Mutuel,2,0.0004
 HERMEX AG,2,0.0004
 HRM Systems AG,2,0.0004
+HRS Real Estate AG,2,0.0004
 HUBER+SUHNER AG,2,0.0004
+HUG - Hôpitaux Universitaires de Genève,2,0.0004
 Hapimag AG,2,0.0004
 Haute Ecole d'Ingénierie et de Gestion de Vaud,2,0.0004
 Haystack,2,0.0004
 Heizmann AG,2,0.0004
 Helsana Insurance Company Ltd,2,0.0004
-Helvetica Partners,2,0.0004
+Helvetia Insurance Switzerland,2,0.0004
 Herbert Ospelt Anstalt (Verwaltung),2,0.0004
 Herzog Küchen AG,2,0.0004
 Herzum (now part of catworkx),2,0.0004
-Hexagon AB,2,0.0004
 Hilti Group,2,0.0004
 HolidayCheck,2,0.0004
-HolidayCheck AG,2,0.0004
 Hoval AG,2,0.0004
+Hôpital de Lavaux,2,0.0004
+IBM,2,0.0004
 IC Resources,2,0.0004
 IMD AG,2,0.0004
 ITpoint Systems AG,2,0.0004
 IWB Industrielle Werke Basel,2,0.0004
 Ikerian AG,2,0.0004
+Incore Technology AG,2,0.0004
 Infogate AG,2,0.0004
 Infomaniak Network SA,2,0.0004
 "Infosystem AG, Wil",2,0.0004
 Institut de Hautes Etudes Internationales et du Développement,2,0.0004
-Interdiscount,2,0.0004
+Integraal Data Services,2,0.0004
 Intersim AG,2,0.0004
 Intersys AG,2,0.0004
 JTI,2,0.0004
+JobCourier,2,0.0004
 Johnson & Johnson AG,2,0.0004
 Johnson Electric International AG,2,0.0004
 KELLER Pressure,2,0.0004
 Kantar Switzerland AG,2,0.0004
+Kanton Aargau,2,0.0004
+Kanton Bern,2,0.0004
 Kanton Solothurn,2,0.0004
 Kantonale Verwaltung Basel-Landschaft,2,0.0004
 Kantonale Verwaltung Zug,2,0.0004
@@ -590,6 +675,7 @@ Kissling+Zbinden AG,2,0.0004
 Kraken,2,0.0004
 Krüger + Co. AG,2,0.0004
 Kudelski S.A.,2,0.0004
+Kyndryl,2,0.0004
 Köbi Brechbühl AG,2,0.0004
 Körber Supply Chain AG,2,0.0004
 L.E.S.S. SA,2,0.0004
@@ -602,21 +688,26 @@ LGT Capital Partners,2,0.0004
 Leister AG,2,0.0004
 Leuchter IT Solutions AG,2,0.0004
 Licht- und Wasserwerk Adelboden AG,2,0.0004
+Liip AG,2,0.0004
 Livit AG,2,0.0004
 Logjob AG - For Supply Chain Experts,2,0.0004
 Lonza Group AG,2,0.0004
 Loomis,2,0.0004
 Luzerner Psychiatrie AG,2,0.0004
 MANTU GROUP SA,2,0.0004
+MSupport Networks AG,2,0.0004
 Machine Learning Architects Basel (MLAB),2,0.0004
 Matterhorn Gotthard Verkehrs AG,2,0.0004
+Merkle,2,0.0004
 Metalor Technologies SA,2,0.0004
 Michel Gruppe AG,2,0.0004
 Migros Bank AG,2,0.0004
+Mistral AI,2,0.0004
 MongoDB,2,0.0004
+My Sherpa,2,0.0004
 NZZ,2,0.0004
-Nicoll Curtin,2,0.0004
 NielsenIQ,2,0.0004
+Nomasis AG,2,0.0004
 Novotec Engineering AG,2,0.0004
 OBT AG,2,0.0004
 OFAC,2,0.0004
@@ -624,7 +715,6 @@ OK Job SA,2,0.0004
 Omnilex,2,0.0004
 OneDoc,2,0.0004
 Oneconsult AG,2,0.0004
-Orange Business,2,0.0004
 Orange Business Switzerland AG,2,0.0004
 Orion Rechtsschutz-Versicherung AG,2,0.0004
 PKZ Burger-Kehl & Co. AG,2,0.0004
@@ -634,48 +724,53 @@ Polymed Medical Center AG,2,0.0004
 Privatklinik Reichenbach b. Meiringen AG,2,0.0004
 ProfiLogic AG,2,0.0004
 Pronovo AG,2,0.0004
-Proton,2,0.0004
 Pure ICT AG,2,0.0004
 PureGym AG,2,0.0004
 Qim info,2,0.0004
 Quickline AG,2,0.0004
 R. Nussbaum AG,2,0.0004
 RIZ AG,2,0.0004
+RONAL Wheels,2,0.0004
+ROSEN,2,0.0004
 Rahn+Bodmer Co.,2,0.0004
+Raiffeisen Group,2,0.0004
+Rent a person Beratungs AG,2,0.0004
 Ro-ot Service AG,2,0.0004
-Roche,2,0.0004
 Ronal AG,2,0.0004
 Rotzinger AG,2,0.0004
-SCHNEEBERGER AG Lineartechnik,2,0.0004
 SHL Medical AG,2,0.0004
 SPS Switzerland AG,2,0.0004
-SR Technics Switzerland AG,2,0.0004
-"SUISA, Genossenschaft der Urheber und Verleger von Musik",2,0.0004
+SQLI,2,0.0004
 SUMEX AG,2,0.0004
-SV (Schweiz) AG,2,0.0004
 SWICA Organisation de Santé,2,0.0004
+Safran Timing Technologies SA,2,0.0004
+Sartiq,2,0.0004
 Schaerer AG,2,0.0004
 Schleuniger AG,2,0.0004
 Schmid & Partner Engineering AG,2,0.0004
 Schweizer Armee - Armeestab A Stab,2,0.0004
 Schweizer Armee - Kommando Operationen Kdo Op,2,0.0004
+Selby Jennings,2,0.0004
 Senevita,2,0.0004
 Senthorus SA,2,0.0004
 ServiceNow,2,0.0004
+Sigma Advisor SA,2,0.0004
+Sixsentix,2,0.0004
 SmartIT Services AG,2,0.0004
+Smith+Nephew,2,0.0004
 Snap Inc.,2,0.0004
-Sonar,2,0.0004
+Solina,2,0.0004
 Sonepar International Services SA,2,0.0004
 Spital Thurgau AG,2,0.0004
 Spitäler Schaffhausen,2,0.0004
 Spotted,2,0.0004
-Stadler,2,0.0004
 Stadt Bülach,2,0.0004
-Stanzwerk AG,2,0.0004
 Stettler Consulting AG,2,0.0004
 Stiftung Heilsarmee Schweiz,2,0.0004
 Stiftung für die Inter-Community School,2,0.0004
 Stäubli Electrical Connectors AG,2,0.0004
+SuisseCo GmbH,2,0.0004
+Sulzer & Schmid Laboratories AG,2,0.0004
 Supsign AG,2,0.0004
 Swatch AG,2,0.0004
 Swatch Group Services,2,0.0004
@@ -683,29 +778,27 @@ Swiss Infosec AG,2,0.0004
 Swiss Life AG,2,0.0004
 Swistec Systems AG,2,0.0004
 Synchrotech SA,2,0.0004
-TORMAX,2,0.0004
 TRINAMO AG,2,0.0004
-TXT GROUP,2,0.0004
 Talus Informatik AG,2,0.0004
 Tamedia,2,0.0004
-TechFirm Information Systems,2,0.0004
+Tata Consultancy Services,2,0.0004
 Telecom26 AG,2,0.0004
 Tether.io,2,0.0004
 "The Global Fund to fight Aids, Tuberculosis and Malaria",2,0.0004
 Threema GmbH,2,0.0004
 Transgourmet/Prodega Schweiz,2,0.0004
-Transports publics genevois (TPG),2,0.0004
+UCB-Pharma SA,2,0.0004
+UDITIS SA,2,0.0004
 UPGREAT AG,2,0.0004
 Unit8 SA,2,0.0004
-United Machining Solutions,2,0.0004
 Universität Zürich,2,0.0004
 Universitätsklinik Balgrist,2,0.0004
 Universitätsspital Zürich,2,0.0004
+VANGARD AG,2,0.0004
 Vebego AG,2,0.0004
 Verwo AG,2,0.0004
 Vision-Inside AG,2,0.0004
 Voicepoint AG,2,0.0004
-Wavestone,2,0.0004
 Wey Group AG,2,0.0004
 Würth AG,2,0.0004
 Würth IT Switzerland AG,2,0.0004
@@ -716,21 +809,23 @@ ZEEN Tech AG,2,0.0004
 ZHAW,2,0.0004
 ZWZ AG,2,0.0004
 Zibris AG,2,0.0004
-Zur Rose Suisse AG,2,0.0004
 ZuriQ AG,2,0.0004
+Zurich Flughafen AG,2,0.0004
 Zweifel Chips & Snacks AG,2,0.0004
-Zühlke Group,2,0.0004
+aXenta AG,2,0.0004
 axapharm ag,2,0.0004
 bbv Software Services AG,2,0.0004
 beeworx GmbH,2,0.0004
-coni+partner AG,2,0.0004
-dormakaba Schweiz AG,2,0.0004
 dynasoft AG,2,0.0004
+emineo Spain,2,0.0004
 ewz,2,0.0004
+finitia AG,2,0.0004
 green.ch AG,2,0.0004
+healthinal AG,2,0.0004
+iTrust AG,2,0.0004
 infoscore AG,2,0.0004
 insieme Schweizerische Vereinigung der Elternvereine für Menschen mit einer geistigen Behinderung,2,0.0004
-mesoneer AG,2,0.0004
+lululemon,2,0.0004
 microTECH Global LTD,2,0.0004
 mylife Diabetes Care AG,2,0.0004
 soxes AG,2,0.0004
@@ -747,24 +842,25 @@ ALERION CONSULT AG,1,0.0002
 AMAC Aerospace Switzerland AG,1,0.0002
 AMAG Corporate Services AG,1,0.0002
 ANAVIA,1,0.0002
-AP Executive SARL,1,0.0002
 ARONET GmbH,1,0.0002
 ASANA Gruppe AG,1,0.0002
 ASE (Analysis Simulation Engineering) AG,1,0.0002
 ASSA ABLOY (Schweiz) AG,1,0.0002
+ASTRELYA,1,0.0002
+ATSP Schweiz GmbH,1,0.0002
 AWU AG System- und Umwelttechnik,1,0.0002
 AXEPTA SA,1,0.0002
 Aargau Verkehr AG (AVA),1,0.0002
 Aargauische Kantonalbank,1,0.0002
 Abacus Business Solutions AG,1,0.0002
+"Abraxas Cari, succursale d'Abraxas Informatique SA",1,0.0002
 Accelleron Industries,1,0.0002
 AdVision Swiss AG,1,0.0002
-Adnovum,1,0.0002
-Adone Conseil,1,0.0002
+Aderis,1,0.0002
 Affidea SA,1,0.0002
-Agnostic Intelligence,1,0.0002
 Air Apps,1,0.0002
 Airex AG,1,0.0002
+Akamai Technologies,1,0.0002
 Akkodis,1,0.0002
 Aktiengesellschaft Hallenstadion Zürich,1,0.0002
 Aktiengesellschaft Matterhorn Gotthard Bahn,1,0.0002
@@ -772,6 +868,8 @@ Alba IT Services Sàrl,1,0.0002
 Alfred Müller AG,1,0.0002
 Alitheon,1,0.0002
 Allix GmbH,1,0.0002
+Alpi,1,0.0002
+AlpineAI,1,0.0002
 AlpineReach Solutions,1,0.0002
 Alpiq,1,0.0002
 Alterszentrum im Brüel Aesch-Pfeffingen,1,0.0002
@@ -781,7 +879,9 @@ Amt für Informatik,1,0.0002
 Andermatt Group AG,1,0.0002
 Andermatt Swiss Alps AG,1,0.0002
 Angst+Pfister AG,1,0.0002
+Antaes Consulting,1,0.0002
 Aproda AG,1,0.0002
+Apsida Life Science,1,0.0002
 Aptomet AG,1,0.0002
 Arco IT GmbH,1,0.0002
 Arcon Informatik AG,1,0.0002
@@ -792,33 +892,34 @@ Ativa Pensionskassen Management AG,1,0.0002
 Atlantic Gate,1,0.0002
 Atlantic Gate Netherlands,1,0.0002
 Atupri Gesundheitsversicherung AG,1,0.0002
+Audi Revolut F1 Team,1,0.0002
 Ausgleichskasse des Kantons Bern,1,0.0002
 Australian Permanent Mission,1,0.0002
-Autexis AG,1,0.0002
-Avaloq,1,0.0002
+Auterion,1,0.0002
 Axetris AG,1,0.0002
 Axians IT Services AG,1,0.0002
 Axon Ivy AG,1,0.0002
 BAMBUS EDV-Consulting GmbH,1,0.0002
 BAMBUS Software AG,1,0.0002
 BASF Intertrade AG,1,0.0002
-BCV - Banque Cantonale Vaudoise,1,0.0002
 BDO AG,1,0.0002
 BE BRAVE AG,1,0.0002
 BERNINA International AG,1,0.0002
 BEWERBEAGENTUR,1,0.0002
 BGP AG,1,0.0002
 BLKB,1,0.0002
+BLP,1,0.0002
 BLS AG,1,0.0002
 BM-EMPLOI SA,1,0.0002
-BOBST,1,0.0002
 BRACK.CH,1,0.0002
 BROMsolutions AG Basel,1,0.0002
 BSI Business Systems Integration AG,1,0.0002
 BSW SECURITY AG,1,0.0002
-BaXian AG,1,0.0002
+BUSINESSCOM AG,1,0.0002
+BVK,1,0.0002
 Band-Genossenschaft,1,0.0002
 Bank Cler,1,0.0002
+"Bart & Associates, Inc.",1,0.0002
 Basel Institute on Governance,1,0.0002
 Batterman Consulting Basel AG,1,0.0002
 BauSpektrum AG Münsingen,1,0.0002
@@ -835,10 +936,9 @@ Bio-Rad Laboratories,1,0.0002
 Biognosys AG,1,0.0002
 Biotta AG,1,0.0002
 Blue Entertainment AG,1,0.0002
-BlueNetwork Systems AG,1,0.0002
 Blumer Lehmann,1,0.0002
 Blutspende SRK Schweiz AG,1,0.0002
-Bornhauser People's Management AG,1,0.0002
+Boston Consulting Group (BCG),1,0.0002
 Branchen Versicherung Genossenschaft,1,0.0002
 Brokinsoft SA,1,0.0002
 Bruker Switzerland AG,1,0.0002
@@ -852,20 +952,23 @@ Bögli ICT AG,1,0.0002
 Büchi Labortechnik AG,1,0.0002
 Bürgenstock Resort,1,0.0002
 Bürgerspital Basel,1,0.0002
+C&D Talent Advisory - Academy,1,0.0002
 CAISSE DES MEDECINS,1,0.0002
 CARAUKTION AG,1,0.0002
 CAS in Medication Safety University of Bern,1,0.0002
-CDR-Life AG,1,0.0002
+CBTW,1,0.0002
 CFU GmbH,1,0.0002
 CGS Customer Ground Service AG,1,0.0002
 CH-Bluesign,1,0.0002
+CHANEL,1,0.0002
 CIGES SA,1,0.0002
 CIM BANQUE SA,1,0.0002
 CKW,1,0.0002
-CNT Management Consulting,1,0.0002
+CS-Computing GmbH,1,0.0002
 CSD INGENIEURE,1,0.0002
 CSL,1,0.0002
 CTC Resourcing Solutions,1,0.0002
+Cactus Life Sciences,1,0.0002
 Callista,1,0.0002
 Calvin Risk AG,1,0.0002
 Canon (Schweiz) AG,1,0.0002
@@ -873,12 +976,14 @@ Capco,1,0.0002
 Capgemini,1,0.0002
 Carbagas AG,1,0.0002
 CareStudy,1,0.0002
-Cargill,1,0.0002
 Carglass Suisse SA,1,0.0002
 Caritas Schweiz,1,0.0002
 "Caritas Schweiz Inland, Caritas Schweiz",1,0.0002
 Carl Zeiss AG,1,0.0002
 Casino Interlaken AG,1,0.0002
+Celag,1,0.0002
+Ceruno AG,1,0.0002
+Check Point Software,1,0.0002
 Chiral,1,0.0002
 Circuit Mind,1,0.0002
 Clinique de Genolier,1,0.0002
@@ -886,41 +991,51 @@ Coach,1,0.0002
 Cognizant,1,0.0002
 Compagnie des Montres Longines Francillon SA,1,0.0002
 "Compagnie des Montres Longines, Francillon S.A.",1,0.0002
+Computer Trend-IT Solution GmbH,1,0.0002
 Condecta AG,1,0.0002
 Confiserie Sprüngli AG,1,0.0002
 ConnectOne Bank,1,0.0002
 Consor AG,1,0.0002
 Consultinform AG,1,0.0002
 ControlTech Engineering AG,1,0.0002
-Coop,1,0.0002
 Corealis Consulting AG,1,0.0002
+Corintis,1,0.0002
 Coris Innovation Group,1,0.0002
 Customize AG,1,0.0002
 Cyberlink AG,1,0.0002
 CynLr,1,0.0002
+Cytiva,1,0.0002
 Cytosurge AG,1,0.0002
+DASTA CHARPENTES-BOIS SA,1,0.0002
 DB&L Services SA,1,0.0002
 DCC Tec GmbH,1,0.0002
 DGS Druckguss Systeme AG St. Gallen,1,0.0002
+DLG (Digital Luxury Group),1,0.0002
+DSwiss AG,1,0.0002
+DXC Technology Switzerland GmbH,1,0.0002
 Darwin Partners,1,0.0002
 Data Purpose AG,1,0.0002
 DataStore AG,1,0.0002
 Datalynx AG,1,0.0002
+Davidson consulting,1,0.0002
 Departement für Bau und Umwelt,1,0.0002
-"Derendinger AG, Zweigniederlassung Dietlikon",1,0.0002
+Descartes Systems Group,1,0.0002
 Designwerk Technologies AG,1,0.0002
+Destinus,1,0.0002
+Dextra Rechtsschutz AG,1,0.0002
 Digital Boutique GmbH,1,0.0002
 Digital Delivery GmbH,1,0.0002
+Dina,1,0.0002
 DiploTools,1,0.0002
+Direktion für Inneres und Justiz des Kantons Bern,1,0.0002
 Distalmotion,1,0.0002
 Domino Graph-Tech AG,1,0.0002
-DonTouch SA,1,0.0002
+Dottikon Exclusive Synthesis AG,1,0.0002
 Dreier AG,1,0.0002
 Duscholux AG,1,0.0002
-EBL (Genossenschaft Elektra Baselland),1,0.0002
 EDV Werke AG,1,0.0002
 EFG International,1,0.0002
-EHL Group,1,0.0002
+EHL,1,0.0002
 EITI AG,1,0.0002
 "ELESTA GmbH, Ostfildern (DE), Zweigniederlassung Bad Ragaz",1,0.0002
 ELLEON,1,0.0002
@@ -934,15 +1049,18 @@ ESA,1,0.0002
 ESA - Die Einkaufsorganisation des Schweizerischen Auto- und Motorfahrzeuggewerbes,1,0.0002
 ESA-Einkaufsorganisation des Schweizerischen Auto- und Motorfahrzeuggewerbes Genossenschaft,1,0.0002
 ESPRIT Netzwerk AG,1,0.0002
-ETA SA Manufacture Horlogère Suisse,1,0.0002
 ETEL S.A.,1,0.0002
 EVERIENCE,1,0.0002
 EXPERTsuisse AG,1,0.0002
+Eco Medics AG,1,0.0002
+Ecolab,1,0.0002
+Egis Group,1,0.0002
 Eidg. Forschungsanstalt WSL,1,0.0002
 Elastic,1,0.0002
 Electrolux AG,1,0.0002
 Elektro-Material AG,1,0.0002
 Element AG,1,0.0002
+Eligo Recruitment,1,0.0002
 Elma Electronic AG,1,0.0002
 Embodied AI,1,0.0002
 Emeria Services AG,1,0.0002
@@ -951,50 +1069,55 @@ Emil Egger Romandie SA,1,0.0002
 Emil Frey Digital AG,1,0.0002
 Emile Egger & Cie SA,1,0.0002
 Energiebüro AG,1,0.0002
-Energy Schweiz AG,1,0.0002
+Entirely,1,0.0002
 Epic Fusion AG,1,0.0002
 Erne Management AG,1,0.0002
 Etat de Vaud,1,0.0002
 Etterli Testkaufdienst GmbH,1,0.0002
 Eumedo AG,1,0.0002
 Eventfrog AG,1,0.0002
-EveryWare AG,1,0.0002
 Evis AG,1,0.0002
-Exeon Analytics AG,1,0.0002
 Experian,1,0.0002
 Expersoft Systems AG,1,0.0002
+Expleo Technology Switzerland,1,0.0002
 Exyte Switzerland AG,1,0.0002
 F + C Optic GmbH,1,0.0002
 F&P Robotics AG,1,0.0002
 FICOBA SA,1,0.0002
 FOKUS Talent Sàrl,1,0.0002
+FORFIRM,1,0.0002
+FORGIS,1,0.0002
+FUTURA Vorsorgestiftung,1,0.0002
 Fabasoft Schweiz AG,1,0.0002
-Fachhochschule Graubünden,1,0.0002
 Facility Solutions Lake Lucerne AG,1,0.0002
-Faigle AG,1,0.0002
 Farfalla Essentials AG,1,0.0002
 Farner Consulting AG,1,0.0002
+Feintool International Holding AG,1,0.0002
 Feller AG,1,0.0002
 Ferratec Technics AG,1,0.0002
 Ferrum Management Services AG,1,0.0002
 Fidigit (Schweiz) AG,1,0.0002
 Fielmann AG,1,0.0002
 Finanzdirektion Kanton Zürich,1,0.0002
+Fincons Group,1,0.0002
 "Flexsis AG, Mendrisio",1,0.0002
 Flexsis – Bern,1,0.0002
-Flughafen Zürich AG,1,0.0002
 Flumerics Solutions GmbH,1,0.0002
 Fondation Armée du Salut Suisse,1,0.0002
 Fondation Bois-Gentil,1,0.0002
 Fondation pour l'accueil des enfants de Blonay - St-Légier,1,0.0002
+FoodTechScout AG,1,0.0002
 Fortis Watches AG,1,0.0002
+Founder & Co,1,0.0002
 Free-Work,1,0.0002
 Freestar-People AG,1,0.0002
+Frischfleisch AG,1,0.0002
 Fritz Studer AG,1,0.0002
-Frontify,1,0.0002
+Fyra Technologies GmbH,1,0.0002
 G. Baumgartner AG,1,0.0002
 GBL Gubler AG,1,0.0002
 GE Vernova,1,0.0002
+GLOBALNETworks GmbH,1,0.0002
 GLOBONET GmbH,1,0.0002
 GOFAST,1,0.0002
 GONSER AG,1,0.0002
@@ -1003,24 +1126,32 @@ GRYPS AG,1,0.0002
 GULP Schweiz AG,1,0.0002
 GVZ Gebäudeversicherung Kanton Zürich,1,0.0002
 GZF Gesundheitszentrum Fricktal,1,0.0002
+Galaxi Consulting Group,1,0.0002
 Galderma Pharma S.A.,1,0.0002
 Gate Gourmet Switzerland GmbH,1,0.0002
 Gebäudeversicherung Thurgau,1,0.0002
 Gemeinde Teufen,1,0.0002
+Genesys,1,0.0002
 Genève Sports,1,0.0002
 Gewässerschutzverband der Region Zugersee-Küssnachtersee-Ägerisee (GVRZ) Kläranlage Schönau,1,0.0002
 Gilgen Door Systems AG,1,0.0002
+Givaudan,1,0.0002
 Glaux Group AG,1,0.0002
+Global Center for Health Diplomacy and Inclusion,1,0.0002
+GlobalEngineer GmbH,1,0.0002
 Globus,1,0.0002
 Go 2 Flow AG,1,0.0002
 Goldbach Neo OOH SA,1,0.0002
 Gomringer & Partner GmbH,1,0.0002
 Grand Resort Bad Ragaz,1,0.0002
+Grand Resort Bad Ragaz AG,1,0.0002
 Gravis Robotics AG,1,0.0002
 Grimselhotels,1,0.0002
 Groupe Devillard,1,0.0002
 H&M Hennes & Mauritz AG,1,0.0002
 H-Hotels Gruppe,1,0.0002
+HAEUSLER AG Duggingen,1,0.0002
+HALBA,1,0.0002
 HANS KOHLER AG,1,0.0002
 HAPA AG,1,0.0002
 HCI Solutions AG,1,0.0002
@@ -1034,9 +1165,10 @@ HID,1,0.0002
 HID Global Switzerland SA,1,0.0002
 HOCH Health Ostschweiz,1,0.0002
 HOELZLE AG,1,0.0002
+HOFFMANN NEOPAC AG,1,0.0002
 HUG - Hopitaux Universitaires de Genève,1,0.0002
-HUG - Hôpitaux Universitaires de Genève,1,0.0002
 HYDRO Exploitation SA,1,0.0002
+Hach,1,0.0002
 Hauenstein Gruppe,1,0.0002
 Hawa Sliding Solutions AG,1,0.0002
 Heise RegioConcept GmbH,1,0.0002
@@ -1045,6 +1177,7 @@ Helvetic Payroll,1,0.0002
 Heule Werkzeug AG,1,0.0002
 Hexagon Manufacturing Intelligence,1,0.0002
 Hexagon Manufacturing Intelligence Sarl,1,0.0002
+Hexagon Robotics,1,0.0002
 Hidrostal AG,1,0.0002
 Hilcona Aktiengesellschaft,1,0.0002
 Hitachi Energy,1,0.0002
@@ -1055,10 +1188,12 @@ Huba Control,1,0.0002
 Humanka GmbH,1,0.0002
 Hänseler AG,1,0.0002
 Häny AG,1,0.0002
-Hôpital de Lavaux,1,0.0002
-IBM,1,0.0002
+I-AG,1,0.0002
+IAZI AG,1,0.0002
+IBSA Group,1,0.0002
 IBW Energie AG,1,0.0002
 ICT Berufsbildungscenter AG,1,0.0002
+ID Quantique,1,0.0002
 IDAK Food Group AG,1,0.0002
 IDEAS emplois SA,1,0.0002
 IEM SA,1,0.0002
@@ -1067,7 +1202,9 @@ IGAKIS Genossenschaft,1,0.0002
 IGP Pulvertechnik AG,1,0.0002
 IGS Informatikgesellschaft für Sozialversicherungen GmbH,1,0.0002
 IMC Trading,1,0.0002
+INACTA,1,0.0002
 INERA SA,1,0.0002
+INGINIA SA,1,0.0002
 INP Schweiz AG,1,0.0002
 INSELSPITAL,1,0.0002
 IOM - UN Migration,1,0.0002
@@ -1077,16 +1214,19 @@ IV-Stelle Basel-Stadt,1,0.0002
 IWF AG,1,0.0002
 IWIS AG,1,0.0002
 Idea Creation GmbH,1,0.0002
-Incore Technology AG,1,0.0002
 Increo AG,1,0.0002
 Increo®,1,0.0002
 Indaflex AG,1,0.0002
 Infolog Data Center SA,1,0.0002
 Infomaniak,1,0.0002
 Infometis,1,0.0002
-Infopro AG,1,0.0002
+Infosys Limited,1,0.0002
+Instaffo,1,0.0002
 Intecso AG • Managed Cloud Infrastructure • Managed Modern Work • Managed Security,1,0.0002
+Intelliact AG,1,0.0002
+Inter-American Development Bank,1,0.0002
 Inter-Networking AG,1,0.0002
+International Olympic Committee – IOC,1,0.0002
 International Space Federation (ISF),1,0.0002
 Intrum AG,1,0.0002
 Intuitive,1,0.0002
@@ -1095,21 +1235,24 @@ Ipex AG,1,0.0002
 Ivoclar Vivadent AG,1,0.0002
 Ivy Partners,1,0.0002
 J.P. Morgan (Suisse) SA,1,0.0002
+"JELD-WEN, Inc.",1,0.0002
+JURA Elektroapparate AG,1,0.0002
 Jagaad,1,0.0002
+Jet Aviation,1,0.0002
 Job Solution AG,1,0.0002
 Johnson & Johnson,1,0.0002
 Johnson & Johnson Innovative Medicine,1,0.0002
 Jungfraubahnen Management AG,1,0.0002
 Jungwacht Blauring Schweiz,1,0.0002
 Jura,1,0.0002
+K&K Talents,1,0.0002
 KARL STORZ Endoskope Schweiz AG,1,0.0002
 KENDRIS Services AG,1,0.0002
+KEYTEO,1,0.0002
 KV Basel AG,1,0.0002
 KWC Group AG,1,0.0002
 Kaleidodoc,1,0.0002
 Kandou Bus SA,1,0.0002
-Kanton Aargau,1,0.0002
-Kanton Basel-Stadt,1,0.0002
 Kanton Basel-Stadt Bau- und Verkehrsdepartement,1,0.0002
 Kanton Basel-Stadt Gerichte,1,0.0002
 Kanton Basel-Stadt Präsidialdepartement,1,0.0002
@@ -1130,16 +1273,19 @@ Kudelski Security,1,0.0002
 Kurath Engineering AG,1,0.0002
 Kyndryl Switzerland GmbH,1,0.0002
 Körber Pharma,1,0.0002
+L. Kellenberger & Co. AG,1,0.0002
 LIONSCOUT | GROUP,1,0.0002
 LS Instruments AG,1,0.0002
+Lakera,1,0.0002
 Landqart AG,1,0.0002
-Leantin AG,1,0.0002
 LearningCulture AG,1,0.0002
-LeeGroup GmbH,1,0.0002
 Lenovo (Schweiz) GmbH,1,0.0002
 Leonteq Securities AG,1,0.0002
+Liberty Vorsorge AG,1,0.0002
+Liebherr Group,1,0.0002
+Liechtensteinische Kraftwerke,1,0.0002
 Lienhardt & Partner Privatbank Zürich AG,1,0.0002
-Liip AG,1,0.0002
+Lindt & Sprüngli,1,0.0002
 Lindt & Sprüngli (Schweiz) AG,1,0.0002
 Lipo Einrichtungsmärkte AG,1,0.0002
 Lobsiger & Partner GmbH,1,0.0002
@@ -1159,11 +1305,11 @@ MPower Plus,1,0.0002
 MST Systemtechnik AG,1,0.0002
 Maagtechnic AG,1,0.0002
 Mandarin Oriental,1,0.0002
-Manexperts (Schweiz) GmbH,1,0.0002
 Manor AG,1,0.0002
 Markem-Imaje AG,1,0.0002
 Marti Dienstleistungen AG,1,0.0002
 Martin Engineering AG,1,0.0002
+Max Felchlin AG,1,0.0002
 MaxWell Biosystems AG,1,0.0002
 Medacta Italia,1,0.0002
 Medair,1,0.0002
@@ -1171,8 +1317,9 @@ Medartis,1,0.0002
 Medela AG,1,0.0002
 Medgate AG,1,0.0002
 Medidata AG,1,0.0002
-Merkle,1,0.0002
+Meteomatics AG,1,0.0002
 Metso,1,0.0002
+Mettler-Toledo GmbH,1,0.0002
 Michael Bailey Associates,1,0.0002
 Michael Kors (Switzerland) GmbH,1,0.0002
 Micronel AG,1,0.0002
@@ -1184,7 +1331,10 @@ Mobimo FM Service AG,1,0.0002
 MvdM Archi-Techs,1,0.0002
 MÖKAH AG,1,0.0002
 Möbel Pfister AG,1,0.0002
+Müller Martini AG,1,0.0002
 Müller Technologie AG,1,0.0002
+NAGRA,1,0.0002
+NEXPLORE AG,1,0.0002
 NSNW AG,1,0.0002
 NTT DATA Europe & Latam,1,0.0002
 NTT DATA North America,1,0.0002
@@ -1193,13 +1343,13 @@ Naef Immobilier SA,1,0.0002
 Nahrin AG,1,0.0002
 NatWest Group,1,0.0002
 Neho,1,0.0002
+Neovo AG,1,0.0002
 Nestlé,1,0.0002
 Netsafe AG,1,0.0002
 New Work Human Resources,1,0.0002
 Nexthink SA,1,0.0002
-Nigel Frank International,1,0.0002
-Nomasis AG,1,0.0002
 NovaMea SA,1,0.0002
+Nozomi Networks,1,0.0002
 OBRO AG,1,0.0002
 OEKO-TEX Service GmbH,1,0.0002
 OI Wild GmbH,1,0.0002
@@ -1210,7 +1360,6 @@ Olai Interactive,1,0.0002
 Omya,1,0.0002
 Omya (Schweiz) AG,1,0.0002
 On,1,0.0002
-OnlineDoctor AG,1,0.0002
 Onyx Circle,1,0.0002
 Open Circle AG,1,0.0002
 Open Net Sarl,1,0.0002
@@ -1221,6 +1370,7 @@ Oratek,1,0.0002
 Orchid Orthopedics Switzerland GmbH,1,0.0002
 Oscilloquartz SA,1,0.0002
 Oswald Nahrungsmittel GmbH,1,0.0002
+Otis SA,1,0.0002
 Otto Hofstetter AG,1,0.0002
 Outdooractive GmbH,1,0.0002
 PH Luzern,1,0.0002
@@ -1230,7 +1380,10 @@ PRACYVA,1,0.0002
 PRECITRAME MACHINES SA,1,0.0002
 PRIME INTERNATIONAL GROUP Sàrl,1,0.0002
 PROSTAFF,1,0.0002
+PROVIA Executive GmbH,1,0.0002
 Papers AG,1,0.0002
+Patrimonium Invest AG,1,0.0002
+Paul Scherrer Institut (PSI),1,0.0002
 Peakcontrol,1,0.0002
 Pensionskasse des Bundes PUBLICA,1,0.0002
 Peoplefone AG,1,0.0002
@@ -1239,32 +1392,39 @@ Persigo AG,1,0.0002
 Pflegewegweiser GmbH,1,0.0002
 PharmaFocus AG,1,0.0002
 Pharmatronic AG,1,0.0002
-Pictet Group,1,0.0002
 Planer Studio GmbH,1,0.0002
 Planzer Synergistics,1,0.0002
 Pontacol AG,1,0.0002
 Pontinova AG,1,0.0002
+Popety.io,1,0.0002
+PostFinance,1,0.0002
 Praxisklinik Rennbahn AG,1,0.0002
 PrimeIT Switzerland,1,0.0002
 Primetrack AG,1,0.0002
 PrismaLife AG,1,0.0002
 PrivaSphere AG,1,0.0002
 ProPharma Systems AG,1,0.0002
+Procter & Gamble,1,0.0002
+QA Ltd,1,0.0002
 QPS Engineering AG,1,0.0002
+QSC,1,0.0002
 QZabre AG,1,0.0002
 QoQa Services SA,1,0.0002
 Quantum Digital,1,0.0002
+"QuantumBlack, AI by McKinsey",1,0.0002
 RJC Group,1,0.0002
-RM Group (Switzerland),1,0.0002
-ROSEN,1,0.0002
 RRG SUISSE SA,1,0.0002
-Raiffeisen Group,1,0.0002
+RUAG,1,0.0002
 Raiffeisenbank Unteremmental,1,0.0002
+Ramboll AG,1,0.0002
 "Randstad (Schweiz) AG, c/o Johnson & Johnson",1,0.0002
 Raptus AG,1,0.0002
+Redsen,1,0.0002
+ReefPoint Group,1,0.0002
 Regionales Pflegezentrum Baden AG,1,0.0002
+Relewant,1,0.0002
 Renault Suisse SA,1,0.0002
-Rent a person Beratungs AG,1,0.0002
+Revolut,1,0.0002
 Rheinmetall Air Defence AG,1,0.0002
 Rhenus Alpina AG,1,0.0002
 Ringier AG,1,0.0002
@@ -1272,6 +1432,7 @@ Ringier Sports,1,0.0002
 Ripple,1,0.0002
 Ritter Products AG,1,0.0002
 Robert Walters,1,0.0002
+Rocket GmbH,1,0.0002
 Rohrbogen AG,1,0.0002
 Romande Energie SA,1,0.0002
 Romer's Hausbäckerei AG,1,0.0002
@@ -1280,23 +1441,29 @@ République et Canton de Neuchâtel,1,0.0002
 SAG Schweiz AG,1,0.0002
 SBB Cargo International AG,1,0.0002
 SCAIT,1,0.0002
+SERV Swiss Export Risk Insurance,1,0.0002
 SIB Institut Suisse de Bioinformatique,1,0.0002
 SICPA HOLDING SA,1,0.0002
 SIG - Services Industriels de Genève,1,0.0002
+SITS Group,1,0.0002
+SIX,1,0.0002
 SKAN,1,0.0002
+SLYNET AG,1,0.0002
 SN Energie AG,1,0.0002
 SOMMER IT CONSULTING GMBH,1,0.0002
 SOTTAS SA,1,0.0002
 SPIE Groupe,1,0.0002
 SPIE Schweiz AG,1,0.0002
 SQ Products AG,1,0.0002
+SR Technics Group,1,0.0002
 SRG SSR,1,0.0002
 SSI IT Consulting GmbH,1,0.0002
 STA Personalpartner AG,1,0.0002
+STRABAG AG,1,0.0002
+SV Group,1,0.0002
 SWAG Swiss Work AG,1,0.0002
 SWISSLOS Interkantonale Landeslotterie Genossenschaft,1,0.0002
 Sadies SA,1,0.0002
-Safran Timing Technologies SA,1,0.0002
 Salto Systems AG,1,0.0002
 Samsung Electronics Switzerland GmbH,1,0.0002
 Sanatlas GmbH,1,0.0002
@@ -1305,9 +1472,11 @@ Schiller AG,1,0.0002
 Schindler Aufzüge AG,1,0.0002
 Schneider Electric (Schweiz) AG,1,0.0002
 Schoch Informatik Hinwil AG,1,0.0002
+Schulthess Klinik,1,0.0002
 Schweizer Hagel,1,0.0002
 Schweizer Reisekasse (Reka) Genossenschaft,1,0.0002
 Schweizer Weinhandelskontrolle,1,0.0002
+Schweizerische Akademie der Medizinischen Wissenschaften,1,0.0002
 Schweizerische Exportrisikoversicherung,1,0.0002
 "Schweizerische Hagel-Versicherungs-Gesellschaft, Genossenschaft",1,0.0002
 Schweizerische Rettungsflugwacht (Rega),1,0.0002
@@ -1315,74 +1484,83 @@ Schweizerischer Apothekerverband (PharmaSuisse),1,0.0002
 Schweizerisches Bundesgericht BGer,1,0.0002
 Schwyzer Kantonalbank,1,0.0002
 Schönenberger Partner AG,1,0.0002
-Selby Jennings,1,0.0002
+Secure Switzerland AG,1,0.0002
 Selectron Systems AG,1,0.0002
 Semtech (International) AG,1,0.0002
 Senevita AG,1,0.0002
 Sensirion Connected Solutions,1,0.0002
-Sigma Advisor SA,1,0.0002
+Sigma Suisse,1,0.0002
 Sigmaplan AG,1,0.0002
 Sika,1,0.0002
 SimplyVision GmbH,1,0.0002
+Simulands AG,1,0.0002
 Sius AG,1,0.0002
 Sixt rent-a-car AG,1,0.0002
 Skan AG,1,0.0002
 Snyk,1,0.0002
 Sobi - Swedish Orphan Biovitrum AB (publ),1,0.0002
+Sogema Software,1,0.0002
 Solarstream AG,1,0.0002
+Solerity,1,0.0002
 Solvias AG,1,0.0002
 Sommet Education,1,0.0002
 Sophia Genetics SA,1,0.0002
+Sopra HR Software,1,0.0002
 Sozialversicherungsanstalt des Kantons Basel-Landschaft,1,0.0002
 Spacetek Technology AG,1,0.0002
 Sparta Commodities SA,1,0.0002
-Specialized Bicycle Components,1,0.0002
 Speedgoat GmbH,1,0.0002
 Spital Affoltern AG,1,0.0002
 Spital Emmental,1,0.0002
-Spital Emmental AG,1,0.0002
 Spital Limmattal,1,0.0002
 Spital STS AG,1,0.0002
 Spital Zollikerberg,1,0.0002
 Spitäler fmi AG,1,0.0002
+Spoud,1,0.0002
 Sprinklr,1,0.0002
 Stadler Rail Schweiz AG,1,0.0002
 Stadt Bern,1,0.0002
 Stadt Kloten,1,0.0002
 Stadt St.Gallen,1,0.0002
 Stadt Thun,1,0.0002
+Stadt Zürich – Sportamt,1,0.0002
 Stadt Zürich – Wasserversorgung,1,0.0002
 Starrag Vuadens SA,1,0.0002
 Stier & Partner GmbH,1,0.0002
+"Stiftung Fernfachhochschule Schweiz, Brig FFH-CH",1,0.0002
 Stiftung Passaggio,1,0.0002
+Stiftung Solina,1,0.0002
 Stiftung Swiss Sport Integrity,1,0.0002
 Stiftung Töpferhaus,1,0.0002
 "Stiftung Wagerenhof, Institution für Menschen mit geistiger Behinderung",1,0.0002
 Stiftung südhang Klinik für Suchttherapien,1,0.0002
 Stöckli Swiss Sports AG,1,0.0002
 Stöcklin Logistik Group,1,0.0002
-SuisseCo GmbH,1,0.0002
 Sukano Finance AG,1,0.0002
-Sulzer & Schmid Laboratories AG,1,0.0002
 Swiss Automotive Group AG,1,0.0002
 Swiss Bankers Prepaid Services AG,1,0.0002
 Swiss Cancer Institute,1,0.0002
 Swiss Fibertec AG,1,0.0002
 Swiss IT Professional AG,1,0.0002
-Swiss Post Digital Government AG,1,0.0002
 Swiss Timing,1,0.0002
 SwissDrones Operating AG,1,0.0002
 Swisslog AG,1,0.0002
 Swissmedic,1,0.0002
 Swissphone Wireless AG,1,0.0002
+Sword Group,1,0.0002
+Sygnum Bank,1,0.0002
 Symbios Orthopédie S.A.,1,0.0002
 Synature,1,0.0002
 Syngenta Crop Protection,1,0.0002
 Synotis,1,0.0002
 SystemsAccountants,1,0.0002
 TE Web GmbH,1,0.0002
+TEAM PARTNERS Suisse SA - Groupe BLUESOFT,1,0.0002
 TEQABLE AG,1,0.0002
 TGW Logistics,1,0.0002
+TPO Display Shanghai Ltd. (Chimei-Innolux Subsidiary),1,0.0002
+Tafalla Iron Foundry S. Coop.,1,0.0002
+Takeda,1,0.0002
 Talent Sutra,1,0.0002
 Talents Connection Sarl,1,0.0002
 Tanner & Co. AG,1,0.0002
@@ -1390,6 +1568,7 @@ Tanner + Co AG Verpackungstechnik,1,0.0002
 Tantum AG,1,0.0002
 Technische Fachschule Bern,1,0.0002
 Techyon,1,0.0002
+TekkMinds Schweiz AG,1,0.0002
 Tenz GmbH,1,0.0002
 Teoxane SA,1,0.0002
 The Nuance Group AG,1,0.0002
@@ -1397,18 +1576,26 @@ The Swatch Group Services AG,1,0.0002
 Thoma & Partner Management Consulting AG,1,0.0002
 Thomson Reuters,1,0.0002
 Thrive IT Systems,1,0.0002
+Tiffany & Co.,1,0.0002
 Touring Club Suisse,1,0.0002
+Trafigura,1,0.0002
 Translait S.A.,1,0.0002
 Transports Publics de la Région Lausannoise,1,0.0002
 Tremegisto Consulting AG,1,0.0002
 Tribunal fédéral TF,1,0.0002
 Tricon Switzerland AG,1,0.0002
+Trio Personal,1,0.0002
 TrioTech Recruitment,1,0.0002
+Turner & Townsend,1,0.0002
+Twine,1,0.0002
 UBAG Ingenieure & Planer AG,1,0.0002
 UBS,1,0.0002
 UBS Card Center AG,1,0.0002
-UCB-Pharma SA,1,0.0002
+UNITED MACHINING,1,0.0002
 Umano AG,1,0.0002
+Umbrella AG,1,0.0002
+Unilabs,1,0.0002
+"Unilabs, Laboratoire d'analyses médicales SA",1,0.0002
 Union of European Football Associations (UEFA),1,0.0002
 Universal Gebäudemanagement AG,1,0.0002
 University of Applied Sciences of the Grisons,1,0.0002
@@ -1416,7 +1603,7 @@ Universitäre Psychiatrische Kliniken UPK Basel,1,0.0002
 Universität Basel,1,0.0002
 Urban Games GmbH,1,0.0002
 Usines Métallurgiques de Vallorbe SA,1,0.0002
-VANGARD AG,1,0.0002
+Uster Technologies,1,0.0002
 VAT Vakuumventile AG,1,0.0002
 VELUX Schweiz AG,1,0.0002
 VF Corporation,1,0.0002
@@ -1427,9 +1614,12 @@ Ventoo AG,1,0.0002
 Verein Sozialmedizinisches Zentrum Oberwallis,1,0.0002
 Vetropack S.A.,1,0.0002
 ViaTec AG,1,0.0002
+Viasat,1,0.0002
 ViiV Healthcare GmbH,1,0.0002
+Viiala SA,1,0.0002
 Ville d'Yverdon-les-Bains,1,0.0002
 Vina Cosmetics AG,1,0.0002
+"Vintra SA, Weinimporte",1,0.0002
 Viollier AG,1,0.0002
 Visiativ Switzerland AG,1,0.0002
 Vision 2 Action SA,1,0.0002
@@ -1437,6 +1627,8 @@ Vision Management Services GmbH,1,0.0002
 VitalAire Suisse SA,1,0.0002
 Voila AI - Gal,1,0.0002
 Vorwerk Home & Co. KmG,1,0.0002
+Vögtlin Instruments GmbH,1,0.0002
+W Talent - We see Talents where others don't,1,0.0002
 WEALTH INVESTMENT NETWORK - WENET AG,1,0.0002
 WEDO SA,1,0.0002
 WIDE,1,0.0002
@@ -1453,11 +1645,13 @@ Wenger Vieli AG,1,0.0002
 Wetrok AG,1,0.0002
 Winet Voicetec Solutions AG,1,0.0002
 Woodpecker Group AG,1,0.0002
+World Trade Organization,1,0.0002
 Wyna Informatik GmbH,1,0.0002
 Wüest Partner,1,0.0002
 YO IT Consulting,1,0.0002
 YOO AG,1,0.0002
 Youth.Economy.Switzerland.,1,0.0002
+Youtility AG,1,0.0002
 ZLZ Zentrallabor AG,1,0.0002
 Zaugg Maschinenbau AG,1,0.0002
 Zeit AG,1,0.0002
@@ -1467,11 +1661,10 @@ Zentrum für Soziales Hochdorf und Sursee,1,0.0002
 Zimmerberg Informatik AG,1,0.0002
 Zuger Kantonalbank,1,0.0002
 Zugerberg Finanz AG,1,0.0002
-Zurich Flughafen AG,1,0.0002
 Zurich Instruments AG,1,0.0002
 "Zürich Versicherungs-Gesellschaft AG, Regionalsitz Zürich",1,0.0002
-aXenta AG,1,0.0002
 addexpert GmbH,1,0.0002
+alltitude SA,1,0.0002
 app-room GmbH,1,0.0002
 bexio ag,1,0.0002
 bytes at work AG,1,0.0002
@@ -1479,28 +1672,34 @@ comparis.ch,1,0.0002
 cross-ING AG,1,0.0002
 de Rham SA,1,0.0002
 devedis AG,1,0.0002
+dplan AG,1,0.0002
 e+a Elektromaschinen und Antriebe AG,1,0.0002
 e-novinfo SA,1,0.0002
 e3 AG,1,0.0002
 eMonitor AG,1,0.0002
 eduxept AG,1,0.0002
+enovetic ag,1,0.0002
 enshift AG,1,0.0002
+escola GmbH,1,0.0002
 etrex GmbH,1,0.0002
 exxo it-services AG,1,0.0002
+freihandlabor GmbH,1,0.0002
 goSecurity AG,1,0.0002
-healthinal AG,1,0.0002
 hypt GmbH,1,0.0002
 i4M Services Informatiques Sàrl,1,0.0002
 iFAS ERP AG,1,0.0002
 iSource AG,1,0.0002
+iTrust,1,0.0002
 immopac ag,1,0.0002
-ipt Innovation Process Technology,1,0.0002
 keyIT SA,1,0.0002
 kohler + partner,1,0.0002
-lululemon,1,0.0002
+ks treuhandexperten ag / ks datawerk ag,1,0.0002
+lastminute.com,1,0.0002
 medmix,1,0.0002
+mesoneer AG,1,0.0002
 myky AG,1,0.0002
 mühlemann+popp AG,1,0.0002
+nanoTRONIC,1,0.0002
 ndd Medizintechnik AG,1,0.0002
 netconnex GmbH,1,0.0002
 salesforce.com Sàrl,1,0.0002
@@ -1517,11 +1716,12 @@ suscap advisors ag,1,0.0002
 swenex - swiss energy exchange Ltd,1,0.0002
 swenex – swiss energy exchange Ltd.,1,0.0002
 tilia Stiftung für Langzeitpflege,1,0.0002
-valantic,1,0.0002
+upConsult GmbH,1,0.0002
 vector8,1,0.0002
 vision&,1,0.0002
 webwirkung GmbH,1,0.0002
 wega Informatik AG,1,0.0002
 witcom ag,1,0.0002
+xorlab,1,0.0002
 zvoove,1,0.0002
 État de Neuchâtel,1,0.0002
