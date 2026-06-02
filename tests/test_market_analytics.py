@@ -40,8 +40,8 @@ class MarketAnalyticsTests(unittest.TestCase):
                 "salary_currency": ["chf", "CHF", None],
                 "salary_unit": ["year", "YEAR", None],
                 "detected_skills": [
-                    '["python", "sql", "airflow"]',
-                    ["python", "pandas"],
+                    '["python", "sql", "airflow", "postgres"]',
+                    ["js", ".NET Core", "k8s"],
                     "sql | excel",
                 ],
             }
@@ -53,7 +53,16 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertIn("skills_list", standardized.columns)
         self.assertEqual("CHF", standardized.loc[0, "salary_currency"])
         self.assertEqual("YEAR", standardized.loc[0, "salary_unit"])
-        self.assertEqual(["python", "sql", "airflow"], standardized.loc[0, "skills_list"])
+        self.assertEqual(
+            ["python", "sql", "airflow", "postgresql"],
+            standardized.loc[0, "skills_list"],
+        )
+        self.assertEqual(
+            ["javascript", "dotnet", "kubernetes"],
+            standardized.loc[1, "skills_list"],
+        )
+        self.assertEqual(["javascript", "dotnet"], standardized.loc[1, "language_skills_list"])
+        self.assertEqual(["kubernetes"], standardized.loc[1, "tool_skills_list"])
         self.assertEqual(["sql", "excel"], standardized.loc[2, "skills_list"])
         self.assertTrue(pd.isna(standardized.loc[2, "work_mode"]))
 
@@ -156,7 +165,7 @@ class MarketAnalyticsTests(unittest.TestCase):
 
         outputs = build_analytics_outputs(standardized, top_skills_limit=5, top_skill_pairs_limit=5)
 
-        self.assertEqual(30, len(outputs))
+        self.assertEqual(32, len(outputs))
         overview = outputs["overview_metrics"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, overview["total_vacancies"])
         self.assertEqual(2, overview["total_companies"])
@@ -196,6 +205,11 @@ class MarketAnalyticsTests(unittest.TestCase):
             outputs["top_skills_overall"].iloc[0]["skill"],
         )
         self.assertIn("top_skills_by_canton", outputs)
+        taxonomy = outputs["top_skill_taxonomy"]
+        self.assertIn("language", set(taxonomy["category"]))
+        self.assertIn("framework", set(taxonomy["category"]))
+        taxonomy_summary = outputs["skill_taxonomy_summary"].set_index("category")
+        self.assertEqual(3, taxonomy_summary.loc["language", "vacancies_with_items"])
         self.assertEqual(
             "python",
             outputs["top_programming_languages"].iloc[0]["programming_language"],
@@ -323,7 +337,7 @@ class MarketAnalyticsTests(unittest.TestCase):
         self.assertEqual(2, deduped.loc[0, "duplicate_source_count"])
         self.assertEqual(["jobs.ch", "linkedin.com"], deduped.loc[0, "duplicate_sources"])
         self.assertEqual(
-            {"python", "airflow", "aws"},
+            {"python", "airflow", "pandas", "aws"},
             set(deduped.loc[0, "skills_list"]),
         )
         self.assertEqual(
@@ -548,10 +562,11 @@ class MarketAnalyticsTests(unittest.TestCase):
                     "aws",
                     "kubernetes",
                     "terraform",
-                    "legacy-tool",
                 ],
                 loaded.loc[0, "skills_list"],
             )
+            self.assertEqual(["aws"], loaded.loc[0, "cloud_skills_list"])
+            self.assertEqual(["kubernetes", "terraform"], loaded.loc[0, "tool_skills_list"])
             self.assertEqual(100000, loaded.loc[0, "salary_min"])
             self.assertEqual("CHF", loaded.loc[0, "salary_currency"])
 

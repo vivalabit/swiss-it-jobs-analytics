@@ -26,7 +26,9 @@ from .deduplication import deduplicate_cross_source_vacancies
 from .skills import (
     calculate_list_summary,
     calculate_skill_cooccurrence_pairs,
+    calculate_skill_taxonomy_summary,
     calculate_top_list_items,
+    calculate_top_skills_by_category,
     calculate_top_skills_by_dimension,
     calculate_top_skills_overall,
 )
@@ -93,6 +95,11 @@ def build_analytics_outputs(
             dimension="canton",
             top_n=top_skills_limit,
         ),
+        "top_skill_taxonomy": calculate_top_skills_by_category(
+            dataset,
+            top_n=top_skills_limit,
+        ),
+        "skill_taxonomy_summary": calculate_skill_taxonomy_summary(dataset),
         "top_programming_languages": calculate_top_list_items(
             dataset,
             list_column="programming_languages_list",

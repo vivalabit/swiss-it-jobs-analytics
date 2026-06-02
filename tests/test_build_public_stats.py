@@ -281,6 +281,42 @@ class BuildPublicStatsTests(unittest.TestCase):
             pd.DataFrame(
                 [
                     {
+                        "category": "language",
+                        "skill": "python",
+                        "vacancy_count": 2,
+                        "share": 0.6667,
+                        "rank": 1,
+                    },
+                    {
+                        "category": "database",
+                        "skill": "postgresql",
+                        "vacancy_count": 1,
+                        "share": 0.3333,
+                        "rank": 1,
+                    },
+                ]
+            ).to_csv(csv_dir / "top_skill_taxonomy.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
+                        "category": "language",
+                        "distinct_items": 2,
+                        "total_mentions": 3,
+                        "vacancies_with_items": 2,
+                        "vacancy_coverage": 0.6667,
+                    },
+                    {
+                        "category": "database",
+                        "distinct_items": 1,
+                        "total_mentions": 1,
+                        "vacancies_with_items": 1,
+                        "vacancy_coverage": 0.3333,
+                    },
+                ]
+            ).to_csv(csv_dir / "skill_taxonomy_summary.csv", index=False)
+            pd.DataFrame(
+                [
+                    {
                         "company": "Acme",
                         "vacancy_count": 2,
                         "share": 0.6667,
@@ -392,6 +428,11 @@ class BuildPublicStatsTests(unittest.TestCase):
             top_skills = json.loads((output_dir / "top_skills.json").read_text(encoding="utf-8"))
             self.assertEqual("python", top_skills["overall"][0]["skill"])
             self.assertEqual("data_ai", top_skills["by_role_category"][0]["group"])
+            self.assertEqual("language", top_skills["taxonomy"]["items"][0]["category"])
+            self.assertEqual(
+                0.6667,
+                top_skills["taxonomy"]["summary"][0]["vacancy_coverage"],
+            )
 
             canton_distribution = json.loads(
                 (output_dir / "distributions_canton.json").read_text(encoding="utf-8")

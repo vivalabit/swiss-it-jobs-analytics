@@ -11,6 +11,12 @@ from typing import Any, Iterable
 import pandas as pd
 
 from swiss_jobs.core.database import merge_analytics_payloads
+from swiss_jobs.core.skill_taxonomy import (
+    SKILL_CATEGORIES,
+    build_skill_taxonomy_records,
+    canonicalize_skill,
+    category_for_skill,
+)
 
 from .constants import (
     CANONICAL_COLUMN_ALIASES,
@@ -297,7 +303,7 @@ def validate_and_standardize_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
             f"{missing_list}"
         )
 
-    standardized["skills_list"] = standardized["skills"].map(parse_skills)
+    standardized["raw_skills_list"] = standardized["skills"].map(parse_skills)
     standardized["city"] = standardized["city"].map(_normalize_city_value)
     standardized["canton"] = standardized.apply(
         lambda row: _normalize_canton_value(
@@ -317,6 +323,18 @@ def validate_and_standardize_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
         else:
             standardized[canonical_name] = _empty_list_series(standardized.index)
         standardized[f"{canonical_name}_list"] = standardized[canonical_name].map(parse_skills)
+    standardized["skills_list"] = standardized.apply(_build_taxonomy_skill_list, axis=1)
+    standardized["skill_taxonomy_list"] = standardized["skills_list"].map(
+        build_skill_taxonomy_records
+    )
+    for category in SKILL_CATEGORIES:
+        standardized[f"{category}_skills_list"] = standardized["skills_list"].map(
+            lambda values, skill_category=category: [
+                skill
+                for skill in values
+                if category_for_skill(skill) == skill_category
+            ]
+        )
     return standardized
 
 
@@ -353,6 +371,16 @@ def parse_skills(value: Any) -> list[str]:
     return parsed_skills
 
 
+def _build_taxonomy_skill_list(row: pd.Series) -> list[str]:
+    values: list[Any] = []
+    values.extend(row.get("raw_skills_list") or [])
+    for canonical_name in OPTIONAL_LIST_COLUMNS:
+        values.extend(row.get(f"{canonical_name}_list") or [])
+
+    records = build_skill_taxonomy_records(values)
+    return [record["skill"] for record in records]
+
+
 def _parse_list_like_string(value: str) -> list[Any] | None:
     if not value.startswith("[") or not value.endswith("]"):
         return None
@@ -376,7 +404,7 @@ def _normalize_skill(value: Any) -> str | None:
     text = re.sub(r"\s+", " ", str(value)).strip()
     if not text or text.casefold() in MISSING_TEXT_VALUES:
         return None
-    return text.casefold()
+    return canonicalize_skill(text, allow_unknown=True)
 
 
 def _normalize_column_name(column_name: Any) -> str:
@@ -554,6 +582,15 @@ def _build_record_from_sqlite_row(
         "work_mode": analytics.get("remote_mode"),
         "programming_languages": analytics.get("programming_languages", []),
         "frameworks_libraries": analytics.get("frameworks_libraries", []),
+        "cloud_platforms": analytics.get("cloud_platforms", []),
+        "data_platforms": analytics.get("data_platforms", []),
+        "databases": analytics.get("databases", []),
+        "platforms": analytics.get("platforms", []),
+        "tools": analytics.get("tools", []),
+        "vendors": analytics.get("vendors", []),
+        "protocols_standards": analytics.get("protocols_standards", []),
+        "methodologies": analytics.get("methodologies", []),
+        "domains": analytics.get("domains", []),
         "skills": _collect_skills_from_analytics(analytics),
         "salary_min": row.get("salary_min"),
         "salary_max": row.get("salary_max"),
@@ -622,7 +659,10 @@ def _collect_skills_from_analytics(analytics: dict[str, Any]) -> list[str]:
         "platforms",
         "tools",
         "tools_platforms",
+        "vendors",
+        "protocols_standards",
         "methodologies",
+        "domains",
     )
     skills: list[str] = []
     for field_name in skill_fields:

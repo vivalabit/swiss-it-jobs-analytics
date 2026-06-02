@@ -92,6 +92,27 @@ class JobsChAnalyticsTests(unittest.TestCase):
         self.assertNotIn("employment_types", analytics)
         self.assertEqual(["quickApply"], analytics["listing_tags"])
 
+    def test_build_job_analytics_resolves_skill_aliases_and_negative_contexts(self) -> None:
+        vacancy = VacancyFull(
+            id="analytics-3",
+            title="Full Stack Engineer",
+            company="Acme",
+            place="Zurich",
+            description_text=(
+                "Build services with JS, .NET Core, Postgres and K8s. "
+                "The office has Java coffee and the rest of the stack is documented."
+            ),
+        )
+
+        analytics = build_job_analytics(vacancy)
+
+        self.assertIn("javascript", analytics["programming_languages"])
+        self.assertIn("dotnet", analytics["programming_languages"])
+        self.assertIn("postgresql", analytics["databases"])
+        self.assertIn("kubernetes", analytics["platforms"])
+        self.assertNotIn("java", analytics["programming_languages"])
+        self.assertNotIn("rest", analytics.get("protocols_standards", []))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,8 @@ from itertools import combinations
 
 import pandas as pd
 
+from swiss_jobs.core.skill_taxonomy import SKILL_CATEGORIES, category_for_skill
+
 from .constants import UNKNOWN_LABEL
 
 
@@ -141,6 +143,79 @@ def calculate_list_summary(
     )
 
 
+def calculate_top_skills_by_category(
+    dataset: pd.DataFrame,
+    top_n: int = 20,
+) -> pd.DataFrame:
+    rows = _taxonomy_rows(dataset)
+    columns = ["category", "skill", "vacancy_count", "share", "rank"]
+    if not rows:
+        return pd.DataFrame(columns=columns)
+
+    frame = pd.DataFrame.from_records(rows).drop_duplicates(
+        subset=["vacancy_index", "category", "skill"]
+    )
+    grouped = (
+        frame.groupby(["category", "skill"])
+        .size()
+        .reset_index(name="vacancy_count")
+        .sort_values(["category", "vacancy_count", "skill"], ascending=[True, False, True])
+    )
+    grouped["share"] = (grouped["vacancy_count"] / len(dataset)).round(4)
+    grouped["rank"] = (
+        grouped.groupby("category")["vacancy_count"]
+        .rank(method="dense", ascending=False)
+        .astype(int)
+    )
+    grouped = grouped[grouped["rank"] <= top_n]
+    return grouped[columns].reset_index(drop=True)
+
+
+def calculate_skill_taxonomy_summary(dataset: pd.DataFrame) -> pd.DataFrame:
+    rows = _taxonomy_rows(dataset)
+    columns = [
+        "category",
+        "distinct_items",
+        "total_mentions",
+        "vacancies_with_items",
+        "vacancy_coverage",
+    ]
+    if not rows:
+        return pd.DataFrame(
+            [
+                {
+                    "category": category,
+                    "distinct_items": 0,
+                    "total_mentions": 0,
+                    "vacancies_with_items": 0,
+                    "vacancy_coverage": 0.0,
+                }
+                for category in SKILL_CATEGORIES
+            ],
+            columns=columns,
+        )
+
+    frame = pd.DataFrame.from_records(rows).drop_duplicates(
+        subset=["vacancy_index", "category", "skill"]
+    )
+    summary_rows: list[dict[str, int | float | str]] = []
+    for category in SKILL_CATEGORIES:
+        category_frame = frame[frame["category"] == category]
+        vacancies_with_items = int(category_frame["vacancy_index"].nunique())
+        summary_rows.append(
+            {
+                "category": category,
+                "distinct_items": int(category_frame["skill"].nunique()),
+                "total_mentions": int(len(category_frame)),
+                "vacancies_with_items": vacancies_with_items,
+                "vacancy_coverage": (
+                    round(vacancies_with_items / len(dataset), 4) if len(dataset) else 0.0
+                ),
+            }
+        )
+    return pd.DataFrame(summary_rows, columns=columns)
+
+
 def _build_summary_frame(
     *,
     distinct_items: int,
@@ -156,6 +231,28 @@ def _build_summary_frame(
             {"metric": "vacancy_coverage", "value": vacancy_coverage},
         ]
     )
+
+
+def _taxonomy_rows(dataset: pd.DataFrame) -> list[dict[str, int | str]]:
+    if "skills_list" not in dataset.columns:
+        return []
+
+    rows: list[dict[str, int | str]] = []
+    for vacancy_index, skills in enumerate(dataset["skills_list"]):
+        if not isinstance(skills, list):
+            continue
+        for skill in skills:
+            category = category_for_skill(skill)
+            if category is None:
+                continue
+            rows.append(
+                {
+                    "vacancy_index": vacancy_index,
+                    "category": category,
+                    "skill": str(skill),
+                }
+            )
+    return rows
 
 
 def _explode_list_column(

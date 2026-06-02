@@ -41,6 +41,7 @@ LIST_FIELDS = (
     "vendors",
     "protocols_standards",
     "methodologies",
+    "domains",
     "spoken_languages",
 )
 
@@ -475,6 +476,7 @@ def build_analysis_json_schema() -> dict[str, Any]:
             "vendors": {"type": "array", "items": {"type": "string"}},
             "protocols_standards": {"type": "array", "items": {"type": "string"}},
             "methodologies": {"type": "array", "items": {"type": "string"}},
+            "domains": {"type": "array", "items": {"type": "string"}},
             "spoken_languages": {
                 "type": "array",
                 "items": {"type": "string", "enum": language_values},
@@ -503,6 +505,7 @@ def build_analysis_json_schema() -> dict[str, Any]:
             "vendors",
             "protocols_standards",
             "methodologies",
+            "domains",
             "spoken_languages",
             "confidence",
             "confidence_reasons",

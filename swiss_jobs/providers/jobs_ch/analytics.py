@@ -3,6 +3,10 @@ from __future__ import annotations
 import re
 from typing import Any, Mapping, Sequence
 
+from swiss_jobs.core.skill_taxonomy import (
+    build_skill_alias_catalog,
+    collect_skill_matches,
+)
 from swiss_jobs.core.models import VacancyFull
 
 ROLE_FAMILY_KEYWORDS: dict[str, tuple[str, ...]] = {
@@ -161,6 +165,8 @@ PROGRAMMING_LANGUAGE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "dart": ("dart",),
 }
 
+PROGRAMMING_LANGUAGE_KEYWORDS = build_skill_alias_catalog(legacy_field="programming_languages")
+
 FRAMEWORK_KEYWORDS: dict[str, tuple[str, ...]] = {
     "react": ("react",),
     "angular": ("angular",),
@@ -189,6 +195,8 @@ FRAMEWORK_KEYWORDS: dict[str, tuple[str, ...]] = {
     "boost": ("boost", "boost c++"),
 }
 
+FRAMEWORK_KEYWORDS = build_skill_alias_catalog(legacy_field="frameworks_libraries")
+
 CLOUD_PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "aws": ("aws", "amazon web services"),
     "azure": (
@@ -204,6 +212,8 @@ CLOUD_PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "ansible": ("ansible",),
 }
 
+CLOUD_PLATFORM_KEYWORDS = build_skill_alias_catalog(legacy_field="cloud_platforms")
+
 DATA_PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "snowflake": ("snowflake",),
     "databricks": ("databricks",),
@@ -213,6 +223,8 @@ DATA_PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "hadoop": ("hadoop",),
     "etl": ("etl", "elt"),
 }
+
+DATA_PLATFORM_KEYWORDS = build_skill_alias_catalog(legacy_field="data_platforms")
 
 DATABASE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "postgresql": ("postgresql", "postgres"),
@@ -224,6 +236,8 @@ DATABASE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "elasticsearch": ("elasticsearch",),
 }
 
+DATABASE_KEYWORDS = build_skill_alias_catalog(legacy_field="databases")
+
 PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "openshift": ("openshift",),
     "kubernetes": ("kubernetes", "k8s"),
@@ -231,6 +245,8 @@ PLATFORM_KEYWORDS: dict[str, tuple[str, ...]] = {
     "plc": ("plc", "programmable logic controller"),
     "vmware_esxi": ("vmware esxi", "esxi"),
 }
+
+PLATFORM_KEYWORDS = build_skill_alias_catalog(legacy_field="platforms")
 
 TOOL_KEYWORDS: dict[str, tuple[str, ...]] = {
     "git": (" git ", "github", "gitlab"),
@@ -248,6 +264,8 @@ TOOL_KEYWORDS: dict[str, tuple[str, ...]] = {
     "selenium": ("selenium",),
 }
 
+TOOL_KEYWORDS = build_skill_alias_catalog(legacy_field="tools")
+
 PROTOCOL_STANDARD_KEYWORDS: dict[str, tuple[str, ...]] = {
     "rest": ("rest api", "restful api", "restful apis", "rest"),
     "graphql": ("graphql",),
@@ -255,11 +273,15 @@ PROTOCOL_STANDARD_KEYWORDS: dict[str, tuple[str, ...]] = {
     "tcp_ip": ("tcp/ip", "tcp ip"),
 }
 
+PROTOCOL_STANDARD_KEYWORDS = build_skill_alias_catalog(legacy_field="protocols_standards")
+
 VENDOR_KEYWORDS: dict[str, tuple[str, ...]] = {
     "beckhoff": ("beckhoff",),
     "siemens": ("siemens",),
     "vmware": ("vmware",),
 }
+
+VENDOR_KEYWORDS = build_skill_alias_catalog(legacy_field="vendors")
 
 METHODOLOGY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "agile": ("agile", "scrum", "kanban"),
@@ -270,6 +292,9 @@ METHODOLOGY_KEYWORDS: dict[str, tuple[str, ...]] = {
     "clean_code": ("clean code",),
     "test_automation": ("test automation", "automated testing"),
 }
+
+METHODOLOGY_KEYWORDS = build_skill_alias_catalog(legacy_field="methodologies")
+DOMAIN_KEYWORDS = build_skill_alias_catalog(category="domain")
 
 SPOKEN_LANGUAGE_KEYWORDS: dict[str, tuple[str, ...]] = {
     "english": ("english", "englisch", "anglais"),
@@ -693,16 +718,26 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
         "role_family_matches": role_family_matches,
         "seniority_labels": seniority_labels,
         "experience_years": experience_years,
-        "programming_languages": _collect_matches(text, PROGRAMMING_LANGUAGE_KEYWORDS),
-        "frameworks_libraries": _collect_matches(text, FRAMEWORK_KEYWORDS),
-        "cloud_platforms": _collect_matches(text, CLOUD_PLATFORM_KEYWORDS),
-        "data_platforms": _collect_matches(text, DATA_PLATFORM_KEYWORDS),
-        "databases": _collect_matches(text, DATABASE_KEYWORDS),
-        "platforms": _collect_matches(text, PLATFORM_KEYWORDS),
-        "tools": _collect_matches(text, TOOL_KEYWORDS),
-        "vendors": _collect_matches(text, VENDOR_KEYWORDS),
-        "protocols_standards": _collect_matches(text, PROTOCOL_STANDARD_KEYWORDS),
-        "methodologies": _collect_matches(text, METHODOLOGY_KEYWORDS),
+        "programming_languages": collect_skill_matches(
+            text,
+            legacy_field="programming_languages",
+        ),
+        "frameworks_libraries": collect_skill_matches(
+            text,
+            legacy_field="frameworks_libraries",
+        ),
+        "cloud_platforms": collect_skill_matches(text, legacy_field="cloud_platforms"),
+        "data_platforms": collect_skill_matches(text, legacy_field="data_platforms"),
+        "databases": collect_skill_matches(text, legacy_field="databases"),
+        "platforms": collect_skill_matches(text, legacy_field="platforms"),
+        "tools": collect_skill_matches(text, legacy_field="tools"),
+        "vendors": collect_skill_matches(text, legacy_field="vendors"),
+        "protocols_standards": collect_skill_matches(
+            text,
+            legacy_field="protocols_standards",
+        ),
+        "methodologies": collect_skill_matches(text, legacy_field="methodologies"),
+        "domains": collect_skill_matches(text, category="domain"),
         "spoken_languages": spoken_languages,
         "employment_types": employment_types,
         "occupational_categories": occupational_categories,

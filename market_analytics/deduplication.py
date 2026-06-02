@@ -8,10 +8,25 @@ from typing import Any
 
 import pandas as pd
 
+from swiss_jobs.core.skill_taxonomy import (
+    SKILL_CATEGORIES,
+    build_skill_taxonomy_records,
+    category_for_skill,
+)
+
+from .constants import OPTIONAL_LIST_COLUMNS
+
 LIST_COLUMNS: tuple[tuple[str, str], ...] = (
     ("skills", "skills_list"),
-    ("programming_languages", "programming_languages_list"),
-    ("frameworks_libraries", "frameworks_libraries_list"),
+    ("raw_skills", "raw_skills_list"),
+    *(
+        (column_name, f"{column_name}_list")
+        for column_name in OPTIONAL_LIST_COLUMNS
+    ),
+    *(
+        (f"{category}_skills", f"{category}_skills_list")
+        for category in SKILL_CATEGORIES
+    ),
 )
 COMPANY_SUFFIX_TOKENS: frozenset[str] = frozenset(
     {
@@ -268,6 +283,14 @@ def _merge_cluster(cluster: pd.DataFrame, *, group_number: int) -> pd.Series:
         merged[parsed_column] = merged_list
         if raw_column in cluster.columns:
             merged[raw_column] = merged_list
+
+    if "skills_list" in merged:
+        merged_skills = _as_list(merged.get("skills_list"))
+        merged["skill_taxonomy_list"] = build_skill_taxonomy_records(merged_skills)
+        for category in SKILL_CATEGORIES:
+            merged[f"{category}_skills_list"] = [
+                skill for skill in merged_skills if category_for_skill(skill) == category
+            ]
 
     return merged
 
