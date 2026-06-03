@@ -36,10 +36,23 @@ def make_vacancy(
     title: str,
     company: str,
     place: str,
-    salary_min: int,
-    salary_max: int,
+    salary_min: int | None = None,
+    salary_max: int | None = None,
     analytics: dict[str, object],
 ) -> VacancyFull:
+    raw = {}
+    if salary_min is not None or salary_max is not None:
+        raw = {
+            "salary": {
+                "currency": "CHF",
+                "unit": "YEAR",
+                "range": {
+                    "minValue": salary_min,
+                    "maxValue": salary_max,
+                },
+            },
+        }
+
     return VacancyFull(
         id=vacancy_id,
         title=title,
@@ -51,16 +64,7 @@ def make_vacancy(
         url=f"https://example.com/{vacancy_id}",
         source="jobs.ch",
         description_text=f"{title} role with local database search.",
-        raw={
-            "salary": {
-                "currency": "CHF",
-                "unit": "YEAR",
-                "range": {
-                    "minValue": salary_min,
-                    "maxValue": salary_max,
-                },
-            },
-        },
+        raw=raw,
         extra={"analytics": analytics},
     )
 
@@ -114,6 +118,35 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
             self.assertEqual([], payload["database_errors"])
 
+    def test_search_local_databases_does_not_require_salary(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Python Engineer",
+                    company="Acme",
+                    place="Zurich",
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "programming_languages": ["python"],
+                    },
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            payload = search_local_databases(
+                [database_path],
+                {
+                    "q": ["python"],
+                    "limit": ["50"],
+                },
+            )
+
+            self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
+            self.assertEqual("", payload["results"][0]["salary"])
+
     def test_load_facets_reads_local_database_terms(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "jobs.sqlite"
@@ -143,6 +176,10 @@ class LocalSearchWebTests(unittest.TestCase):
             facets = load_facets([database_path])
 
             self.assertEqual(1, facets["total"])
+            self.assertEqual(
+                [{"label": "jobs", "path": str(database_path), "count": 1}],
+                facets["database_stats"],
+            )
             self.assertEqual([{"value": "jobs.ch", "count": 1}], facets["sources"])
             self.assertIn({"value": "python", "count": 1}, facets["terms"]["programming_language"])
 

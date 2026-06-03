@@ -133,6 +133,13 @@ def _load_json_object(value: Any) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _database_label(database_path: Path) -> str:
+    parts = database_path.parts
+    if len(parts) >= 3 and parts[-2] == "main-config":
+        return parts[-3]
+    return database_path.stem
+
+
 def _listify(value: Any) -> list[str]:
     if value is None:
         return []
@@ -388,6 +395,7 @@ def load_facets(database_paths: Iterable[Path]) -> dict[str, Any]:
     sources: dict[str, int] = {}
     locations: dict[str, int] = {}
     terms: dict[str, dict[str, int]] = {term_type: {} for term_type in FACET_TERM_TYPES}
+    database_stats: list[dict[str, Any]] = []
     total = 0
     database_errors: list[dict[str, str]] = []
 
@@ -395,7 +403,15 @@ def load_facets(database_paths: Iterable[Path]) -> dict[str, Any]:
         try:
             connection = _connect_readonly(database_path)
             try:
-                total += int(connection.execute("SELECT COUNT(*) FROM vacancies").fetchone()[0])
+                database_count = int(connection.execute("SELECT COUNT(*) FROM vacancies").fetchone()[0])
+                total += database_count
+                database_stats.append(
+                    {
+                        "label": _database_label(database_path),
+                        "path": str(database_path),
+                        "count": database_count,
+                    }
+                )
                 for row in connection.execute(
                     """
                     SELECT source, COUNT(*) AS item_count
@@ -452,6 +468,7 @@ def load_facets(database_paths: Iterable[Path]) -> dict[str, Any]:
     return {
         "total": total,
         "databases": [str(path) for path in database_paths],
+        "database_stats": sorted(database_stats, key=lambda item: (-int(item["count"]), str(item["label"]))),
         "sources": top_items(sources, 30),
         "locations": top_items(locations, 80),
         "terms": {term_type: top_items(values, 80) for term_type, values in terms.items()},
@@ -653,6 +670,46 @@ INDEX_HTML = """<!doctype html>
       background: #ffffff;
       padding: 3px 10px;
     }
+    .database-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .summary-block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px;
+    }
+    .summary-title {
+      margin: 0 0 8px;
+      color: #344150;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .summary-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+    }
+    .summary-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .summary-item span:first-child {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .summary-count {
+      color: var(--ink);
+      font-weight: 800;
+    }
     .results {
       display: grid;
       gap: 12px;
@@ -755,6 +812,7 @@ INDEX_HTML = """<!doctype html>
       main { padding: 18px; }
       .job-head { grid-template-columns: 1fr; }
       .salary { white-space: normal; }
+      .database-summary { grid-template-columns: 1fr; }
     }
     @media (max-width: 520px) {
       aside { padding: 18px; }
@@ -806,11 +864,11 @@ INDEX_HTML = """<!doctype html>
         </div>
         <div class="row">
           <div class="field">
-            <label for="salary_min">Salary min</label>
+            <label for="salary_min">Salary min <span>optional</span></label>
             <input id="salary_min" name="salary_min" type="number" inputmode="numeric" placeholder="110000">
           </div>
           <div class="field">
-            <label for="salary_max">Salary max</label>
+            <label for="salary_max">Salary max <span>optional</span></label>
             <input id="salary_max" name="salary_max" type="number" inputmode="numeric" placeholder="160000">
           </div>
         </div>
@@ -851,6 +909,7 @@ INDEX_HTML = """<!doctype html>
         <div class="stats" id="stats"></div>
       </div>
       <div id="errors"></div>
+      <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
       <section class="results" id="results"></section>
     </main>
   </div>
@@ -859,6 +918,7 @@ INDEX_HTML = """<!doctype html>
     const resultsEl = document.querySelector("#results");
     const statsEl = document.querySelector("#stats");
     const errorsEl = document.querySelector("#errors");
+    const databaseSummaryEl = document.querySelector("#database-summary");
     const subtitleEl = document.querySelector("#subtitle");
     const resetBtn = document.querySelector("#reset");
 
@@ -909,6 +969,23 @@ INDEX_HTML = """<!doctype html>
         return;
       }
       errorsEl.innerHTML = `<div class="error">${esc(errors.length)} local database error(s). Check terminal output or database schema.</div>`;
+    }
+
+    function renderSummaryBlock(title, items) {
+      if (!items || !items.length) return "";
+      return `
+        <div class="summary-block">
+          <p class="summary-title">${esc(title)}</p>
+          <div class="summary-list">
+            ${items.map((item) => `
+              <div class="summary-item">
+                <span title="${esc(item.path || item.value || item.label)}">${esc(item.label || item.value)}</span>
+                <span class="summary-count">${esc(item.count)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
     }
 
     function renderResults(payload) {
@@ -970,6 +1047,10 @@ INDEX_HTML = """<!doctype html>
         ...(facets.terms?.tool || [])
       ]));
       subtitleEl.textContent = `${facets.total || 0} local vacancies across ${(facets.databases || []).length} database(s).`;
+      databaseSummaryEl.innerHTML = [
+        renderSummaryBlock("SQLite databases", facets.database_stats || []),
+        renderSummaryBlock("Sources", facets.sources || [])
+      ].join("");
       renderErrors(facets.database_errors);
     }
 
