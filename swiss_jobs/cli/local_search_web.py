@@ -41,6 +41,9 @@ FACET_TERM_TYPES = {
     "methodology",
 }
 
+SEARCH_DEFAULT_PAGE_SIZE = 10
+SEARCH_MAX_PAGE_SIZE = 100
+
 
 @dataclass(frozen=True)
 class LocalSearchConfig:
@@ -360,8 +363,11 @@ def search_local_databases(
     database_paths: Iterable[Path],
     params: dict[str, list[str]],
 ) -> dict[str, Any]:
-    limit = _request_int(params, "limit", 100) or 100
-    limit = max(1, min(limit, 500))
+    legacy_limit = _request_int(params, "limit", SEARCH_DEFAULT_PAGE_SIZE) or SEARCH_DEFAULT_PAGE_SIZE
+    per_page = _request_int(params, "per_page", legacy_limit) or SEARCH_DEFAULT_PAGE_SIZE
+    per_page = max(1, min(per_page, SEARCH_MAX_PAGE_SIZE))
+    page = _request_int(params, "page", 1) or 1
+    page = max(1, page)
     where, values, words = _build_where(params)
     rows: list[dict[str, Any]] = []
     database_errors: list[dict[str, str]] = []
@@ -393,14 +399,13 @@ def search_local_databases(
             v.last_seen_at DESC,
             COALESCE(v.salary_max, v.salary_min) DESC,
             v.vacancy_id ASC
-        LIMIT ?
     """
 
     for database_path in database_paths:
         try:
             connection = _connect_readonly(database_path)
             try:
-                fetched = connection.execute(query, [*values, limit]).fetchall()
+                fetched = connection.execute(query, values).fetchall()
             finally:
                 connection.close()
         except sqlite3.Error as exc:
@@ -448,9 +453,20 @@ def search_local_databases(
         ),
         reverse=True,
     )
+    total = len(rows)
+    total_pages = max(1, (total + per_page - 1) // per_page)
+    page = min(page, total_pages)
+    start = (page - 1) * per_page
+    end = start + per_page
+    page_rows = rows[start:end]
     return {
-        "count": len(rows[:limit]),
-        "results": rows[:limit],
+        "count": total,
+        "shown_count": len(page_rows),
+        "page": page,
+        "per_page": per_page,
+        "total": total,
+        "total_pages": total_pages,
+        "results": page_rows,
         "database_errors": database_errors,
     }
 
@@ -849,6 +865,47 @@ INDEX_HTML = """<!doctype html>
       display: grid;
       gap: 12px;
     }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .page-btn {
+      min-width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      box-shadow: var(--shadow-soft);
+    }
+    .page-btn:hover:not(:disabled),
+    .page-btn.is-active {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+    }
+    .page-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      box-shadow: none;
+    }
+    .page-gap {
+      min-width: 24px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 800;
+    }
     .job {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -1166,23 +1223,12 @@ INDEX_HTML = """<!doctype html>
           <input id="salary_min" name="salary_min" type="hidden">
           <input id="salary_max" name="salary_max" type="hidden">
         </div>
-        <div class="row">
-          <div class="field">
-            <label for="limit">Limit</label>
-            <select id="limit" name="limit">
-              <option>50</option>
-              <option selected>100</option>
-              <option>200</option>
-              <option>500</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="has_salary">Salary</label>
-            <select id="has_salary" name="has_salary">
-              <option value="">Any</option>
-              <option value="1">Only with salary</option>
-            </select>
-          </div>
+        <div class="field">
+          <label for="has_salary">Salary</label>
+          <select id="has_salary" name="has_salary">
+            <option value="">Any</option>
+            <option value="1">Only with salary</option>
+          </select>
         </div>
         <div class="actions">
           <button class="btn primary" type="submit" title="Run search">Search</button>
@@ -1212,6 +1258,7 @@ INDEX_HTML = """<!doctype html>
       </div>
       <div id="errors"></div>
       <section class="results" id="results"></section>
+      <nav class="pagination" id="pagination" aria-label="Search results pages"></nav>
     </main>
   </div>
   <script>
@@ -1219,6 +1266,7 @@ INDEX_HTML = """<!doctype html>
     const resultsEl = document.querySelector("#results");
     const errorsEl = document.querySelector("#errors");
     const databaseSummaryEl = document.querySelector("#database-summary");
+    const paginationEl = document.querySelector("#pagination");
     const subtitleEl = document.querySelector("#subtitle");
     const resetBtn = document.querySelector("#reset");
     const resultTitleEl = document.querySelector("#result-title");
@@ -1230,6 +1278,8 @@ INDEX_HTML = """<!doctype html>
     const salaryMaxText = document.querySelector("#salary_max_text");
     const salaryTrack = document.querySelector("#salary-track");
     const salaryRangeMax = Number(salaryMaxRange.max);
+    const pageSize = 10;
+    let currentPage = 1;
 
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -1299,13 +1349,15 @@ INDEX_HTML = """<!doctype html>
         .sort((left, right) => right.count - left.count || left.value.localeCompare(right.value));
     }
 
-    function buildParams() {
+    function buildParams(page = currentPage) {
       const data = new FormData(form);
       const params = new URLSearchParams();
       for (const [key, value] of data.entries()) {
         const clean = String(value).trim();
         if (clean) params.set(key, clean);
       }
+      params.set("page", String(page));
+      params.set("per_page", String(pageSize));
       return params;
     }
 
@@ -1334,9 +1386,59 @@ INDEX_HTML = """<!doctype html>
       `;
     }
 
+    function getVisiblePages(page, totalPages) {
+      if (totalPages <= 7) {
+        return Array.from({ length: totalPages }, (_, index) => index + 1);
+      }
+      const pages = new Set([1, totalPages, page - 1, page, page + 1]);
+      if (page <= 3) {
+        pages.add(2);
+        pages.add(3);
+        pages.add(4);
+      }
+      if (page >= totalPages - 2) {
+        pages.add(totalPages - 3);
+        pages.add(totalPages - 2);
+        pages.add(totalPages - 1);
+      }
+      return [...pages]
+        .filter((item) => item >= 1 && item <= totalPages)
+        .sort((left, right) => left - right);
+    }
+
+    function renderPagination(payload) {
+      const totalPages = Number(payload.total_pages || 1);
+      const page = Number(payload.page || 1);
+      if (totalPages <= 1) {
+        paginationEl.innerHTML = "";
+        return;
+      }
+      const pages = getVisiblePages(page, totalPages);
+      const pageButtons = [];
+      let previousPage = 0;
+      for (const item of pages) {
+        if (previousPage && item - previousPage > 1) {
+          pageButtons.push('<span class="page-gap" aria-hidden="true">...</span>');
+        }
+        pageButtons.push(`
+          <button class="page-btn ${item === page ? "is-active" : ""}" type="button" data-page="${item}" ${item === page ? 'aria-current="page"' : ""}>
+            ${item}
+          </button>
+        `);
+        previousPage = item;
+      }
+      paginationEl.innerHTML = `
+        <button class="page-btn" type="button" data-page="${page - 1}" ${page <= 1 ? "disabled" : ""} aria-label="Previous page">‹</button>
+        ${pageButtons.join("")}
+        <button class="page-btn" type="button" data-page="${page + 1}" ${page >= totalPages ? "disabled" : ""} aria-label="Next page">›</button>
+      `;
+    }
+
     function renderResults(payload) {
       renderErrors(payload.database_errors);
-      resultTitleEl.innerHTML = `Found <strong>${esc(payload.count)}</strong> jobs`;
+      currentPage = Number(payload.page || 1);
+      resultTitleEl.innerHTML = `Found <strong>${esc(payload.total ?? payload.count)}</strong> jobs`;
+      renderPagination(payload);
       if (!payload.results.length) {
         resultsEl.innerHTML = '<div class="empty">No vacancies match these filters.</div>';
         return;
@@ -1405,9 +1507,10 @@ INDEX_HTML = """<!doctype html>
       renderErrors(facets.database_errors);
     }
 
-    async function runSearch() {
+    async function runSearch(page = currentPage) {
       resultsEl.innerHTML = '<div class="empty">Searching local databases...</div>';
-      const response = await fetch(`/api/search?${buildParams().toString()}`);
+      paginationEl.innerHTML = "";
+      const response = await fetch(`/api/search?${buildParams(page).toString()}`);
       const payload = await response.json();
       if (!response.ok) {
         resultsEl.innerHTML = `<div class="error">${esc(payload.error || "Search failed")}</div>`;
@@ -1418,12 +1521,21 @@ INDEX_HTML = """<!doctype html>
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      runSearch();
+      currentPage = 1;
+      runSearch(1);
     });
     resetBtn.addEventListener("click", () => {
       form.reset();
       syncSalaryInputsFromRange();
-      runSearch();
+      currentPage = 1;
+      runSearch(1);
+    });
+    paginationEl.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-page]");
+      if (!button || button.disabled) return;
+      const page = Number(button.dataset.page);
+      if (!Number.isFinite(page)) return;
+      runSearch(page);
     });
     salaryMinRange.addEventListener("input", () => syncSalaryInputsFromRange("min"));
     salaryMaxRange.addEventListener("input", () => syncSalaryInputsFromRange("max"));

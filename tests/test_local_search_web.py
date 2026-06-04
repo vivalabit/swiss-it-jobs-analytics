@@ -150,6 +150,40 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
             self.assertEqual("", payload["results"][0]["salary"])
 
+    def test_search_local_databases_paginates_results(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    f"vacancy-{index}",
+                    title=f"Python Engineer {index}",
+                    company="Acme",
+                    place="Zurich",
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "programming_languages": ["python"],
+                    },
+                )
+                for index in range(1, 4)
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            payload = search_local_databases(
+                [database_path],
+                {
+                    "q": ["python"],
+                    "page": ["2"],
+                    "per_page": ["1"],
+                },
+            )
+
+            self.assertEqual(3, payload["total"])
+            self.assertEqual(2, payload["page"])
+            self.assertEqual(1, payload["per_page"])
+            self.assertEqual(3, payload["total_pages"])
+            self.assertEqual(1, len(payload["results"]))
+
     def test_search_local_databases_filters_by_keywords(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "jobs.sqlite"
