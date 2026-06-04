@@ -596,18 +596,20 @@ INDEX_HTML = """<!doctype html>
   <style>
     :root {
       color-scheme: light;
-      --ink: #17202a;
-      --muted: #647180;
-      --line: #d8dee5;
+      --ink: #121722;
+      --muted: #657182;
+      --line: #e5e7eb;
       --field: #ffffff;
-      --surface: #f6f7f4;
+      --surface: #fafafa;
       --panel: #ffffff;
-      --accent: #b4232a;
-      --accent-dark: #8e1d23;
-      --green: #1f7a5f;
-      --blue: #2364aa;
-      --amber: #a45f12;
-      --shadow: 0 12px 32px rgba(23, 32, 42, 0.08);
+      --accent: #d71920;
+      --accent-dark: #b71118;
+      --accent-soft: rgba(215, 25, 32, 0.08);
+      --green: #d71920;
+      --blue: #17202a;
+      --amber: #d71920;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.07);
+      --shadow-soft: 0 4px 14px rgba(17, 24, 39, 0.05);
     }
     * { box-sizing: border-box; }
     body {
@@ -618,28 +620,36 @@ INDEX_HTML = """<!doctype html>
       letter-spacing: 0;
     }
     button, input, select, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
     .app {
-      min-height: 100vh;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px 44px 32px;
       display: grid;
-      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
     }
     aside {
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: 24px;
+      max-height: calc(100vh - 48px);
       overflow: auto;
-      background: #fdfdfb;
-      border-right: 1px solid var(--line);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       padding: 22px;
+      box-shadow: var(--shadow);
     }
     main {
       min-width: 0;
-      padding: 22px 26px 32px;
+      padding: 10px 0 32px;
     }
     h1 {
       margin: 0 0 4px;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1.2;
+      letter-spacing: -0.03em;
     }
     .sub {
       margin: 0 0 18px;
@@ -652,29 +662,30 @@ INDEX_HTML = """<!doctype html>
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      color: #344150;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
+      color: #151b28;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 9px;
     }
     input, select, textarea {
       width: 100%;
-      min-height: 40px;
+      min-height: 44px;
       border: 1px solid var(--line);
-      border-radius: 7px;
+      border-radius: 6px;
       background: var(--field);
       color: var(--ink);
-      padding: 9px 10px;
+      padding: 10px 12px;
       outline: none;
+      font-size: 14px;
+      box-shadow: inset 0 1px 0 rgba(17, 24, 39, 0.02);
     }
     textarea {
-      min-height: 68px;
-      resize: vertical;
+      min-height: 44px;
+      resize: none;
     }
     input:focus, select:focus, textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(35, 100, 170, 0.16);
+      border-color: rgba(215, 25, 32, 0.5);
+      box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.1);
     }
     .row {
       display: grid;
@@ -683,14 +694,13 @@ INDEX_HTML = """<!doctype html>
     }
     .actions {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      margin-top: 18px;
+      gap: 14px;
+      margin-top: 20px;
     }
     .btn {
-      min-height: 42px;
+      min-height: 46px;
       border: 1px solid transparent;
-      border-radius: 7px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: 700;
       display: inline-flex;
@@ -701,14 +711,15 @@ INDEX_HTML = """<!doctype html>
       white-space: nowrap;
     }
     .btn.primary {
-      background: var(--accent);
+      background: linear-gradient(180deg, #e03136, #c9161d);
       color: white;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
     }
     .btn.primary:hover { background: var(--accent-dark); }
     .btn.secondary {
       background: #ffffff;
-      border-color: var(--line);
-      color: var(--ink);
+      border-color: var(--accent);
+      color: var(--accent);
     }
     .toolbar {
       display: flex;
@@ -716,6 +727,55 @@ INDEX_HTML = """<!doctype html>
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 16px;
+      position: relative;
+    }
+    .toolbar h1 {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .toolbar h1 strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .sort-control {
+      min-width: 156px;
+      width: auto;
+      background-position: right 12px center;
+    }
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-menu {
+      position: relative;
+      margin: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+    .info-menu summary {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      list-style: none;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+      user-select: none;
+    }
+    .info-menu summary::-webkit-details-marker {
+      display: none;
+    }
+    .info-menu[open] summary {
+      background: var(--accent-dark);
     }
     .stats {
       display: flex;
@@ -729,22 +789,33 @@ INDEX_HTML = """<!doctype html>
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
+      border: 0;
+      border-radius: 0;
       background: #ffffff;
-      padding: 3px 10px;
+      padding: 0;
     }
     .database-summary {
+      position: absolute;
+      top: 42px;
+      right: 0;
+      z-index: 15;
+      width: min(290px, calc(100vw - 32px));
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 12px;
-      margin-bottom: 16px;
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 18px 42px rgba(17, 24, 39, 0.12);
     }
     .summary-block {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #ffffff;
       padding: 12px;
+      box-shadow: var(--shadow-soft);
     }
     .summary-title {
       margin: 0 0 8px;
@@ -782,68 +853,111 @@ INDEX_HTML = """<!doctype html>
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 16px;
-      box-shadow: var(--shadow);
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow-soft);
     }
     .job-head {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 14px;
+      grid-template-columns: 54px minmax(0, 1fr) minmax(160px, auto);
+      gap: 18px;
       align-items: start;
+    }
+    .company-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(215, 25, 32, 0.18);
+      text-transform: uppercase;
     }
     .job h2 {
       margin: 0;
       font-size: 18px;
       line-height: 1.28;
+      letter-spacing: -0.02em;
+    }
+    .company {
+      margin-top: 4px;
+      color: #151b28;
+      font-size: 14px;
+      font-weight: 600;
     }
     .meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px 12px;
+      gap: 7px 12px;
       color: var(--muted);
       font-size: 13px;
-      margin-top: 7px;
+      margin-top: 8px;
+    }
+    .meta span + span::before {
+      content: "";
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #c2c8d0;
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+    .job-side {
+      display: grid;
+      justify-items: end;
+      gap: 14px;
+      text-align: right;
     }
     .salary {
       color: var(--green);
       font-weight: 800;
       white-space: nowrap;
+      font-size: 14px;
     }
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 12px;
+      margin-top: 14px;
+      margin-left: 72px;
     }
     .tag {
       border-radius: 999px;
-      background: #eef3f0;
-      color: #1f473c;
+      background: #f3f4f6;
+      color: #4b5563;
       padding: 4px 9px;
       font-size: 12px;
       line-height: 1.2;
     }
-    .tag.role { background: #eef3fb; color: #1e4c82; }
-    .tag.warn { background: #fff2df; color: #7a4008; }
-    .tag.keyword { background: #f1eef8; color: #4f3778; }
+    .tag.role { background: var(--accent-soft); color: var(--accent); }
+    .tag.warn { background: #fff4f4; color: #a3161b; }
+    .tag.keyword { background: #f5f5f5; color: #374151; }
     .preview {
       color: #4b5968;
       font-size: 13px;
       line-height: 1.5;
-      margin: 12px 0 0;
+      margin: 12px 0 0 72px;
+      max-width: 620px;
     }
     .open-link {
       min-height: 36px;
-      border-radius: 7px;
-      border: 1px solid var(--line);
-      padding: 0 11px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      padding: 0 18px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--blue);
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
       text-decoration: none;
       font-weight: 800;
       white-space: nowrap;
+      font-size: 13px;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
     }
     .empty, .error {
       border: 1px dashed var(--line);
@@ -868,33 +982,121 @@ INDEX_HTML = """<!doctype html>
       padding-left: 18px;
       overflow-wrap: anywhere;
     }
+    .salary-range {
+      padding-top: 2px;
+    }
+    .range-control {
+      position: relative;
+      height: 30px;
+      margin: 2px 0 8px;
+    }
+    .range-track {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      top: 14px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent));
+    }
+    input[type="range"] {
+      position: absolute;
+      inset: 0;
+      min-height: 30px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      appearance: none;
+      pointer-events: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 8px rgba(215, 25, 32, 0.16);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 8px rgba(215, 25, 32, 0.16);
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      background: transparent;
+    }
+    input[type="range"]::-moz-range-track {
+      height: 4px;
+      background: transparent;
+    }
+    .range-values {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+    }
     @media (max-width: 860px) {
-      .app { grid-template-columns: 1fr; }
+      .app {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 18px;
+      }
       aside {
         position: static;
-        height: auto;
+        max-height: none;
       }
       main { padding: 18px; }
-      .job-head { grid-template-columns: 1fr; }
+      .job-head { grid-template-columns: 44px minmax(0, 1fr); }
+      .job-side {
+        grid-column: 2;
+        justify-items: start;
+        text-align: left;
+      }
+      .tags, .preview { margin-left: 62px; }
       .salary { white-space: normal; }
-      .database-summary { grid-template-columns: 1fr; }
+      .database-summary {
+        right: 0;
+        grid-template-columns: 1fr;
+      }
     }
     @media (max-width: 520px) {
       aside { padding: 18px; }
       .row, .actions { grid-template-columns: 1fr; }
       .toolbar { align-items: flex-start; flex-direction: column; }
+      .toolbar-actions { width: 100%; justify-content: space-between; }
+      .database-summary {
+        left: 0;
+        right: auto;
+        width: calc(100vw - 36px);
+      }
       .btn { width: 100%; }
+      main { padding: 0; }
+      .job { padding: 18px; }
+      .job-head { grid-template-columns: 1fr; }
+      .company-mark, .tags, .preview { margin-left: 0; }
+      .company-mark { border-radius: 8px; }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <aside>
-      <h1>Local Vacancy Search</h1>
-      <p class="sub">Searches only the SQLite databases loaded from your local runtime folder.</p>
+      <h1>Search Jobs</h1>
+      <p class="sub">Searches only your loaded local SQLite databases.</p>
       <form id="search-form">
         <div class="field">
-          <label for="q">Search</label>
+          <label for="q">Job title, keywords, or company</label>
           <textarea id="q" name="q" placeholder="python backend zurich"></textarea>
         </div>
         <div class="field">
@@ -950,15 +1152,19 @@ INDEX_HTML = """<!doctype html>
             <input id="date_to" name="date_to" type="date">
           </div>
         </div>
-        <div class="row">
-          <div class="field">
-            <label for="salary_min">Salary min <span>optional</span></label>
-            <input id="salary_min" name="salary_min" type="number" inputmode="numeric" placeholder="110000">
+        <div class="field salary-range">
+          <label>Salary Range (CHF)</label>
+          <div class="range-control">
+            <div class="range-track" id="salary-track"></div>
+            <input id="salary_min_range" type="range" min="0" max="250000" step="5000" value="0" aria-label="Salary minimum">
+            <input id="salary_max_range" type="range" min="0" max="250000" step="5000" value="250000" aria-label="Salary maximum">
           </div>
-          <div class="field">
-            <label for="salary_max">Salary max <span>optional</span></label>
-            <input id="salary_max" name="salary_max" type="number" inputmode="numeric" placeholder="160000">
+          <div class="range-values">
+            <span id="salary_min_text">Any min</span>
+            <span id="salary_max_text">Any max</span>
           </div>
+          <input id="salary_min" name="salary_min" type="hidden">
+          <input id="salary_max" name="salary_max" type="hidden">
         </div>
         <div class="row">
           <div class="field">
@@ -991,28 +1197,80 @@ INDEX_HTML = """<!doctype html>
     <main>
       <div class="toolbar">
         <div>
-          <h1>Vacancies</h1>
+          <h1 id="result-title">Found <strong>0</strong> jobs</h1>
           <p class="sub" id="subtitle">Loading local database facets...</p>
         </div>
-        <div class="stats" id="stats"></div>
+        <div class="toolbar-actions">
+          <details class="info-menu">
+            <summary aria-label="Local database statistics" title="Local database statistics">i</summary>
+            <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
+          </details>
+          <select class="sort-control" aria-label="Sort results">
+            <option>Most Recent</option>
+          </select>
+        </div>
       </div>
       <div id="errors"></div>
-      <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
       <section class="results" id="results"></section>
     </main>
   </div>
   <script>
     const form = document.querySelector("#search-form");
     const resultsEl = document.querySelector("#results");
-    const statsEl = document.querySelector("#stats");
     const errorsEl = document.querySelector("#errors");
     const databaseSummaryEl = document.querySelector("#database-summary");
     const subtitleEl = document.querySelector("#subtitle");
     const resetBtn = document.querySelector("#reset");
+    const resultTitleEl = document.querySelector("#result-title");
+    const salaryMinInput = document.querySelector("#salary_min");
+    const salaryMaxInput = document.querySelector("#salary_max");
+    const salaryMinRange = document.querySelector("#salary_min_range");
+    const salaryMaxRange = document.querySelector("#salary_max_range");
+    const salaryMinText = document.querySelector("#salary_min_text");
+    const salaryMaxText = document.querySelector("#salary_max_text");
+    const salaryTrack = document.querySelector("#salary-track");
+    const salaryRangeMax = Number(salaryMaxRange.max);
 
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     }[char]));
+    const formatChf = (value) => `${Number(value).toLocaleString("en-US")} CHF`;
+
+    function syncSalaryTrack() {
+      const min = Number(salaryMinRange.value);
+      const max = Number(salaryMaxRange.value);
+      const left = (min / salaryRangeMax) * 100;
+      const right = (max / salaryRangeMax) * 100;
+      salaryTrack.style.background = `linear-gradient(90deg, #e5e7eb 0%, #e5e7eb ${left}%, var(--accent) ${left}%, var(--accent) ${right}%, #e5e7eb ${right}%, #e5e7eb 100%)`;
+      salaryMinText.textContent = min > 0 ? formatChf(min) : "Any min";
+      salaryMaxText.textContent = max < salaryRangeMax ? formatChf(max) : "Any max";
+    }
+
+    function syncSalaryInputsFromRange(changed) {
+      let min = Number(salaryMinRange.value);
+      let max = Number(salaryMaxRange.value);
+      if (min > max) {
+        if (changed === "min") {
+          max = min;
+          salaryMaxRange.value = String(max);
+        } else {
+          min = max;
+          salaryMinRange.value = String(min);
+        }
+      }
+      salaryMinInput.value = min > 0 ? String(min) : "";
+      salaryMaxInput.value = max < salaryRangeMax ? String(max) : "";
+      syncSalaryTrack();
+    }
+
+    function syncSalaryRangeFromInputs() {
+      const min = Math.max(0, Math.min(Number(salaryMinInput.value || 0), salaryRangeMax));
+      const maxRaw = salaryMaxInput.value ? Number(salaryMaxInput.value) : salaryRangeMax;
+      const max = Math.max(0, Math.min(maxRaw, salaryRangeMax));
+      salaryMinRange.value = String(Math.min(min, max));
+      salaryMaxRange.value = String(Math.max(min, max));
+      syncSalaryTrack();
+    }
 
     function setOptions(select, items) {
       const current = select.value;
@@ -1078,15 +1336,13 @@ INDEX_HTML = """<!doctype html>
 
     function renderResults(payload) {
       renderErrors(payload.database_errors);
-      statsEl.innerHTML = `
-        <span class="pill">${esc(payload.count)} shown</span>
-        <span class="pill">${new Date().toLocaleTimeString()}</span>
-      `;
+      resultTitleEl.innerHTML = `Found <strong>${esc(payload.count)}</strong> jobs`;
       if (!payload.results.length) {
         resultsEl.innerHTML = '<div class="empty">No vacancies match these filters.</div>';
         return;
       }
       resultsEl.innerHTML = payload.results.map((job) => {
+        const initial = String(job.company || job.title || "?").trim().slice(0, 1) || "?";
         const tags = [
           job.role ? `<span class="tag role">${esc(job.role)}</span>` : "",
           job.seniority ? `<span class="tag warn">${esc(job.seniority)}</span>` : "",
@@ -1097,16 +1353,17 @@ INDEX_HTML = """<!doctype html>
         return `
           <article class="job">
             <div class="job-head">
+              <div class="company-mark" aria-hidden="true">${esc(initial)}</div>
               <div>
                 <h2>${esc(job.title || "Untitled vacancy")}</h2>
+                <div class="company">${esc(job.company || "-")}</div>
                 <div class="meta">
-                  <span>${esc(job.company || "-")}</span>
                   <span>${esc(job.location || "-")}</span>
                   <span>${esc(job.source || "-")}</span>
                   <span>${esc(job.publication_date || job.last_seen_at || "-")}</span>
                 </div>
               </div>
-              <div>
+              <div class="job-side">
                 <div class="salary">${esc(job.salary || "")}</div>
                 ${job.url ? `<a class="open-link" href="${esc(job.url)}" target="_blank" rel="noreferrer" title="Open original vacancy">Open</a>` : ""}
               </div>
@@ -1144,10 +1401,7 @@ INDEX_HTML = """<!doctype html>
         ...(facets.terms?.methodology || [])
       ]));
       subtitleEl.textContent = `${facets.total || 0} local vacancies across ${(facets.databases || []).length} database(s).`;
-      databaseSummaryEl.innerHTML = [
-        renderSummaryBlock("SQLite databases", facets.database_stats || []),
-        renderSummaryBlock("Sources", facets.sources || [])
-      ].join("");
+      databaseSummaryEl.innerHTML = renderSummaryBlock("Sources", facets.sources || []);
       renderErrors(facets.database_errors);
     }
 
@@ -1168,9 +1422,15 @@ INDEX_HTML = """<!doctype html>
     });
     resetBtn.addEventListener("click", () => {
       form.reset();
+      syncSalaryInputsFromRange();
       runSearch();
     });
+    salaryMinRange.addEventListener("input", () => syncSalaryInputsFromRange("min"));
+    salaryMaxRange.addEventListener("input", () => syncSalaryInputsFromRange("max"));
+    salaryMinInput.addEventListener("input", syncSalaryRangeFromInputs);
+    salaryMaxInput.addEventListener("input", syncSalaryRangeFromInputs);
 
+    syncSalaryTrack();
     loadFacets().then(runSearch).catch((error) => {
       resultsEl.innerHTML = `<div class="error">${esc(error.message || error)}</div>`;
     });

@@ -14,21 +14,6 @@ Current sources:
 - `jobup.ch`
 - `swissdevjobs.ch`
 
-## Local Vacancy Search
-
-To search your own local SQLite vacancy databases without using the public dataset, run:
-
-```bash
-python3 -m swiss_jobs.cli.local_search_web
-```
-
-Then open http://127.0.0.1:8765/search.
-
-By default, the page searches existing `runtime/*/main-config/*.sqlite` databases. You can also pass one or more explicit local database paths:
-
-```bash
-python3 -m swiss_jobs.cli.local_search_web --database-path runtime/jobs_ch/main-config/jobs_ch.sqlite
-```
 
 The dataset is deduplicated across sources at the vacancy level.
 When the same job is posted on multiple job boards, it is counted once in the public statistics.
