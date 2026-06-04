@@ -36,6 +36,7 @@ def make_vacancy(
     title: str,
     company: str,
     place: str,
+    publication_date: str = "2026-05-28T08:00:00+02:00",
     salary_min: int | None = None,
     salary_max: int | None = None,
     keywords_matched: list[str] | None = None,
@@ -59,8 +60,8 @@ def make_vacancy(
         title=title,
         company=company,
         place=place,
-        publication_date="2026-05-28T08:00:00+02:00",
-        initial_publication_date="2026-05-28T08:00:00+02:00",
+        publication_date=publication_date,
+        initial_publication_date=publication_date,
         is_new=True,
         url=f"https://example.com/{vacancy_id}",
         source="jobs.ch",
@@ -189,6 +190,53 @@ class LocalSearchWebTests(unittest.TestCase):
 
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
             self.assertEqual(["event-driven"], payload["results"][0]["matched_keywords"])
+
+    def test_search_local_databases_filters_by_published_date_range(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Python Engineer",
+                    company="Acme",
+                    place="Zurich",
+                    publication_date="2026-05-28T08:00:00+02:00",
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "programming_languages": ["python"],
+                    },
+                ),
+                make_vacancy(
+                    "vacancy-2",
+                    title="Python Engineer",
+                    company="Beta",
+                    place="Bern",
+                    publication_date="2026-04-10T08:00:00+02:00",
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "programming_languages": ["python"],
+                    },
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            payload = search_local_databases(
+                [database_path],
+                {
+                    "q": ["python"],
+                    "date_field": ["published"],
+                    "date_from": ["2026-05-01"],
+                    "date_to": ["2026-05-31"],
+                    "limit": ["50"],
+                },
+            )
+
+            self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
+
+    def test_search_local_databases_rejects_invalid_date_format(self) -> None:
+        with self.assertRaisesRegex(ValueError, "date_from must use YYYY-MM-DD format"):
+            search_local_databases([], {"date_from": ["2026/05/01"]})
 
     def test_load_facets_reads_local_database_terms(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

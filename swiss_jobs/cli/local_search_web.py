@@ -119,6 +119,23 @@ def _request_int(params: dict[str, list[str]], name: str, default: int | None = 
         raise ValueError(f"{name} must be an integer") from exc
 
 
+def _request_date(params: dict[str, list[str]], name: str) -> str:
+    raw = (params.get(name) or [""])[0].strip()
+    if not raw:
+        return ""
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
+        raise ValueError(f"{name} must use YYYY-MM-DD format")
+    return raw
+
+
+def _date_filter_expression(field_name: str) -> tuple[str, bool]:
+    if field_name == "published":
+        return "substr(COALESCE(v.publication_date, v.initial_publication_date, ''), 1, 10)", True
+    if field_name == "first_seen":
+        return "substr(v.first_seen_at, 1, 10)", False
+    return "substr(v.last_seen_at, 1, 10)", False
+
+
 def _search_words(value: str) -> list[str]:
     return [word.lower() for word in re.findall(r"[\w.+#-]+", value, flags=re.UNICODE) if word.strip()]
 
@@ -256,6 +273,20 @@ def _build_where(params: dict[str, list[str]]) -> tuple[str, list[Any], list[str
     if salary_max is not None:
         clauses.append("COALESCE(v.salary_min, v.salary_max) <= ?")
         values.append(salary_max)
+
+    date_from = _request_date(params, "date_from")
+    date_to = _request_date(params, "date_to")
+    if date_from or date_to:
+        date_field = (params.get("date_field") or ["last_seen"])[0].strip()
+        date_expression, require_iso_date = _date_filter_expression(date_field)
+        if require_iso_date:
+            clauses.append(f"{date_expression} GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'")
+        if date_from:
+            clauses.append(f"{date_expression} >= ?")
+            values.append(date_from)
+        if date_to:
+            clauses.append(f"{date_expression} <= ?")
+            values.append(date_to)
 
     role = (params.get("role") or [""])[0].strip().lower()
     if role:
@@ -900,6 +931,24 @@ INDEX_HTML = """<!doctype html>
           <label for="skill">Required skill</label>
           <input id="skill" name="skill" list="skill-list" placeholder="python">
           <datalist id="skill-list"></datalist>
+        </div>
+        <div class="field">
+          <label for="date_field">Date field</label>
+          <select id="date_field" name="date_field">
+            <option value="last_seen" selected>Last seen</option>
+            <option value="first_seen">First seen</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="date_from">Date from</label>
+            <input id="date_from" name="date_from" type="date">
+          </div>
+          <div class="field">
+            <label for="date_to">Date to</label>
+            <input id="date_to" name="date_to" type="date">
+          </div>
         </div>
         <div class="row">
           <div class="field">
