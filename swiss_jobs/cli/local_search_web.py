@@ -133,6 +133,18 @@ def _load_json_object(value: Any) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _load_json_list(value: Any) -> list[str]:
+    if not value:
+        return []
+    try:
+        payload = json.loads(value)
+    except (TypeError, json.JSONDecodeError):
+        return []
+    if not isinstance(payload, list):
+        return []
+    return [str(item) for item in payload if item is not None and str(item).strip()]
+
+
 def _database_label(database_path: Path) -> str:
     parts = database_path.parts
     if len(parts) >= 3 and parts[-2] == "main-config":
@@ -289,10 +301,28 @@ def _build_where(params: dict[str, list[str]]) -> tuple[str, list[Any], list[str
         values.extend(sorted(TECH_TERM_TYPES))
         values.append(skill)
 
+    keywords = [value.lower() for value in _request_values(params, "keyword")]
+    for keyword in keywords:
+        pattern = f"%{keyword}%"
+        clauses.append(
+            """
+            (
+                EXISTS (
+                    SELECT 1 FROM vacancy_terms vt
+                    WHERE vt.vacancy_id = v.vacancy_id
+                      AND lower(vt.term_value) LIKE ?
+                ) OR
+                lower(v.keywords_matched_json) LIKE ? OR
+                lower(v.analytics_json) LIKE ?
+            )
+            """
+        )
+        values.extend([pattern, pattern, pattern])
+
     where = ""
     if clauses:
         where = "WHERE " + " AND ".join(f"({clause.strip()})" for clause in clauses)
-    return where, values, words
+    return where, values, [*words, *keywords]
 
 
 def search_local_databases(
@@ -321,6 +351,7 @@ def search_local_databases(
             v.salary_currency,
             v.salary_unit,
             v.salary_text,
+            v.keywords_matched_json,
             v.analytics_json,
             v.first_seen_at,
             v.last_seen_at,
@@ -347,6 +378,7 @@ def search_local_databases(
 
         for row in fetched:
             analytics = _load_json_object(row["analytics_json"])
+            matched_keywords = _load_json_list(row["keywords_matched_json"])
             skills = []
             for key in ("programming_languages", "frameworks_libraries", "cloud_platforms", "databases", "tools"):
                 skills.extend(_listify(analytics.get(key)))
@@ -370,6 +402,7 @@ def search_local_databases(
                     "role": analytics.get("role_family_primary") or "",
                     "seniority": ", ".join(_listify(analytics.get("seniority_labels"))),
                     "remote_mode": analytics.get("remote_mode") or "",
+                    "matched_keywords": matched_keywords[:10],
                     "skills": sorted({str(skill) for skill in skills if str(skill).strip()})[:10],
                     "score": _row_score(row, words),
                     "description_preview": str(row["description_text"] or "").strip()[:420],
@@ -761,6 +794,7 @@ INDEX_HTML = """<!doctype html>
     }
     .tag.role { background: #eef3fb; color: #1e4c82; }
     .tag.warn { background: #fff2df; color: #7a4008; }
+    .tag.keyword { background: #f1eef8; color: #4f3778; }
     .preview {
       color: #4b5968;
       font-size: 13px;
@@ -831,6 +865,11 @@ INDEX_HTML = """<!doctype html>
         <div class="field">
           <label for="q">Search</label>
           <textarea id="q" name="q" placeholder="python backend zurich"></textarea>
+        </div>
+        <div class="field">
+          <label for="keyword">Keywords</label>
+          <input id="keyword" name="keyword" list="keyword-list" placeholder="python, django, kubernetes">
+          <datalist id="keyword-list"></datalist>
         </div>
         <div class="row">
           <div class="field">
@@ -1003,6 +1042,7 @@ INDEX_HTML = """<!doctype html>
           job.role ? `<span class="tag role">${esc(job.role)}</span>` : "",
           job.seniority ? `<span class="tag warn">${esc(job.seniority)}</span>` : "",
           job.remote_mode ? `<span class="tag">${esc(job.remote_mode)}</span>` : "",
+          ...job.matched_keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`),
           ...job.skills.map((skill) => `<span class="tag">${esc(skill)}</span>`)
         ].filter(Boolean).join("");
         return `
@@ -1045,6 +1085,14 @@ INDEX_HTML = """<!doctype html>
         ...(facets.terms?.cloud_platform || []),
         ...(facets.terms?.database || []),
         ...(facets.terms?.tool || [])
+      ]));
+      setDatalist("#keyword-list", mergeFacetItems([
+        ...(facets.terms?.programming_language || []),
+        ...(facets.terms?.framework_library || []),
+        ...(facets.terms?.cloud_platform || []),
+        ...(facets.terms?.database || []),
+        ...(facets.terms?.tool || []),
+        ...(facets.terms?.methodology || [])
       ]));
       subtitleEl.textContent = `${facets.total || 0} local vacancies across ${(facets.databases || []).length} database(s).`;
       databaseSummaryEl.innerHTML = [

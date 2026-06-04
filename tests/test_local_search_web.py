@@ -38,6 +38,7 @@ def make_vacancy(
     place: str,
     salary_min: int | None = None,
     salary_max: int | None = None,
+    keywords_matched: list[str] | None = None,
     analytics: dict[str, object],
 ) -> VacancyFull:
     raw = {}
@@ -64,6 +65,7 @@ def make_vacancy(
         url=f"https://example.com/{vacancy_id}",
         source="jobs.ch",
         description_text=f"{title} role with local database search.",
+        keywords_matched=list(keywords_matched or []),
         raw=raw,
         extra={"analytics": analytics},
     )
@@ -146,6 +148,47 @@ class LocalSearchWebTests(unittest.TestCase):
 
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
             self.assertEqual("", payload["results"][0]["salary"])
+
+    def test_search_local_databases_filters_by_keywords(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Platform Engineer",
+                    company="Acme",
+                    place="Zurich",
+                    keywords_matched=["event-driven"],
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "programming_languages": ["python"],
+                    },
+                ),
+                make_vacancy(
+                    "vacancy-2",
+                    title="Platform Engineer",
+                    company="Beta",
+                    place="Bern",
+                    keywords_matched=["linux"],
+                    analytics={
+                        "role_family_primary": "devops_cloud_platform",
+                        "programming_languages": ["go"],
+                    },
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            payload = search_local_databases(
+                [database_path],
+                {
+                    "keyword": ["event-driven"],
+                    "limit": ["50"],
+                },
+            )
+
+            self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
+            self.assertEqual(["event-driven"], payload["results"][0]["matched_keywords"])
 
     def test_load_facets_reads_local_database_terms(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
