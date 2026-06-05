@@ -391,8 +391,21 @@ def _extract_explicit_seniority_labels(vacancy: VacancyFull) -> list[str]:
     if isinstance(detail_attributes, Mapping):
         values.extend(_coerce_strings(detail_attributes.get("seniorityLevel")))
 
-    for key in ("seniorityLevel", "job_seniority_level", "seniority_level", "seniority"):
+    for key in (
+        "expLevel",
+        "experienceLevel",
+        "experience_level",
+        "seniorityLevel",
+        "job_seniority_level",
+        "seniority_level",
+        "seniority",
+    ):
         values.extend(_coerce_strings(vacancy.raw.get(key)))
+
+    detail_payload = vacancy.raw.get("detailPayload")
+    if isinstance(detail_payload, Mapping):
+        for key in ("expLevel", "experienceLevel", "seniorityLevel"):
+            values.extend(_coerce_strings(detail_payload.get(key)))
 
     labels: list[str] = []
     for value in values:
@@ -695,13 +708,17 @@ def build_job_analytics(vacancy: VacancyFull) -> dict[str, Any]:
             spoken_languages.append(language)
 
     experience_years = _extract_experience_years(text)
+    explicit_seniority_labels = _dedupe_strings(
+        [
+            *_extract_explicit_seniority_labels(vacancy),
+            *_collect_matches(title_text, SENIORITY_KEYWORDS),
+        ]
+    )
+    seniority_text_labels = (
+        [] if explicit_seniority_labels else _collect_matches(text, SENIORITY_KEYWORDS)
+    )
     seniority_labels = _infer_seniority_labels(
-        _dedupe_strings(
-            [
-                *_extract_explicit_seniority_labels(vacancy),
-                *_collect_matches(text, SENIORITY_KEYWORDS),
-            ]
-        ),
+        _dedupe_strings([*explicit_seniority_labels, *seniority_text_labels]),
         experience_years,
     )
     confidence = "high"

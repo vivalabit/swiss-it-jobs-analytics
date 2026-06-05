@@ -92,6 +92,29 @@ class JobsChAnalyticsTests(unittest.TestCase):
         self.assertNotIn("employment_types", analytics)
         self.assertEqual(["quickApply"], analytics["listing_tags"])
 
+    def test_build_job_analytics_prefers_explicit_seniority_over_description_footer(self) -> None:
+        vacancy = VacancyFull(
+            id="analytics-seniority-footer",
+            title="Senior Fullstack Software Engineer",
+            company="Ergon Informatik AG",
+            place="Zurich",
+            description_text=(
+                "Mindestens 5 Jahre Berufserfahrung in der professionellen Software-Entwicklung. "
+                "Eva Felsberg, Lead Talent Acquisition Manager, steht dir bei Fragen gerne zur Verfügung. "
+                "Weitere Job-Angebote von Ergon. Erfahrung: Junior, Senior, Lehre, Schnuppertage."
+            ),
+            raw={
+                "expLevel": "Senior",
+                "detailPayload": {
+                    "expLevel": "Senior",
+                },
+            },
+        )
+
+        analytics = build_job_analytics(vacancy)
+
+        self.assertEqual(["senior"], analytics["seniority_labels"])
+
     def test_build_job_analytics_resolves_skill_aliases_and_negative_contexts(self) -> None:
         vacancy = VacancyFull(
             id="analytics-3",
