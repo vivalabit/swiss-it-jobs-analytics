@@ -392,7 +392,14 @@ def search_local_databases(
             v.salary_unit,
             v.salary_text,
             v.keywords_matched_json,
+            v.raw_json,
             v.analytics_json,
+            v.job_posting_schema_json,
+            v.detail_schema_error,
+            v.detail_schema_skipped,
+            v.llm_analysis_json,
+            v.llm_model,
+            v.llm_analyzed_at,
             v.first_seen_at,
             v.last_seen_at,
             v.description_text
@@ -444,7 +451,16 @@ def search_local_databases(
                     "matched_keywords": matched_keywords[:10],
                     "skills": sorted({str(skill) for skill in skills if str(skill).strip()})[:10],
                     "score": _row_score(row, words),
+                    "description_text": str(row["description_text"] or "").strip(),
                     "description_preview": str(row["description_text"] or "").strip()[:420],
+                    "analytics": analytics,
+                    "raw": _load_json_object(row["raw_json"]),
+                    "job_posting_schema": _load_json_object(row["job_posting_schema_json"]),
+                    "detail_schema_error": row["detail_schema_error"] or "",
+                    "detail_schema_skipped": bool(row["detail_schema_skipped"]),
+                    "llm_analysis": _load_json_object(row["llm_analysis_json"]),
+                    "llm_model": row["llm_model"] or "",
+                    "llm_analyzed_at": row["llm_analyzed_at"] or "",
                 }
             )
 
@@ -972,6 +988,12 @@ INDEX_HTML = """<!doctype html>
       gap: 14px;
       text-align: right;
     }
+    .job-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
     .salary {
       color: var(--green);
       font-weight: 800;
@@ -1018,6 +1040,97 @@ INDEX_HTML = """<!doctype html>
       white-space: nowrap;
       font-size: 13px;
       box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+    }
+    .details-toggle {
+      min-height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 13px;
+      box-shadow: var(--shadow-soft);
+    }
+    .details-toggle:hover,
+    .details-toggle[aria-expanded="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .json-toggle {
+      margin-top: 14px;
+    }
+    .job-details-panel {
+      margin: 16px 0 0 72px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      color: #344150;
+      box-shadow: var(--shadow-soft);
+    }
+    .job-details-panel[hidden] {
+      display: none;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px 16px;
+      margin: 0 0 14px;
+    }
+    .detail-item {
+      min-width: 0;
+    }
+    .detail-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .detail-value {
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .detail-section {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .detail-section[hidden] {
+      display: none;
+    }
+    .detail-section-title {
+      margin: 0 0 8px;
+      color: #17202a;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .detail-description {
+      margin: 0;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .detail-json {
+      max-height: 260px;
+      overflow: auto;
+      margin: 0;
+      border-radius: 6px;
+      background: #f8fafc;
+      padding: 12px;
+      color: #1f2937;
+      font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
     }
     .empty, .error {
       border: 1px dashed var(--line);
@@ -1123,7 +1236,10 @@ INDEX_HTML = """<!doctype html>
         justify-items: start;
         text-align: left;
       }
-      .tags, .preview { margin-left: 62px; }
+      .job-actions {
+        justify-content: flex-start;
+      }
+      .tags, .preview, .job-details-panel { margin-left: 62px; }
       .salary { white-space: normal; }
       .database-summary {
         right: 0;
@@ -1144,8 +1260,10 @@ INDEX_HTML = """<!doctype html>
       main { padding: 0; }
       .job { padding: 18px; }
       .job-head { grid-template-columns: 1fr; }
-      .company-mark, .tags, .preview { margin-left: 0; }
+      .company-mark, .tags, .preview, .job-details-panel { margin-left: 0; }
       .company-mark { border-radius: 8px; }
+      .job-side, .job-actions { width: 100%; justify-items: stretch; }
+      .job-actions > * { flex: 1 1 130px; }
     }
   </style>
 </head>
@@ -1436,6 +1554,102 @@ INDEX_HTML = """<!doctype html>
       `;
     }
 
+    function isPlainObject(value) {
+      return value && typeof value === "object" && !Array.isArray(value);
+    }
+
+    function hasDetailValue(value) {
+      if (value === null || value === undefined || value === "") return false;
+      if (Array.isArray(value)) return value.length > 0;
+      if (isPlainObject(value)) return Object.keys(value).length > 0;
+      return true;
+    }
+
+    function formatDetailValue(value) {
+      if (Array.isArray(value)) return value.join(", ");
+      if (isPlainObject(value)) return JSON.stringify(value);
+      if (typeof value === "boolean") return value ? "Yes" : "No";
+      return String(value ?? "");
+    }
+
+    function makeDomId(prefix, value, index) {
+      const clean = String(value || index).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "");
+      return `${prefix}-${clean || index}-${index}`;
+    }
+
+    function renderDetailGrid(rows) {
+      const items = rows.filter(([, value]) => hasDetailValue(value));
+      if (!items.length) return "";
+      return `
+        <div class="details-grid">
+          ${items.map(([label, value]) => `
+            <div class="detail-item">
+              <span class="detail-label">${esc(label)}</span>
+              <div class="detail-value">${esc(formatDetailValue(value))}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderJsonSection(title, value) {
+      if (!hasDetailValue(value)) return "";
+      return `
+        <section class="detail-section json-section" hidden>
+          <h3 class="detail-section-title">${esc(title)}</h3>
+          <pre class="detail-json">${esc(JSON.stringify(value, null, 2))}</pre>
+        </section>
+      `;
+    }
+
+    function renderJobDetails(job, detailsId) {
+      const jsonSections = [
+        renderJsonSection("Analytics", job.analytics),
+        renderJsonSection("LLM analysis", job.llm_analysis),
+        renderJsonSection("Job posting schema", job.job_posting_schema),
+        renderJsonSection("Raw vacancy data", job.raw),
+      ].filter(Boolean).join("");
+      const rows = [
+        ["Vacancy ID", job.id],
+        ["Database", job.database],
+        ["Source", job.source],
+        ["URL", job.url],
+        ["Company", job.company],
+        ["Location", job.location],
+        ["Employment type", job.employment_type],
+        ["Role", job.role],
+        ["Seniority", job.seniority],
+        ["Remote mode", job.remote_mode],
+        ["Salary", job.salary],
+        ["Salary minimum", job.salary_min],
+        ["Salary maximum", job.salary_max],
+        ["Salary currency", job.salary_currency],
+        ["Salary unit", job.salary_unit],
+        ["Published", job.publication_date],
+        ["First seen", job.first_seen_at],
+        ["Last seen", job.last_seen_at],
+        ["Detail skipped", job.detail_schema_skipped],
+        ["Detail error", job.detail_schema_error],
+        ["LLM model", job.llm_model],
+        ["LLM analyzed at", job.llm_analyzed_at],
+      ];
+      return `
+        <section class="job-details-panel" id="${detailsId}" hidden>
+          ${renderDetailGrid(rows)}
+          ${job.description_text ? `
+            <section class="detail-section">
+              <h3 class="detail-section-title">Description</h3>
+              <p class="detail-description">${esc(job.description_text)}</p>
+            </section>
+          ` : ""}
+          ${jsonSections ? `
+            <button class="details-toggle json-toggle" type="button" aria-expanded="false" data-json-toggle>Show JSON</button>
+            ${jsonSections}
+          ` : ""}
+        </section>
+      `;
+    }
+
     function renderResults(payload) {
       renderErrors(payload.database_errors);
       currentPage = Number(payload.page || 1);
@@ -1445,8 +1659,9 @@ INDEX_HTML = """<!doctype html>
         resultsEl.innerHTML = '<div class="empty">No vacancies match these filters.</div>';
         return;
       }
-      resultsEl.innerHTML = payload.results.map((job) => {
+      resultsEl.innerHTML = payload.results.map((job, index) => {
         const initial = String(job.company || job.title || "?").trim().slice(0, 1) || "?";
+        const detailsId = makeDomId("job-details", job.id, index);
         const tags = [
           job.role ? `<span class="tag role">${esc(job.role)}</span>` : "",
           job.seniority ? `<span class="tag warn">${esc(job.seniority)}</span>` : "",
@@ -1469,11 +1684,15 @@ INDEX_HTML = """<!doctype html>
               </div>
               <div class="job-side">
                 <div class="salary">${esc(job.salary || "")}</div>
-                ${job.url ? `<a class="open-link" href="${esc(job.url)}" target="_blank" rel="noreferrer" title="Open original vacancy">Open</a>` : ""}
+                <div class="job-actions">
+                  <button class="details-toggle" type="button" aria-expanded="false" aria-controls="${detailsId}" data-details-target="${detailsId}">Details</button>
+                  ${job.url ? `<a class="open-link" href="${esc(job.url)}" target="_blank" rel="noreferrer" title="Open original vacancy">Open</a>` : ""}
+                </div>
               </div>
             </div>
             ${tags ? `<div class="tags">${tags}</div>` : ""}
             ${job.description_preview ? `<p class="preview">${esc(job.description_preview)}${job.description_preview.length >= 420 ? "..." : ""}</p>` : ""}
+            ${renderJobDetails(job, detailsId)}
           </article>
         `;
       }).join("");
@@ -1538,6 +1757,34 @@ INDEX_HTML = """<!doctype html>
       const page = Number(button.dataset.page);
       if (!Number.isFinite(page)) return;
       runSearch(page);
+    });
+    resultsEl.addEventListener("click", (event) => {
+      const jsonButton = event.target.closest("button[data-json-toggle]");
+      if (jsonButton) {
+        const panel = jsonButton.closest(".job-details-panel");
+        const sections = panel ? Array.from(panel.querySelectorAll(".json-section")) : [];
+        const isExpanded = jsonButton.getAttribute("aria-expanded") === "true";
+        jsonButton.setAttribute("aria-expanded", String(!isExpanded));
+        jsonButton.textContent = isExpanded ? "Show JSON" : "Hide JSON";
+        sections.forEach((section) => {
+          section.hidden = isExpanded;
+        });
+        return;
+      }
+
+      const button = event.target.closest("button[data-details-target]");
+      if (button) {
+        const panel = document.getElementById(button.dataset.detailsTarget);
+        if (!panel) return;
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        button.textContent = isExpanded ? "Details" : "Hide details";
+        panel.hidden = isExpanded;
+        const preview = button.closest(".job")?.querySelector(".preview");
+        if (preview) {
+          preview.hidden = !isExpanded;
+        }
+      }
     });
     salaryMinRange.addEventListener("input", () => syncSalaryInputsFromRange("min"));
     salaryMaxRange.addEventListener("input", () => syncSalaryInputsFromRange("max"));

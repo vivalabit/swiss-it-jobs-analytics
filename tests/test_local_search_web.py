@@ -121,6 +121,11 @@ class LocalSearchWebTests(unittest.TestCase):
             )
 
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
+            result = payload["results"][0]
+            self.assertEqual("Python Backend Engineer role with local database search.", result["description_text"])
+            self.assertEqual("https://example.com/vacancy-1", result["url"])
+            self.assertEqual("software_engineering", result["analytics"]["role_family_primary"])
+            self.assertEqual("CHF", result["raw"]["salary"]["currency"])
             self.assertEqual([], payload["database_errors"])
 
     def test_search_local_databases_does_not_require_salary(self) -> None:
