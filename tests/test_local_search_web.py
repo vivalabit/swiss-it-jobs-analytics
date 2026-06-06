@@ -232,6 +232,33 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
             self.assertEqual(["event-driven"], payload["results"][0]["matched_keywords"])
 
+    def test_search_local_databases_uses_effective_seniority_for_lead_titles(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Lead Fullstack Software Developer Java / Software Architect",
+                    company="Yellowshark",
+                    place="Bern oder Zürich",
+                    analytics={
+                        "role_family_primary": "software_engineering",
+                        "seniority_labels": ["junior", "senior"],
+                        "programming_languages": ["java"],
+                    },
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            senior_payload = search_local_databases([database_path], {"seniority": ["senior"]})
+            junior_payload = search_local_databases([database_path], {"seniority": ["junior"]})
+
+            self.assertEqual(["vacancy-1"], [item["id"] for item in senior_payload["results"]])
+            self.assertEqual("senior", senior_payload["results"][0]["seniority"])
+            self.assertEqual("junior, senior", senior_payload["results"][0]["detected_seniority"])
+            self.assertEqual([], junior_payload["results"])
+
     def test_search_local_databases_filters_by_published_date_range(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "jobs.sqlite"

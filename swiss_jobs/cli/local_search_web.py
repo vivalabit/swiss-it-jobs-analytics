@@ -211,6 +211,30 @@ def _format_salary(row: sqlite3.Row) -> str:
     return ""
 
 
+def _select_effective_seniority(title: Any, labels: Iterable[Any]) -> str:
+    title_text = f" {str(title or '').lower()} "
+    title_patterns = (
+        ("manager", r"\b(?:head|manager|teamleiter|leiter|responsable)\b"),
+        ("senior", r"\b(?:lead|senior|staff|principal|architect|expert)\b"),
+        ("intern", r"\b(?:intern|internship|praktikum|praktikant|stagiaire)\b"),
+        ("junior", r"\b(?:junior|trainee|graduate|entry[-\s]?level)\b"),
+        ("mid", r"\b(?:mid|middle)\b"),
+    )
+    for label, pattern in title_patterns:
+        if re.search(pattern, title_text):
+            return label
+
+    normalized_labels = {
+        str(label).strip().lower()
+        for label in labels
+        if label is not None and str(label).strip()
+    }
+    for label in ("manager", "senior", "mid", "junior", "intern"):
+        if label in normalized_labels:
+            return label
+    return ""
+
+
 def _row_score(row: sqlite3.Row, words: list[str]) -> int:
     title = str(row["title"] or "").lower()
     company = str(row["company"] or "").lower()
@@ -308,20 +332,6 @@ def _build_where(params: dict[str, list[str]]) -> tuple[str, list[Any], list[str
         )
         values.append(role)
 
-    seniority = (params.get("seniority") or [""])[0].strip().lower()
-    if seniority:
-        clauses.append(
-            """
-            EXISTS (
-                SELECT 1 FROM vacancy_terms vt
-                WHERE vt.vacancy_id = v.vacancy_id
-                  AND vt.term_type = 'seniority'
-                  AND lower(vt.term_value) = ?
-            )
-            """
-        )
-        values.append(seniority)
-
     skills = [value.lower() for value in _request_values(params, "skill")]
     for skill in skills:
         placeholders = ", ".join("?" for _ in TECH_TERM_TYPES)
@@ -374,6 +384,7 @@ def search_local_databases(
     where, values, words = _build_where(params)
     rows: list[dict[str, Any]] = []
     database_errors: list[dict[str, str]] = []
+    selected_seniority = (params.get("seniority") or [""])[0].strip().lower()
 
     query = f"""
         SELECT
@@ -425,6 +436,10 @@ def search_local_databases(
         for row in fetched:
             analytics = _load_json_object(row["analytics_json"])
             matched_keywords = _load_json_list(row["keywords_matched_json"])
+            detected_seniority = _listify(analytics.get("seniority_labels"))
+            effective_seniority = _select_effective_seniority(row["title"], detected_seniority)
+            if selected_seniority and effective_seniority != selected_seniority:
+                continue
             skills = []
             for key in ("programming_languages", "frameworks_libraries", "cloud_platforms", "databases", "tools"):
                 skills.extend(_listify(analytics.get(key)))
@@ -446,7 +461,8 @@ def search_local_databases(
                     "salary": _format_salary(row),
                     "last_seen_at": row["last_seen_at"] or "",
                     "role": analytics.get("role_family_primary") or "",
-                    "seniority": ", ".join(_listify(analytics.get("seniority_labels"))),
+                    "seniority": effective_seniority,
+                    "detected_seniority": ", ".join(detected_seniority),
                     "remote_mode": analytics.get("remote_mode") or "",
                     "matched_keywords": matched_keywords[:10],
                     "skills": sorted({str(skill) for skill in skills if str(skill).strip()})[:10],
@@ -1619,6 +1635,7 @@ INDEX_HTML = """<!doctype html>
         ["Employment type", job.employment_type],
         ["Role", job.role],
         ["Seniority", job.seniority],
+        ["Detected seniority", job.detected_seniority],
         ["Remote mode", job.remote_mode],
         ["Salary", job.salary],
         ["Salary minimum", job.salary_min],
