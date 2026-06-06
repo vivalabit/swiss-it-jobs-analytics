@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import sqlite3
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 
 from swiss_jobs.cli.local_search_web import load_facets, search_local_databases
@@ -307,6 +309,107 @@ class LocalSearchWebTests(unittest.TestCase):
             )
             self.assertEqual([{"value": "jobs.ch", "count": 1}], facets["sources"])
             self.assertIn({"value": "python", "count": 1}, facets["terms"]["programming_language"])
+
+    def test_persist_result_normalizes_location_names(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Python Engineer",
+                    company="Acme",
+                    place="Zurich Switzerland",
+                    analytics={"programming_languages": ["python"]},
+                ),
+                make_vacancy(
+                    "vacancy-2",
+                    title="Data Engineer",
+                    company="Beta",
+                    place="Berne",
+                    analytics={"programming_languages": ["python"]},
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+
+            with closing(sqlite3.connect(database_path)) as connection:
+                rows = connection.execute(
+                    "SELECT vacancy_id, place FROM vacancies ORDER BY vacancy_id"
+                ).fetchall()
+
+            self.assertEqual(
+                [("vacancy-1", "Zürich"), ("vacancy-2", "Bern")],
+                rows,
+            )
+
+    def test_load_facets_collapses_legacy_location_aliases(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Python Engineer",
+                    company="Acme",
+                    place="Zurich",
+                    analytics={"programming_languages": ["python"]},
+                ),
+                make_vacancy(
+                    "vacancy-2",
+                    title="Data Engineer",
+                    company="Beta",
+                    place="Geneva",
+                    analytics={"programming_languages": ["python"]},
+                ),
+                make_vacancy(
+                    "vacancy-3",
+                    title="Platform Engineer",
+                    company="Gamma",
+                    place="Berne",
+                    analytics={"programming_languages": ["go"]},
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+            with closing(sqlite3.connect(database_path)) as connection:
+                connection.execute("UPDATE vacancies SET place = ? WHERE vacancy_id = ?", ("Zurich", "vacancy-1"))
+                connection.execute("UPDATE vacancies SET place = ? WHERE vacancy_id = ?", ("Geneva", "vacancy-2"))
+                connection.execute("UPDATE vacancies SET place = ? WHERE vacancy_id = ?", ("Berne", "vacancy-3"))
+                connection.commit()
+
+            facets = load_facets([database_path])
+
+            self.assertIn({"value": "Zürich", "count": 1}, facets["locations"])
+            self.assertIn({"value": "Genève", "count": 1}, facets["locations"])
+            self.assertIn({"value": "Bern", "count": 1}, facets["locations"])
+            self.assertNotIn({"value": "Zurich", "count": 1}, facets["locations"])
+            self.assertNotIn({"value": "Geneva", "count": 1}, facets["locations"])
+            self.assertNotIn({"value": "Berne", "count": 1}, facets["locations"])
+
+    def test_search_location_filter_matches_legacy_aliases_and_displays_canonical_name(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancies = [
+                make_vacancy(
+                    "vacancy-1",
+                    title="Python Engineer",
+                    company="Acme",
+                    place="Zurich",
+                    analytics={"programming_languages": ["python"]},
+                ),
+            ]
+            JobsDatabase(database_path).persist_result(config, make_result(config, vacancies))
+            with closing(sqlite3.connect(database_path)) as connection:
+                connection.execute(
+                    "UPDATE vacancies SET place = ? WHERE vacancy_id = ?",
+                    ("Zurich, Switzerland", "vacancy-1"),
+                )
+                connection.commit()
+
+            payload = search_local_databases([database_path], {"location": ["Zürich"], "limit": ["50"]})
+
+            self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
+            self.assertEqual("Zürich", payload["results"][0]["location"])
 
 
 if __name__ == "__main__":

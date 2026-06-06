@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import parse_qs, urlparse
 
+from swiss_jobs.core.locations import location_search_terms, normalize_location_display
+
 from .search_vacancies import DEFAULT_RUNTIME_DATABASES, _resolve_database_paths, _split_csv_values
 
 TECH_TERM_TYPES = {
@@ -258,8 +260,9 @@ def _build_where(params: dict[str, list[str]]) -> tuple[str, list[Any], list[str
 
     location = (params.get("location") or [""])[0].strip().lower()
     if location:
-        clauses.append("lower(v.place) LIKE ?")
-        values.append(f"%{location}%")
+        location_terms = location_search_terms(location) or [location]
+        clauses.append("(" + " OR ".join("lower(v.place) LIKE ?" for _ in location_terms) + ")")
+        values.extend(f"%{term}%" for term in location_terms)
 
     company = (params.get("company") or [""])[0].strip().lower()
     if company:
@@ -425,7 +428,7 @@ def search_local_databases(
                     "source": row["source"],
                     "title": row["title"] or "",
                     "company": row["company"] or "",
-                    "location": row["place"] or "",
+                    "location": normalize_location_display(row["place"]) or row["place"] or "",
                     "publication_date": row["publication_date"] or row["initial_publication_date"] or "",
                     "url": row["url"] or "",
                     "employment_type": row["employment_type"] or "",
@@ -513,7 +516,7 @@ def load_facets(database_paths: Iterable[Path]) -> dict[str, Any]:
                     LIMIT 150
                     """
                 ):
-                    place = str(row["place"] or "")
+                    place = normalize_location_display(row["place"])
                     if place:
                         locations[place] = locations.get(place, 0) + int(row["item_count"])
 
@@ -1151,7 +1154,7 @@ INDEX_HTML = """<!doctype html>
     <aside>
       <h1>Search Jobs</h1>
       <p class="sub">Searches only your loaded local SQLite databases.</p>
-      <form id="search-form">
+      <form id="search-form" autocomplete="off">
         <div class="field">
           <label for="q">Job title, keywords, or company</label>
           <textarea id="q" name="q" placeholder="python backend zurich"></textarea>
@@ -1168,8 +1171,7 @@ INDEX_HTML = """<!doctype html>
           </div>
           <div class="field">
             <label for="location">Location</label>
-            <input id="location" name="location" list="location-list" placeholder="Zurich">
-            <datalist id="location-list"></datalist>
+            <select id="location" name="location"><option value="">Any</option></select>
           </div>
         </div>
         <div class="field">
@@ -1486,7 +1488,7 @@ INDEX_HTML = """<!doctype html>
         ...(facets.terms?.role_family || [])
       ]));
       setOptions(document.querySelector("#seniority"), facets.terms?.seniority || []);
-      setDatalist("#location-list", facets.locations || []);
+      setOptions(document.querySelector("#location"), facets.locations || []);
       setDatalist("#skill-list", mergeFacetItems([
         ...(facets.terms?.programming_language || []),
         ...(facets.terms?.framework_library || []),

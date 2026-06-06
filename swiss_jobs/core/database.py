@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
+from .locations import normalize_location_display
 from .models import ClientConfig, ClientRunResult, VacancyFull
 from .salary import extract_salary_info
 
@@ -731,7 +732,7 @@ class JobsDatabase:
                 vacancy.source,
                 vacancy.title,
                 vacancy.company,
-                vacancy.place,
+                normalize_location_display(vacancy.place),
                 vacancy.publication_date,
                 vacancy.initial_publication_date,
                 1 if vacancy.is_new else 0,
