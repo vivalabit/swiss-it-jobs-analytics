@@ -971,6 +971,7 @@ INDEX_HTML = """<!doctype html>
       margin-top: 16px;
     }
     .parser-panel {
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
@@ -992,6 +993,71 @@ INDEX_HTML = """<!doctype html>
     .parser-preview {
       display: grid;
       gap: 10px;
+    }
+    .source-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 0 0 16px;
+      background: #fff;
+    }
+    .source-table th,
+    .source-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.35;
+      text-align: left;
+      vertical-align: middle;
+      overflow-wrap: anywhere;
+    }
+    .source-table th:first-child,
+    .source-table td:first-child {
+      width: 56px;
+      text-align: center;
+    }
+    .source-table th:last-child,
+    .source-table td:last-child {
+      width: 84px;
+    }
+    .source-table th {
+      background: #f8fafc;
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .source-table tr:last-child td {
+      border-bottom: 0;
+    }
+    .source-check {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      padding: 0;
+      accent-color: var(--accent);
+      box-shadow: none;
+    }
+    .source-name {
+      color: #17202a;
+      font-weight: 900;
+    }
+    .source-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 0 9px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
     }
     .parser-step {
       display: grid;
@@ -1677,23 +1743,59 @@ INDEX_HTML = """<!doctype html>
           <form class="parser-panel" autocomplete="off">
             <h2>Collection Parameters</h2>
             <p>Select the provider, search mode, and query fields for a future parser run.</p>
+            <table class="source-table" aria-label="Vacancy sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobs_ch" checked aria-label="Use jobs_ch"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobscout24_ch" checked aria-label="Use jobscout24_ch"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobup_ch" checked aria-label="Use jobup_ch"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="linked_in" checked aria-label="Use linked_in"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="swissdevjobs_ch" checked aria-label="Use swissdevjobs_ch"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
             <div class="row">
-              <div class="field">
-                <label for="parser_source">Source</label>
-                <select id="parser_source" name="parser_source">
-                  <option>jobs_ch</option>
-                  <option>jobscout24_ch</option>
-                  <option>jobup_ch</option>
-                  <option>linked_in</option>
-                  <option>swissdevjobs_ch</option>
-                </select>
-              </div>
               <div class="field">
                 <label for="parser_mode">Mode</label>
                 <select id="parser_mode" name="parser_mode">
                   <option>search</option>
                   <option>new</option>
                 </select>
+              </div>
+              <div class="field">
+                <label for="parser_canton">Canton</label>
+                <input id="parser_canton" name="parser_canton" placeholder="zh">
               </div>
             </div>
             <div class="row">
@@ -1709,11 +1811,11 @@ INDEX_HTML = """<!doctype html>
             <div class="row">
               <div class="field">
                 <label for="parser_pages">Max pages</label>
-                <input id="parser_pages" name="parser_pages" type="number" min="1" value="3">
+                <input id="parser_pages" name="parser_pages" type="number" min="1" placeholder="Optional">
               </div>
               <div class="field">
                 <label for="parser_detail_limit">Detail limit</label>
-                <input id="parser_detail_limit" name="parser_detail_limit" type="number" min="0" value="20">
+                <input id="parser_detail_limit" name="parser_detail_limit" type="number" min="0" placeholder="Optional">
               </div>
             </div>
             <div class="actions">
