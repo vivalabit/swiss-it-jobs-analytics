@@ -678,8 +678,96 @@ INDEX_HTML = """<!doctype html>
       padding: 24px 44px 32px;
       display: grid;
       grid-template-columns: 330px minmax(0, 1fr);
-      gap: 36px;
+      gap: 24px;
       align-items: start;
+    }
+    .app.view-vacancies,
+    .app.view-settings {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .app.view-vacancies .filters-panel,
+    .app.view-settings .filters-panel {
+      display: none;
+    }
+    .main-menu {
+      grid-column: 1 / -1;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr) minmax(240px, 320px);
+      gap: 18px;
+      align-items: center;
+    }
+    .brand {
+      display: grid;
+      gap: 4px;
+    }
+    .brand-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+    .brand-sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .menu-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .menu-btn {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: #344150;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .menu-btn:hover,
+    .menu-btn.is-active {
+      border-color: rgba(215, 25, 32, 0.2);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .menu-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #17202a;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .menu-btn.is-active .menu-icon {
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+    }
+    .menu-foot {
+      border-left: 1px solid var(--line);
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
     }
     aside {
       position: sticky;
@@ -695,6 +783,9 @@ INDEX_HTML = """<!doctype html>
     main {
       min-width: 0;
       padding: 10px 0 32px;
+    }
+    .workspace-panel[hidden] {
+      display: none;
     }
     h1 {
       margin: 0 0 4px;
@@ -798,6 +889,80 @@ INDEX_HTML = """<!doctype html>
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+    .section-kicker {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .settings-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .settings-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .settings-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .settings-row {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .setting-toggle {
+      min-height: 42px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: #344150;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .switch {
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      position: relative;
+    }
+    .switch::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(17, 24, 39, 0.14);
+    }
+    .switch.is-on {
+      background: linear-gradient(180deg, #e03136, #c9161d);
+    }
+    .switch.is-on::after {
+      left: 24px;
     }
     .info-menu {
       position: relative;
@@ -1241,11 +1406,30 @@ INDEX_HTML = """<!doctype html>
         padding: 18px;
         gap: 18px;
       }
+      .app.view-vacancies,
+      .app.view-settings {
+        grid-template-columns: 1fr;
+      }
+      .main-menu {
+        position: static;
+        max-height: none;
+        grid-template-columns: 1fr;
+      }
+      .menu-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .menu-foot {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+        padding-top: 14px;
+      }
       aside {
         position: static;
         max-height: none;
       }
       main { padding: 18px; }
+      .settings-grid { grid-template-columns: 1fr; }
       .job-head { grid-template-columns: 44px minmax(0, 1fr); }
       .job-side {
         grid-column: 2;
@@ -1263,6 +1447,8 @@ INDEX_HTML = """<!doctype html>
       }
     }
     @media (max-width: 520px) {
+      .main-menu { padding: 18px; }
+      .menu-list { grid-template-columns: 1fr; }
       aside { padding: 18px; }
       .row, .actions { grid-template-columns: 1fr; }
       .toolbar { align-items: flex-start; flex-direction: column; }
@@ -1284,8 +1470,31 @@ INDEX_HTML = """<!doctype html>
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside>
+  <div class="app view-vacancies" id="app">
+    <nav class="main-menu" aria-label="Main application menu">
+      <div class="brand">
+        <p class="brand-title">Swiss IT Jobs</p>
+        <span class="brand-sub">Local database app</span>
+      </div>
+      <div class="menu-list">
+        <button class="menu-btn is-active" type="button" data-view-target="vacancies" aria-current="page">
+          <span class="menu-icon" aria-hidden="true">▦</span>
+          <span>Vacancy Browser</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="search">
+          <span class="menu-icon" aria-hidden="true">⌕</span>
+          <span>Vacancy Search</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="settings">
+          <span class="menu-icon" aria-hidden="true">⚙</span>
+          <span>Settings</span>
+        </button>
+      </div>
+      <div class="menu-foot">
+        Browse local SQLite databases without changing stored vacancy data.
+      </div>
+    </nav>
+    <aside class="filters-panel">
       <h1>Search Jobs</h1>
       <p class="sub">Searches only your loaded local SQLite databases.</p>
       <form id="search-form" autocomplete="off">
@@ -1377,27 +1586,88 @@ INDEX_HTML = """<!doctype html>
       </details>
     </aside>
     <main>
-      <div class="toolbar">
-        <div>
-          <h1 id="result-title">Found <strong>0</strong> jobs</h1>
-          <p class="sub" id="subtitle">Loading local database facets...</p>
+      <section class="workspace-panel" id="vacancies-workspace">
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker" id="workspace-kicker">Vacancy Browser</p>
+            <h1 id="result-title">Found <strong>0</strong> jobs</h1>
+            <p class="sub" id="subtitle">Loading local database facets...</p>
+          </div>
+          <div class="toolbar-actions">
+            <details class="info-menu">
+              <summary aria-label="Local database statistics" title="Local database statistics">i</summary>
+              <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
+            </details>
+            <select class="sort-control" aria-label="Sort results">
+              <option>Most Recent</option>
+            </select>
+          </div>
         </div>
-        <div class="toolbar-actions">
-          <details class="info-menu">
-            <summary aria-label="Local database statistics" title="Local database statistics">i</summary>
-            <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
-          </details>
-          <select class="sort-control" aria-label="Sort results">
-            <option>Most Recent</option>
-          </select>
+        <div id="errors"></div>
+        <section class="results" id="results"></section>
+        <nav class="pagination" id="pagination" aria-label="Search results pages"></nav>
+      </section>
+      <section class="workspace-panel" id="settings-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Settings</p>
+            <h1>Application Settings</h1>
+            <p class="sub">Visual placeholder for future source management, data collection, and statistics export controls.</p>
+          </div>
         </div>
-      </div>
-      <div id="errors"></div>
-      <section class="results" id="results"></section>
-      <nav class="pagination" id="pagination" aria-label="Search results pages"></nav>
+        <section class="settings-grid" aria-label="Application settings">
+          <article class="settings-panel">
+            <h2>Vacancy Sources</h2>
+            <p>Connect and select local databases for browsing, search, and future synchronization.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Use main-config databases</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Show test databases</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+          <article class="settings-panel">
+            <h2>Statistics Builder</h2>
+            <p>Reserved for running public statistics generation separately from vacancy browsing.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Update public CSV files</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Save JSON snapshots</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+          <article class="settings-panel">
+            <h2>Interface</h2>
+            <p>Display settings for results, vacancy cards, and local helper content.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Compact vacancy cards</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Show JSON details</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
     </main>
   </div>
   <script>
+    const appEl = document.querySelector("#app");
+    const menuButtons = Array.from(document.querySelectorAll("[data-view-target]"));
+    const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
+    const settingsWorkspaceEl = document.querySelector("#settings-workspace");
+    const workspaceKickerEl = document.querySelector("#workspace-kicker");
     const form = document.querySelector("#search-form");
     const resultsEl = document.querySelector("#results");
     const errorsEl = document.querySelector("#errors");
@@ -1416,6 +1686,7 @@ INDEX_HTML = """<!doctype html>
     const salaryRangeMax = Number(salaryMaxRange.max);
     const pageSize = 10;
     let currentPage = 1;
+    let currentView = "vacancies";
 
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -1495,6 +1766,44 @@ INDEX_HTML = """<!doctype html>
       params.set("page", String(page));
       params.set("per_page", String(pageSize));
       return params;
+    }
+
+    function activateMenu(view) {
+      for (const button of menuButtons) {
+        const isActive = button.dataset.viewTarget === view;
+        button.classList.toggle("is-active", isActive);
+        if (isActive) {
+          button.setAttribute("aria-current", "page");
+        } else {
+          button.removeAttribute("aria-current");
+        }
+      }
+    }
+
+    function setView(view, options = {}) {
+      currentView = view;
+      appEl.classList.remove("view-vacancies", "view-search", "view-settings");
+      appEl.classList.add(`view-${view}`);
+      activateMenu(view);
+
+      const isSettings = view === "settings";
+      vacanciesWorkspaceEl.hidden = isSettings;
+      settingsWorkspaceEl.hidden = !isSettings;
+
+      if (view === "vacancies") {
+        workspaceKickerEl.textContent = "Vacancy Browser";
+        if (options.resetFilters) {
+          form.reset();
+          syncSalaryInputsFromRange();
+          currentPage = 1;
+          runSearch(1);
+        }
+        return;
+      }
+
+      if (view === "search") {
+        workspaceKickerEl.textContent = "Vacancy Search";
+      }
     }
 
     function renderErrors(errors) {
@@ -1757,8 +2066,16 @@ INDEX_HTML = """<!doctype html>
       renderResults(payload);
     }
 
+    menuButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const view = button.dataset.viewTarget;
+        if (!view || view === currentView) return;
+        setView(view, { resetFilters: view === "vacancies" });
+      });
+    });
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      setView("search");
       currentPage = 1;
       runSearch(1);
     });
