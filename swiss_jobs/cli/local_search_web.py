@@ -682,10 +682,12 @@ INDEX_HTML = """<!doctype html>
       align-items: start;
     }
     .app.view-search,
+    .app.view-ai-analyse,
     .app.view-settings {
       grid-template-columns: minmax(0, 1fr);
     }
     .app.view-search .filters-panel,
+    .app.view-ai-analyse .filters-panel,
     .app.view-settings .filters-panel {
       display: none;
     }
@@ -719,7 +721,7 @@ INDEX_HTML = """<!doctype html>
     }
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
     }
     .menu-btn {
@@ -1530,6 +1532,7 @@ INDEX_HTML = """<!doctype html>
         gap: 18px;
       }
       .app.view-search,
+      .app.view-ai-analyse,
       .app.view-settings {
         grid-template-columns: 1fr;
       }
@@ -1539,7 +1542,7 @@ INDEX_HTML = """<!doctype html>
         grid-template-columns: 1fr;
       }
       .menu-list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .menu-foot {
         border-left: 0;
@@ -1608,6 +1611,10 @@ INDEX_HTML = """<!doctype html>
         <button class="menu-btn" type="button" data-view-target="search">
           <span class="menu-icon" aria-hidden="true">⌕</span>
           <span>Vacancy Search</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="ai-analyse">
+          <span class="menu-icon" aria-hidden="true">✦</span>
+          <span>AI Analyse</span>
         </button>
         <button class="menu-btn" type="button" data-view-target="settings">
           <span class="menu-icon" aria-hidden="true">⚙</span>
@@ -1843,6 +1850,129 @@ INDEX_HTML = """<!doctype html>
           </article>
         </section>
       </section>
+      <section class="workspace-panel" id="ai-analyse-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">AI Analyse</p>
+            <h1>Analyse New Vacancies</h1>
+            <p class="sub">Visual shell for enriching fresh local vacancies with AI role, skill, salary, and seniority signals.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="AI vacancy analysis launcher">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Analysis Parameters</h2>
+            <p>Select vacancy sources, freshness scope, and model settings for a future AI analysis run.</p>
+            <table class="source-table" aria-label="AI analysis sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobs_ch" checked aria-label="Analyse jobs_ch"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobscout24_ch" checked aria-label="Analyse jobscout24_ch"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobup_ch" checked aria-label="Analyse jobup_ch"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="linked_in" checked aria-label="Analyse linked_in"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="swissdevjobs_ch" checked aria-label="Analyse swissdevjobs_ch"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_scope">Vacancy scope</label>
+                <select id="analysis_scope" name="analysis_scope">
+                  <option>new vacancies only</option>
+                  <option>missing AI analysis</option>
+                  <option>all selected vacancies</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="analysis_model">Model</label>
+                <select id="analysis_model" name="analysis_model">
+                  <option value="gpt-5-nano" selected>gpt-5-nano</option>
+                  <option value="gpt-5-mini">gpt-5-mini</option>
+                  <option value="gpt-4.1-nano">gpt-4.1-nano</option>
+                  <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+                  <option value="o4-mini">o4-mini</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_date_from">First seen from</label>
+                <input id="analysis_date_from" name="analysis_date_from" type="date">
+              </div>
+              <div class="field">
+                <label for="analysis_date_to">First seen to</label>
+                <input id="analysis_date_to" name="analysis_date_to" type="date">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_limit">Vacancy limit</label>
+                <input id="analysis_limit" name="analysis_limit" type="number" min="1" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="analysis_batch_size">Batch size</label>
+                <input id="analysis_batch_size" name="analysis_batch_size" type="number" min="1" placeholder="25">
+              </div>
+            </div>
+            <div class="field">
+              <label for="analysis_notes">Analysis focus</label>
+              <textarea id="analysis_notes" name="analysis_notes" placeholder="skills, role category, seniority, salary signals"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="AI analysis launch is not connected yet">Run AI Analyse</button>
+              <button class="btn secondary" type="button" title="Preview analysis command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="AI analysis run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show AI analysis status, model usage, and database update results when enrichment is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Find fresh vacancies</strong>Filter selected databases by first-seen date and missing AI analysis fields.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Run AI enrichment</strong>Analyse vacancy descriptions for role category, seniority, skills, and salary signals.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Write analysis results</strong>Persist structured AI output back into the selected local SQLite databases.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
       <section class="workspace-panel" id="settings-workspace" hidden>
         <div class="toolbar">
           <div>
@@ -1903,6 +2033,7 @@ INDEX_HTML = """<!doctype html>
     const menuButtons = Array.from(document.querySelectorAll("[data-view-target]"));
     const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
     const parserWorkspaceEl = document.querySelector("#parser-workspace");
+    const aiAnalyseWorkspaceEl = document.querySelector("#ai-analyse-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
     const workspaceKickerEl = document.querySelector("#workspace-kicker");
     const form = document.querySelector("#search-form");
@@ -2019,14 +2150,16 @@ INDEX_HTML = """<!doctype html>
 
     function setView(view, options = {}) {
       currentView = view;
-      appEl.classList.remove("view-vacancies", "view-search", "view-settings");
+      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-settings");
       appEl.classList.add(`view-${view}`);
       activateMenu(view);
 
       const isParser = view === "search";
+      const isAiAnalyse = view === "ai-analyse";
       const isSettings = view === "settings";
-      vacanciesWorkspaceEl.hidden = isParser || isSettings;
+      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isSettings;
       parserWorkspaceEl.hidden = !isParser;
+      aiAnalyseWorkspaceEl.hidden = !isAiAnalyse;
       settingsWorkspaceEl.hidden = !isSettings;
 
       if (view === "vacancies") {
