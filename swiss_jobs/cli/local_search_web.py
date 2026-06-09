@@ -769,7 +769,7 @@ INDEX_HTML = """<!doctype html>
       color: #fff;
       box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
     }
-    aside {
+    .filters-panel {
       position: sticky;
       top: 24px;
       max-height: calc(100vh - 48px);
@@ -993,6 +993,147 @@ INDEX_HTML = """<!doctype html>
     .parser-preview {
       display: grid;
       gap: 10px;
+    }
+    .log-toggle {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      z-index: 40;
+      width: 44px;
+      height: 104px;
+      border: 1px solid rgba(215, 25, 32, 0.22);
+      border-right: 0;
+      border-radius: 8px 0 0 8px;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 32px rgba(17, 24, 39, 0.16);
+      transform: translateY(-50%);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .log-toggle:hover,
+    .log-toggle[aria-expanded="true"] {
+      background: var(--accent-dark);
+    }
+    .log-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 39;
+      width: min(380px, calc(100vw - 48px));
+      border-left: 1px solid var(--line);
+      background: #fff;
+      box-shadow: -18px 0 42px rgba(17, 24, 39, 0.14);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      transform: translateX(100%);
+      transition: transform 160ms ease;
+    }
+    .log-drawer.is-open {
+      transform: translateX(0);
+    }
+    .log-head {
+      min-height: 70px;
+      border-bottom: 1px solid var(--line);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+    }
+    .log-title {
+      margin: 0 0 4px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+    .log-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .log-close {
+      width: 32px;
+      height: 32px;
+      min-height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-weight: 900;
+    }
+    .log-list {
+      min-height: 0;
+      overflow: auto;
+      padding: 14px 18px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      background: #fafafa;
+    }
+    .log-entry {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+    .log-entry.is-info { border-left: 3px solid #17202a; }
+    .log-entry.is-success { border-left: 3px solid var(--accent); }
+    .log-entry.is-warning { border-left: 3px solid #d97706; }
+    .log-entry.is-error { border-left: 3px solid #8e1d23; }
+    .log-entry-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .log-entry-title {
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    .log-entry-time {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .log-entry-message {
+      margin: 0;
+      color: #344150;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .log-actions {
+      border-top: 1px solid var(--line);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: flex-end;
+      background: #fff;
+    }
+    .log-clear {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
     }
     .source-table {
       width: 100%;
@@ -1543,7 +1684,7 @@ INDEX_HTML = """<!doctype html>
       .menu-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      aside {
+      .filters-panel {
         position: static;
         max-height: none;
       }
@@ -1569,7 +1710,7 @@ INDEX_HTML = """<!doctype html>
     @media (max-width: 520px) {
       .main-menu { padding: 18px; }
       .menu-list { grid-template-columns: 1fr; }
-      aside { padding: 18px; }
+      .filters-panel { padding: 18px; }
       .row, .actions { grid-template-columns: 1fr; }
       .toolbar { align-items: flex-start; flex-direction: column; }
       .toolbar-actions { width: 100%; justify-content: space-between; }
@@ -1586,6 +1727,13 @@ INDEX_HTML = """<!doctype html>
       .company-mark { border-radius: 8px; }
       .job-side, .job-actions { width: 100%; justify-items: stretch; }
       .job-actions > * { flex: 1 1 130px; }
+      .log-toggle {
+        width: 40px;
+        height: 86px;
+      }
+      .log-drawer {
+        width: calc(100vw - 40px);
+      }
     }
   </style>
 </head>
@@ -2135,6 +2283,20 @@ INDEX_HTML = """<!doctype html>
       </section>
     </main>
   </div>
+  <button class="log-toggle" id="log-toggle" type="button" aria-controls="log-drawer" aria-expanded="false" title="Open application logs">☰</button>
+  <aside class="log-drawer" id="log-drawer" aria-label="Application logs" aria-hidden="true">
+    <div class="log-head">
+      <div>
+        <p class="log-title">Application Logs</p>
+        <p class="log-subtitle">Search, collection, AI analysis, and public snapshot events.</p>
+      </div>
+      <button class="log-close" id="log-close" type="button" aria-label="Close logs">×</button>
+    </div>
+    <div class="log-list" id="log-list" role="log" aria-live="polite"></div>
+    <div class="log-actions">
+      <button class="log-clear" id="log-clear" type="button">Clear logs</button>
+    </div>
+  </aside>
   <script>
     const appEl = document.querySelector("#app");
     const menuButtons = Array.from(document.querySelectorAll("[data-view-target]"));
@@ -2143,6 +2305,11 @@ INDEX_HTML = """<!doctype html>
     const aiAnalyseWorkspaceEl = document.querySelector("#ai-analyse-workspace");
     const publicStatsWorkspaceEl = document.querySelector("#public-stats-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
+    const logToggleEl = document.querySelector("#log-toggle");
+    const logDrawerEl = document.querySelector("#log-drawer");
+    const logCloseEl = document.querySelector("#log-close");
+    const logListEl = document.querySelector("#log-list");
+    const logClearEl = document.querySelector("#log-clear");
     const workspaceKickerEl = document.querySelector("#workspace-kicker");
     const form = document.querySelector("#search-form");
     const resultsEl = document.querySelector("#results");
@@ -2161,6 +2328,8 @@ INDEX_HTML = """<!doctype html>
     const salaryTrack = document.querySelector("#salary-track");
     const salaryRangeMax = Number(salaryMaxRange.max);
     const pageSize = 10;
+    const maxLogEntries = 80;
+    const logs = [];
     let currentPage = 1;
     let currentView = "vacancies";
 
@@ -2168,6 +2337,46 @@ INDEX_HTML = """<!doctype html>
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     }[char]));
     const formatChf = (value) => `${Number(value).toLocaleString("en-US")} CHF`;
+    const viewLabels = {
+      vacancies: "Vacancy Browser",
+      search: "Vacancy Search",
+      "ai-analyse": "AI Analyse",
+      "public-stats": "Public Stats",
+      settings: "Settings",
+    };
+
+    function formatLogTime(date) {
+      return date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    }
+
+    function renderLogs() {
+      if (!logs.length) {
+        logListEl.innerHTML = '<div class="empty">No log entries yet.</div>';
+        return;
+      }
+      logListEl.innerHTML = logs.map((entry) => `
+        <article class="log-entry is-${esc(entry.level)}">
+          <div class="log-entry-head">
+            <span class="log-entry-title">${esc(entry.title)}</span>
+            <span class="log-entry-time">${esc(entry.time)}</span>
+          </div>
+          <p class="log-entry-message">${esc(entry.message)}</p>
+        </article>
+      `).join("");
+      logListEl.scrollTop = 0;
+    }
+
+    function addLog(title, message, level = "info") {
+      logs.unshift({ title, message, level, time: formatLogTime(new Date()) });
+      if (logs.length > maxLogEntries) logs.length = maxLogEntries;
+      renderLogs();
+    }
+
+    function setLogDrawer(open) {
+      logDrawerEl.classList.toggle("is-open", open);
+      logDrawerEl.setAttribute("aria-hidden", String(!open));
+      logToggleEl.setAttribute("aria-expanded", String(open));
+    }
 
     function syncSalaryTrack() {
       const min = Number(salaryMinRange.value);
@@ -2264,6 +2473,9 @@ INDEX_HTML = """<!doctype html>
     }
 
     function setView(view, options = {}) {
+      if (view !== currentView) {
+        addLog("Navigation", `Opened ${viewLabels[view] || view}.`);
+      }
       currentView = view;
       appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-public-stats", "view-settings");
       appEl.classList.add(`view-${view}`);
@@ -2511,6 +2723,7 @@ INDEX_HTML = """<!doctype html>
     }
 
     async function loadFacets() {
+      addLog("Facets", "Loading local database facets.");
       const response = await fetch("/api/facets");
       const facets = await response.json();
       setOptions(document.querySelector("#source"), facets.sources || []);
@@ -2538,18 +2751,22 @@ INDEX_HTML = """<!doctype html>
       subtitleEl.textContent = `${facets.total || 0} local vacancies across ${(facets.databases || []).length} database(s).`;
       databaseSummaryEl.innerHTML = renderSummaryBlock("Sources", facets.sources || []);
       renderErrors(facets.database_errors);
+      addLog("Facets", `Loaded ${facets.total || 0} vacancies across ${(facets.databases || []).length} database(s).`, facets.database_errors?.length ? "warning" : "success");
     }
 
     async function runSearch(page = currentPage) {
+      addLog("Vacancy Search", `Searching local databases, page ${page}.`);
       resultsEl.innerHTML = '<div class="empty">Searching local databases...</div>';
       paginationEl.innerHTML = "";
       const response = await fetch(`/api/search?${buildParams(page).toString()}`);
       const payload = await response.json();
       if (!response.ok) {
         resultsEl.innerHTML = `<div class="error">${esc(payload.error || "Search failed")}</div>`;
+        addLog("Vacancy Search", payload.error || "Search failed.", "error");
         return;
       }
       renderResults(payload);
+      addLog("Vacancy Search", `Found ${payload.total ?? payload.count ?? 0} matching vacancies.`, payload.database_errors?.length ? "warning" : "success");
     }
 
     menuButtons.forEach((button) => {
@@ -2569,6 +2786,7 @@ INDEX_HTML = """<!doctype html>
       form.reset();
       syncSalaryInputsFromRange();
       currentPage = 1;
+      addLog("Vacancy Search", "Cleared search filters.");
       runSearch(1);
     });
     paginationEl.addEventListener("click", (event) => {
@@ -2611,9 +2829,48 @@ INDEX_HTML = """<!doctype html>
     salaryMinInput.addEventListener("input", syncSalaryRangeFromInputs);
     salaryMaxInput.addEventListener("input", syncSalaryRangeFromInputs);
 
+    document.querySelector("#parser-workspace .btn.primary")?.addEventListener("click", () => {
+      addLog("Vacancy Collection", "Parser launch requested. Command execution is not connected yet.", "warning");
+      setLogDrawer(true);
+    });
+    document.querySelector("#parser-workspace .btn.secondary")?.addEventListener("click", () => {
+      addLog("Vacancy Collection", "Parser command preview requested.", "info");
+      setLogDrawer(true);
+    });
+    document.querySelector("#ai-analyse-workspace .btn.primary")?.addEventListener("click", () => {
+      const model = document.querySelector("#analysis_model")?.value || "selected model";
+      const scope = document.querySelector("#analysis_scope")?.value || "selected vacancies";
+      addLog("AI Analyse", `AI analysis requested for ${scope} with ${model}. Command execution is not connected yet.`, "warning");
+      setLogDrawer(true);
+    });
+    document.querySelector("#ai-analyse-workspace .btn.secondary")?.addEventListener("click", () => {
+      addLog("AI Analyse", "AI analysis command preview requested.", "info");
+      setLogDrawer(true);
+    });
+    document.querySelector("#public-stats-workspace .btn.primary")?.addEventListener("click", () => {
+      addLog("Public Stats", "Public snapshot build requested. Command execution is not connected yet.", "warning");
+      setLogDrawer(true);
+    });
+    document.querySelector("#public-stats-workspace .btn.secondary")?.addEventListener("click", () => {
+      addLog("Public Stats", "Public snapshot command preview requested.", "info");
+      setLogDrawer(true);
+    });
+    logToggleEl.addEventListener("click", () => {
+      setLogDrawer(logToggleEl.getAttribute("aria-expanded") !== "true");
+    });
+    logCloseEl.addEventListener("click", () => setLogDrawer(false));
+    logClearEl.addEventListener("click", () => {
+      logs.length = 0;
+      renderLogs();
+      addLog("Logs", "Log history cleared.");
+    });
+
     syncSalaryTrack();
+    renderLogs();
+    addLog("Application", "Local vacancy interface initialized.");
     loadFacets().then(runSearch).catch((error) => {
       resultsEl.innerHTML = `<div class="error">${esc(error.message || error)}</div>`;
+      addLog("Application", error.message || String(error), "error");
     });
   </script>
 </body>
