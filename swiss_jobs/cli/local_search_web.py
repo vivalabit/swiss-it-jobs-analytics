@@ -128,9 +128,12 @@ def _request_date(params: dict[str, list[str]], name: str) -> str:
     raw = (params.get(name) or [""])[0].strip()
     if not raw:
         return ""
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
-        raise ValueError(f"{name} must use YYYY-MM-DD format")
-    return raw
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
+        return raw
+    match = re.fullmatch(r"(\d{2})\.(\d{2})\.(\d{4})", raw)
+    if match:
+        return f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
+    raise ValueError(f"{name} must use dd.mm.yyyy format")
 
 
 def _date_filter_expression(field_name: str) -> tuple[str, bool]:
@@ -683,11 +686,13 @@ INDEX_HTML = """<!doctype html>
     }
     .app.view-search,
     .app.view-ai-analyse,
+    .app.view-public-stats,
     .app.view-settings {
       grid-template-columns: minmax(0, 1fr);
     }
     .app.view-search .filters-panel,
     .app.view-ai-analyse .filters-panel,
+    .app.view-public-stats .filters-panel,
     .app.view-settings .filters-panel {
       display: none;
     }
@@ -699,7 +704,7 @@ INDEX_HTML = """<!doctype html>
       padding: 18px 20px;
       box-shadow: var(--shadow);
       display: grid;
-      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr) minmax(240px, 320px);
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
       gap: 18px;
       align-items: center;
     }
@@ -721,7 +726,7 @@ INDEX_HTML = """<!doctype html>
     }
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
     }
     .menu-btn {
@@ -763,13 +768,6 @@ INDEX_HTML = """<!doctype html>
       background: linear-gradient(180deg, #e03136, #c9161d);
       color: #fff;
       box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
-    }
-    .menu-foot {
-      border-left: 1px solid var(--line);
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
     }
     aside {
       position: sticky;
@@ -1533,6 +1531,7 @@ INDEX_HTML = """<!doctype html>
       }
       .app.view-search,
       .app.view-ai-analyse,
+      .app.view-public-stats,
       .app.view-settings {
         grid-template-columns: 1fr;
       }
@@ -1543,12 +1542,6 @@ INDEX_HTML = """<!doctype html>
       }
       .menu-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .menu-foot {
-        border-left: 0;
-        border-top: 1px solid var(--line);
-        padding-left: 0;
-        padding-top: 14px;
       }
       aside {
         position: static;
@@ -1616,13 +1609,14 @@ INDEX_HTML = """<!doctype html>
           <span class="menu-icon" aria-hidden="true">✦</span>
           <span>AI Analyse</span>
         </button>
+        <button class="menu-btn" type="button" data-view-target="public-stats">
+          <span class="menu-icon" aria-hidden="true">◫</span>
+          <span>Public Stats</span>
+        </button>
         <button class="menu-btn" type="button" data-view-target="settings">
           <span class="menu-icon" aria-hidden="true">⚙</span>
           <span>Settings</span>
         </button>
-      </div>
-      <div class="menu-foot">
-        Browse local SQLite databases without changing stored vacancy data.
       </div>
     </nav>
     <aside class="filters-panel">
@@ -1678,11 +1672,11 @@ INDEX_HTML = """<!doctype html>
         <div class="row">
           <div class="field">
             <label for="date_from">Date from</label>
-            <input id="date_from" name="date_from" type="date">
+            <input id="date_from" name="date_from" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
           </div>
           <div class="field">
             <label for="date_to">Date to</label>
-            <input id="date_to" name="date_to" type="date">
+            <input id="date_to" name="date_to" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
           </div>
         </div>
         <div class="field salary-range">
@@ -1927,11 +1921,11 @@ INDEX_HTML = """<!doctype html>
             <div class="row">
               <div class="field">
                 <label for="analysis_date_from">First seen from</label>
-                <input id="analysis_date_from" name="analysis_date_from" type="date">
+                <input id="analysis_date_from" name="analysis_date_from" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
               </div>
               <div class="field">
                 <label for="analysis_date_to">First seen to</label>
-                <input id="analysis_date_to" name="analysis_date_to" type="date">
+                <input id="analysis_date_to" name="analysis_date_to" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
               </div>
             </div>
             <div class="row">
@@ -1968,6 +1962,119 @@ INDEX_HTML = """<!doctype html>
               <div class="parser-step">
                 <span class="step-index">3</span>
                 <span><strong class="step-title">Write analysis results</strong>Persist structured AI output back into the selected local SQLite databases.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+      <section class="workspace-panel" id="public-stats-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Public Stats</p>
+            <h1>Create Public Snapshot</h1>
+            <p class="sub">Visual shell for building anonymized public statistics snapshots from local vacancy databases.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="Public statistics snapshot builder">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Snapshot Parameters</h2>
+            <p>Select the source databases and output targets for a future public statistics build.</p>
+            <table class="source-table" aria-label="Public statistics sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobs_ch" checked aria-label="Use jobs_ch statistics"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobscout24_ch" checked aria-label="Use jobscout24_ch statistics"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobup_ch" checked aria-label="Use jobup_ch statistics"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="linked_in" checked aria-label="Use linked_in statistics"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="swissdevjobs_ch" checked aria-label="Use swissdevjobs_ch statistics"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="field">
+                <label for="stats_snapshot_date">Snapshot date</label>
+                <input id="stats_snapshot_date" name="stats_snapshot_date" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+              </div>
+              <div class="field">
+                <label for="stats_min_salary_count">Salary group minimum</label>
+                <input id="stats_min_salary_count" name="stats_min_salary_count" type="number" min="1" placeholder="10">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="stats_output_dir">Output directory</label>
+                <input id="stats_output_dir" name="stats_output_dir" placeholder="public_stats">
+              </div>
+              <div class="field">
+                <label for="stats_site_dir">Site data directory</label>
+                <input id="stats_site_dir" name="stats_site_dir" placeholder="site/public">
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Generate JSON snapshot</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Generate CSV exports</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Sync website data</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="Public snapshot build is not connected yet">Build Snapshot</button>
+              <button class="btn secondary" type="button" title="Preview public statistics command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="Public snapshot run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show snapshot generation status, exported file counts, and website sync results when the builder is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Load vacancy data</strong>Read selected local SQLite databases and merge provider datasets.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Build statistics</strong>Aggregate market overview, trends, salary groups, roles, locations, and skills.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Publish snapshot</strong>Write anonymized JSON and CSV files for the public analytics site.</span>
               </div>
             </div>
           </article>
@@ -2034,6 +2141,7 @@ INDEX_HTML = """<!doctype html>
     const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
     const parserWorkspaceEl = document.querySelector("#parser-workspace");
     const aiAnalyseWorkspaceEl = document.querySelector("#ai-analyse-workspace");
+    const publicStatsWorkspaceEl = document.querySelector("#public-stats-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
     const workspaceKickerEl = document.querySelector("#workspace-kicker");
     const form = document.querySelector("#search-form");
@@ -2124,12 +2232,19 @@ INDEX_HTML = """<!doctype html>
         .sort((left, right) => right.count - left.count || left.value.localeCompare(right.value));
     }
 
+    function normalizeDateParam(key, value) {
+      if (!["date_from", "date_to"].includes(key)) return value;
+      const match = value.match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);
+      if (!match) return value;
+      return `${match[3]}-${match[2]}-${match[1]}`;
+    }
+
     function buildParams(page = currentPage) {
       const data = new FormData(form);
       const params = new URLSearchParams();
       for (const [key, value] of data.entries()) {
         const clean = String(value).trim();
-        if (clean) params.set(key, clean);
+        if (clean) params.set(key, normalizeDateParam(key, clean));
       }
       params.set("page", String(page));
       params.set("per_page", String(pageSize));
@@ -2150,16 +2265,18 @@ INDEX_HTML = """<!doctype html>
 
     function setView(view, options = {}) {
       currentView = view;
-      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-settings");
+      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-public-stats", "view-settings");
       appEl.classList.add(`view-${view}`);
       activateMenu(view);
 
       const isParser = view === "search";
       const isAiAnalyse = view === "ai-analyse";
+      const isPublicStats = view === "public-stats";
       const isSettings = view === "settings";
-      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isSettings;
+      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isPublicStats || isSettings;
       parserWorkspaceEl.hidden = !isParser;
       aiAnalyseWorkspaceEl.hidden = !isAiAnalyse;
+      publicStatsWorkspaceEl.hidden = !isPublicStats;
       settingsWorkspaceEl.hidden = !isSettings;
 
       if (view === "vacancies") {

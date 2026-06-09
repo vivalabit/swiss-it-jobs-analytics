@@ -294,8 +294,8 @@ class LocalSearchWebTests(unittest.TestCase):
                 {
                     "q": ["python"],
                     "date_field": ["published"],
-                    "date_from": ["2026-05-01"],
-                    "date_to": ["2026-05-31"],
+                    "date_from": ["01.05.2026"],
+                    "date_to": ["31.05.2026"],
                     "limit": ["50"],
                 },
             )
@@ -303,7 +303,7 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
 
     def test_search_local_databases_rejects_invalid_date_format(self) -> None:
-        with self.assertRaisesRegex(ValueError, "date_from must use YYYY-MM-DD format"):
+        with self.assertRaisesRegex(ValueError, "date_from must use dd.mm.yyyy format"):
             search_local_databases([], {"date_from": ["2026/05/01"]})
 
     def test_load_facets_reads_local_database_terms(self) -> None:
