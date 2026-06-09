@@ -995,14 +995,13 @@ INDEX_HTML = """<!doctype html>
       gap: 10px;
     }
     .log-toggle {
-      position: fixed;
+      position: absolute;
       top: 50%;
-      right: 0;
-      z-index: 40;
+      left: -44px;
       width: 44px;
       height: 104px;
       border: 1px solid rgba(215, 25, 32, 0.22);
-      border-right: 0;
+      border-right: 1px solid rgba(215, 25, 32, 0.22);
       border-radius: 8px 0 0 8px;
       background: linear-gradient(180deg, #e03136, #c9161d);
       color: #fff;
@@ -1730,6 +1729,7 @@ INDEX_HTML = """<!doctype html>
       .log-toggle {
         width: 40px;
         height: 86px;
+        left: -40px;
       }
       .log-drawer {
         width: calc(100vw - 40px);
@@ -2283,8 +2283,8 @@ INDEX_HTML = """<!doctype html>
       </section>
     </main>
   </div>
-  <button class="log-toggle" id="log-toggle" type="button" aria-controls="log-drawer" aria-expanded="false" title="Open application logs">☰</button>
   <aside class="log-drawer" id="log-drawer" aria-label="Application logs" aria-hidden="true">
+    <button class="log-toggle" id="log-toggle" type="button" aria-controls="log-drawer" aria-expanded="false" title="Open application logs">☰</button>
     <div class="log-head">
       <div>
         <p class="log-title">Application Logs</p>
