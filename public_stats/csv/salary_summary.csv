@@ -1,9 +1,9 @@
 metric,value
-salary_count,272
-salary_coverage,0.0525
-average_salary,99895.0
+salary_count,270
+salary_coverage,0.0317
+average_salary,100077.0
 median_salary,99500.0
-p25_salary,89066.0
+p25_salary,89016.0
 p75_salary,112500.0
 min_salary,40000.0
 max_salary,180000.0

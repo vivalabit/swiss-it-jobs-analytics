@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-05-31T16:16:42Z",
+  "generated_at": "2026-06-09T09:30:44Z",
   "available": true,
   "summary": {
-    "salary_count": 272,
-    "salary_coverage": 0.0525,
-    "average_salary": 99895,
+    "salary_count": 270,
+    "salary_coverage": 0.0317,
+    "average_salary": 100077,
     "median_salary": 99500,
-    "p25_salary": 89066,
+    "p25_salary": 89016,
     "p75_salary": 112500,
     "min_salary": 40000,
     "max_salary": 180000,
@@ -16,21 +16,12 @@
   "by_role_category": [
     {
       "role_category": "security",
-      "salary_count": 21,
-      "average_salary": 112438,
-      "median_salary": 110824,
+      "salary_count": 18,
+      "average_salary": 111706,
+      "median_salary": 110759,
       "min_salary": 40000,
       "max_salary": 180000,
       "rank": 1
-    },
-    {
-      "role_category": "product_project_analysis",
-      "salary_count": 31,
-      "average_salary": 105715,
-      "median_salary": 110000,
-      "min_salary": 62389,
-      "max_salary": 135000,
-      "rank": 2
     },
     {
       "role_category": "erp_business_systems",
@@ -39,12 +30,21 @@
       "median_salary": 115250,
       "min_salary": 74000,
       "max_salary": 127500,
+      "rank": 2
+    },
+    {
+      "role_category": "product_project_analysis",
+      "salary_count": 31,
+      "average_salary": 104941,
+      "median_salary": 108644,
+      "min_salary": 62389,
+      "max_salary": 135000,
       "rank": 3
     },
     {
       "role_category": "software_engineering",
-      "salary_count": 99,
-      "average_salary": 101100,
+      "salary_count": 100,
+      "average_salary": 102673,
       "median_salary": 100000,
       "min_salary": 40000,
       "max_salary": 148000,
@@ -52,8 +52,8 @@
     },
     {
       "role_category": "data_ai",
-      "salary_count": 23,
-      "average_salary": 100937,
+      "salary_count": 22,
+      "average_salary": 101434,
       "median_salary": 100000,
       "min_salary": 40000,
       "max_salary": 152125,
@@ -71,64 +71,64 @@
     {
       "role_category": "qa_testing",
       "salary_count": 14,
-      "average_salary": 88029,
+      "average_salary": 88643,
       "median_salary": 95974,
       "min_salary": 55000,
       "max_salary": 116675,
       "rank": 7
     },
     {
-      "role_category": "support_operations",
-      "salary_count": 29,
-      "average_salary": 84164,
-      "median_salary": 80000,
-      "min_salary": 51750,
-      "max_salary": 108000,
+      "role_category": "ux_ui_design",
+      "salary_count": 3,
+      "average_salary": 87286,
+      "median_salary": 84750,
+      "min_salary": 82108,
+      "max_salary": 95000,
       "rank": 8
     },
     {
-      "role_category": "ux_ui_design",
-      "salary_count": 2,
-      "average_salary": 83429,
-      "median_salary": 83429,
-      "min_salary": 82108,
-      "max_salary": 84750,
+      "role_category": "support_operations",
+      "salary_count": 29,
+      "average_salary": 82507,
+      "median_salary": 80000,
+      "min_salary": 51750,
+      "max_salary": 108000,
       "rank": 9
     }
   ],
   "by_seniority": [
     {
-      "seniority": "manager",
-      "salary_count": 64,
-      "average_salary": 103983,
-      "median_salary": 107750,
-      "min_salary": 55000,
-      "max_salary": 180000,
-      "rank": 1
-    },
-    {
       "seniority": "senior",
-      "salary_count": 107,
-      "average_salary": 103514,
+      "salary_count": 110,
+      "average_salary": 104170,
       "median_salary": 100000,
       "min_salary": 70000,
       "max_salary": 148000,
+      "rank": 1
+    },
+    {
+      "seniority": "manager",
+      "salary_count": 64,
+      "average_salary": 103133,
+      "median_salary": 103438,
+      "min_salary": 55000,
+      "max_salary": 180000,
       "rank": 2
     },
     {
       "seniority": "mid",
-      "salary_count": 54,
-      "average_salary": 100347,
-      "median_salary": 96574,
+      "salary_count": 49,
+      "average_salary": 100129,
+      "median_salary": 96261,
       "min_salary": 51750,
       "max_salary": 152125,
       "rank": 3
     },
     {
       "seniority": "Unknown",
-      "salary_count": 20,
-      "average_salary": 94797,
-      "median_salary": 95047,
+      "salary_count": 21,
+      "average_salary": 95283,
+      "median_salary": 95550,
       "min_salary": 70000,
       "max_salary": 125278,
       "rank": 4
@@ -136,16 +136,16 @@
     {
       "seniority": "junior",
       "salary_count": 19,
-      "average_salary": 86983,
+      "average_salary": 85326,
       "median_salary": 89000,
       "min_salary": 42000,
-      "max_salary": 120000,
+      "max_salary": 106853,
       "rank": 5
     },
     {
       "seniority": "intern",
-      "salary_count": 8,
-      "average_salary": 59149,
+      "salary_count": 7,
+      "average_salary": 61885,
       "median_salary": 40000,
       "min_salary": 40000,
       "max_salary": 120000,
