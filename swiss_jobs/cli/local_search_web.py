@@ -681,11 +681,11 @@ INDEX_HTML = """<!doctype html>
       gap: 24px;
       align-items: start;
     }
-    .app.view-vacancies,
+    .app.view-search,
     .app.view-settings {
       grid-template-columns: minmax(0, 1fr);
     }
-    .app.view-vacancies .filters-panel,
+    .app.view-search .filters-panel,
     .app.view-settings .filters-panel {
       display: none;
     }
@@ -963,6 +963,63 @@ INDEX_HTML = """<!doctype html>
     }
     .switch.is-on::after {
       left: 24px;
+    }
+    .parser-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .parser-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .parser-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .parser-panel p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .parser-preview {
+      display: grid;
+      gap: 10px;
+    }
+    .parser-step {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .step-index {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .step-title {
+      display: block;
+      color: #17202a;
+      font-weight: 900;
+      margin-bottom: 2px;
     }
     .info-menu {
       position: relative;
@@ -1406,7 +1463,7 @@ INDEX_HTML = """<!doctype html>
         padding: 18px;
         gap: 18px;
       }
-      .app.view-vacancies,
+      .app.view-search,
       .app.view-settings {
         grid-template-columns: 1fr;
       }
@@ -1430,6 +1487,7 @@ INDEX_HTML = """<!doctype html>
       }
       main { padding: 18px; }
       .settings-grid { grid-template-columns: 1fr; }
+      .parser-grid { grid-template-columns: 1fr; }
       .job-head { grid-template-columns: 44px minmax(0, 1fr); }
       .job-side {
         grid-column: 2;
@@ -1607,6 +1665,82 @@ INDEX_HTML = """<!doctype html>
         <section class="results" id="results"></section>
         <nav class="pagination" id="pagination" aria-label="Search results pages"></nav>
       </section>
+      <section class="workspace-panel" id="parser-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Vacancy Search</p>
+            <h1>Run Vacancy Collection</h1>
+            <p class="sub">Visual shell for launching provider parsing and collecting fresh vacancies into local databases.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="Vacancy collection launcher">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Collection Parameters</h2>
+            <p>Select the provider, search mode, and query fields for a future parser run.</p>
+            <div class="row">
+              <div class="field">
+                <label for="parser_source">Source</label>
+                <select id="parser_source" name="parser_source">
+                  <option>jobs_ch</option>
+                  <option>jobscout24_ch</option>
+                  <option>jobup_ch</option>
+                  <option>linked_in</option>
+                  <option>swissdevjobs_ch</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="parser_mode">Mode</label>
+                <select id="parser_mode" name="parser_mode">
+                  <option>search</option>
+                  <option>new</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="parser_term">Search term</label>
+                <input id="parser_term" name="parser_term" placeholder="python">
+              </div>
+              <div class="field">
+                <label for="parser_location">Location</label>
+                <input id="parser_location" name="parser_location" placeholder="zurich">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="parser_pages">Max pages</label>
+                <input id="parser_pages" name="parser_pages" type="number" min="1" value="3">
+              </div>
+              <div class="field">
+                <label for="parser_detail_limit">Detail limit</label>
+                <input id="parser_detail_limit" name="parser_detail_limit" type="number" min="0" value="20">
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="Parser launch is not connected yet">Run Parser</button>
+              <button class="btn secondary" type="button" title="Preview command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="Collection run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show parser status, progress, and database write results when collection is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Prepare query</strong>Validate source, terms, location, and pagination limits.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Collect vacancies</strong>Run provider parsing and detail-page enrichment.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Update database</strong>Persist new vacancies into the selected local SQLite database.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
       <section class="workspace-panel" id="settings-workspace" hidden>
         <div class="toolbar">
           <div>
@@ -1666,6 +1800,7 @@ INDEX_HTML = """<!doctype html>
     const appEl = document.querySelector("#app");
     const menuButtons = Array.from(document.querySelectorAll("[data-view-target]"));
     const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
+    const parserWorkspaceEl = document.querySelector("#parser-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
     const workspaceKickerEl = document.querySelector("#workspace-kicker");
     const form = document.querySelector("#search-form");
@@ -1786,8 +1921,10 @@ INDEX_HTML = """<!doctype html>
       appEl.classList.add(`view-${view}`);
       activateMenu(view);
 
+      const isParser = view === "search";
       const isSettings = view === "settings";
-      vacanciesWorkspaceEl.hidden = isSettings;
+      vacanciesWorkspaceEl.hidden = isParser || isSettings;
+      parserWorkspaceEl.hidden = !isParser;
       settingsWorkspaceEl.hidden = !isSettings;
 
       if (view === "vacancies") {
@@ -1801,9 +1938,6 @@ INDEX_HTML = """<!doctype html>
         return;
       }
 
-      if (view === "search") {
-        workspaceKickerEl.textContent = "Vacancy Search";
-      }
     }
 
     function renderErrors(errors) {
@@ -2070,12 +2204,12 @@ INDEX_HTML = """<!doctype html>
       button.addEventListener("click", () => {
         const view = button.dataset.viewTarget;
         if (!view || view === currentView) return;
-        setView(view, { resetFilters: view === "vacancies" });
+        setView(view);
       });
     });
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      setView("search");
+      setView("vacancies");
       currentPage = 1;
       runSearch(1);
     });
