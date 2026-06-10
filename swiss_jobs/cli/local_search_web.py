@@ -3437,9 +3437,6 @@ INDEX_HTML = """<!doctype html>
     }
 
     function setView(view, options = {}) {
-      if (view !== currentView) {
-        addLog("Navigation", `Opened ${viewLabels[view] || view}.`);
-      }
       currentView = view;
       appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-public-stats", "view-settings");
       appEl.classList.add(`view-${view}`);
