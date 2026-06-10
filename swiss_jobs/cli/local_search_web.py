@@ -5,7 +5,11 @@ import html
 import json
 import re
 import sqlite3
+import subprocess
 import sys
+import threading
+import time
+import uuid
 import webbrowser
 from dataclasses import dataclass
 from http import HTTPStatus
@@ -15,8 +19,12 @@ from typing import Any, Iterable
 from urllib.parse import parse_qs, urlparse
 
 from swiss_jobs.core.locations import location_search_terms, normalize_location_display
+from swiss_jobs.registry import list_supported_sources
 
 from .search_vacancies import DEFAULT_RUNTIME_DATABASES, _resolve_database_paths, _split_csv_values
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MAX_RUN_LOGS = 1000
 
 TECH_TERM_TYPES = {
     "cloud_platform",
@@ -45,6 +53,8 @@ FACET_TERM_TYPES = {
 
 SEARCH_DEFAULT_PAGE_SIZE = 10
 SEARCH_MAX_PAGE_SIZE = 100
+PARSER_RUNS: dict[str, dict[str, Any]] = {}
+PARSER_RUNS_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True)
@@ -134,6 +144,225 @@ def _request_date(params: dict[str, list[str]], name: str) -> str:
     if match:
         return f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
     raise ValueError(f"{name} must use dd.mm.yyyy format")
+
+
+def _json_body(handler: BaseHTTPRequestHandler) -> dict[str, Any]:
+    length = int(handler.headers.get("Content-Length") or 0)
+    if length <= 0:
+        return {}
+    raw = handler.rfile.read(length)
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"invalid JSON request body: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("request body must be a JSON object")
+    return payload
+
+
+def _clean_text(value: Any) -> str:
+    return str(value or "").strip()
+
+
+def _clean_positive_int(value: Any) -> str:
+    text = _clean_text(value)
+    if not text:
+        return ""
+    try:
+        number = int(text)
+    except ValueError as exc:
+        raise ValueError(f"expected integer value, got {text!r}") from exc
+    if number < 0:
+        raise ValueError(f"expected non-negative integer value, got {number}")
+    return str(number)
+
+
+def _parser_sources(payload: dict[str, Any]) -> list[str]:
+    raw_sources = payload.get("sources")
+    if not isinstance(raw_sources, list):
+        raise ValueError("sources must be a non-empty list")
+    sources = [_clean_text(item) for item in raw_sources]
+    sources = [source for source in sources if source]
+    supported = set(list_supported_sources())
+    unsupported = sorted(source for source in sources if source not in supported)
+    if unsupported:
+        raise ValueError(f"unsupported source(s): {', '.join(unsupported)}")
+    if not sources:
+        raise ValueError("at least one parser source must be selected")
+    return sorted(set(sources))
+
+
+def _parser_cli_args(payload: dict[str, Any]) -> list[str]:
+    args: list[str] = []
+    mode = _clean_text(payload.get("mode"))
+    if mode:
+        if mode not in {"new", "search"}:
+            raise ValueError("mode must be new or search")
+        args.extend(["--mode", mode])
+    for payload_key, cli_key in (
+        ("canton", "--canton"),
+        ("term", "--term"),
+        ("location", "--location"),
+    ):
+        value = _clean_text(payload.get(payload_key))
+        if value:
+            args.extend([cli_key, value])
+    for payload_key, cli_key in (
+        ("max_pages", "--max-pages"),
+        ("detail_limit", "--detail-limit"),
+    ):
+        value = _clean_positive_int(payload.get(payload_key))
+        if value:
+            args.extend([cli_key, value])
+    return args
+
+
+def _append_parser_log(
+    run_id: str,
+    message: str,
+    *,
+    source: str = "",
+    stream: str = "system",
+    level: str = "info",
+) -> None:
+    if not message:
+        return
+    with PARSER_RUNS_LOCK:
+        run = PARSER_RUNS.get(run_id)
+        if not run:
+            return
+        run["next_seq"] += 1
+        entry = {
+            "seq": run["next_seq"],
+            "time": time.strftime("%H:%M:%S"),
+            "source": source,
+            "stream": stream,
+            "level": level,
+            "message": message,
+        }
+        logs = run["logs"]
+        logs.append(entry)
+        if len(logs) > MAX_RUN_LOGS:
+            del logs[: len(logs) - MAX_RUN_LOGS]
+
+
+def _read_process_stream(run_id: str, source: str, stream_name: str, stream: Any) -> None:
+    try:
+        for line in iter(stream.readline, ""):
+            text = line.rstrip("\n")
+            if text:
+                level = "error" if stream_name == "stderr" and "[error]" in text.lower() else "info"
+                _append_parser_log(run_id, text, source=source, stream=stream_name, level=level)
+    finally:
+        stream.close()
+
+
+def _run_parser_processes(run_id: str, sources: list[str], cli_args: list[str]) -> None:
+    exit_code = 0
+    try:
+        with PARSER_RUNS_LOCK:
+            if run_id in PARSER_RUNS:
+                PARSER_RUNS[run_id]["status"] = "running"
+        _append_parser_log(run_id, f"Parser run started for {', '.join(sources)}.")
+        for source in sources:
+            command = [
+                sys.executable,
+                "-m",
+                "swiss_jobs.cli.parse",
+                "--source",
+                source,
+                *cli_args,
+            ]
+            _append_parser_log(run_id, "$ " + " ".join(command), source=source)
+            process = subprocess.Popen(
+                command,
+                cwd=PROJECT_ROOT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+            )
+            assert process.stdout is not None
+            assert process.stderr is not None
+            stdout_thread = threading.Thread(
+                target=_read_process_stream,
+                args=(run_id, source, "stdout", process.stdout),
+                daemon=True,
+            )
+            stderr_thread = threading.Thread(
+                target=_read_process_stream,
+                args=(run_id, source, "stderr", process.stderr),
+                daemon=True,
+            )
+            stdout_thread.start()
+            stderr_thread.start()
+            return_code = process.wait()
+            stdout_thread.join(timeout=2)
+            stderr_thread.join(timeout=2)
+            if return_code == 0:
+                _append_parser_log(run_id, f"{source} finished successfully.", source=source, level="success")
+            else:
+                exit_code = 1
+                _append_parser_log(
+                    run_id,
+                    f"{source} failed with exit code {return_code}.",
+                    source=source,
+                    level="error",
+                )
+        final_status = "completed" if exit_code == 0 else "failed"
+        _append_parser_log(run_id, f"Parser run {final_status}.", level="success" if exit_code == 0 else "error")
+        with PARSER_RUNS_LOCK:
+            if run_id in PARSER_RUNS:
+                PARSER_RUNS[run_id]["status"] = final_status
+                PARSER_RUNS[run_id]["return_code"] = exit_code
+                PARSER_RUNS[run_id]["finished_at"] = time.time()
+    except Exception as exc:  # noqa: BLE001
+        _append_parser_log(run_id, f"Parser run crashed: {exc}", level="error")
+        with PARSER_RUNS_LOCK:
+            if run_id in PARSER_RUNS:
+                PARSER_RUNS[run_id]["status"] = "failed"
+                PARSER_RUNS[run_id]["return_code"] = 1
+                PARSER_RUNS[run_id]["finished_at"] = time.time()
+
+
+def start_parser_run(payload: dict[str, Any]) -> dict[str, Any]:
+    sources = _parser_sources(payload)
+    cli_args = _parser_cli_args(payload)
+    run_id = uuid.uuid4().hex
+    with PARSER_RUNS_LOCK:
+        PARSER_RUNS[run_id] = {
+            "id": run_id,
+            "status": "queued",
+            "sources": sources,
+            "args": cli_args,
+            "logs": [],
+            "next_seq": 0,
+            "return_code": None,
+            "started_at": time.time(),
+            "finished_at": None,
+        }
+    thread = threading.Thread(target=_run_parser_processes, args=(run_id, sources, cli_args), daemon=True)
+    thread.start()
+    return get_parser_run(run_id, after_seq=0)
+
+
+def get_parser_run(run_id: str, *, after_seq: int = 0) -> dict[str, Any]:
+    with PARSER_RUNS_LOCK:
+        run = PARSER_RUNS.get(run_id)
+        if run is None:
+            raise ValueError(f"unknown parser run: {run_id}")
+        logs = [entry for entry in run["logs"] if int(entry["seq"]) > after_seq]
+        return {
+            "id": run["id"],
+            "status": run["status"],
+            "sources": run["sources"],
+            "args": run["args"],
+            "logs": logs,
+            "last_seq": run["next_seq"],
+            "return_code": run["return_code"],
+            "started_at": run["started_at"],
+            "finished_at": run["finished_at"],
+        }
 
 
 def _date_filter_expression(field_name: str) -> tuple[str, bool]:
@@ -609,7 +838,7 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
         if parsed.path in {"/", "/search"}:
             _head_response(self, "text/html; charset=utf-8")
             return
-        if parsed.path in {"/api/search", "/api/facets", "/health"}:
+        if parsed.path in {"/api/search", "/api/facets", "/api/parser-runs", "/health"}:
             _head_response(self, "application/json; charset=utf-8")
             return
         _head_response(self, "text/plain; charset=utf-8", status=HTTPStatus.NOT_FOUND)
@@ -628,8 +857,26 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/facets":
                 _json_response(self, load_facets(self.config.database_paths))
                 return
+            if parsed.path == "/api/parser-runs":
+                run_id = (params.get("run_id") or [""])[0].strip()
+                after = _request_int(params, "after", 0) or 0
+                _json_response(self, get_parser_run(run_id, after_seq=after))
+                return
             if parsed.path == "/health":
                 _json_response(self, {"ok": True})
+                return
+        except ValueError as exc:
+            _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
+            return
+
+        _text_response(self, "Not found", status=HTTPStatus.NOT_FOUND)
+
+    def do_POST(self) -> None:
+        parsed = urlparse(self.path)
+
+        try:
+            if parsed.path == "/api/parser-runs":
+                _json_response(self, start_parser_run(_json_body(self)), status=HTTPStatus.CREATED)
                 return
         except ValueError as exc:
             _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
@@ -1968,7 +2215,7 @@ INDEX_HTML = """<!doctype html>
               </div>
             </div>
             <div class="actions">
-              <button class="btn primary" type="button" title="Parser launch is not connected yet">Run Parser</button>
+              <button class="btn primary" type="button" title="Run selected vacancy parsers">Run Parser</button>
               <button class="btn secondary" type="button" title="Preview command shell">Preview Command</button>
             </div>
           </form>
@@ -2330,6 +2577,12 @@ INDEX_HTML = """<!doctype html>
     const pageSize = 10;
     const maxLogEntries = 80;
     const logs = [];
+    const parserRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
     let currentPage = 1;
     let currentView = "vacancies";
 
@@ -2376,6 +2629,101 @@ INDEX_HTML = """<!doctype html>
       logDrawerEl.classList.toggle("is-open", open);
       logDrawerEl.setAttribute("aria-hidden", String(!open));
       logToggleEl.setAttribute("aria-expanded", String(open));
+    }
+
+    function parserLogTitle(entry) {
+      const source = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `Parser${source}${stream}`;
+    }
+
+    function ingestParserLogs(payload) {
+      for (const entry of payload.logs || []) {
+        parserRunState.lastSeq = Math.max(parserRunState.lastSeq, Number(entry.seq || 0));
+        addLog(parserLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      parserRunState.status = payload.status || parserRunState.status;
+    }
+
+    async function pollParserRun() {
+      if (!parserRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: parserRunState.runId,
+          after: String(parserRunState.lastSeq),
+        });
+        const response = await fetch(`/api/parser-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("Parser", payload.error || "Failed to read parser logs.", "error");
+          window.clearInterval(parserRunState.timer);
+          parserRunState.timer = 0;
+          return;
+        }
+        ingestParserLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(parserRunState.timer);
+          parserRunState.timer = 0;
+          parserRunState.runId = "";
+          loadFacets().then(() => runSearch(1)).catch((error) => {
+            addLog("Vacancy Search", error.message || String(error), "error");
+          });
+        }
+      } catch (error) {
+        addLog("Parser", error.message || String(error), "error");
+        window.clearInterval(parserRunState.timer);
+        parserRunState.timer = 0;
+      }
+    }
+
+    function collectParserPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="parser_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        mode: document.querySelector("#parser_mode")?.value || "new",
+        canton: document.querySelector("#parser_canton")?.value || "",
+        term: document.querySelector("#parser_term")?.value || "",
+        location: document.querySelector("#parser_location")?.value || "",
+        max_pages: document.querySelector("#parser_pages")?.value || "",
+        detail_limit: document.querySelector("#parser_detail_limit")?.value || "",
+      };
+    }
+
+    async function startParserRun() {
+      if (parserRunState.timer) {
+        addLog("Vacancy Collection", "Parser run is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectParserPayload();
+      if (!payload.sources.length) {
+        addLog("Vacancy Collection", "Select at least one parser source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("Vacancy Collection", `Starting parser run for ${payload.sources.join(", ")}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/parser-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("Vacancy Collection", data.error || "Failed to start parser run.", "error");
+          return;
+        }
+        parserRunState.runId = data.id;
+        parserRunState.lastSeq = 0;
+        parserRunState.status = data.status;
+        ingestParserLogs(data);
+        parserRunState.timer = window.setInterval(pollParserRun, 1000);
+        pollParserRun();
+      } catch (error) {
+        addLog("Vacancy Collection", error.message || String(error), "error");
+      }
     }
 
     function syncSalaryTrack() {
@@ -2830,11 +3178,20 @@ INDEX_HTML = """<!doctype html>
     salaryMaxInput.addEventListener("input", syncSalaryRangeFromInputs);
 
     document.querySelector("#parser-workspace .btn.primary")?.addEventListener("click", () => {
-      addLog("Vacancy Collection", "Parser launch requested. Command execution is not connected yet.", "warning");
-      setLogDrawer(true);
+      startParserRun();
     });
     document.querySelector("#parser-workspace .btn.secondary")?.addEventListener("click", () => {
-      addLog("Vacancy Collection", "Parser command preview requested.", "info");
+      const payload = collectParserPayload();
+      const args = [
+        payload.mode ? `--mode ${payload.mode}` : "",
+        payload.canton ? `--canton ${payload.canton}` : "",
+        payload.term ? `--term ${payload.term}` : "",
+        payload.location ? `--location ${payload.location}` : "",
+        payload.max_pages ? `--max-pages ${payload.max_pages}` : "",
+        payload.detail_limit ? `--detail-limit ${payload.detail_limit}` : "",
+      ].filter(Boolean).join(" ");
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog("Vacancy Collection", `Preview for ${sourceText}: python -m swiss_jobs.cli.parse --source <source> ${args}`.trim(), "info");
       setLogDrawer(true);
     });
     document.querySelector("#ai-analyse-workspace .btn.primary")?.addEventListener("click", () => {
