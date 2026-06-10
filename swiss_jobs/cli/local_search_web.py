@@ -55,6 +55,8 @@ SEARCH_DEFAULT_PAGE_SIZE = 10
 SEARCH_MAX_PAGE_SIZE = 100
 PARSER_RUNS: dict[str, dict[str, Any]] = {}
 PARSER_RUNS_LOCK = threading.Lock()
+AI_ANALYSIS_RUNS: dict[str, dict[str, Any]] = {}
+AI_ANALYSIS_RUNS_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True)
@@ -351,6 +353,189 @@ def get_parser_run(run_id: str, *, after_seq: int = 0) -> dict[str, Any]:
         run = PARSER_RUNS.get(run_id)
         if run is None:
             raise ValueError(f"unknown parser run: {run_id}")
+        logs = [entry for entry in run["logs"] if int(entry["seq"]) > after_seq]
+        return {
+            "id": run["id"],
+            "status": run["status"],
+            "sources": run["sources"],
+            "args": run["args"],
+            "logs": logs,
+            "last_seq": run["next_seq"],
+            "return_code": run["return_code"],
+            "started_at": run["started_at"],
+            "finished_at": run["finished_at"],
+        }
+
+
+def _analysis_sources(payload: dict[str, Any]) -> list[str]:
+    raw_sources = payload.get("sources")
+    if not isinstance(raw_sources, list):
+        raise ValueError("sources must be a non-empty list")
+    sources = [_clean_text(item) for item in raw_sources]
+    sources = [source for source in sources if source]
+    supported = set(list_supported_sources())
+    unsupported = sorted(source for source in sources if source not in supported)
+    if unsupported:
+        raise ValueError(f"unsupported source(s): {', '.join(unsupported)}")
+    if not sources:
+        raise ValueError("at least one AI analysis source must be selected")
+    return sorted(set(sources))
+
+
+def _analysis_cli_args(payload: dict[str, Any]) -> list[str]:
+    args: list[str] = []
+    model = _clean_text(payload.get("model")) or "gpt-5-nano"
+    args.extend(["--model", model])
+
+    limit = _clean_positive_int(payload.get("limit"))
+    scope = _clean_text(payload.get("scope")) or "new vacancies only"
+    if scope == "all selected vacancies":
+        args.append("--include-analyzed")
+        if limit:
+            args.extend(["--limit", limit])
+        else:
+            args.append("--all")
+    else:
+        if limit:
+            args.extend(["--limit", limit])
+    return args
+
+
+def _append_ai_analysis_log(
+    run_id: str,
+    message: str,
+    *,
+    source: str = "",
+    stream: str = "system",
+    level: str = "info",
+) -> None:
+    if not message:
+        return
+    with AI_ANALYSIS_RUNS_LOCK:
+        run = AI_ANALYSIS_RUNS.get(run_id)
+        if not run:
+            return
+        run["next_seq"] += 1
+        entry = {
+            "seq": run["next_seq"],
+            "time": time.strftime("%H:%M:%S"),
+            "source": source,
+            "stream": stream,
+            "level": level,
+            "message": message,
+        }
+        logs = run["logs"]
+        logs.append(entry)
+        if len(logs) > MAX_RUN_LOGS:
+            del logs[: len(logs) - MAX_RUN_LOGS]
+
+
+def _read_ai_analysis_stream(run_id: str, source: str, stream_name: str, stream: Any) -> None:
+    try:
+        for line in iter(stream.readline, ""):
+            text = line.rstrip("\n")
+            if text:
+                lowered = text.lower()
+                level = "error" if stream_name == "stderr" and ("error" in lowered or "failed" in lowered) else "info"
+                _append_ai_analysis_log(run_id, text, source=source, stream=stream_name, level=level)
+    finally:
+        stream.close()
+
+
+def _run_ai_analysis_processes(run_id: str, sources: list[str], cli_args: list[str]) -> None:
+    exit_code = 0
+    try:
+        with AI_ANALYSIS_RUNS_LOCK:
+            if run_id in AI_ANALYSIS_RUNS:
+                AI_ANALYSIS_RUNS[run_id]["status"] = "running"
+        _append_ai_analysis_log(run_id, f"AI analysis run started for {', '.join(sources)}.")
+        for source in sources:
+            command = [
+                sys.executable,
+                "-m",
+                "swiss_jobs.cli.analyze_vacancies_llm",
+                "--source",
+                source,
+                *cli_args,
+            ]
+            _append_ai_analysis_log(run_id, "$ " + " ".join(command), source=source)
+            process = subprocess.Popen(
+                command,
+                cwd=PROJECT_ROOT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+            )
+            assert process.stdout is not None
+            assert process.stderr is not None
+            stdout_thread = threading.Thread(
+                target=_read_ai_analysis_stream,
+                args=(run_id, source, "stdout", process.stdout),
+                daemon=True,
+            )
+            stderr_thread = threading.Thread(
+                target=_read_ai_analysis_stream,
+                args=(run_id, source, "stderr", process.stderr),
+                daemon=True,
+            )
+            stdout_thread.start()
+            stderr_thread.start()
+            return_code = process.wait()
+            stdout_thread.join(timeout=2)
+            stderr_thread.join(timeout=2)
+            if return_code == 0:
+                _append_ai_analysis_log(run_id, f"{source} AI analysis finished successfully.", source=source, level="success")
+            else:
+                exit_code = 1
+                _append_ai_analysis_log(
+                    run_id,
+                    f"{source} AI analysis failed with exit code {return_code}.",
+                    source=source,
+                    level="error",
+                )
+        final_status = "completed" if exit_code == 0 else "failed"
+        _append_ai_analysis_log(run_id, f"AI analysis run {final_status}.", level="success" if exit_code == 0 else "error")
+        with AI_ANALYSIS_RUNS_LOCK:
+            if run_id in AI_ANALYSIS_RUNS:
+                AI_ANALYSIS_RUNS[run_id]["status"] = final_status
+                AI_ANALYSIS_RUNS[run_id]["return_code"] = exit_code
+                AI_ANALYSIS_RUNS[run_id]["finished_at"] = time.time()
+    except Exception as exc:  # noqa: BLE001
+        _append_ai_analysis_log(run_id, f"AI analysis run crashed: {exc}", level="error")
+        with AI_ANALYSIS_RUNS_LOCK:
+            if run_id in AI_ANALYSIS_RUNS:
+                AI_ANALYSIS_RUNS[run_id]["status"] = "failed"
+                AI_ANALYSIS_RUNS[run_id]["return_code"] = 1
+                AI_ANALYSIS_RUNS[run_id]["finished_at"] = time.time()
+
+
+def start_ai_analysis_run(payload: dict[str, Any]) -> dict[str, Any]:
+    sources = _analysis_sources(payload)
+    cli_args = _analysis_cli_args(payload)
+    run_id = uuid.uuid4().hex
+    with AI_ANALYSIS_RUNS_LOCK:
+        AI_ANALYSIS_RUNS[run_id] = {
+            "id": run_id,
+            "status": "queued",
+            "sources": sources,
+            "args": cli_args,
+            "logs": [],
+            "next_seq": 0,
+            "return_code": None,
+            "started_at": time.time(),
+            "finished_at": None,
+        }
+    thread = threading.Thread(target=_run_ai_analysis_processes, args=(run_id, sources, cli_args), daemon=True)
+    thread.start()
+    return get_ai_analysis_run(run_id, after_seq=0)
+
+
+def get_ai_analysis_run(run_id: str, *, after_seq: int = 0) -> dict[str, Any]:
+    with AI_ANALYSIS_RUNS_LOCK:
+        run = AI_ANALYSIS_RUNS.get(run_id)
+        if run is None:
+            raise ValueError(f"unknown AI analysis run: {run_id}")
         logs = [entry for entry in run["logs"] if int(entry["seq"]) > after_seq]
         return {
             "id": run["id"],
@@ -838,7 +1023,7 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
         if parsed.path in {"/", "/search"}:
             _head_response(self, "text/html; charset=utf-8")
             return
-        if parsed.path in {"/api/search", "/api/facets", "/api/parser-runs", "/health"}:
+        if parsed.path in {"/api/search", "/api/facets", "/api/parser-runs", "/api/ai-analysis-runs", "/health"}:
             _head_response(self, "application/json; charset=utf-8")
             return
         _head_response(self, "text/plain; charset=utf-8", status=HTTPStatus.NOT_FOUND)
@@ -862,6 +1047,11 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
                 after = _request_int(params, "after", 0) or 0
                 _json_response(self, get_parser_run(run_id, after_seq=after))
                 return
+            if parsed.path == "/api/ai-analysis-runs":
+                run_id = (params.get("run_id") or [""])[0].strip()
+                after = _request_int(params, "after", 0) or 0
+                _json_response(self, get_ai_analysis_run(run_id, after_seq=after))
+                return
             if parsed.path == "/health":
                 _json_response(self, {"ok": True})
                 return
@@ -877,6 +1067,9 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
         try:
             if parsed.path == "/api/parser-runs":
                 _json_response(self, start_parser_run(_json_body(self)), status=HTTPStatus.CREATED)
+                return
+            if parsed.path == "/api/ai-analysis-runs":
+                _json_response(self, start_ai_analysis_run(_json_body(self)), status=HTTPStatus.CREATED)
                 return
         except ValueError as exc:
             _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
@@ -2338,7 +2531,7 @@ INDEX_HTML = """<!doctype html>
               <textarea id="analysis_notes" name="analysis_notes" placeholder="skills, role category, seniority, salary signals"></textarea>
             </div>
             <div class="actions">
-              <button class="btn primary" type="button" title="AI analysis launch is not connected yet">Run AI Analyse</button>
+              <button class="btn primary" type="button" title="Run selected AI analysis">Run AI Analyse</button>
               <button class="btn secondary" type="button" title="Preview analysis command shell">Preview Command</button>
             </div>
           </form>
@@ -2583,6 +2776,12 @@ INDEX_HTML = """<!doctype html>
       timer: 0,
       status: "idle",
     };
+    const aiAnalysisRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
     let currentPage = 1;
     let currentView = "vacancies";
 
@@ -2723,6 +2922,98 @@ INDEX_HTML = """<!doctype html>
         pollParserRun();
       } catch (error) {
         addLog("Vacancy Collection", error.message || String(error), "error");
+      }
+    }
+
+    function aiAnalysisLogTitle(entry) {
+      const source = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `AI Analyse${source}${stream}`;
+    }
+
+    function ingestAiAnalysisLogs(payload) {
+      for (const entry of payload.logs || []) {
+        aiAnalysisRunState.lastSeq = Math.max(aiAnalysisRunState.lastSeq, Number(entry.seq || 0));
+        addLog(aiAnalysisLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      aiAnalysisRunState.status = payload.status || aiAnalysisRunState.status;
+    }
+
+    async function pollAiAnalysisRun() {
+      if (!aiAnalysisRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: aiAnalysisRunState.runId,
+          after: String(aiAnalysisRunState.lastSeq),
+        });
+        const response = await fetch(`/api/ai-analysis-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("AI Analyse", payload.error || "Failed to read AI analysis logs.", "error");
+          window.clearInterval(aiAnalysisRunState.timer);
+          aiAnalysisRunState.timer = 0;
+          return;
+        }
+        ingestAiAnalysisLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(aiAnalysisRunState.timer);
+          aiAnalysisRunState.timer = 0;
+          aiAnalysisRunState.runId = "";
+          loadFacets().then(() => runSearch(1)).catch((error) => {
+            addLog("Vacancy Search", error.message || String(error), "error");
+          });
+        }
+      } catch (error) {
+        addLog("AI Analyse", error.message || String(error), "error");
+        window.clearInterval(aiAnalysisRunState.timer);
+        aiAnalysisRunState.timer = 0;
+      }
+    }
+
+    function collectAiAnalysisPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="analysis_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        scope: document.querySelector("#analysis_scope")?.value || "new vacancies only",
+        model: document.querySelector("#analysis_model")?.value || "gpt-5-nano",
+        limit: document.querySelector("#analysis_limit")?.value || "",
+      };
+    }
+
+    async function startAiAnalysisRun() {
+      if (aiAnalysisRunState.timer) {
+        addLog("AI Analyse", "AI analysis run is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectAiAnalysisPayload();
+      if (!payload.sources.length) {
+        addLog("AI Analyse", "Select at least one AI analysis source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("AI Analyse", `Starting AI analysis for ${payload.sources.join(", ")} with ${payload.model}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/ai-analysis-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("AI Analyse", data.error || "Failed to start AI analysis run.", "error");
+          return;
+        }
+        aiAnalysisRunState.runId = data.id;
+        aiAnalysisRunState.lastSeq = 0;
+        aiAnalysisRunState.status = data.status;
+        ingestAiAnalysisLogs(data);
+        aiAnalysisRunState.timer = window.setInterval(pollAiAnalysisRun, 1000);
+        pollAiAnalysisRun();
+      } catch (error) {
+        addLog("AI Analyse", error.message || String(error), "error");
       }
     }
 
@@ -3195,13 +3486,18 @@ INDEX_HTML = """<!doctype html>
       setLogDrawer(true);
     });
     document.querySelector("#ai-analyse-workspace .btn.primary")?.addEventListener("click", () => {
-      const model = document.querySelector("#analysis_model")?.value || "selected model";
-      const scope = document.querySelector("#analysis_scope")?.value || "selected vacancies";
-      addLog("AI Analyse", `AI analysis requested for ${scope} with ${model}. Command execution is not connected yet.`, "warning");
-      setLogDrawer(true);
+      startAiAnalysisRun();
     });
     document.querySelector("#ai-analyse-workspace .btn.secondary")?.addEventListener("click", () => {
-      addLog("AI Analyse", "AI analysis command preview requested.", "info");
+      const payload = collectAiAnalysisPayload();
+      const args = [
+        `--model ${payload.model}`,
+        payload.scope === "all selected vacancies" ? "--include-analyzed" : "",
+        payload.scope === "all selected vacancies" && !payload.limit ? "--all" : "",
+        payload.limit ? `--limit ${payload.limit}` : "",
+      ].filter(Boolean).join(" ");
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog("AI Analyse", `Preview for ${sourceText}: python -m swiss_jobs.cli.analyze_vacancies_llm --source <source> ${args}`.trim(), "info");
       setLogDrawer(true);
     });
     document.querySelector("#public-stats-workspace .btn.primary")?.addEventListener("click", () => {
