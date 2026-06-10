@@ -57,6 +57,15 @@ PARSER_RUNS: dict[str, dict[str, Any]] = {}
 PARSER_RUNS_LOCK = threading.Lock()
 AI_ANALYSIS_RUNS: dict[str, dict[str, Any]] = {}
 AI_ANALYSIS_RUNS_LOCK = threading.Lock()
+PUBLIC_STATS_RUNS: dict[str, dict[str, Any]] = {}
+PUBLIC_STATS_RUNS_LOCK = threading.Lock()
+SOURCE_DATABASE_PATHS = {
+    "jobs_ch": PROJECT_ROOT / "runtime" / "jobs_ch" / "main-config" / "jobs_ch.sqlite",
+    "jobscout24_ch": PROJECT_ROOT / "runtime" / "jobscout24_ch" / "main-config" / "jobscout24_ch.sqlite",
+    "jobup_ch": PROJECT_ROOT / "runtime" / "jobup_ch" / "main-config" / "jobup_ch.sqlite",
+    "linked_in": PROJECT_ROOT / "runtime" / "linked_in" / "main-config" / "linked_in.sqlite",
+    "swissdevjobs_ch": PROJECT_ROOT / "runtime" / "swissdevjobs_ch" / "main-config" / "swissdevjobs_ch.sqlite",
+}
 
 
 @dataclass(frozen=True)
@@ -550,6 +559,212 @@ def get_ai_analysis_run(run_id: str, *, after_seq: int = 0) -> dict[str, Any]:
         }
 
 
+def _public_stats_sources(payload: dict[str, Any]) -> list[str]:
+    raw_sources = payload.get("sources")
+    if not isinstance(raw_sources, list):
+        raise ValueError("sources must be a non-empty list")
+    sources = [_clean_text(item) for item in raw_sources]
+    sources = [source for source in sources if source]
+    supported = set(SOURCE_DATABASE_PATHS)
+    unsupported = sorted(source for source in sources if source not in supported)
+    if unsupported:
+        raise ValueError(f"unsupported source(s): {', '.join(unsupported)}")
+    if not sources:
+        raise ValueError("at least one public stats source must be selected")
+    return sorted(set(sources))
+
+
+def _resolve_workspace_path(value: Any, default: str) -> Path:
+    text = _clean_text(value) or default
+    path = Path(text)
+    if not path.is_absolute():
+        path = PROJECT_ROOT / path
+    return path
+
+
+def _append_public_stats_log(
+    run_id: str,
+    message: str,
+    *,
+    stage: str = "",
+    stream: str = "system",
+    level: str = "info",
+) -> None:
+    if not message:
+        return
+    with PUBLIC_STATS_RUNS_LOCK:
+        run = PUBLIC_STATS_RUNS.get(run_id)
+        if not run:
+            return
+        run["next_seq"] += 1
+        entry = {
+            "seq": run["next_seq"],
+            "time": time.strftime("%H:%M:%S"),
+            "source": stage,
+            "stream": stream,
+            "level": level,
+            "message": message,
+        }
+        logs = run["logs"]
+        logs.append(entry)
+        if len(logs) > MAX_RUN_LOGS:
+            del logs[: len(logs) - MAX_RUN_LOGS]
+
+
+def _read_public_stats_stream(run_id: str, stage: str, stream_name: str, stream: Any) -> None:
+    try:
+        for line in iter(stream.readline, ""):
+            text = line.rstrip("\n")
+            if text:
+                lowered = text.lower()
+                level = "error" if stream_name == "stderr" and ("error" in lowered or "failed" in lowered) else "info"
+                _append_public_stats_log(run_id, text, stage=stage, stream=stream_name, level=level)
+    finally:
+        stream.close()
+
+
+def _run_public_stats_command(run_id: str, stage: str, command: list[str]) -> int:
+    _append_public_stats_log(run_id, "$ " + " ".join(command), stage=stage)
+    process = subprocess.Popen(
+        command,
+        cwd=PROJECT_ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        bufsize=1,
+    )
+    assert process.stdout is not None
+    assert process.stderr is not None
+    stdout_thread = threading.Thread(
+        target=_read_public_stats_stream,
+        args=(run_id, stage, "stdout", process.stdout),
+        daemon=True,
+    )
+    stderr_thread = threading.Thread(
+        target=_read_public_stats_stream,
+        args=(run_id, stage, "stderr", process.stderr),
+        daemon=True,
+    )
+    stdout_thread.start()
+    stderr_thread.start()
+    return_code = process.wait()
+    stdout_thread.join(timeout=2)
+    stderr_thread.join(timeout=2)
+    return return_code
+
+
+def _run_public_stats_process(run_id: str, payload: dict[str, Any]) -> None:
+    try:
+        sources = _public_stats_sources(payload)
+        dataset_paths = [str(SOURCE_DATABASE_PATHS[source]) for source in sources]
+        analytics_dir = PROJECT_ROOT / "analytics_output"
+        output_root = _resolve_workspace_path(payload.get("output_dir"), "public_stats")
+        data_dir = output_root / "data"
+        csv_dir = output_root / "csv"
+        sync_site = bool(payload.get("sync_site", True))
+        with PUBLIC_STATS_RUNS_LOCK:
+            if run_id in PUBLIC_STATS_RUNS:
+                PUBLIC_STATS_RUNS[run_id]["status"] = "running"
+        _append_public_stats_log(run_id, f"Public stats build started for {', '.join(sources)}.")
+
+        commands = [
+            (
+                "analytics",
+                [
+                    sys.executable,
+                    "scripts/export_analytics.py",
+                    *dataset_paths,
+                    "--output-dir",
+                    str(analytics_dir),
+                ],
+            ),
+            (
+                "snapshot",
+                [
+                    sys.executable,
+                    "scripts/build_public_stats.py",
+                    "--csv-dir",
+                    str(analytics_dir),
+                    "--output-dir",
+                    str(data_dir),
+                    "--copy-csv-dir",
+                    str(csv_dir),
+                ],
+            ),
+        ]
+        if sync_site:
+            commands.append(("site-sync", ["node", "site/scripts/sync-public-data.mjs"]))
+
+        exit_code = 0
+        for stage, command in commands:
+            _append_public_stats_log(run_id, f"Starting {stage} stage.", stage=stage)
+            return_code = _run_public_stats_command(run_id, stage, command)
+            if return_code == 0:
+                _append_public_stats_log(run_id, f"{stage} stage completed.", stage=stage, level="success")
+                continue
+            exit_code = 1
+            _append_public_stats_log(run_id, f"{stage} stage failed with exit code {return_code}.", stage=stage, level="error")
+            break
+
+        final_status = "completed" if exit_code == 0 else "failed"
+        _append_public_stats_log(run_id, f"Public stats build {final_status}.", level="success" if exit_code == 0 else "error")
+        with PUBLIC_STATS_RUNS_LOCK:
+            if run_id in PUBLIC_STATS_RUNS:
+                PUBLIC_STATS_RUNS[run_id]["status"] = final_status
+                PUBLIC_STATS_RUNS[run_id]["return_code"] = exit_code
+                PUBLIC_STATS_RUNS[run_id]["finished_at"] = time.time()
+    except Exception as exc:  # noqa: BLE001
+        _append_public_stats_log(run_id, f"Public stats build crashed: {exc}", level="error")
+        with PUBLIC_STATS_RUNS_LOCK:
+            if run_id in PUBLIC_STATS_RUNS:
+                PUBLIC_STATS_RUNS[run_id]["status"] = "failed"
+                PUBLIC_STATS_RUNS[run_id]["return_code"] = 1
+                PUBLIC_STATS_RUNS[run_id]["finished_at"] = time.time()
+
+
+def start_public_stats_run(payload: dict[str, Any]) -> dict[str, Any]:
+    sources = _public_stats_sources(payload)
+    run_id = uuid.uuid4().hex
+    with PUBLIC_STATS_RUNS_LOCK:
+        PUBLIC_STATS_RUNS[run_id] = {
+            "id": run_id,
+            "status": "queued",
+            "sources": sources,
+            "args": {
+                "output_dir": _clean_text(payload.get("output_dir")) or "public_stats",
+                "site_dir": _clean_text(payload.get("site_dir")) or "site/public",
+                "sync_site": bool(payload.get("sync_site", True)),
+            },
+            "logs": [],
+            "next_seq": 0,
+            "return_code": None,
+            "started_at": time.time(),
+            "finished_at": None,
+        }
+    thread = threading.Thread(target=_run_public_stats_process, args=(run_id, payload), daemon=True)
+    thread.start()
+    return get_public_stats_run(run_id, after_seq=0)
+
+
+def get_public_stats_run(run_id: str, *, after_seq: int = 0) -> dict[str, Any]:
+    with PUBLIC_STATS_RUNS_LOCK:
+        run = PUBLIC_STATS_RUNS.get(run_id)
+        if run is None:
+            raise ValueError(f"unknown public stats run: {run_id}")
+        logs = [entry for entry in run["logs"] if int(entry["seq"]) > after_seq]
+        return {
+            "id": run["id"],
+            "status": run["status"],
+            "sources": run["sources"],
+            "args": run["args"],
+            "logs": logs,
+            "last_seq": run["next_seq"],
+            "return_code": run["return_code"],
+            "started_at": run["started_at"],
+            "finished_at": run["finished_at"],
+        }
+
+
 def _date_filter_expression(field_name: str) -> tuple[str, bool]:
     if field_name == "published":
         return "substr(COALESCE(v.publication_date, v.initial_publication_date, ''), 1, 10)", True
@@ -1023,7 +1238,14 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
         if parsed.path in {"/", "/search"}:
             _head_response(self, "text/html; charset=utf-8")
             return
-        if parsed.path in {"/api/search", "/api/facets", "/api/parser-runs", "/api/ai-analysis-runs", "/health"}:
+        if parsed.path in {
+            "/api/search",
+            "/api/facets",
+            "/api/parser-runs",
+            "/api/ai-analysis-runs",
+            "/api/public-stats-runs",
+            "/health",
+        }:
             _head_response(self, "application/json; charset=utf-8")
             return
         _head_response(self, "text/plain; charset=utf-8", status=HTTPStatus.NOT_FOUND)
@@ -1052,6 +1274,11 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
                 after = _request_int(params, "after", 0) or 0
                 _json_response(self, get_ai_analysis_run(run_id, after_seq=after))
                 return
+            if parsed.path == "/api/public-stats-runs":
+                run_id = (params.get("run_id") or [""])[0].strip()
+                after = _request_int(params, "after", 0) or 0
+                _json_response(self, get_public_stats_run(run_id, after_seq=after))
+                return
             if parsed.path == "/health":
                 _json_response(self, {"ok": True})
                 return
@@ -1070,6 +1297,9 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
                 return
             if parsed.path == "/api/ai-analysis-runs":
                 _json_response(self, start_ai_analysis_run(_json_body(self)), status=HTTPStatus.CREATED)
+                return
+            if parsed.path == "/api/public-stats-runs":
+                _json_response(self, start_public_stats_run(_json_body(self)), status=HTTPStatus.CREATED)
                 return
         except ValueError as exc:
             _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
@@ -2644,7 +2874,7 @@ INDEX_HTML = """<!doctype html>
               </div>
             </div>
             <div class="actions">
-              <button class="btn primary" type="button" title="Public snapshot build is not connected yet">Build Snapshot</button>
+              <button class="btn primary" type="button" title="Build public statistics snapshot">Build Snapshot</button>
               <button class="btn secondary" type="button" title="Preview public statistics command shell">Preview Command</button>
             </div>
           </form>
@@ -2777,6 +3007,12 @@ INDEX_HTML = """<!doctype html>
       status: "idle",
     };
     const aiAnalysisRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
+    const publicStatsRunState = {
       runId: "",
       lastSeq: 0,
       timer: 0,
@@ -3014,6 +3250,95 @@ INDEX_HTML = """<!doctype html>
         pollAiAnalysisRun();
       } catch (error) {
         addLog("AI Analyse", error.message || String(error), "error");
+      }
+    }
+
+    function publicStatsLogTitle(entry) {
+      const stage = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `Public Stats${stage}${stream}`;
+    }
+
+    function ingestPublicStatsLogs(payload) {
+      for (const entry of payload.logs || []) {
+        publicStatsRunState.lastSeq = Math.max(publicStatsRunState.lastSeq, Number(entry.seq || 0));
+        addLog(publicStatsLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      publicStatsRunState.status = payload.status || publicStatsRunState.status;
+    }
+
+    async function pollPublicStatsRun() {
+      if (!publicStatsRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: publicStatsRunState.runId,
+          after: String(publicStatsRunState.lastSeq),
+        });
+        const response = await fetch(`/api/public-stats-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("Public Stats", payload.error || "Failed to read public stats logs.", "error");
+          window.clearInterval(publicStatsRunState.timer);
+          publicStatsRunState.timer = 0;
+          return;
+        }
+        ingestPublicStatsLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(publicStatsRunState.timer);
+          publicStatsRunState.timer = 0;
+          publicStatsRunState.runId = "";
+        }
+      } catch (error) {
+        addLog("Public Stats", error.message || String(error), "error");
+        window.clearInterval(publicStatsRunState.timer);
+        publicStatsRunState.timer = 0;
+      }
+    }
+
+    function collectPublicStatsPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="stats_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        output_dir: document.querySelector("#stats_output_dir")?.value || "public_stats",
+        site_dir: document.querySelector("#stats_site_dir")?.value || "site/public",
+        sync_site: true,
+      };
+    }
+
+    async function startPublicStatsRun() {
+      if (publicStatsRunState.timer) {
+        addLog("Public Stats", "Public stats build is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectPublicStatsPayload();
+      if (!payload.sources.length) {
+        addLog("Public Stats", "Select at least one public stats source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("Public Stats", `Starting public stats build for ${payload.sources.join(", ")}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/public-stats-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("Public Stats", data.error || "Failed to start public stats build.", "error");
+          return;
+        }
+        publicStatsRunState.runId = data.id;
+        publicStatsRunState.lastSeq = 0;
+        publicStatsRunState.status = data.status;
+        ingestPublicStatsLogs(data);
+        publicStatsRunState.timer = window.setInterval(pollPublicStatsRun, 1000);
+        pollPublicStatsRun();
+      } catch (error) {
+        addLog("Public Stats", error.message || String(error), "error");
       }
     }
 
@@ -3501,11 +3826,16 @@ INDEX_HTML = """<!doctype html>
       setLogDrawer(true);
     });
     document.querySelector("#public-stats-workspace .btn.primary")?.addEventListener("click", () => {
-      addLog("Public Stats", "Public snapshot build requested. Command execution is not connected yet.", "warning");
-      setLogDrawer(true);
+      startPublicStatsRun();
     });
     document.querySelector("#public-stats-workspace .btn.secondary")?.addEventListener("click", () => {
-      addLog("Public Stats", "Public snapshot command preview requested.", "info");
+      const payload = collectPublicStatsPayload();
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog(
+        "Public Stats",
+        `Preview for ${sourceText}: export analytics -> build public_stats/data + public_stats/csv -> sync site/public.`,
+        "info",
+      );
       setLogDrawer(true);
     });
     logToggleEl.addEventListener("click", () => {
