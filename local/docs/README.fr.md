@@ -49,3 +49,6 @@ Ensuite, chaque offre d'emploi est normalisée : l'entreprise, le lieu, le canto
 Après cela, les agences et intermédiaires de recrutement sont exclus de l'échantillon global. C'est important : dans nos statistiques publiques, nous cherchons à suivre spécifiquement le marché direct de l'emploi, plutôt que l'activité d'intermédiaires qui peuvent republier plusieurs fois des postes similaires et déformer l'image de la demande. Les exclusions s'appuient sur une liste normalisée d'entreprises de placement/recrutement connues et de leurs alias.
 
 Les offres d'emploi sont également analysées à l'aide de l'IA : les filtres logiciels standards ne parviennent souvent pas à reconnaître toutes les informations pertinentes et peuvent négliger des détails importants. L'IA ne remplace pas ces filtres et n'invente pas de données, mais travaille avec eux pour fournir une analyse plus approfondie et plus précise.
+
+[Technical usage](local/docs/TECHNICAL_USAGE.md)<br>
+[Local App](local/docs/LOCAL_APP.md)

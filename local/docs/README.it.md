@@ -49,3 +49,6 @@ Successivamente, ogni annuncio viene normalizzato: azienda, località, cantone, 
 Dopo questa fase, agenzie e intermediari di reclutamento vengono esclusi dal campione complessivo. Questo è importante: nelle nostre statistiche pubbliche vogliamo monitorare specificamente il mercato diretto del lavoro, non l'attività degli intermediari, che possono ripubblicare più volte posizioni simili e distorcere il quadro della domanda. Le eccezioni sono gestite sulla base di una lista normalizzata di società di collocamento/reclutamento note e dei loro alias.
 
 Gli annunci vengono inoltre analizzati con l'IA: i filtri software standard spesso non riescono a riconoscere tutte le informazioni rilevanti e possono trascurare dettagli importanti. L'IA non sostituisce questi filtri e non inventa dati, ma lavora insieme a essi per fornire un'analisi più approfondita e accurata.
+
+[Technical usage](local/docs/TECHNICAL_USAGE.md)<br>
+[Local App](local/docs/LOCAL_APP.md)

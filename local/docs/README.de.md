@@ -49,3 +49,6 @@ Danach wird jede Stellenanzeige normalisiert: Unternehmen, Standort, Kanton, Sen
 Anschließend werden Agenturen und Rekrutierungsvermittler aus der Gesamtstichprobe ausgeschlossen. Das ist wichtig: In unseren öffentlichen Statistiken wollen wir gezielt den direkten Arbeitsmarkt abbilden und nicht die Aktivität von Vermittlern, die ähnliche Stellen mehrfach erneut veröffentlichen und so das Bild der Nachfrage verzerren können. Ausnahmen werden auf Basis einer normalisierten Liste bekannter Personalvermittlungs- und Rekrutierungsunternehmen sowie ihrer Aliasnamen vorgenommen.
 
 Stellenanzeigen werden zusätzlich mit KI analysiert: Standardsoftwarefilter erkennen oft nicht alle relevanten Informationen und können wichtige Details übersehen. KI ersetzt diese Filter nicht und erfindet keine Daten, sondern arbeitet ergänzend zu ihnen, um eine tiefere und genauere Analyse zu ermöglichen.
+
+[Technical usage](local/docs/TECHNICAL_USAGE.md)<br>
+[Local App](local/docs/LOCAL_APP.md)

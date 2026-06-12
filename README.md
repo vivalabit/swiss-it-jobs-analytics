@@ -51,5 +51,5 @@ After that, agencies and recruitment intermediaries are excluded from the overal
 
 Job vacancies are further analysed using AI: standard software filters often fail to recognise all the relevant information and may overlook important details. AI does not replace these filters or invent data, but works alongside them to provide a more in-depth and accurate analysis.
 
-[Technical usage](README.md)<br>
+[Technical usage](local/docs/TECHNICAL_USAGE.md)<br>
 [Local App](local/docs/LOCAL_APP.md)
