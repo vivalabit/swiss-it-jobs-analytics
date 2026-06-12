@@ -50,3 +50,6 @@ Next, each job posting is normalized: the company, location, canton, seniority, 
 After that, agencies and recruitment intermediaries are excluded from the overall sample. This is important: in our public statistics, we strive to track the direct job market specifically, rather than the activity of intermediaries, who may repost similar positions multiple times and distort the picture of demand. Exceptions are made based on a normalized list of known staffing/recruitment companies and their aliases.
 
 Job vacancies are further analysed using AI: standard software filters often fail to recognise all the relevant information and may overlook important details. AI does not replace these filters or invent data, but works alongside them to provide a more in-depth and accurate analysis.
+
+[Technical usage](README.md)<br>
+[Local App](local/docs/LOCAL_APP.md)
