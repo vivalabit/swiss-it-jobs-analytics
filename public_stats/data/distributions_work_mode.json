@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-06-09T09:30:44Z",
+  "generated_at": "2026-06-13T22:07:32Z",
   "available": true,
   "dimension": "work_mode",
   "items": [
     {
       "key": "Unknown",
       "label": "Unknown",
-      "vacancy_count": 4880,
-      "share": 0.5735
+      "vacancy_count": 5416,
+      "share": 0.5718
     },
     {
       "key": "hybrid",
       "label": "hybrid",
-      "vacancy_count": 1880,
-      "share": 0.2209
+      "vacancy_count": 2104,
+      "share": 0.2221
     },
     {
       "key": "onsite",
       "label": "onsite",
-      "vacancy_count": 945,
-      "share": 0.1111
+      "vacancy_count": 1055,
+      "share": 0.1114
     },
     {
       "key": "remote",
       "label": "remote",
-      "vacancy_count": 804,
-      "share": 0.0945
+      "vacancy_count": 897,
+      "share": 0.0947
     }
   ]
 }

@@ -1,61 +1,67 @@
 {
-  "generated_at": "2026-06-09T09:30:44Z",
+  "generated_at": "2026-06-13T22:07:32Z",
   "available": true,
   "dimension": "role_category",
   "items": [
     {
       "key": "software_engineering",
       "label": "software_engineering",
-      "vacancy_count": 2770,
-      "share": 0.3255
+      "vacancy_count": 3029,
+      "share": 0.3198
     },
     {
       "key": "devops_cloud_platform",
       "label": "devops_cloud_platform",
-      "vacancy_count": 1617,
-      "share": 0.19
+      "vacancy_count": 1811,
+      "share": 0.1912
     },
     {
       "key": "product_project_analysis",
       "label": "product_project_analysis",
-      "vacancy_count": 1161,
-      "share": 0.1364
+      "vacancy_count": 1308,
+      "share": 0.1381
     },
     {
       "key": "data_ai",
       "label": "data_ai",
-      "vacancy_count": 906,
-      "share": 0.1065
+      "vacancy_count": 988,
+      "share": 0.1043
     },
     {
       "key": "security",
       "label": "security",
-      "vacancy_count": 804,
-      "share": 0.0945
+      "vacancy_count": 897,
+      "share": 0.0947
     },
     {
       "key": "support_operations",
       "label": "support_operations",
-      "vacancy_count": 606,
-      "share": 0.0712
+      "vacancy_count": 685,
+      "share": 0.0723
     },
     {
       "key": "qa_testing",
       "label": "qa_testing",
-      "vacancy_count": 375,
+      "vacancy_count": 418,
       "share": 0.0441
     },
     {
       "key": "erp_business_systems",
       "label": "erp_business_systems",
-      "vacancy_count": 201,
-      "share": 0.0236
+      "vacancy_count": 258,
+      "share": 0.0272
     },
     {
       "key": "ux_ui_design",
       "label": "ux_ui_design",
-      "vacancy_count": 69,
-      "share": 0.0081
+      "vacancy_count": 76,
+      "share": 0.008
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "vacancy_count": 2,
+      "share": 0.0002
     }
   ]
 }

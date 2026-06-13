@@ -1,2065 +1,2167 @@
 {
-  "generated_at": "2026-06-09T09:30:44Z",
+  "generated_at": "2026-06-13T22:07:32Z",
   "available": true,
   "dimension": "city",
   "items": [
     {
       "key": "Zürich",
       "label": "Zürich",
-      "vacancy_count": 1975,
-      "share": 0.2321
+      "vacancy_count": 2206,
+      "share": 0.2329
     },
     {
       "key": "Genève",
       "label": "Genève",
-      "vacancy_count": 586,
-      "share": 0.0689
+      "vacancy_count": 646,
+      "share": 0.0682
     },
     {
       "key": "Bern",
       "label": "Bern",
-      "vacancy_count": 486,
-      "share": 0.0571
+      "vacancy_count": 546,
+      "share": 0.0576
     },
     {
       "key": "Lausanne",
       "label": "Lausanne",
-      "vacancy_count": 276,
-      "share": 0.0324
+      "vacancy_count": 302,
+      "share": 0.0319
     },
     {
       "key": "Basel",
       "label": "Basel",
-      "vacancy_count": 273,
-      "share": 0.0321
+      "vacancy_count": 300,
+      "share": 0.0317
     },
     {
       "key": "Switzerland",
       "label": "Switzerland",
-      "vacancy_count": 224,
-      "share": 0.0263
+      "vacancy_count": 245,
+      "share": 0.0259
     },
     {
       "key": "Luzern",
       "label": "Luzern",
-      "vacancy_count": 130,
-      "share": 0.0153
-    },
-    {
-      "key": "Winterthur",
-      "label": "Winterthur",
-      "vacancy_count": 107,
-      "share": 0.0126
-    },
-    {
-      "key": "Zurich, Switzerland",
-      "label": "Zurich, Switzerland",
-      "vacancy_count": 107,
-      "share": 0.0126
+      "vacancy_count": 161,
+      "share": 0.017
     },
     {
       "key": "Zürich Metropolitan Area",
       "label": "Zürich Metropolitan Area",
-      "vacancy_count": 102,
-      "share": 0.012
+      "vacancy_count": 118,
+      "share": 0.0125
     },
     {
-      "key": "Zurich, Zurich, Switzerland",
-      "label": "Zurich, Zurich, Switzerland",
-      "vacancy_count": 101,
-      "share": 0.0119
+      "key": "Winterthur",
+      "label": "Winterthur",
+      "vacancy_count": 112,
+      "share": 0.0118
+    },
+    {
+      "key": "Zurich, Switzerland",
+      "label": "Zurich, Switzerland",
+      "vacancy_count": 108,
+      "share": 0.0114
     },
     {
       "key": "Zug",
       "label": "Zug",
-      "vacancy_count": 91,
-      "share": 0.0107
+      "vacancy_count": 105,
+      "share": 0.0111
     },
     {
-      "key": "Aarau",
-      "label": "Aarau",
-      "vacancy_count": 70,
-      "share": 0.0082
+      "key": "Zurich, Zurich, Switzerland",
+      "label": "Zurich, Zurich, Switzerland",
+      "vacancy_count": 104,
+      "share": 0.011
     },
     {
       "key": "Berne",
       "label": "Berne",
-      "vacancy_count": 69,
+      "vacancy_count": 94,
+      "share": 0.0099
+    },
+    {
+      "key": "Aarau",
+      "label": "Aarau",
+      "vacancy_count": 77,
       "share": 0.0081
     },
     {
       "key": "Wallisellen",
       "label": "Wallisellen",
-      "vacancy_count": 64,
-      "share": 0.0075
+      "vacancy_count": 74,
+      "share": 0.0078
     },
     {
       "key": "Baden",
       "label": "Baden",
-      "vacancy_count": 55,
-      "share": 0.0065
-    },
-    {
-      "key": "Geneva, Switzerland",
-      "label": "Geneva, Switzerland",
-      "vacancy_count": 55,
-      "share": 0.0065
+      "vacancy_count": 65,
+      "share": 0.0069
     },
     {
       "key": "St. Gallen",
       "label": "St. Gallen",
-      "vacancy_count": 53,
-      "share": 0.0062
+      "vacancy_count": 63,
+      "share": 0.0067
     },
     {
-      "key": "Schlieren",
-      "label": "Schlieren",
-      "vacancy_count": 44,
-      "share": 0.0052
+      "key": "Geneva, Switzerland",
+      "label": "Geneva, Switzerland",
+      "vacancy_count": 57,
+      "share": 0.006
     },
     {
       "key": "Lugano",
       "label": "Lugano",
-      "vacancy_count": 42,
+      "vacancy_count": 49,
+      "share": 0.0052
+    },
+    {
+      "key": "St Gallen",
+      "label": "St Gallen",
+      "vacancy_count": 47,
+      "share": 0.005
+    },
+    {
+      "key": "Schlieren",
+      "label": "Schlieren",
+      "vacancy_count": 46,
       "share": 0.0049
+    },
+    {
+      "key": "Chiasso",
+      "label": "Chiasso",
+      "vacancy_count": 44,
+      "share": 0.0046
+    },
+    {
+      "key": "Herisau",
+      "label": "Herisau",
+      "vacancy_count": 43,
+      "share": 0.0045
     },
     {
       "key": "Thun",
       "label": "Thun",
       "vacancy_count": 42,
-      "share": 0.0049
-    },
-    {
-      "key": "St Gallen",
-      "label": "St Gallen",
-      "vacancy_count": 40,
-      "share": 0.0047
-    },
-    {
-      "key": "Chiasso",
-      "label": "Chiasso",
-      "vacancy_count": 38,
-      "share": 0.0045
-    },
-    {
-      "key": "Herisau",
-      "label": "Herisau",
-      "vacancy_count": 38,
-      "share": 0.0045
-    },
-    {
-      "key": "Dübendorf",
-      "label": "Dübendorf",
-      "vacancy_count": 36,
-      "share": 0.0042
+      "share": 0.0044
     },
     {
       "key": "Mägenwil",
       "label": "Mägenwil",
-      "vacancy_count": 36,
+      "vacancy_count": 40,
       "share": 0.0042
     },
     {
-      "key": "Baar",
-      "label": "Baar",
-      "vacancy_count": 35,
+      "key": "Dübendorf",
+      "label": "Dübendorf",
+      "vacancy_count": 39,
       "share": 0.0041
     },
     {
       "key": "Lenzburg",
       "label": "Lenzburg",
-      "vacancy_count": 35,
+      "vacancy_count": 39,
       "share": 0.0041
     },
     {
       "key": "Olten",
       "label": "Olten",
-      "vacancy_count": 35,
-      "share": 0.0041
+      "vacancy_count": 37,
+      "share": 0.0039
     },
     {
-      "key": "Sursee",
-      "label": "Sursee",
-      "vacancy_count": 33,
-      "share": 0.0039
+      "key": "Baar",
+      "label": "Baar",
+      "vacancy_count": 36,
+      "share": 0.0038
     },
     {
       "key": "Frauenfeld",
       "label": "Frauenfeld",
-      "vacancy_count": 32,
+      "vacancy_count": 36,
       "share": 0.0038
     },
     {
-      "key": "Basel, Basel, Switzerland",
-      "label": "Basel, Basel, Switzerland",
-      "vacancy_count": 31,
-      "share": 0.0036
+      "key": "Neuchâtel",
+      "label": "Neuchâtel",
+      "vacancy_count": 36,
+      "share": 0.0038
     },
     {
-      "key": "Meyrin",
-      "label": "Meyrin",
-      "vacancy_count": 31,
-      "share": 0.0036
-    },
-    {
-      "key": "Solothurn",
-      "label": "Solothurn",
-      "vacancy_count": 31,
-      "share": 0.0036
-    },
-    {
-      "key": "Zug, Zug, Switzerland",
-      "label": "Zug, Zug, Switzerland",
-      "vacancy_count": 31,
-      "share": 0.0036
+      "key": "Sursee",
+      "label": "Sursee",
+      "vacancy_count": 36,
+      "share": 0.0038
     },
     {
       "key": "Fribourg",
       "label": "Fribourg",
-      "vacancy_count": 30,
-      "share": 0.0035
-    },
-    {
-      "key": "Reinach",
-      "label": "Reinach",
-      "vacancy_count": 30,
+      "vacancy_count": 33,
       "share": 0.0035
     },
     {
       "key": "Rotkreuz",
       "label": "Rotkreuz",
-      "vacancy_count": 30,
+      "vacancy_count": 33,
       "share": 0.0035
+    },
+    {
+      "key": "Solothurn",
+      "label": "Solothurn",
+      "vacancy_count": 33,
+      "share": 0.0035
+    },
+    {
+      "key": "Basel, Basel, Switzerland",
+      "label": "Basel, Basel, Switzerland",
+      "vacancy_count": 32,
+      "share": 0.0034
     },
     {
       "key": "Berne, Switzerland",
       "label": "Berne, Switzerland",
-      "vacancy_count": 29,
+      "vacancy_count": 32,
       "share": 0.0034
+    },
+    {
+      "key": "Meyrin",
+      "label": "Meyrin",
+      "vacancy_count": 32,
+      "share": 0.0034
+    },
+    {
+      "key": "Reinach",
+      "label": "Reinach",
+      "vacancy_count": 32,
+      "share": 0.0034
+    },
+    {
+      "key": "Zug, Zug, Switzerland",
+      "label": "Zug, Zug, Switzerland",
+      "vacancy_count": 32,
+      "share": 0.0034
+    },
+    {
+      "key": "Glattbrugg",
+      "label": "Glattbrugg",
+      "vacancy_count": 31,
+      "share": 0.0033
     },
     {
       "key": "Chur",
       "label": "Chur",
+      "vacancy_count": 30,
+      "share": 0.0032
+    },
+    {
+      "key": "Dietikon",
+      "label": "Dietikon",
+      "vacancy_count": 30,
+      "share": 0.0032
+    },
+    {
+      "key": "Fully, Valais, Switzerland",
+      "label": "Fully, Valais, Switzerland",
       "vacancy_count": 29,
-      "share": 0.0034
+      "share": 0.0031
     },
     {
       "key": "Mendrisio",
       "label": "Mendrisio",
       "vacancy_count": 29,
-      "share": 0.0034
-    },
-    {
-      "key": "Neuchâtel",
-      "label": "Neuchâtel",
-      "vacancy_count": 29,
-      "share": 0.0034
-    },
-    {
-      "key": "Dietikon",
-      "label": "Dietikon",
-      "vacancy_count": 28,
-      "share": 0.0033
-    },
-    {
-      "key": "Glattbrugg",
-      "label": "Glattbrugg",
-      "vacancy_count": 28,
-      "share": 0.0033
-    },
-    {
-      "key": "Kloten",
-      "label": "Kloten",
-      "vacancy_count": 26,
       "share": 0.0031
     },
     {
       "key": "Schaffhausen",
       "label": "Schaffhausen",
-      "vacancy_count": 26,
-      "share": 0.0031
+      "vacancy_count": 28,
+      "share": 0.003
     },
     {
-      "key": "Emmen",
-      "label": "Emmen",
-      "vacancy_count": 25,
+      "key": "Kloten",
+      "label": "Kloten",
+      "vacancy_count": 27,
+      "share": 0.0029
+    },
+    {
+      "key": "Volketswil",
+      "label": "Volketswil",
+      "vacancy_count": 27,
       "share": 0.0029
     },
     {
       "key": "Opfikon",
       "label": "Opfikon",
-      "vacancy_count": 25,
-      "share": 0.0029
+      "vacancy_count": 26,
+      "share": 0.0027
     },
     {
       "key": "Allschwil",
       "label": "Allschwil",
-      "vacancy_count": 24,
-      "share": 0.0028
+      "vacancy_count": 25,
+      "share": 0.0026
+    },
+    {
+      "key": "Emmen",
+      "label": "Emmen",
+      "vacancy_count": 25,
+      "share": 0.0026
+    },
+    {
+      "key": "Gland",
+      "label": "Gland",
+      "vacancy_count": 25,
+      "share": 0.0026
+    },
+    {
+      "key": "Spreitenbach",
+      "label": "Spreitenbach",
+      "vacancy_count": 25,
+      "share": 0.0026
     },
     {
       "key": "Basel, Switzerland",
       "label": "Basel, Switzerland",
       "vacancy_count": 24,
-      "share": 0.0028
+      "share": 0.0025
     },
     {
-      "key": "Gland",
-      "label": "Gland",
-      "vacancy_count": 24,
-      "share": 0.0028
-    },
-    {
-      "key": "Spreitenbach",
-      "label": "Spreitenbach",
+      "key": "Bioggio",
+      "label": "Bioggio",
       "vacancy_count": 23,
-      "share": 0.0027
+      "share": 0.0024
+    },
+    {
+      "key": "Zug, Switzerland",
+      "label": "Zug, Switzerland",
+      "vacancy_count": 22,
+      "share": 0.0023
     },
     {
       "key": "Bern, Berne, Switzerland",
       "label": "Bern, Berne, Switzerland",
-      "vacancy_count": 22,
-      "share": 0.0026
+      "vacancy_count": 21,
+      "share": 0.0022
     },
     {
-      "key": "Fully, Valais, Switzerland",
-      "label": "Fully, Valais, Switzerland",
+      "key": "Urdorf",
+      "label": "Urdorf",
       "vacancy_count": 21,
-      "share": 0.0025
+      "share": 0.0022
     },
     {
-      "key": "Volketswil",
-      "label": "Volketswil",
-      "vacancy_count": 21,
-      "share": 0.0025
+      "key": "Pully",
+      "label": "Pully",
+      "vacancy_count": 20,
+      "share": 0.0021
+    },
+    {
+      "key": "Schwyz",
+      "label": "Schwyz",
+      "vacancy_count": 20,
+      "share": 0.0021
+    },
+    {
+      "key": "Yverdon-les-Bains",
+      "label": "Yverdon-les-Bains",
+      "vacancy_count": 20,
+      "share": 0.0021
     },
     {
       "key": "Stans",
       "label": "Stans",
       "vacancy_count": 19,
-      "share": 0.0022
+      "share": 0.002
     },
     {
-      "key": "Zug, Switzerland",
-      "label": "Zug, Switzerland",
+      "key": "Wetzikon",
+      "label": "Wetzikon",
       "vacancy_count": 19,
-      "share": 0.0022
+      "share": 0.002
     },
     {
-      "key": "Yverdon-les-Bains",
-      "label": "Yverdon-les-Bains",
+      "key": "Biel",
+      "label": "Biel",
       "vacancy_count": 18,
-      "share": 0.0021
+      "share": 0.0019
     },
     {
       "key": "Lausanne Metropolitan Area",
       "label": "Lausanne Metropolitan Area",
-      "vacancy_count": 17,
-      "share": 0.002
-    },
-    {
-      "key": "Pully",
-      "label": "Pully",
-      "vacancy_count": 17,
-      "share": 0.002
-    },
-    {
-      "key": "Schwyz",
-      "label": "Schwyz",
-      "vacancy_count": 17,
-      "share": 0.002
-    },
-    {
-      "key": "Urdorf",
-      "label": "Urdorf",
-      "vacancy_count": 17,
-      "share": 0.002
-    },
-    {
-      "key": "Bussnang",
-      "label": "Bussnang",
-      "vacancy_count": 16,
+      "vacancy_count": 18,
       "share": 0.0019
     },
     {
       "key": "Rothenburg",
       "label": "Rothenburg",
-      "vacancy_count": 16,
+      "vacancy_count": 18,
       "share": 0.0019
     },
     {
-      "key": "Wetzikon",
-      "label": "Wetzikon",
-      "vacancy_count": 16,
+      "key": "Visp",
+      "label": "Visp",
+      "vacancy_count": 18,
       "share": 0.0019
-    },
-    {
-      "key": "Zürich Seebach",
-      "label": "Zürich Seebach",
-      "vacancy_count": 16,
-      "share": 0.0019
-    },
-    {
-      "key": "Biel",
-      "label": "Biel",
-      "vacancy_count": 15,
-      "share": 0.0018
-    },
-    {
-      "key": "Biel/Bienne",
-      "label": "Biel/Bienne",
-      "vacancy_count": 15,
-      "share": 0.0018
-    },
-    {
-      "key": "Bioggio",
-      "label": "Bioggio",
-      "vacancy_count": 15,
-      "share": 0.0018
     },
     {
       "key": "Bülach",
       "label": "Bülach",
-      "vacancy_count": 15,
+      "vacancy_count": 17,
       "share": 0.0018
     },
     {
-      "key": "Kriens",
-      "label": "Kriens",
-      "vacancy_count": 15,
+      "key": "Cham",
+      "label": "Cham",
+      "vacancy_count": 17,
       "share": 0.0018
     },
     {
-      "key": "Langenthal",
-      "label": "Langenthal",
-      "vacancy_count": 15,
-      "share": 0.0018
-    },
-    {
-      "key": "Rapperswil-Jona",
-      "label": "Rapperswil-Jona",
-      "vacancy_count": 15,
-      "share": 0.0018
-    },
-    {
-      "key": "Stein",
-      "label": "Stein",
-      "vacancy_count": 15,
+      "key": "Zürich Seebach",
+      "label": "Zürich Seebach",
+      "vacancy_count": 17,
       "share": 0.0018
     },
     {
       "key": "Bulle",
       "label": "Bulle",
-      "vacancy_count": 14,
-      "share": 0.0016
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Bussnang",
+      "label": "Bussnang",
+      "vacancy_count": 16,
+      "share": 0.0017
     },
     {
       "key": "Hinwil",
       "label": "Hinwil",
-      "vacancy_count": 14,
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Kriens",
+      "label": "Kriens",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Muttenz",
+      "label": "Muttenz",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Quartino",
+      "label": "Quartino",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Rapperswil-Jona",
+      "label": "Rapperswil-Jona",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Stein",
+      "label": "Stein",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Wohlen",
+      "label": "Wohlen",
+      "vacancy_count": 16,
+      "share": 0.0017
+    },
+    {
+      "key": "Biel/Bienne",
+      "label": "Biel/Bienne",
+      "vacancy_count": 15,
       "share": 0.0016
     },
     {
       "key": "Kaiseraugst",
       "label": "Kaiseraugst",
-      "vacancy_count": 14,
+      "vacancy_count": 15,
       "share": 0.0016
+    },
+    {
+      "key": "Landquart",
+      "label": "Landquart",
+      "vacancy_count": 15,
+      "share": 0.0016
+    },
+    {
+      "key": "Langenthal",
+      "label": "Langenthal",
+      "vacancy_count": 15,
+      "share": 0.0016
+    },
+    {
+      "key": "Münchenstein",
+      "label": "Münchenstein",
+      "vacancy_count": 15,
+      "share": 0.0016
+    },
+    {
+      "key": "Pfäffikon",
+      "label": "Pfäffikon",
+      "vacancy_count": 15,
+      "share": 0.0016
+    },
+    {
+      "key": "Stäfa",
+      "label": "Stäfa",
+      "vacancy_count": 15,
+      "share": 0.0016
+    },
+    {
+      "key": "Aarburg",
+      "label": "Aarburg",
+      "vacancy_count": 14,
+      "share": 0.0015
+    },
+    {
+      "key": "Geneva Metropolitan Area",
+      "label": "Geneva Metropolitan Area",
+      "vacancy_count": 14,
+      "share": 0.0015
     },
     {
       "key": "Nyon",
       "label": "Nyon",
       "vacancy_count": 14,
-      "share": 0.0016
-    },
-    {
-      "key": "Steinhausen",
-      "label": "Steinhausen",
-      "vacancy_count": 14,
-      "share": 0.0016
-    },
-    {
-      "key": "Visp",
-      "label": "Visp",
-      "vacancy_count": 14,
-      "share": 0.0016
-    },
-    {
-      "key": "Zurich, Zurich",
-      "label": "Zurich, Zurich",
-      "vacancy_count": 14,
-      "share": 0.0016
-    },
-    {
-      "key": "Cham",
-      "label": "Cham",
-      "vacancy_count": 13,
       "share": 0.0015
     },
     {
-      "key": "Moosseedorf",
-      "label": "Moosseedorf",
-      "vacancy_count": 13,
-      "share": 0.0015
-    },
-    {
-      "key": "Pfäffikon",
-      "label": "Pfäffikon",
-      "vacancy_count": 13,
+      "key": "Ostermundigen",
+      "label": "Ostermundigen",
+      "vacancy_count": 14,
       "share": 0.0015
     },
     {
       "key": "Sion",
       "label": "Sion",
-      "vacancy_count": 13,
+      "vacancy_count": 14,
       "share": 0.0015
     },
     {
-      "key": "Aarburg",
-      "label": "Aarburg",
-      "vacancy_count": 12,
-      "share": 0.0014
+      "key": "Stabio",
+      "label": "Stabio",
+      "vacancy_count": 14,
+      "share": 0.0015
+    },
+    {
+      "key": "Steinhausen",
+      "label": "Steinhausen",
+      "vacancy_count": 14,
+      "share": 0.0015
+    },
+    {
+      "key": "Unknown",
+      "label": "Unknown",
+      "vacancy_count": 14,
+      "share": 0.0015
+    },
+    {
+      "key": "Zurich, Zurich",
+      "label": "Zurich, Zurich",
+      "vacancy_count": 14,
+      "share": 0.0015
     },
     {
       "key": "Bonaduz",
       "label": "Bonaduz",
-      "vacancy_count": 12,
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
       "key": "Burgdorf",
       "label": "Burgdorf",
-      "vacancy_count": 12,
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
       "key": "Dietlikon",
       "label": "Dietlikon",
-      "vacancy_count": 12,
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
-      "key": "Geneva Metropolitan Area",
-      "label": "Geneva Metropolitan Area",
-      "vacancy_count": 12,
+      "key": "Eschen",
+      "label": "Eschen",
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
-      "key": "Geneva, Geneva, Switzerland",
-      "label": "Geneva, Geneva, Switzerland",
-      "vacancy_count": 12,
+      "key": "Gümligen",
+      "label": "Gümligen",
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
       "key": "Horgen",
       "label": "Horgen",
-      "vacancy_count": 12,
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
-      "key": "Jona",
-      "label": "Jona",
-      "vacancy_count": 12,
-      "share": 0.0014
-    },
-    {
-      "key": "Landquart",
-      "label": "Landquart",
-      "vacancy_count": 12,
-      "share": 0.0014
-    },
-    {
-      "key": "Muttenz",
-      "label": "Muttenz",
-      "vacancy_count": 12,
-      "share": 0.0014
-    },
-    {
-      "key": "Ostermundigen",
-      "label": "Ostermundigen",
-      "vacancy_count": 12,
-      "share": 0.0014
-    },
-    {
-      "key": "Stäfa",
-      "label": "Stäfa",
-      "vacancy_count": 12,
-      "share": 0.0014
-    },
-    {
-      "key": "Unknown",
-      "label": "Unknown",
-      "vacancy_count": 12,
+      "key": "Moosseedorf",
+      "label": "Moosseedorf",
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
       "key": "Wallisellen / Hof, Zurich, Switzerland",
       "label": "Wallisellen / Hof, Zurich, Switzerland",
-      "vacancy_count": 12,
+      "vacancy_count": 13,
       "share": 0.0014
     },
     {
-      "key": "Wohlen",
-      "label": "Wohlen",
+      "key": "Aargau, Switzerland",
+      "label": "Aargau, Switzerland",
       "vacancy_count": 12,
-      "share": 0.0014
+      "share": 0.0013
+    },
+    {
+      "key": "Geneva, Geneva, Switzerland",
+      "label": "Geneva, Geneva, Switzerland",
+      "vacancy_count": 12,
+      "share": 0.0013
+    },
+    {
+      "key": "Hard",
+      "label": "Hard",
+      "vacancy_count": 12,
+      "share": 0.0013
+    },
+    {
+      "key": "Jona",
+      "label": "Jona",
+      "vacancy_count": 12,
+      "share": 0.0013
     },
     {
       "key": "Zollikofen",
       "label": "Zollikofen",
       "vacancy_count": 12,
-      "share": 0.0014
+      "share": 0.0013
     },
     {
       "key": "Aargau",
       "label": "Aargau",
       "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Aargau, Switzerland",
-      "label": "Aargau, Switzerland",
-      "vacancy_count": 11,
-      "share": 0.0013
+      "share": 0.0012
     },
     {
       "key": "Balzers",
       "label": "Balzers",
       "vacancy_count": 11,
-      "share": 0.0013
+      "share": 0.0012
+    },
+    {
+      "key": "Basel (City)",
+      "label": "Basel (City)",
+      "vacancy_count": 11,
+      "share": 0.0012
+    },
+    {
+      "key": "Bottighofen",
+      "label": "Bottighofen",
+      "vacancy_count": 11,
+      "share": 0.0012
+    },
+    {
+      "key": "Bubendorf",
+      "label": "Bubendorf",
+      "vacancy_count": 11,
+      "share": 0.0012
     },
     {
       "key": "Cham, Zug, Switzerland",
       "label": "Cham, Zug, Switzerland",
       "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Gümligen",
-      "label": "Gümligen",
-      "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Kemptthal",
-      "label": "Kemptthal",
-      "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Solothurn, Switzerland",
-      "label": "Solothurn, Switzerland",
-      "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Stabio",
-      "label": "Stabio",
-      "vacancy_count": 11,
-      "share": 0.0013
-    },
-    {
-      "key": "Basel (City)",
-      "label": "Basel (City)",
-      "vacancy_count": 10,
-      "share": 0.0012
-    },
-    {
-      "key": "Bubikon",
-      "label": "Bubikon",
-      "vacancy_count": 10,
-      "share": 0.0012
-    },
-    {
-      "key": "CH - Zürich",
-      "label": "CH - Zürich",
-      "vacancy_count": 10,
-      "share": 0.0012
-    },
-    {
-      "key": "Eschen",
-      "label": "Eschen",
-      "vacancy_count": 10,
-      "share": 0.0012
-    },
-    {
-      "key": "Fribourg, Switzerland",
-      "label": "Fribourg, Switzerland",
-      "vacancy_count": 10,
       "share": 0.0012
     },
     {
       "key": "Fully",
       "label": "Fully",
-      "vacancy_count": 10,
+      "vacancy_count": 11,
       "share": 0.0012
     },
     {
-      "key": "Münchenstein",
-      "label": "Münchenstein",
-      "vacancy_count": 10,
+      "key": "Kemptthal",
+      "label": "Kemptthal",
+      "vacancy_count": 11,
+      "share": 0.0012
+    },
+    {
+      "key": "Männedorf",
+      "label": "Männedorf",
+      "vacancy_count": 11,
+      "share": 0.0012
+    },
+    {
+      "key": "Rapperswil",
+      "label": "Rapperswil",
+      "vacancy_count": 11,
       "share": 0.0012
     },
     {
       "key": "Schwerzenbach",
       "label": "Schwerzenbach",
-      "vacancy_count": 10,
+      "vacancy_count": 11,
       "share": 0.0012
     },
     {
-      "key": "Aadorf",
-      "label": "Aadorf",
-      "vacancy_count": 9,
-      "share": 0.0011
-    },
-    {
-      "key": "Baden, Aargau, Switzerland",
-      "label": "Baden, Aargau, Switzerland",
-      "vacancy_count": 9,
-      "share": 0.0011
+      "key": "Solothurn, Switzerland",
+      "label": "Solothurn, Switzerland",
+      "vacancy_count": 11,
+      "share": 0.0012
     },
     {
       "key": "Bellevue",
       "label": "Bellevue",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
-      "key": "Brugg",
-      "label": "Brugg",
-      "vacancy_count": 9,
-      "share": 0.0011
-    },
-    {
-      "key": "Bubendorf",
-      "label": "Bubendorf",
-      "vacancy_count": 9,
+      "key": "Bubikon",
+      "label": "Bubikon",
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
       "key": "Bussigny",
       "label": "Bussigny",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
+      "share": 0.0011
+    },
+    {
+      "key": "CH - Zürich",
+      "label": "CH - Zürich",
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
       "key": "Ecublens",
       "label": "Ecublens",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
+      "share": 0.0011
+    },
+    {
+      "key": "Fribourg, Switzerland",
+      "label": "Fribourg, Switzerland",
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
       "key": "Greater Bern Area",
       "label": "Greater Bern Area",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
-      "key": "Grenchen",
-      "label": "Grenchen",
-      "vacancy_count": 9,
-      "share": 0.0011
-    },
-    {
-      "key": "Männedorf",
-      "label": "Männedorf",
-      "vacancy_count": 9,
+      "key": "Unterentfelden",
+      "label": "Unterentfelden",
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
       "key": "Wil",
       "label": "Wil",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
       "share": 0.0011
     },
     {
       "key": "Zofingen",
       "label": "Zofingen",
-      "vacancy_count": 9,
+      "vacancy_count": 10,
       "share": 0.0011
+    },
+    {
+      "key": "Aadorf",
+      "label": "Aadorf",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Altishofen",
+      "label": "Altishofen",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Brugg",
+      "label": "Brugg",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Grenchen",
+      "label": "Grenchen",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Prilly",
+      "label": "Prilly",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Renens",
+      "label": "Renens",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "St Gallen, Switzerland",
+      "label": "St Gallen, Switzerland",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Thalwil",
+      "label": "Thalwil",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Untersiggenthal",
+      "label": "Untersiggenthal",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Vaud, Switzerland",
+      "label": "Vaud, Switzerland",
+      "vacancy_count": 9,
+      "share": 0.001
+    },
+    {
+      "key": "Baar, Zug, Switzerland",
+      "label": "Baar, Zug, Switzerland",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Baden, Aargau, Switzerland",
+      "label": "Baden, Aargau, Switzerland",
+      "vacancy_count": 8,
+      "share": 0.0008
     },
     {
       "key": "Basel Metropolitan Area",
       "label": "Basel Metropolitan Area",
       "vacancy_count": 8,
-      "share": 0.0009
+      "share": 0.0008
     },
     {
       "key": "Bellach",
       "label": "Bellach",
       "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Bottighofen",
-      "label": "Bottighofen",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Fehraltorf",
-      "label": "Fehraltorf",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Hard",
-      "label": "Hard",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Plan-les-Ouates",
-      "label": "Plan-les-Ouates",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Pratteln",
-      "label": "Pratteln",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Prilly",
-      "label": "Prilly",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Quartino",
-      "label": "Quartino",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Rapperswil",
-      "label": "Rapperswil",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "St Gallen, Switzerland",
-      "label": "St Gallen, Switzerland",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Staefa",
-      "label": "Staefa",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Thalwil",
-      "label": "Thalwil",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Unterentfelden",
-      "label": "Unterentfelden",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Yverdon",
-      "label": "Yverdon",
-      "vacancy_count": 8,
-      "share": 0.0009
-    },
-    {
-      "key": "Altishofen",
-      "label": "Altishofen",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Baar, Zug, Switzerland",
-      "label": "Baar, Zug, Switzerland",
-      "vacancy_count": 7,
       "share": 0.0008
     },
     {
       "key": "Bilten",
       "label": "Bilten",
-      "vacancy_count": 7,
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Crissier",
+      "label": "Crissier",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Fehraltorf",
+      "label": "Fehraltorf",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Lupfig",
+      "label": "Lupfig",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Nänikon-Greifensee",
+      "label": "Nänikon-Greifensee",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Plan-les-Ouates",
+      "label": "Plan-les-Ouates",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Pratteln",
+      "label": "Pratteln",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Risch-Rotkreuz",
+      "label": "Risch-Rotkreuz",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Staefa",
+      "label": "Staefa",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Vaud",
+      "label": "Vaud",
+      "vacancy_count": 8,
+      "share": 0.0008
+    },
+    {
+      "key": "Yverdon",
+      "label": "Yverdon",
+      "vacancy_count": 8,
       "share": 0.0008
     },
     {
       "key": "Buchs (SG), St Gallen, Switzerland",
       "label": "Buchs (SG), St Gallen, Switzerland",
       "vacancy_count": 7,
-      "share": 0.0008
+      "share": 0.0007
     },
     {
       "key": "Coppet",
       "label": "Coppet",
       "vacancy_count": 7,
-      "share": 0.0008
+      "share": 0.0007
     },
     {
       "key": "Dättwil",
       "label": "Dättwil",
       "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Heerbrugg",
-      "label": "Heerbrugg",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Les Acacias",
-      "label": "Les Acacias",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Nänikon-Greifensee",
-      "label": "Nänikon-Greifensee",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Paudex",
-      "label": "Paudex",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Region Bern Mittelland (BE/SO/AG)",
-      "label": "Region Bern Mittelland (BE/SO/AG)",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Renens",
-      "label": "Renens",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Rheinfelden",
-      "label": "Rheinfelden",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Risch-Rotkreuz",
-      "label": "Risch-Rotkreuz",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Rümlang",
-      "label": "Rümlang",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Schaan",
-      "label": "Schaan",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Thurgau",
-      "label": "Thurgau",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Uzwil",
-      "label": "Uzwil",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Vaud",
-      "label": "Vaud",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Vernier",
-      "label": "Vernier",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Zürich-Flughafen, Zurich, Switzerland",
-      "label": "Zürich-Flughafen, Zurich, Switzerland",
-      "vacancy_count": 7,
-      "share": 0.0008
-    },
-    {
-      "key": "Aigle",
-      "label": "Aigle",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Altstätten",
-      "label": "Altstätten",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Bendern",
-      "label": "Bendern",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Bienne",
-      "label": "Bienne",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Cham, Zug",
-      "label": "Cham, Zug",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Davos Platz",
-      "label": "Davos Platz",
-      "vacancy_count": 6,
       "share": 0.0007
     },
     {
       "key": "Ebikon",
       "label": "Ebikon",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Gerlafingen",
-      "label": "Gerlafingen",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Glattpark",
       "label": "Glattpark",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Grand-Lancy",
-      "label": "Grand-Lancy",
-      "vacancy_count": 6,
+      "key": "Heerbrugg",
+      "label": "Heerbrugg",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Lindau",
-      "label": "Lindau",
-      "vacancy_count": 6,
+      "key": "Les Acacias",
+      "label": "Les Acacias",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Lupfig",
-      "label": "Lupfig",
-      "vacancy_count": 6,
+      "key": "Liestal",
+      "label": "Liestal",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Lyss",
-      "label": "Lyss",
-      "vacancy_count": 6,
+      "key": "Lucerne Metropolitan Area",
+      "label": "Lucerne Metropolitan Area",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Münsingen",
-      "label": "Münsingen",
-      "vacancy_count": 6,
+      "key": "Martigny",
+      "label": "Martigny",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Nidau",
-      "label": "Nidau",
-      "vacancy_count": 6,
+      "key": "Paudex",
+      "label": "Paudex",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Reiden",
-      "label": "Reiden",
-      "vacancy_count": 6,
+      "key": "Region Bern Mittelland (BE/SO/AG)",
+      "label": "Region Bern Mittelland (BE/SO/AG)",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Risch-Rotkreuz, Zug, Switzerland",
-      "label": "Risch-Rotkreuz, Zug, Switzerland",
-      "vacancy_count": 6,
+      "key": "Rheinfelden",
+      "label": "Rheinfelden",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Roggwil",
       "label": "Roggwil",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Sempach",
-      "label": "Sempach",
-      "vacancy_count": 6,
+      "key": "Rümlang",
+      "label": "Rümlang",
+      "vacancy_count": 7,
+      "share": 0.0007
+    },
+    {
+      "key": "Schaan",
+      "label": "Schaan",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Sulgen",
       "label": "Sulgen",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Thun (Gwatt)",
-      "label": "Thun (Gwatt)",
-      "vacancy_count": 6,
+      "key": "Uzwil",
+      "label": "Uzwil",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Untersiggenthal",
-      "label": "Untersiggenthal",
-      "vacancy_count": 6,
-      "share": 0.0007
-    },
-    {
-      "key": "Vaud, Switzerland",
-      "label": "Vaud, Switzerland",
-      "vacancy_count": 6,
+      "key": "Vernier",
+      "label": "Vernier",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Wettingen",
       "label": "Wettingen",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Wimmis",
       "label": "Wimmis",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
-      "key": "Würenlingen",
-      "label": "Würenlingen",
-      "vacancy_count": 6,
+      "key": "Zuchwil",
+      "label": "Zuchwil",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Zürich-Flughafen",
       "label": "Zürich-Flughafen",
-      "vacancy_count": 6,
+      "vacancy_count": 7,
+      "share": 0.0007
+    },
+    {
+      "key": "Zürich-Flughafen, Zurich, Switzerland",
+      "label": "Zürich-Flughafen, Zurich, Switzerland",
+      "vacancy_count": 7,
       "share": 0.0007
     },
     {
       "key": "Adliswil",
       "label": "Adliswil",
-      "vacancy_count": 5,
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Aigle",
+      "label": "Aigle",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Altstätten",
+      "label": "Altstätten",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Bendern",
+      "label": "Bendern",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Bienne",
+      "label": "Bienne",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Cham, Zug",
+      "label": "Cham, Zug",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Davos Platz",
+      "label": "Davos Platz",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Freienbach",
+      "label": "Freienbach",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Fully, Valais",
+      "label": "Fully, Valais",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Gerlafingen",
+      "label": "Gerlafingen",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Lancy",
+      "label": "Lancy",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Lindau",
+      "label": "Lindau",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Lyss",
+      "label": "Lyss",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Münsingen",
+      "label": "Münsingen",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Nidau",
+      "label": "Nidau",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Reiden",
+      "label": "Reiden",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Risch",
+      "label": "Risch",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Risch-Rotkreuz, Zug, Switzerland",
+      "label": "Risch-Rotkreuz, Zug, Switzerland",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Root",
+      "label": "Root",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Sempach",
+      "label": "Sempach",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "St.Gallen",
+      "label": "St.Gallen",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Thun (Gwatt)",
+      "label": "Thun (Gwatt)",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Thurgau",
+      "label": "Thurgau",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Ticino, Switzerland",
+      "label": "Ticino, Switzerland",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Tägerwilen",
+      "label": "Tägerwilen",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Wangen-Brüttisellen",
+      "label": "Wangen-Brüttisellen",
+      "vacancy_count": 6,
+      "share": 0.0006
+    },
+    {
+      "key": "Würenlingen",
+      "label": "Würenlingen",
+      "vacancy_count": 6,
       "share": 0.0006
     },
     {
       "key": "Basel, Geneva, Zurich",
       "label": "Basel, Geneva, Zurich",
       "vacancy_count": 5,
-      "share": 0.0006
+      "share": 0.0005
     },
     {
       "key": "Beringen",
       "label": "Beringen",
       "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Central Switzerland, Switzerland",
-      "label": "Central Switzerland, Switzerland",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Crissier",
-      "label": "Crissier",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Freienbach",
-      "label": "Freienbach",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Fully, Valais",
-      "label": "Fully, Valais",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Geneva, Zurich",
-      "label": "Geneva, Zurich",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Ittigen",
-      "label": "Ittigen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Laufenburg",
-      "label": "Laufenburg",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Liestal",
-      "label": "Liestal",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Martigny",
-      "label": "Martigny",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Meggen",
-      "label": "Meggen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Meilen",
-      "label": "Meilen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Meisterschwanden",
-      "label": "Meisterschwanden",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Mex, Vaud, Switzerland",
-      "label": "Mex, Vaud, Switzerland",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Muhen",
-      "label": "Muhen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Otelfingen",
-      "label": "Otelfingen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Rapperswi-Jona",
-      "label": "Rapperswi-Jona",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Rapperswil-Jona, St Gallen, Switzerland",
-      "label": "Rapperswil-Jona, St Gallen, Switzerland",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Region Bern",
-      "label": "Region Bern",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Risch",
-      "label": "Risch",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Ruswil",
-      "label": "Ruswil",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Sachseln",
-      "label": "Sachseln",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Sankt Gallen",
-      "label": "Sankt Gallen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Schweiz",
-      "label": "Schweiz",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "St.Gallen",
-      "label": "St.Gallen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Thun, Berne, Switzerland",
-      "label": "Thun, Berne, Switzerland",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Ticino, Switzerland",
-      "label": "Ticino, Switzerland",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Triesen",
-      "label": "Triesen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Tägerwilen",
-      "label": "Tägerwilen",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Urtenen-Schönbühl",
-      "label": "Urtenen-Schönbühl",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Weggis",
-      "label": "Weggis",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Wollerau",
-      "label": "Wollerau",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Zuchwil",
-      "label": "Zuchwil",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Zurich (Headquarter)",
-      "label": "Zurich (Headquarter)",
-      "vacancy_count": 5,
-      "share": 0.0006
-    },
-    {
-      "key": "Appenzell",
-      "label": "Appenzell",
-      "vacancy_count": 4,
       "share": 0.0005
     },
     {
       "key": "Biel, Berne, Switzerland",
       "label": "Biel, Berne, Switzerland",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Brig",
-      "label": "Brig",
-      "vacancy_count": 4,
+      "key": "Central Switzerland, Switzerland",
+      "label": "Central Switzerland, Switzerland",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "DWL T",
       "label": "DWL T",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Deutschschweiz",
       "label": "Deutschschweiz",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Domat/Ems",
       "label": "Domat/Ems",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Effretikon",
-      "label": "Effretikon",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Eschlikon",
       "label": "Eschlikon",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Gland, Vaud, Switzerland",
-      "label": "Gland, Vaud, Switzerland",
-      "vacancy_count": 4,
+      "key": "Geneva, Zurich",
+      "label": "Geneva, Zurich",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Glarus",
-      "label": "Glarus",
-      "vacancy_count": 4,
+      "key": "Grand-Lancy",
+      "label": "Grand-Lancy",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Granges-Paccot",
       "label": "Granges-Paccot",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Hauptsitz Zollikofen",
-      "label": "Hauptsitz Zollikofen",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Härkingen",
-      "label": "Härkingen",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Kirchberg",
-      "label": "Kirchberg",
-      "vacancy_count": 4,
+      "key": "Ittigen",
+      "label": "Ittigen",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Kreuzlingen",
       "label": "Kreuzlingen",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Köniz",
-      "label": "Köniz",
-      "vacancy_count": 4,
+      "key": "Küsnacht",
+      "label": "Küsnacht",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Lancy",
-      "label": "Lancy",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Lancy, Geneva, Switzerland",
-      "label": "Lancy, Geneva, Switzerland",
-      "vacancy_count": 4,
-      "share": 0.0005
-    },
-    {
-      "key": "Lucerne Metropolitan Area",
-      "label": "Lucerne Metropolitan Area",
-      "vacancy_count": 4,
+      "key": "Laufenburg",
+      "label": "Laufenburg",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Marin-Epagnier",
       "label": "Marin-Epagnier",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Meiringen",
-      "label": "Meiringen",
-      "vacancy_count": 4,
+      "key": "Meggen",
+      "label": "Meggen",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Meyrin, Geneva, Switzerland",
-      "label": "Meyrin, Geneva, Switzerland",
-      "vacancy_count": 4,
+      "key": "Meilen",
+      "label": "Meilen",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Meisterschwanden",
+      "label": "Meisterschwanden",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Mex, Vaud, Switzerland",
+      "label": "Mex, Vaud, Switzerland",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Molinazzo di Monteggio",
       "label": "Molinazzo di Monteggio",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Muhen",
+      "label": "Muhen",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Murten",
       "label": "Murten",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Oberbüren",
-      "label": "Oberbüren",
-      "vacancy_count": 4,
+      "key": "Otelfingen",
+      "label": "Otelfingen",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Paderborn/Büren",
-      "label": "Paderborn/Büren",
-      "vacancy_count": 4,
+      "key": "Rapperswi-Jona",
+      "label": "Rapperswi-Jona",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Rancate",
-      "label": "Rancate",
-      "vacancy_count": 4,
+      "key": "Rapperswil-Jona, St Gallen, Switzerland",
+      "label": "Rapperswil-Jona, St Gallen, Switzerland",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Regensdorf",
-      "label": "Regensdorf",
-      "vacancy_count": 4,
+      "key": "Region Bern",
+      "label": "Region Bern",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Root",
-      "label": "Root",
-      "vacancy_count": 4,
+      "key": "Ruswil",
+      "label": "Ruswil",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Sankt Gallen Metropolitan Area",
-      "label": "Sankt Gallen Metropolitan Area",
-      "vacancy_count": 4,
+      "key": "Sachseln",
+      "label": "Sachseln",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Seuzach",
-      "label": "Seuzach",
-      "vacancy_count": 4,
+      "key": "Sankt Gallen",
+      "label": "Sankt Gallen",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "St Gallen, St Gallen, Switzerland",
-      "label": "St Gallen, St Gallen, Switzerland",
-      "vacancy_count": 4,
+      "key": "Schweiz",
+      "label": "Schweiz",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Stabio, Switzerland",
       "label": "Stabio, Switzerland",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Thun, Berne, Switzerland",
+      "label": "Thun, Berne, Switzerland",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Triesen",
+      "label": "Triesen",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Urtenen-Schönbühl",
+      "label": "Urtenen-Schönbühl",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
       "key": "Villars-sur-Glâne",
       "label": "Villars-sur-Glâne",
-      "vacancy_count": 4,
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Villars-sur-Glâne, Fribourg, Switzerland",
-      "label": "Villars-sur-Glâne, Fribourg, Switzerland",
-      "vacancy_count": 4,
+      "key": "Wangen b. Dübendorf",
+      "label": "Wangen b. Dübendorf",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Zizers",
-      "label": "Zizers",
-      "vacancy_count": 4,
+      "key": "Weggis",
+      "label": "Weggis",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Zwingen",
-      "label": "Zwingen",
-      "vacancy_count": 4,
+      "key": "Weinfelden",
+      "label": "Weinfelden",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Zürich Linkes, Zurich, Switzerland",
-      "label": "Zürich Linkes, Zurich, Switzerland",
-      "vacancy_count": 4,
+      "key": "Winkeln, St Gallen, Switzerland",
+      "label": "Winkeln, St Gallen, Switzerland",
+      "vacancy_count": 5,
       "share": 0.0005
     },
     {
-      "key": "Affoltern am Albis",
-      "label": "Affoltern am Albis",
-      "vacancy_count": 3,
+      "key": "Wollerau",
+      "label": "Wollerau",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Zurich (Headquarter)",
+      "label": "Zurich (Headquarter)",
+      "vacancy_count": 5,
+      "share": 0.0005
+    },
+    {
+      "key": "Appenzell",
+      "label": "Appenzell",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Alpnach",
-      "label": "Alpnach",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Altendorf",
-      "label": "Altendorf",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Amriswil",
-      "label": "Amriswil",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Arlesheim",
-      "label": "Arlesheim",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bad Ragaz",
-      "label": "Bad Ragaz",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Baden-Dättwil",
-      "label": "Baden-Dättwil",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bellinzona",
-      "label": "Bellinzona",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bellinzone",
-      "label": "Bellinzone",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bern-Mittelland, Berne, Switzerland",
-      "label": "Bern-Mittelland, Berne, Switzerland",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bern/Zürich",
-      "label": "Bern/Zürich",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Biel/bienne",
-      "label": "Biel/bienne",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Birr",
-      "label": "Birr",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Birsfelden",
-      "label": "Birsfelden",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Bremgarten",
-      "label": "Bremgarten",
-      "vacancy_count": 3,
+      "key": "Brig",
+      "label": "Brig",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Buchs",
       "label": "Buchs",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Canton de Vaud",
-      "label": "Canton de Vaud",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Castione",
-      "label": "Castione",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Cressier",
-      "label": "Cressier",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Czech Republic, Hungary, Slovakia",
-      "label": "Czech Republic, Hungary, Slovakia",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Degersheim",
-      "label": "Degersheim",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Dietikon / Im Berg, Zurich, Switzerland",
       "label": "Dietikon / Im Berg, Zurich, Switzerland",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Dällikon",
-      "label": "Dällikon",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Emmen, Lucerne, Switzerland",
-      "label": "Emmen, Lucerne, Switzerland",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Fahrweid",
-      "label": "Fahrweid",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Flughafen Zürich",
-      "label": "Flughafen Zürich",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Füllinsdorf",
-      "label": "Füllinsdorf",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Gisikon",
-      "label": "Gisikon",
-      "vacancy_count": 3,
+      "key": "Effretikon",
+      "label": "Effretikon",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Givisiez",
       "label": "Givisiez",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Granges, Fribourg, Switzerland",
-      "label": "Granges, Fribourg, Switzerland",
-      "vacancy_count": 3,
+      "key": "Gland, Vaud, Switzerland",
+      "label": "Gland, Vaud, Switzerland",
+      "vacancy_count": 4,
+      "share": 0.0004
+    },
+    {
+      "key": "Glarus",
+      "label": "Glarus",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Haag",
       "label": "Haag",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Jegenstorf",
-      "label": "Jegenstorf",
-      "vacancy_count": 3,
+      "key": "Hauptsitz Zollikofen",
+      "label": "Hauptsitz Zollikofen",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Kilchberg",
-      "label": "Kilchberg",
-      "vacancy_count": 3,
+      "key": "Härkingen",
+      "label": "Härkingen",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Kägiswil",
-      "label": "Kägiswil",
-      "vacancy_count": 3,
+      "key": "Kirchberg",
+      "label": "Kirchberg",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Küsnacht",
-      "label": "Küsnacht",
-      "vacancy_count": 3,
+      "key": "Köniz",
+      "label": "Köniz",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Langnau",
-      "label": "Langnau",
-      "vacancy_count": 3,
+      "key": "Lancy, Geneva, Switzerland",
+      "label": "Lancy, Geneva, Switzerland",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Laufen",
       "label": "Laufen",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Le Brassus",
-      "label": "Le Brassus",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Lengnau",
-      "label": "Lengnau",
-      "vacancy_count": 3,
+      "key": "Liebefeld",
+      "label": "Liebefeld",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Losone",
       "label": "Losone",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Losone, Meyrin or Biel",
-      "label": "Losone, Meyrin or Biel",
-      "vacancy_count": 3,
+      "key": "Meiringen",
+      "label": "Meiringen",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Lucerne, Switzerland",
-      "label": "Lucerne, Switzerland",
-      "vacancy_count": 3,
+      "key": "Meyrin, Geneva, Switzerland",
+      "label": "Meyrin, Geneva, Switzerland",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Lützelflüh-Goldbach",
-      "label": "Lützelflüh-Goldbach",
-      "vacancy_count": 3,
+      "key": "Oberbüren",
+      "label": "Oberbüren",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Morbio Inferiore",
-      "label": "Morbio Inferiore",
-      "vacancy_count": 3,
+      "key": "Paderborn/Büren",
+      "label": "Paderborn/Büren",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Morges",
-      "label": "Morges",
-      "vacancy_count": 3,
+      "key": "Rancate",
+      "label": "Rancate",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Muri",
-      "label": "Muri",
-      "vacancy_count": 3,
+      "key": "Regensdorf",
+      "label": "Regensdorf",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Muri b. Bern",
-      "label": "Muri b. Bern",
-      "vacancy_count": 3,
+      "key": "Sankt Gallen Metropolitan Area",
+      "label": "Sankt Gallen Metropolitan Area",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Münsterlingen",
-      "label": "Münsterlingen",
-      "vacancy_count": 3,
+      "key": "Seuzach",
+      "label": "Seuzach",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Niederönz",
-      "label": "Niederönz",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Nottwil",
-      "label": "Nottwil",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Oberrohrdorf",
-      "label": "Oberrohrdorf",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Oetwil am See",
-      "label": "Oetwil am See",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Othmarsingen",
-      "label": "Othmarsingen",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Port",
-      "label": "Port",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Schaffhausen, Schaffhausen, Switzerland",
-      "label": "Schaffhausen, Schaffhausen, Switzerland",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Schindellegi",
-      "label": "Schindellegi",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Schwyz, Switzerland",
-      "label": "Schwyz, Switzerland",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Seengen",
-      "label": "Seengen",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Spiez",
-      "label": "Spiez",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "St-Sulpice",
-      "label": "St-Sulpice",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "St. Margrethen",
-      "label": "St. Margrethen",
-      "vacancy_count": 3,
+      "key": "St Gallen, St Gallen, Switzerland",
+      "label": "St Gallen, St Gallen, Switzerland",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Thurgau, Switzerland",
       "label": "Thurgau, Switzerland",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Turgi",
-      "label": "Turgi",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Uster",
-      "label": "Uster",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Vevey",
       "label": "Vevey",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
+      "share": 0.0004
+    },
+    {
+      "key": "Villars-sur-Glâne, Fribourg, Switzerland",
+      "label": "Villars-sur-Glâne, Fribourg, Switzerland",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Villmergen",
       "label": "Villmergen",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Wallisellen / Hof, Zurich",
-      "label": "Wallisellen / Hof, Zurich",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Wangen b. Dübendorf",
-      "label": "Wangen b. Dübendorf",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Weinfelden",
-      "label": "Weinfelden",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Weinfelden, Landquart, St. Gallen",
       "label": "Weinfelden, Landquart, St. Gallen",
-      "vacancy_count": 3,
-      "share": 0.0004
-    },
-    {
-      "key": "Winkeln, St Gallen, Switzerland",
-      "label": "Winkeln, St Gallen, Switzerland",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Würenlos",
       "label": "Würenlos",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Zurich Metropolitan Area",
-      "label": "Zurich Metropolitan Area",
-      "vacancy_count": 3,
+      "key": "Zizers",
+      "label": "Zizers",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
-      "key": "Zürich Altstetten",
-      "label": "Zürich Altstetten",
-      "vacancy_count": 3,
+      "key": "Zwingen",
+      "label": "Zwingen",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Zürich Flughafen",
       "label": "Zürich Flughafen",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
+      "share": 0.0004
+    },
+    {
+      "key": "Zürich Linkes, Zurich, Switzerland",
+      "label": "Zürich Linkes, Zurich, Switzerland",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Zürich Oerlikon",
       "label": "Zürich Oerlikon",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
+      "share": 0.0004
+    },
+    {
+      "key": "Zürich und/oder Mägenwil",
+      "label": "Zürich und/oder Mägenwil",
+      "vacancy_count": 4,
       "share": 0.0004
     },
     {
       "key": "Écublens",
       "label": "Écublens",
-      "vacancy_count": 3,
+      "vacancy_count": 4,
       "share": 0.0004
+    },
+    {
+      "key": "Affoltern am Albis",
+      "label": "Affoltern am Albis",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Alpnach",
+      "label": "Alpnach",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Altendorf",
+      "label": "Altendorf",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Amriswil",
+      "label": "Amriswil",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Arlesheim",
+      "label": "Arlesheim",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Bad Ragaz",
+      "label": "Bad Ragaz",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Baden-Dättwil",
+      "label": "Baden-Dättwil",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Baldegg",
+      "label": "Baldegg",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Bellinzona",
+      "label": "Bellinzona",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Bellinzone",
+      "label": "Bellinzone",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Bern-Mittelland, Berne, Switzerland",
+      "label": "Bern-Mittelland, Berne, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Biel/bienne",
+      "label": "Biel/bienne",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Birr",
+      "label": "Birr",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Birsfelden",
+      "label": "Birsfelden",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Bremgarten",
+      "label": "Bremgarten",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Canton de Vaud",
+      "label": "Canton de Vaud",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Carouge",
+      "label": "Carouge",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Castione",
+      "label": "Castione",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Cressier",
+      "label": "Cressier",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Czech Republic, Hungary, Slovakia",
+      "label": "Czech Republic, Hungary, Slovakia",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Degersheim",
+      "label": "Degersheim",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Dällikon",
+      "label": "Dällikon",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Dübendorf-Stettbach",
+      "label": "Dübendorf-Stettbach",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Emmen, Lucerne, Switzerland",
+      "label": "Emmen, Lucerne, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Fahrweid",
+      "label": "Fahrweid",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Flughafen Zürich",
+      "label": "Flughafen Zürich",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Fribourg, Fribourg, Switzerland",
+      "label": "Fribourg, Fribourg, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Füllinsdorf",
+      "label": "Füllinsdorf",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Gisikon",
+      "label": "Gisikon",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Granges, Fribourg, Switzerland",
+      "label": "Granges, Fribourg, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Jegenstorf",
+      "label": "Jegenstorf",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Kilchberg",
+      "label": "Kilchberg",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Kägiswil",
+      "label": "Kägiswil",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "La Chaux-de-Fonds",
+      "label": "La Chaux-de-Fonds",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Langnau",
+      "label": "Langnau",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Le Brassus",
+      "label": "Le Brassus",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Lengnau",
+      "label": "Lengnau",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Long",
+      "label": "Long",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Losone, Meyrin or Biel",
+      "label": "Losone, Meyrin or Biel",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Lucerne, Switzerland",
+      "label": "Lucerne, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Lützelflüh-Goldbach",
+      "label": "Lützelflüh-Goldbach",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Morbio Inferiore",
+      "label": "Morbio Inferiore",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Morges",
+      "label": "Morges",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Muri",
+      "label": "Muri",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Muri b. Bern",
+      "label": "Muri b. Bern",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",
+      "label": "Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",
+      "label": "Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Münsterlingen",
+      "label": "Münsterlingen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Niederweningen",
+      "label": "Niederweningen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Niederönz",
+      "label": "Niederönz",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Nottwil",
+      "label": "Nottwil",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Oberrohrdorf",
+      "label": "Oberrohrdorf",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Oetwil am See",
+      "label": "Oetwil am See",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Othmarsingen",
+      "label": "Othmarsingen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Port",
+      "label": "Port",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Rapperswil, St Gallen, Switzerland",
+      "label": "Rapperswil, St Gallen, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Risch-Rotkreuz, Zug",
+      "label": "Risch-Rotkreuz, Zug",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Schaffhausen, Schaffhausen, Switzerland",
+      "label": "Schaffhausen, Schaffhausen, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Schindellegi",
+      "label": "Schindellegi",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Schwyz, Switzerland",
+      "label": "Schwyz, Switzerland",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Spiez",
+      "label": "Spiez",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "St-Sulpice",
+      "label": "St-Sulpice",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "St. Gallen - Poststrasse 17",
+      "label": "St. Gallen - Poststrasse 17",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "St. Margrethen",
+      "label": "St. Margrethen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Teufen",
+      "label": "Teufen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Turgi",
+      "label": "Turgi",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Uster",
+      "label": "Uster",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Villigen PSI",
+      "label": "Villigen PSI",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Wallisellen / Hof, Zurich",
+      "label": "Wallisellen / Hof, Zurich",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Weinfelden, Landquart oder St. Gallen",
+      "label": "Weinfelden, Landquart oder St. Gallen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Winkeln, St Gallen",
+      "label": "Winkeln, St Gallen",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Zurich Metropolitan Area",
+      "label": "Zurich Metropolitan Area",
+      "vacancy_count": 3,
+      "share": 0.0003
+    },
+    {
+      "key": "Zürich Altstetten",
+      "label": "Zürich Altstetten",
+      "vacancy_count": 3,
+      "share": 0.0003
     },
     {
       "key": "AG",
@@ -2122,12 +2224,6 @@
       "share": 0.0002
     },
     {
-      "key": "Baldegg",
-      "label": "Baldegg",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
       "key": "Basel-Country, Switzerland",
       "label": "Basel-Country, Switzerland",
       "vacancy_count": 2,
@@ -2154,6 +2250,12 @@
     {
       "key": "Bern und Homeoffice",
       "label": "Bern und Homeoffice",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Bern/Zürich",
+      "label": "Bern/Zürich",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2202,6 +2304,12 @@
     {
       "key": "Dotzigen",
       "label": "Dotzigen",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Duggingen",
+      "label": "Duggingen",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2272,6 +2380,12 @@
       "share": 0.0002
     },
     {
+      "key": "Friesencham",
+      "label": "Friesencham",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "Fällanden",
       "label": "Fällanden",
       "vacancy_count": 2,
@@ -2292,6 +2406,12 @@
     {
       "key": "Genf",
       "label": "Genf",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Genolier",
+      "label": "Genolier",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2380,6 +2500,12 @@
       "share": 0.0002
     },
     {
+      "key": "Kehrsatz",
+      "label": "Kehrsatz",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "Kriegstetten",
       "label": "Kriegstetten",
       "vacancy_count": 2,
@@ -2398,8 +2524,8 @@
       "share": 0.0002
     },
     {
-      "key": "La Chaux-de-Fonds",
-      "label": "La Chaux-de-Fonds",
+      "key": "Langnau am Albis",
+      "label": "Langnau am Albis",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2422,14 +2548,8 @@
       "share": 0.0002
     },
     {
-      "key": "Liebefeld",
-      "label": "Liebefeld",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
-      "key": "Long",
-      "label": "Long",
+      "key": "Lupfig (Aargau)",
+      "label": "Lupfig (Aargau)",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2464,20 +2584,20 @@
       "share": 0.0002
     },
     {
+      "key": "Mon",
+      "label": "Mon",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "Monthey",
       "label": "Monthey",
       "vacancy_count": 2,
       "share": 0.0002
     },
     {
-      "key": "Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",
-      "label": "Mägenwil, Basel, Bern, Rotkreuz oder St. Gallen",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
-      "key": "Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",
-      "label": "Mägenwil, Bern, Basel, Rotkreuz oder St. Gallen",
+      "key": "Männedorf / Auf Dorf, Zurich, Switzerland",
+      "label": "Männedorf / Auf Dorf, Zurich, Switzerland",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2494,14 +2614,14 @@
       "share": 0.0002
     },
     {
-      "key": "Niederwangen",
-      "label": "Niederwangen",
+      "key": "Nice",
+      "label": "Nice",
       "vacancy_count": 2,
       "share": 0.0002
     },
     {
-      "key": "Niederweningen",
-      "label": "Niederweningen",
+      "key": "Niederwangen",
+      "label": "Niederwangen",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2514,6 +2634,12 @@
     {
       "key": "Nänikon",
       "label": "Nänikon",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Obbürgen",
+      "label": "Obbürgen",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2542,6 +2668,12 @@
       "share": 0.0002
     },
     {
+      "key": "Ostschweiz",
+      "label": "Ostschweiz",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "Ostschweiz/Liechtenstein",
       "label": "Ostschweiz/Liechtenstein",
       "vacancy_count": 2,
@@ -2566,12 +2698,6 @@
       "share": 0.0002
     },
     {
-      "key": "Rapperswil, St Gallen, Switzerland",
-      "label": "Rapperswil, St Gallen, Switzerland",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
       "key": "Region Bern Mittelland",
       "label": "Region Bern Mittelland",
       "vacancy_count": 2,
@@ -2592,6 +2718,12 @@
     {
       "key": "Reichenburg",
       "label": "Reichenburg",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Rolle",
+      "label": "Rolle",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2622,6 +2754,12 @@
     {
       "key": "Satigny",
       "label": "Satigny",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Seengen",
+      "label": "Seengen",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2662,6 +2800,12 @@
       "share": 0.0002
     },
     {
+      "key": "St. Gallen und/oder Zürich-Flughafen (The Circle)",
+      "label": "St. Gallen und/oder Zürich-Flughafen (The Circle)",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "St. Urban",
       "label": "St. Urban",
       "vacancy_count": 2,
@@ -2692,8 +2836,14 @@
       "share": 0.0002
     },
     {
-      "key": "Teufen",
-      "label": "Teufen",
+      "key": "Switzerland + FL",
+      "label": "Switzerland + FL",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Thônex",
+      "label": "Thônex",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2728,12 +2878,6 @@
       "share": 0.0002
     },
     {
-      "key": "Weinfelden, Landquart oder St. Gallen",
-      "label": "Weinfelden, Landquart oder St. Gallen",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
       "key": "Wilderswil",
       "label": "Wilderswil",
       "vacancy_count": 2,
@@ -2742,12 +2886,6 @@
     {
       "key": "Wiler b. Seedorf",
       "label": "Wiler b. Seedorf",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
-      "key": "Winkeln, St Gallen",
-      "label": "Winkeln, St Gallen",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2794,20 +2932,26 @@
       "share": 0.0002
     },
     {
-      "key": "Zürich und/oder Mägenwil",
-      "label": "Zürich und/oder Mägenwil",
-      "vacancy_count": 2,
-      "share": 0.0002
-    },
-    {
       "key": "Zürich und/oder Mägenwil und Homeoffice",
       "label": "Zürich und/oder Mägenwil und Homeoffice",
       "vacancy_count": 2,
       "share": 0.0002
     },
     {
+      "key": "Zürich-Flughafen (The Circle) und/oder St. Gallen",
+      "label": "Zürich-Flughafen (The Circle) und/oder St. Gallen",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
       "key": "Zürich-Flughafen, Zurich",
       "label": "Zürich-Flughafen, Zurich",
+      "vacancy_count": 2,
+      "share": 0.0002
+    },
+    {
+      "key": "Zürich-Seebach",
+      "label": "Zürich-Seebach",
       "vacancy_count": 2,
       "share": 0.0002
     },
@@ -2824,8 +2968,20 @@
       "share": 0.0001
     },
     {
+      "key": "Aargau und Basel",
+      "label": "Aargau und Basel",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Acacias",
       "label": "Acacias",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Adler",
+      "label": "Adler",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -2872,6 +3028,12 @@
       "share": 0.0001
     },
     {
+      "key": "Ascona",
+      "label": "Ascona",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Aurangabad",
       "label": "Aurangabad",
       "vacancy_count": 1,
@@ -2880,6 +3042,12 @@
     {
       "key": "BAD IR",
       "label": "BAD IR",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Baar - Lättich, Switzerland",
+      "label": "Baar - Lättich, Switzerland",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -2904,6 +3072,12 @@
     {
       "key": "Baden-Daettwil",
       "label": "Baden-Daettwil",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Baden-Württemberg",
+      "label": "Baden-Württemberg",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -2934,6 +3108,12 @@
     {
       "key": "Basel (Hauptsitz)",
       "label": "Basel (Hauptsitz)",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Basel, Bern, Geneva, Lausanne, Lugano, Zürich",
+      "label": "Basel, Bern, Geneva, Lausanne, Lugano, Zürich",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -2974,6 +3154,12 @@
       "share": 0.0001
     },
     {
+      "key": "Bellevue / Genève (Geneva)",
+      "label": "Bellevue / Genève (Geneva)",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Bellinzona, Bern, Lausanne, Neuchâtel & Homeoffice",
       "label": "Bellinzona, Bern, Lausanne, Neuchâtel & Homeoffice",
       "vacancy_count": 1,
@@ -2994,6 +3180,12 @@
     {
       "key": "Bendern / Zürich",
       "label": "Bendern / Zürich",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Bendern/Lugano/Zürich",
+      "label": "Bendern/Lugano/Zürich",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3112,8 +3304,26 @@
       "share": 0.0001
     },
     {
+      "key": "Biel / Bern",
+      "label": "Biel / Bern",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "BielBienne",
+      "label": "BielBienne",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Binningen",
       "label": "Binningen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Birr (AG)",
+      "label": "Birr (AG)",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3202,6 +3412,12 @@
       "share": 0.0001
     },
     {
+      "key": "CHE - Bettlach",
+      "label": "CHE - Bettlach",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "CHE - Neuchatel",
       "label": "CHE - Neuchatel",
       "vacancy_count": 1,
@@ -3220,8 +3436,8 @@
       "share": 0.0001
     },
     {
-      "key": "Carouge",
-      "label": "Carouge",
+      "key": "Chavannes-près-Renens",
+      "label": "Chavannes-près-Renens",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3250,6 +3466,12 @@
       "share": 0.0001
     },
     {
+      "key": "Corcelles",
+      "label": "Corcelles",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Corgémont",
       "label": "Corgémont",
       "vacancy_count": 1,
@@ -3258,6 +3480,12 @@
     {
       "key": "Corminboeuf",
       "label": "Corminboeuf",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Court, Bern (Court / Bern)",
+      "label": "Court, Bern (Court / Bern)",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3328,20 +3556,8 @@
       "share": 0.0001
     },
     {
-      "key": "Duggingen",
-      "label": "Duggingen",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Dättwil, Aargau",
       "label": "Dättwil, Aargau",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Dübendorf-Stettbach",
-      "label": "Dübendorf-Stettbach",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3372,12 +3588,6 @@
     {
       "key": "Edinburgh",
       "label": "Edinburgh",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Elsau",
-      "label": "Elsau",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3442,18 +3652,6 @@
       "share": 0.0001
     },
     {
-      "key": "Fribourg, Fribourg, Switzerland",
-      "label": "Fribourg, Fribourg, Switzerland",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Friesencham",
-      "label": "Friesencham",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Frutigen, Berne, Switzerland",
       "label": "Frutigen, Berne, Switzerland",
       "vacancy_count": 1,
@@ -3462,6 +3660,12 @@
     {
       "key": "Full, Aargau, Switzerland",
       "label": "Full, Aargau, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "GENEVA OFFICE LONGEMALLE",
+      "label": "GENEVA OFFICE LONGEMALLE",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3478,6 +3682,12 @@
       "share": 0.0001
     },
     {
+      "key": "Geneva / Lausanne / Zurich",
+      "label": "Geneva / Lausanne / Zurich",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Geneva; Lausanne",
       "label": "Geneva; Lausanne",
       "vacancy_count": 1,
@@ -3486,12 +3696,6 @@
     {
       "key": "Geneve - Vernier, Chemin des Coquelicots 16",
       "label": "Geneve - Vernier, Chemin des Coquelicots 16",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Genolier",
-      "label": "Genolier",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3508,6 +3712,18 @@
       "share": 0.0001
     },
     {
+      "key": "Genève, Geneva",
+      "label": "Genève, Geneva",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Gerlafingen, Solothurn",
+      "label": "Gerlafingen, Solothurn",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Germany, Koblenz",
       "label": "Germany, Koblenz",
       "vacancy_count": 1,
@@ -3516,6 +3732,12 @@
     {
       "key": "Giswil",
       "label": "Giswil",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Givisiez, Fribourg, Switzerland",
+      "label": "Givisiez, Fribourg, Switzerland",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3670,6 +3892,12 @@
       "share": 0.0001
     },
     {
+      "key": "Hünenberg",
+      "label": "Hünenberg",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Ibach",
       "label": "Ibach",
       "vacancy_count": 1,
@@ -3736,12 +3964,6 @@
       "share": 0.0001
     },
     {
-      "key": "Kehrsatz",
-      "label": "Kehrsatz",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Killwangen",
       "label": "Killwangen",
       "vacancy_count": 1,
@@ -3786,12 +4008,6 @@
     {
       "key": "Landstuhl, Berne, Switzerland",
       "label": "Landstuhl, Berne, Switzerland",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Langnau am Albis",
-      "label": "Langnau am Albis",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3844,6 +4060,12 @@
       "share": 0.0001
     },
     {
+      "key": "Liebefeld und Region Bern",
+      "label": "Liebefeld und Region Bern",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Lisbon Metropolitan Area",
       "label": "Lisbon Metropolitan Area",
       "vacancy_count": 1,
@@ -3880,14 +4102,14 @@
       "share": 0.0001
     },
     {
-      "key": "Lugano Metropolitan Area",
-      "label": "Lugano Metropolitan Area",
+      "key": "Luganese",
+      "label": "Luganese",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
-      "key": "Lupfig (Aargau)",
-      "label": "Lupfig (Aargau)",
+      "key": "Lugano Metropolitan Area",
+      "label": "Lugano Metropolitan Area",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -3982,12 +4204,6 @@
       "share": 0.0001
     },
     {
-      "key": "Mon",
-      "label": "Mon",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Montreux 1",
       "label": "Montreux 1",
       "vacancy_count": 1,
@@ -4012,14 +4228,14 @@
       "share": 0.0001
     },
     {
-      "key": "Männedorf / Auf Dorf, Zurich, Switzerland",
-      "label": "Männedorf / Auf Dorf, Zurich, Switzerland",
+      "key": "Môtiers",
+      "label": "Môtiers",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
-      "key": "Môtiers",
-      "label": "Môtiers",
+      "key": "Münchenbuchsee",
+      "label": "Münchenbuchsee",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4072,12 +4288,6 @@
       "share": 0.0001
     },
     {
-      "key": "Nice",
-      "label": "Nice",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Nidwalden",
       "label": "Nidwalden",
       "vacancy_count": 1,
@@ -4098,12 +4308,6 @@
     {
       "key": "Novazzano",
       "label": "Novazzano",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Obbürgen",
-      "label": "Obbürgen",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4168,12 +4372,6 @@
       "share": 0.0001
     },
     {
-      "key": "Ostschweiz",
-      "label": "Ostschweiz",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Ostschweiz + FL",
       "label": "Ostschweiz + FL",
       "vacancy_count": 1,
@@ -4182,6 +4380,12 @@
     {
       "key": "Palézieux",
       "label": "Palézieux",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Payerne",
+      "label": "Payerne",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4198,14 +4402,32 @@
       "share": 0.0001
     },
     {
+      "key": "Pfungen",
+      "label": "Pfungen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Pilatus Kulm",
       "label": "Pilatus Kulm",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
+      "key": "Plan",
+      "label": "Plan",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Plan-les-Ouates, Geneva, Switzerland",
       "label": "Plan-les-Ouates, Geneva, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Plan-les-ouates",
+      "label": "Plan-les-ouates",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4252,6 +4474,12 @@
       "share": 0.0001
     },
     {
+      "key": "Raron",
+      "label": "Raron",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Region Basel / Ganze Schweiz",
       "label": "Region Basel / Ganze Schweiz",
       "vacancy_count": 1,
@@ -4294,6 +4522,12 @@
       "share": 0.0001
     },
     {
+      "key": "Region Zürich (Kloten und Umgebung)",
+      "label": "Region Zürich (Kloten und Umgebung)",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Region Zürich (Kloten, Glattbrugg)",
       "label": "Region Zürich (Kloten, Glattbrugg)",
       "vacancy_count": 1,
@@ -4308,6 +4542,12 @@
     {
       "key": "Region Zürich / Schaffhausen",
       "label": "Region Zürich / Schaffhausen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Remote",
+      "label": "Remote",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4360,12 +4600,6 @@
       "share": 0.0001
     },
     {
-      "key": "Risch-Rotkreuz, Zug",
-      "label": "Risch-Rotkreuz, Zug",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Riviera / Chablais",
       "label": "Riviera / Chablais",
       "vacancy_count": 1,
@@ -4378,8 +4612,8 @@
       "share": 0.0001
     },
     {
-      "key": "Rolle",
-      "label": "Rolle",
+      "key": "Roggwil, Berne, Switzerland",
+      "label": "Roggwil, Berne, Switzerland",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4432,20 +4666,26 @@
       "share": 0.0001
     },
     {
+      "key": "Räterschen",
+      "label": "Räterschen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Région de St-Imier",
       "label": "Région de St-Imier",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
-      "key": "Région du nord vaudois",
-      "label": "Région du nord vaudois",
+      "key": "Région des Montagnes Neuchâteloises",
+      "label": "Région des Montagnes Neuchâteloises",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
-      "key": "Safenwil",
-      "label": "Safenwil",
+      "key": "Région du nord vaudois",
+      "label": "Région du nord vaudois",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4482,6 +4722,12 @@
     {
       "key": "Sankt Gallen, St Gallen, Switzerland",
       "label": "Sankt Gallen, St Gallen, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Sargans",
+      "label": "Sargans",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4564,6 +4810,12 @@
       "share": 0.0001
     },
     {
+      "key": "Sennwald",
+      "label": "Sennwald",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Siebnen",
       "label": "Siebnen",
       "vacancy_count": 1,
@@ -4620,6 +4872,12 @@
     {
       "key": "Spiez, Berne, Switzerland",
       "label": "Spiez, Berne, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Spreitenbach, Tagelswangen",
+      "label": "Spreitenbach, Tagelswangen",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4738,12 +4996,6 @@
       "share": 0.0001
     },
     {
-      "key": "Switzerland + FL",
-      "label": "Switzerland + FL",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
       "key": "Switzerland : Technoparkstrass 1 CH 8005",
       "label": "Switzerland : Technoparkstrass 1 CH 8005",
       "vacancy_count": 1,
@@ -4764,6 +5016,18 @@
     {
       "key": "Tagelswangen",
       "label": "Tagelswangen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Tal",
+      "label": "Tal",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Tannay",
+      "label": "Tannay",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4794,12 +5058,6 @@
     {
       "key": "Thusis",
       "label": "Thusis",
-      "vacancy_count": 1,
-      "share": 0.0001
-    },
-    {
-      "key": "Thônex",
-      "label": "Thônex",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4858,6 +5116,18 @@
       "share": 0.0001
     },
     {
+      "key": "VON",
+      "label": "VON",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Vaduz",
+      "label": "Vaduz",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Valais, Switzerland",
       "label": "Valais, Switzerland",
       "vacancy_count": 1,
@@ -4888,8 +5158,8 @@
       "share": 0.0001
     },
     {
-      "key": "Villigen PSI",
-      "label": "Villigen PSI",
+      "key": "Villigen",
+      "label": "Villigen",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4920,6 +5190,12 @@
     {
       "key": "Walenstadt",
       "label": "Walenstadt",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Wangs",
+      "label": "Wangs",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -4966,6 +5242,12 @@
       "share": 0.0001
     },
     {
+      "key": "Wil SG, St Gallen, Switzerland",
+      "label": "Wil SG, St Gallen, Switzerland",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Willisau",
       "label": "Willisau",
       "vacancy_count": 1,
@@ -5002,6 +5284,12 @@
       "share": 0.0001
     },
     {
+      "key": "Wolfhausen",
+      "label": "Wolfhausen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Zug, Schweiz",
       "label": "Zug, Schweiz",
       "vacancy_count": 1,
@@ -5010,6 +5298,12 @@
     {
       "key": "Zug, Zug",
       "label": "Zug, Zug",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Zuoz",
+      "label": "Zuoz",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -5080,6 +5374,12 @@
       "share": 0.0001
     },
     {
+      "key": "Zürich area",
+      "label": "Zürich area",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
       "key": "Zürich-Altstetten",
       "label": "Zürich-Altstetten",
       "vacancy_count": 1,
@@ -5088,6 +5388,12 @@
     {
       "key": "Zürich-Flughafen, St.Gallen",
       "label": "Zürich-Flughafen, St.Gallen",
+      "vacancy_count": 1,
+      "share": 0.0001
+    },
+    {
+      "key": "Zürich-Flughafen, Zürich",
+      "label": "Zürich-Flughafen, Zürich",
       "vacancy_count": 1,
       "share": 0.0001
     },
@@ -5104,14 +5410,14 @@
       "share": 0.0001
     },
     {
-      "key": "Zürich-Seebach",
-      "label": "Zürich-Seebach",
+      "key": "Zürich/Kloten",
+      "label": "Zürich/Kloten",
       "vacancy_count": 1,
       "share": 0.0001
     },
     {
-      "key": "Zürich/Kloten",
-      "label": "Zürich/Kloten",
+      "key": "fribourg",
+      "label": "fribourg",
       "vacancy_count": 1,
       "share": 0.0001
     }
