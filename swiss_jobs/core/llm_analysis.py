@@ -178,6 +178,8 @@ class OpenAIVacancyAnalyzer:
         limit: int | None = None,
         offset: int = 0,
         only_missing: bool = True,
+        first_seen_from: str = "",
+        first_seen_to: str = "",
         dry_run: bool = False,
     ) -> tuple[VacancyAnalysisRunStats, list[dict[str, Any]]]:
         if not self.api_key:
@@ -189,6 +191,8 @@ class OpenAIVacancyAnalyzer:
             limit=limit,
             offset=offset,
             only_missing=only_missing,
+            first_seen_from=first_seen_from,
+            first_seen_to=first_seen_to,
         )
         stats = VacancyAnalysisRunStats()
         previews: list[dict[str, Any]] = []
@@ -313,6 +317,8 @@ class OpenAIVacancyAnalyzer:
         limit: int | None = None,
         offset: int = 0,
         only_missing: bool = False,
+        first_seen_from: str = "",
+        first_seen_to: str = "",
         estimated_output_tokens_per_vacancy: int = 280,
     ) -> VacancyAnalysisCostEstimate:
         database = JobsDatabase(database_path)
@@ -321,6 +327,8 @@ class OpenAIVacancyAnalyzer:
             limit=limit,
             offset=offset,
             only_missing=only_missing,
+            first_seen_from=first_seen_from,
+            first_seen_to=first_seen_to,
         )
         estimated_input_tokens = sum(
             estimate_input_tokens_for_record(record, model=self.model)

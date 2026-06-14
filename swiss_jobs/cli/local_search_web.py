@@ -154,7 +154,7 @@ def _request_date(params: dict[str, list[str]], name: str) -> str:
     match = re.fullmatch(r"(\d{2})\.(\d{2})\.(\d{4})", raw)
     if match:
         return f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
-    raise ValueError(f"{name} must use dd.mm.yyyy format")
+    raise ValueError(f"{name} must use YYYY-MM-DD or dd.mm.yyyy format")
 
 
 def _json_body(handler: BaseHTTPRequestHandler) -> dict[str, Any]:
@@ -186,6 +186,18 @@ def _clean_positive_int(value: Any) -> str:
     if number < 0:
         raise ValueError(f"expected non-negative integer value, got {number}")
     return str(number)
+
+
+def _clean_date(value: Any, name: str) -> str:
+    text = _clean_text(value)
+    if not text:
+        return ""
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
+        return text
+    match = re.fullmatch(r"(\d{2})\.(\d{2})\.(\d{4})", text)
+    if match:
+        return f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
+    raise ValueError(f"{name} must use YYYY-MM-DD or dd.mm.yyyy format")
 
 
 def _parser_sources(payload: dict[str, Any]) -> list[str]:
@@ -395,6 +407,14 @@ def _analysis_cli_args(payload: dict[str, Any]) -> list[str]:
     args: list[str] = []
     model = _clean_text(payload.get("model")) or "gpt-5-nano"
     args.extend(["--model", model])
+
+    for payload_key, cli_key in (
+        ("first_seen_from", "--first-seen-from"),
+        ("first_seen_to", "--first-seen-to"),
+    ):
+        value = _clean_date(payload.get(payload_key), payload_key)
+        if value:
+            args.extend([cli_key, value])
 
     limit = _clean_positive_int(payload.get("limit"))
     scope = _clean_text(payload.get("scope")) or "new vacancies only"
@@ -3213,6 +3233,8 @@ INDEX_HTML = """<!doctype html>
         sources,
         scope: document.querySelector("#analysis_scope")?.value || "new vacancies only",
         model: document.querySelector("#analysis_model")?.value || "gpt-5-nano",
+        first_seen_from: document.querySelector("#analysis_date_from")?.value || "",
+        first_seen_to: document.querySelector("#analysis_date_to")?.value || "",
         limit: document.querySelector("#analysis_limit")?.value || "",
       };
     }
@@ -3814,6 +3836,8 @@ INDEX_HTML = """<!doctype html>
       const payload = collectAiAnalysisPayload();
       const args = [
         `--model ${payload.model}`,
+        payload.first_seen_from ? `--first-seen-from ${payload.first_seen_from}` : "",
+        payload.first_seen_to ? `--first-seen-to ${payload.first_seen_to}` : "",
         payload.scope === "all selected vacancies" ? "--include-analyzed" : "",
         payload.scope === "all selected vacancies" && !payload.limit ? "--all" : "",
         payload.limit ? `--limit ${payload.limit}` : "",

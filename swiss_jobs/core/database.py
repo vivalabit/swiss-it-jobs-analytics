@@ -313,6 +313,8 @@ class JobsDatabase:
         limit: int | None = None,
         offset: int = 0,
         only_missing: bool = False,
+        first_seen_from: str = "",
+        first_seen_to: str = "",
     ) -> list[StoredVacancyRecord]:
         query = """
             SELECT
@@ -347,6 +349,12 @@ class JobsDatabase:
             conditions.append(
                 "(llm_analysis_json IS NULL OR trim(llm_analysis_json) = '' OR trim(llm_analysis_json) = '{}')"
             )
+        if first_seen_from:
+            conditions.append("substr(first_seen_at, 1, 10) >= ?")
+            params.append(first_seen_from)
+        if first_seen_to:
+            conditions.append("substr(first_seen_at, 1, 10) <= ?")
+            params.append(first_seen_to)
         if conditions:
             query += " WHERE " + " AND ".join(conditions)
         query += """

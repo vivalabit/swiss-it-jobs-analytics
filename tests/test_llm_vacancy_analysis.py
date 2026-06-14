@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from market_analytics.io import load_dataset
-from swiss_jobs.cli.analyze_vacancies_llm import load_dotenv
+from swiss_jobs.cli.analyze_vacancies_llm import build_parser, load_dotenv
 from swiss_jobs.core.database import JobsDatabase
 from swiss_jobs.core.llm_analysis import (
     OpenAIVacancyAnalyzer,
@@ -433,6 +433,52 @@ class LlmVacancyAnalysisTests(unittest.TestCase):
             self.assertGreater(estimate.estimated_input_tokens, 0)
             self.assertGreater(estimate.estimated_output_tokens, 0)
             self.assertGreater(estimate.estimated_total_cost_usd, 0.0)
+
+    def test_llm_vacancy_selection_filters_by_first_seen_range(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "swissdevjobs.sqlite"
+            _persist_sample_vacancy(database_path, vacancy_id="swissdevjobs:1", title="Old vacancy")
+            _persist_sample_vacancy(database_path, vacancy_id="swissdevjobs:2", title="Fresh vacancy")
+
+            connection = sqlite3.connect(database_path)
+            try:
+                connection.execute(
+                    "UPDATE vacancies SET first_seen_at = ? WHERE vacancy_id = ?",
+                    ("2026-04-15T08:00:00+00:00", "swissdevjobs:1"),
+                )
+                connection.execute(
+                    "UPDATE vacancies SET first_seen_at = ? WHERE vacancy_id = ?",
+                    ("2026-05-10T08:00:00+00:00", "swissdevjobs:2"),
+                )
+                connection.commit()
+            finally:
+                connection.close()
+
+            records = JobsDatabase(database_path).fetch_vacancies_for_llm(
+                first_seen_from="2026-05-01",
+                first_seen_to="2026-05-31",
+            )
+            estimate = OpenAIVacancyAnalyzer(api_key="test-key").estimate_cost(
+                str(database_path),
+                first_seen_from="2026-05-01",
+                first_seen_to="2026-05-31",
+            )
+
+        self.assertEqual(["swissdevjobs:2"], [record.vacancy.id for record in records])
+        self.assertEqual(1, estimate.vacancy_count)
+
+    def test_cli_accepts_first_seen_date_filters(self) -> None:
+        args = build_parser().parse_args(
+            [
+                "--first-seen-from",
+                "01.05.2026",
+                "--first-seen-to",
+                "2026-05-31",
+            ]
+        )
+
+        self.assertEqual("2026-05-01", args.first_seen_from)
+        self.assertEqual("2026-05-31", args.first_seen_to)
 
     def test_analyzer_continues_after_single_vacancy_failure(self) -> None:
         fake_transport = FakeOpenAITransport(

@@ -6,7 +6,7 @@ import unittest
 from contextlib import closing
 from pathlib import Path
 
-from swiss_jobs.cli.local_search_web import load_facets, search_local_databases
+from swiss_jobs.cli.local_search_web import _analysis_cli_args, load_facets, search_local_databases
 from swiss_jobs.core.database import JobsDatabase
 from swiss_jobs.core.models import ClientConfig, ClientRunResult, VacancyFull
 
@@ -75,6 +75,32 @@ def make_vacancy(
 
 
 class LocalSearchWebTests(unittest.TestCase):
+    def test_analysis_cli_args_include_first_seen_date_filters(self) -> None:
+        args = _analysis_cli_args(
+            {
+                "model": "gpt-5-mini",
+                "scope": "all selected vacancies",
+                "first_seen_from": "01.05.2026",
+                "first_seen_to": "2026-05-31",
+                "limit": "25",
+            }
+        )
+
+        self.assertEqual(
+            [
+                "--model",
+                "gpt-5-mini",
+                "--first-seen-from",
+                "2026-05-01",
+                "--first-seen-to",
+                "2026-05-31",
+                "--include-analyzed",
+                "--limit",
+                "25",
+            ],
+            args,
+        )
+
     def test_search_local_databases_filters_by_terms_and_salary(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             database_path = Path(tmpdir) / "jobs.sqlite"
@@ -303,7 +329,7 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(["vacancy-1"], [item["id"] for item in payload["results"]])
 
     def test_search_local_databases_rejects_invalid_date_format(self) -> None:
-        with self.assertRaisesRegex(ValueError, "date_from must use dd.mm.yyyy format"):
+        with self.assertRaisesRegex(ValueError, "date_from must use YYYY-MM-DD or dd.mm.yyyy format"):
             search_local_databases([], {"date_from": ["2026/05/01"]})
 
     def test_load_facets_reads_local_database_terms(self) -> None:

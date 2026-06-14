@@ -153,10 +153,11 @@ UI fields currently passed to the backend:
 - selected sources;
 - `Vacancy scope`;
 - `Model`;
+- `First seen from`;
+- `First seen to`;
 - `Vacancy limit`.
 
-The current backend does not use `First seen from`, `First seen to`,
-`Batch size`, or `Analysis focus`.
+The current backend does not use `Batch size` or `Analysis focus`.
 
 Scope behavior:
 

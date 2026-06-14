@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -103,6 +104,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Include vacancies that already have saved LLM analysis.",
     )
     parser.add_argument(
+        "--first-seen-from",
+        type=_date_arg,
+        default="",
+        help="Analyze vacancies first seen on or after this date (YYYY-MM-DD or dd.mm.yyyy).",
+    )
+    parser.add_argument(
+        "--first-seen-to",
+        type=_date_arg,
+        default="",
+        help="Analyze vacancies first seen on or before this date (YYYY-MM-DD or dd.mm.yyyy).",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Do not write results back to the database, only print sample output.",
@@ -141,11 +154,15 @@ def main(argv: list[str] | None = None) -> int:
             limit=limit,
             offset=args.offset,
             only_missing=not args.include_analyzed,
+            first_seen_from=args.first_seen_from,
+            first_seen_to=args.first_seen_to,
         )
         payload = {
             "database_path": str(database_path),
             "source": source_value,
             "model": estimate.model,
+            "first_seen_from": args.first_seen_from,
+            "first_seen_to": args.first_seen_to,
             "vacancy_count": estimate.vacancy_count,
             "estimated_input_tokens": estimate.estimated_input_tokens,
             "estimated_output_tokens": estimate.estimated_output_tokens,
@@ -160,12 +177,16 @@ def main(argv: list[str] | None = None) -> int:
         limit=limit,
         offset=args.offset,
         only_missing=not args.include_analyzed,
+        first_seen_from=args.first_seen_from,
+        first_seen_to=args.first_seen_to,
         dry_run=args.dry_run,
     )
     payload = {
         "database_path": str(database_path),
         "source": source_value,
         "model": args.model,
+        "first_seen_from": args.first_seen_from,
+        "first_seen_to": args.first_seen_to,
         "processed": stats.processed,
         "updated": stats.updated,
         "failed": stats.failed,
@@ -181,6 +202,16 @@ def main(argv: list[str] | None = None) -> int:
 
 def _progress_logger(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
+
+
+def _date_arg(value: str) -> str:
+    text = value.strip()
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
+        return text
+    match = re.fullmatch(r"(\d{2})\.(\d{2})\.(\d{4})", text)
+    if match:
+        return f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
+    raise argparse.ArgumentTypeError("date must use YYYY-MM-DD or dd.mm.yyyy format")
 
 
 if __name__ == "__main__":
