@@ -787,28 +787,48 @@ def calculate_salary_summary(dataset: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(metrics)
 
 
-def calculate_salary_by_role_category(dataset: pd.DataFrame) -> pd.DataFrame:
-    return calculate_salary_by_dimension(dataset, "role_category")
+def calculate_salary_by_role_category(
+    dataset: pd.DataFrame,
+    *,
+    minimum_group_size: int = 1,
+) -> pd.DataFrame:
+    return calculate_salary_by_dimension(
+        dataset,
+        "role_category",
+        minimum_group_size=minimum_group_size,
+    )
 
 
-def calculate_salary_by_seniority(dataset: pd.DataFrame) -> pd.DataFrame:
-    return calculate_salary_by_dimension(dataset, "seniority")
+def calculate_salary_by_seniority(
+    dataset: pd.DataFrame,
+    *,
+    minimum_group_size: int = 1,
+) -> pd.DataFrame:
+    return calculate_salary_by_dimension(
+        dataset,
+        "seniority",
+        minimum_group_size=minimum_group_size,
+    )
 
 
-def calculate_salary_by_dimension(dataset: pd.DataFrame, dimension: str) -> pd.DataFrame:
+def calculate_salary_by_dimension(
+    dataset: pd.DataFrame,
+    dimension: str,
+    *,
+    minimum_group_size: int = 1,
+) -> pd.DataFrame:
     salaries = _annual_salary_frame(dataset)
+    output_columns = [
+        dimension,
+        "salary_count",
+        "average_salary",
+        "median_salary",
+        "min_salary",
+        "max_salary",
+        "rank",
+    ]
     if salaries.empty:
-        return pd.DataFrame(
-            columns=[
-                dimension,
-                "salary_count",
-                "average_salary",
-                "median_salary",
-                "min_salary",
-                "max_salary",
-                "rank",
-            ]
-        )
+        return pd.DataFrame(columns=output_columns)
 
     grouped = (
         salaries.groupby(dimension, dropna=False)["annual_salary"]
@@ -828,8 +848,9 @@ def calculate_salary_by_dimension(dataset: pd.DataFrame, dimension: str) -> pd.D
         ["average_salary", "salary_count", dimension],
         ascending=[False, False, True],
     ).reset_index(drop=True)
+    grouped = grouped.loc[grouped["salary_count"] >= minimum_group_size].reset_index(drop=True)
     grouped["rank"] = grouped.index + 1
-    return grouped
+    return grouped[output_columns]
 
 
 def _annual_salary_frame(dataset: pd.DataFrame) -> pd.DataFrame:

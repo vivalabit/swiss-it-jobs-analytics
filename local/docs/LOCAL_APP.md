@@ -196,11 +196,15 @@ UI fields currently used by the backend:
 
 - selected sources;
 - `Output directory`;
+- `Snapshot date`;
+- `Salary group minimum`;
+- `Site data directory`;
 - sync enabled by default.
 
-`Site data directory` is shown in the UI, but the backend currently uses the
-standard `site/scripts/sync-public-data.mjs` script. `Snapshot date` and
-`Salary group minimum` are not currently passed to the backend.
+`Snapshot date` is embedded in the generated JSON metadata. `Salary group
+minimum` is passed to the analytics export and filters role/seniority salary
+rankings. `Site data directory` is passed to
+`site/scripts/sync-public-data.mjs` as the website sync target.
 
 Successful output can include:
 

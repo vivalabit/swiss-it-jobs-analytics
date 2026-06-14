@@ -67,18 +67,36 @@ def build_analytics_outputs(
     dataset: pd.DataFrame,
     top_skills_limit: int = 20,
     top_skill_pairs_limit: int = 50,
+    salary_group_minimum: int = 1,
 ) -> dict[str, pd.DataFrame]:
+    salary_group_minimum = max(1, int(salary_group_minimum))
     dataset = deduplicate_cross_source_vacancies(dataset).reset_index(drop=True)
     dataset = exclude_staffing_agencies(dataset).reset_index(drop=True)
     dataset = _filter_dataset_to_public_coverage(dataset).reset_index(drop=True)
+    salary_summary = calculate_salary_summary(dataset)
+    salary_summary = pd.concat(
+        [
+            salary_summary,
+            pd.DataFrame(
+                [{"metric": "salary_group_minimum", "value": salary_group_minimum}]
+            ),
+        ],
+        ignore_index=True,
+    )
     outputs: dict[str, pd.DataFrame] = {
         "overview_metrics": calculate_overview_metrics(dataset),
         "education_requirements_summary": calculate_education_requirements_summary(dataset),
         "experience_requirements_summary": calculate_experience_requirements_summary(dataset),
         "experience_by_seniority": calculate_experience_by_seniority(dataset),
-        "salary_summary": calculate_salary_summary(dataset),
-        "salary_by_role_category": calculate_salary_by_role_category(dataset),
-        "salary_by_seniority": calculate_salary_by_seniority(dataset),
+        "salary_summary": salary_summary,
+        "salary_by_role_category": calculate_salary_by_role_category(
+            dataset,
+            minimum_group_size=salary_group_minimum,
+        ),
+        "salary_by_seniority": calculate_salary_by_seniority(
+            dataset,
+            minimum_group_size=salary_group_minimum,
+        ),
         **calculate_distributions(dataset),
         "city_map_details": calculate_city_map_details(dataset),
         "top_skills_overall": calculate_top_skills_overall(

@@ -360,12 +360,16 @@ class BuildPublicStatsTests(unittest.TestCase):
                 csv_dir=csv_dir,
                 output_dir=output_dir,
                 copy_csv_dir=copy_csv_dir,
+                snapshot_date="2026-04-22",
             )
 
             self.assertTrue(saved_paths)
             overview = json.loads((output_dir / "overview.json").read_text(encoding="utf-8"))
             self.assertTrue(overview["available"])
+            self.assertEqual("2026-04-22", overview["snapshot_date"])
             self.assertEqual(3, overview["metrics"]["total_vacancies"])
+            metadata = json.loads((output_dir / "metadata.json").read_text(encoding="utf-8"))
+            self.assertEqual("2026-04-22", metadata["snapshot_date"])
 
             city_map_details = json.loads(
                 (output_dir / "city_map_details.json").read_text(encoding="utf-8")

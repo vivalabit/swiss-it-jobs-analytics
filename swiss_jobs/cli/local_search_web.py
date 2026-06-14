@@ -188,6 +188,16 @@ def _clean_positive_int(value: Any) -> str:
     return str(number)
 
 
+def _clean_minimum_int(value: Any, *, minimum: int, name: str) -> str:
+    text = _clean_positive_int(value)
+    if not text:
+        return ""
+    number = int(text)
+    if number < minimum:
+        raise ValueError(f"{name} must be at least {minimum}")
+    return str(number)
+
+
 def _clean_date(value: Any, name: str) -> str:
     text = _clean_text(value)
     if not text:
@@ -602,6 +612,20 @@ def _resolve_workspace_path(value: Any, default: str) -> Path:
     return path
 
 
+def _public_stats_options(payload: dict[str, Any]) -> dict[str, str | bool]:
+    return {
+        "output_dir": _clean_text(payload.get("output_dir")) or "public_stats",
+        "site_dir": _clean_text(payload.get("site_dir")) or "site/public",
+        "snapshot_date": _clean_date(payload.get("snapshot_date"), "snapshot_date"),
+        "salary_group_minimum": _clean_minimum_int(
+            _clean_text(payload.get("salary_group_minimum")) or "10",
+            minimum=1,
+            name="salary_group_minimum",
+        ),
+        "sync_site": bool(payload.get("sync_site", True)),
+    }
+
+
 def _append_public_stats_log(
     run_id: str,
     message: str,
@@ -676,44 +700,61 @@ def _run_public_stats_command(run_id: str, stage: str, command: list[str]) -> in
 def _run_public_stats_process(run_id: str, payload: dict[str, Any]) -> None:
     try:
         sources = _public_stats_sources(payload)
+        options = _public_stats_options(payload)
         dataset_paths = [str(SOURCE_DATABASE_PATHS[source]) for source in sources]
         analytics_dir = PROJECT_ROOT / "analytics_output"
-        output_root = _resolve_workspace_path(payload.get("output_dir"), "public_stats")
+        output_root = _resolve_workspace_path(options["output_dir"], "public_stats")
         data_dir = output_root / "data"
         csv_dir = output_root / "csv"
-        sync_site = bool(payload.get("sync_site", True))
+        site_dir = _resolve_workspace_path(options["site_dir"], "site/public")
         with PUBLIC_STATS_RUNS_LOCK:
             if run_id in PUBLIC_STATS_RUNS:
                 PUBLIC_STATS_RUNS[run_id]["status"] = "running"
         _append_public_stats_log(run_id, f"Public stats build started for {', '.join(sources)}.")
 
-        commands = [
-            (
-                "analytics",
-                [
-                    sys.executable,
-                    "scripts/export_analytics.py",
-                    *dataset_paths,
-                    "--output-dir",
-                    str(analytics_dir),
-                ],
-            ),
-            (
-                "snapshot",
-                [
-                    sys.executable,
-                    "scripts/build_public_stats.py",
-                    "--csv-dir",
-                    str(analytics_dir),
-                    "--output-dir",
-                    str(data_dir),
-                    "--copy-csv-dir",
-                    str(csv_dir),
-                ],
-            ),
+        analytics_command = [
+            sys.executable,
+            "scripts/export_analytics.py",
+            *dataset_paths,
+            "--output-dir",
+            str(analytics_dir),
         ]
-        if sync_site:
-            commands.append(("site-sync", ["node", "site/scripts/sync-public-data.mjs"]))
+        if options["salary_group_minimum"]:
+            analytics_command.extend(
+                ["--salary-group-minimum", str(options["salary_group_minimum"])]
+            )
+
+        snapshot_command = [
+            sys.executable,
+            "scripts/build_public_stats.py",
+            "--csv-dir",
+            str(analytics_dir),
+            "--output-dir",
+            str(data_dir),
+            "--copy-csv-dir",
+            str(csv_dir),
+        ]
+        if options["snapshot_date"]:
+            snapshot_command.extend(["--snapshot-date", str(options["snapshot_date"])])
+
+        commands = [
+            ("analytics", analytics_command),
+            ("snapshot", snapshot_command),
+        ]
+        if options["sync_site"]:
+            commands.append(
+                (
+                    "site-sync",
+                    [
+                        "node",
+                        "site/scripts/sync-public-data.mjs",
+                        "--source-public-dir",
+                        str(output_root),
+                        "--target-public-dir",
+                        str(site_dir),
+                    ],
+                )
+            )
 
         exit_code = 0
         for stage, command in commands:
@@ -744,17 +785,14 @@ def _run_public_stats_process(run_id: str, payload: dict[str, Any]) -> None:
 
 def start_public_stats_run(payload: dict[str, Any]) -> dict[str, Any]:
     sources = _public_stats_sources(payload)
+    options = _public_stats_options(payload)
     run_id = uuid.uuid4().hex
     with PUBLIC_STATS_RUNS_LOCK:
         PUBLIC_STATS_RUNS[run_id] = {
             "id": run_id,
             "status": "queued",
             "sources": sources,
-            "args": {
-                "output_dir": _clean_text(payload.get("output_dir")) or "public_stats",
-                "site_dir": _clean_text(payload.get("site_dir")) or "site/public",
-                "sync_site": bool(payload.get("sync_site", True)),
-            },
+            "args": options,
             "logs": [],
             "next_seq": 0,
             "return_code": None,
@@ -3322,6 +3360,8 @@ INDEX_HTML = """<!doctype html>
         .map((input) => input.value);
       return {
         sources,
+        snapshot_date: document.querySelector("#stats_snapshot_date")?.value || "",
+        salary_group_minimum: document.querySelector("#stats_min_salary_count")?.value || "",
         output_dir: document.querySelector("#stats_output_dir")?.value || "public_stats",
         site_dir: document.querySelector("#stats_site_dir")?.value || "site/public",
         sync_site: true,
@@ -3854,7 +3894,7 @@ INDEX_HTML = """<!doctype html>
       const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
       addLog(
         "Public Stats",
-        `Preview for ${sourceText}: export analytics -> build public_stats/data + public_stats/csv -> sync site/public.`,
+        `Preview for ${sourceText}: export analytics${payload.salary_group_minimum ? ` with salary groups >= ${payload.salary_group_minimum}` : ""} -> build ${payload.output_dir}/data + ${payload.output_dir}/csv${payload.snapshot_date ? ` for ${payload.snapshot_date}` : ""} -> sync ${payload.site_dir}.`,
         "info",
       );
       setLogDrawer(true);

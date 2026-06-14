@@ -4,11 +4,14 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const currentDirectory = dirname(fileURLToPath(import.meta.url));
-const sourceDataDirectory = resolve(currentDirectory, "../../public_stats/data");
-const sourceCsvDirectory = resolve(currentDirectory, "../../public_stats/csv");
-const targetDataDirectory = resolve(currentDirectory, "../public/data");
-const targetCsvDirectory = resolve(currentDirectory, "../public/csv");
-const targetDownloadsDirectory = resolve(currentDirectory, "../public/downloads");
+const options = parseArgs(process.argv.slice(2));
+const sourcePublicDirectory = resolveOptionPath(options.sourcePublicDir, "../../public_stats");
+const targetPublicDirectory = resolveOptionPath(options.targetPublicDir, "../public");
+const sourceDataDirectory = resolve(sourcePublicDirectory, "data");
+const sourceCsvDirectory = resolve(sourcePublicDirectory, "csv");
+const targetDataDirectory = resolve(targetPublicDirectory, "data");
+const targetCsvDirectory = resolve(targetPublicDirectory, "csv");
+const targetDownloadsDirectory = resolve(targetPublicDirectory, "downloads");
 
 if (!existsSync(sourceDataDirectory)) {
   throw new Error(`Public stats directory not found: ${sourceDataDirectory}`);
@@ -70,4 +73,34 @@ function buildArchive({ archivePath, workingDirectory, directoryName }) {
     cwd: workingDirectory,
     stdio: "inherit",
   });
+}
+
+function parseArgs(args) {
+  const options = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--source-public-dir") {
+      options.sourcePublicDir = requireValue(args, (index += 1), arg);
+    } else if (arg === "--target-public-dir") {
+      options.targetPublicDir = requireValue(args, (index += 1), arg);
+    } else {
+      throw new Error(`Unknown argument: ${arg}`);
+    }
+  }
+  return options;
+}
+
+function requireValue(args, index, flag) {
+  const value = args[index];
+  if (!value || value.startsWith("--")) {
+    throw new Error(`${flag} requires a value`);
+  }
+  return value;
+}
+
+function resolveOptionPath(value, defaultPath) {
+  if (value) {
+    return resolve(process.cwd(), value);
+  }
+  return resolve(currentDirectory, defaultPath);
 }

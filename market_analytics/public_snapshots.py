@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -57,8 +57,10 @@ def build_public_snapshots(
     csv_dir: Path,
     output_dir: Path,
     copy_csv_dir: Path | None = None,
+    snapshot_date: str | date | None = None,
 ) -> list[Path]:
     generated_at = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    normalized_snapshot_date = _normalize_snapshot_date(snapshot_date)
     csv_frames = _load_csv_frames(csv_dir)
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -75,6 +77,7 @@ def build_public_snapshots(
     snapshots: dict[str, dict[str, Any]] = {
         "metadata.json": _build_metadata_snapshot(
             generated_at=generated_at,
+            snapshot_date=normalized_snapshot_date,
             csv_dir=csv_dir,
             output_dir=output_dir,
             csv_frames=csv_frames,
@@ -137,6 +140,10 @@ def build_public_snapshots(
             dimension=dimension,
             frame=csv_frames[file_name],
         )
+
+    if normalized_snapshot_date:
+        for payload in snapshots.values():
+            payload["snapshot_date"] = normalized_snapshot_date
 
     saved_paths: list[Path] = []
     for file_name, payload in snapshots.items():
@@ -249,6 +256,7 @@ def _rescale_distribution_json(
 def _build_metadata_snapshot(
     *,
     generated_at: str,
+    snapshot_date: str | None,
     csv_dir: Path,
     output_dir: Path,
     csv_frames: dict[str, pd.DataFrame | None],
@@ -269,6 +277,7 @@ def _build_metadata_snapshot(
     ]
     return {
         "generated_at": generated_at,
+        "snapshot_date": snapshot_date,
         "schema_version": 4,
         "source_csv_dir": str(csv_dir),
         "public_data_dir": str(output_dir),
@@ -276,6 +285,20 @@ def _build_metadata_snapshot(
         "missing_csv_files": missing_csv_files,
         "generated_snapshots": generated_snapshots,
     }
+
+
+def _normalize_snapshot_date(value: str | date | None) -> str | None:
+    if value is None:
+        return None
+    if isinstance(value, date):
+        return value.isoformat()
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return date.fromisoformat(text).isoformat()
+    except ValueError as exc:
+        raise ValueError("snapshot_date must use YYYY-MM-DD format") from exc
 
 
 def _build_overview_snapshot(
@@ -611,6 +634,7 @@ def _normalize_metric_value(metric_name: str, value: Any) -> Any:
         "total_mentions",
         "vacancies_with_items",
         "salary_count",
+        "salary_group_minimum",
         "average_salary",
         "median_salary",
         "p25_salary",

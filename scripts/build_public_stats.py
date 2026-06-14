@@ -28,6 +28,11 @@ def build_argument_parser() -> argparse.ArgumentParser:
         default=Path("public_stats/csv"),
         help="Directory where source analytics CSV files will be copied.",
     )
+    parser.add_argument(
+        "--snapshot-date",
+        default="",
+        help="Optional snapshot date to embed in JSON metadata, using YYYY-MM-DD.",
+    )
     return parser
 
 
@@ -39,6 +44,7 @@ def main() -> int:
         csv_dir=args.csv_dir,
         output_dir=args.output_dir,
         copy_csv_dir=args.copy_csv_dir,
+        snapshot_date=args.snapshot_date or None,
     )
     print(f"Built {len(snapshot_paths)} public snapshot files in {args.output_dir.resolve()}")
     for path in snapshot_paths:

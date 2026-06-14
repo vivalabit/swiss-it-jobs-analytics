@@ -6,7 +6,12 @@ import unittest
 from contextlib import closing
 from pathlib import Path
 
-from swiss_jobs.cli.local_search_web import _analysis_cli_args, load_facets, search_local_databases
+from swiss_jobs.cli.local_search_web import (
+    _analysis_cli_args,
+    _public_stats_options,
+    load_facets,
+    search_local_databases,
+)
 from swiss_jobs.core.database import JobsDatabase
 from swiss_jobs.core.models import ClientConfig, ClientRunResult, VacancyFull
 
@@ -100,6 +105,23 @@ class LocalSearchWebTests(unittest.TestCase):
             ],
             args,
         )
+
+    def test_public_stats_options_include_snapshot_salary_and_site_fields(self) -> None:
+        options = _public_stats_options(
+            {
+                "output_dir": "public_stats_custom",
+                "site_dir": "site/custom-public",
+                "snapshot_date": "22.04.2026",
+                "salary_group_minimum": "5",
+                "sync_site": False,
+            }
+        )
+
+        self.assertEqual("public_stats_custom", options["output_dir"])
+        self.assertEqual("site/custom-public", options["site_dir"])
+        self.assertEqual("2026-04-22", options["snapshot_date"])
+        self.assertEqual("5", options["salary_group_minimum"])
+        self.assertFalse(options["sync_site"])
 
     def test_search_local_databases_filters_by_terms_and_salary(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

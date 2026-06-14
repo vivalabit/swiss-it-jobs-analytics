@@ -18,6 +18,11 @@ on:
         required: false
         default: "50"
         type: string
+      salary_group_minimum:
+        description: "Minimum salary records required for salary ranking groups."
+        required: false
+        default: "10"
+        type: string
 
 permissions:
   contents: read
@@ -83,12 +88,14 @@ jobs:
           DATASET_PATHS: ${{ steps.snapshot_source.outputs.dataset_paths }}
           TOP_SKILLS: ${{ inputs.top_skills }}
           TOP_PAIRS: ${{ inputs.top_pairs }}
+          SALARY_GROUP_MINIMUM: ${{ inputs.salary_group_minimum }}
         run: |
           mapfile -t dataset_paths < <(printf '%s\n' "$DATASET_PATHS")
           python scripts/export_analytics.py "${dataset_paths[@]}" \
             --output-dir analytics_output \
             --top-skills "$TOP_SKILLS" \
-            --top-pairs "$TOP_PAIRS"
+            --top-pairs "$TOP_PAIRS" \
+            --salary-group-minimum "$SALARY_GROUP_MINIMUM"
 
       - name: Build public JSON snapshots
         if: steps.snapshot_source.outputs.mode == 'rebuild'

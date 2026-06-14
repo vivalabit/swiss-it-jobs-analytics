@@ -601,6 +601,9 @@ function Dashboard() {
     })
     .sort(compareExperienceRequirements);
   const salarySummary = salaryMetrics.summary ?? {};
+  const salaryRankingMinCount =
+    Number(salarySummary.salary_group_minimum) || SALARY_RANKING_MIN_COUNT;
+  const snapshotDisplayDate = metadata.snapshot_date ?? metadata.generated_at;
   const topSkillsItems = selectTopItems(topSkills.overall ?? [], 20);
   const programmingLanguages = topSkills.programming_languages ?? {};
   const programmingLanguageSummary = programmingLanguages.summary ?? {};
@@ -651,8 +654,14 @@ function Dashboard() {
   const salarySeniorityGroups = (salaryMetrics.by_seniority ?? []).filter(
     (item) => item.seniority && item.seniority !== "Unknown",
   );
-  const rankedSalaryRoleGroups = filterReliableSalaryGroups(salaryRoleGroups);
-  const rankedSalarySeniorityGroups = filterReliableSalaryGroups(salarySeniorityGroups);
+  const rankedSalaryRoleGroups = filterReliableSalaryGroups(
+    salaryRoleGroups,
+    salaryRankingMinCount,
+  );
+  const rankedSalarySeniorityGroups = filterReliableSalaryGroups(
+    salarySeniorityGroups,
+    salaryRankingMinCount,
+  );
   const salaryRoleItems = showAllSalaryGroups
     ? rankedSalaryRoleGroups
     : selectTopItems(rankedSalaryRoleGroups, 6);
@@ -694,6 +703,7 @@ function Dashboard() {
     leadingRole,
     fastestGrowingRole,
     salarySummary,
+    salaryRankingMinCount,
   }, copy, language, locale);
 
   return (
@@ -790,7 +800,7 @@ function Dashboard() {
 
                     <TrustInfoCard
                       label={copy.snapshot.updated}
-                      title={formatShortDate(metadata.generated_at, locale)}
+                      title={formatShortDate(snapshotDisplayDate, locale)}
                     >
                       <p className="cy-copy">{formatDateTime(metadata.generated_at, locale)}</p>
                     </TrustInfoCard>
@@ -1107,6 +1117,7 @@ function Dashboard() {
                       salaryCount={salarySummary.salary_count}
                       salaryCoverage={salarySummary.salary_coverage}
                       hiddenGroupCount={salaryChartConfig.hiddenCount}
+                      minimumGroupSize={salaryRankingMinCount}
                     />
                     <SalaryRankingChart
                       items={salaryChartConfig.items}
@@ -1339,7 +1350,7 @@ function Dashboard() {
                     <div className="cy-meta-strip-grid">
                       <MetricCard
                         label={copy.methodology.generated}
-                        value={formatShortDate(metadata.generated_at, locale)}
+                        value={formatShortDate(snapshotDisplayDate, locale)}
                         description={formatDateTime(metadata.generated_at, locale)}
                       />
                       <MetricCard
@@ -1612,7 +1623,12 @@ function SalaryStat({ value, label }) {
   );
 }
 
-function SalaryConfidenceWarning({ salaryCount, salaryCoverage, hiddenGroupCount }) {
+function SalaryConfidenceWarning({
+  salaryCount,
+  salaryCoverage,
+  hiddenGroupCount,
+  minimumGroupSize,
+}) {
   const { copy, locale } = useI18n();
 
   return (
@@ -1620,7 +1636,7 @@ function SalaryConfidenceWarning({ salaryCount, salaryCoverage, hiddenGroupCount
       <strong>{copy.salary.confidenceTitle}</strong>
       <span>
         {copy.salary.confidenceText(
-          SALARY_RANKING_MIN_COUNT,
+          minimumGroupSize,
           hiddenGroupCount > 0 ? formatInteger(hiddenGroupCount, locale) : null,
           formatPercent(salaryCoverage, locale),
           formatInteger(salaryCount, locale),
@@ -2744,8 +2760,8 @@ function SalaryRankingChart({ items, summary, groupKey }) {
   );
 }
 
-function filterReliableSalaryGroups(items) {
-  return items.filter((item) => (item.salary_count ?? 0) >= SALARY_RANKING_MIN_COUNT);
+function filterReliableSalaryGroups(items, minimumGroupSize) {
+  return items.filter((item) => (item.salary_count ?? 0) >= minimumGroupSize);
 }
 
 function SkillRoleMatrix({ matrix }) {
@@ -3628,7 +3644,7 @@ function formatShortDate(value, locale = "en-CH") {
 }
 
 function buildKeyFindings(
-  { topCity, leadingRole, fastestGrowingRole, salarySummary },
+  { topCity, leadingRole, fastestGrowingRole, salarySummary, salaryRankingMinCount },
   copy,
   language,
   locale,
@@ -3661,7 +3677,7 @@ function buildKeyFindings(
       description: copy.findings.compensationDescription(
         formatInteger(salarySummary.salary_count, locale),
         formatPercent(salarySummary.salary_coverage, locale),
-        SALARY_RANKING_MIN_COUNT,
+        salaryRankingMinCount,
       ),
     });
   }

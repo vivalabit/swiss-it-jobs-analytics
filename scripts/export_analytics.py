@@ -35,6 +35,12 @@ def build_argument_parser() -> argparse.ArgumentParser:
         default=50,
         help="Maximum number of skill co-occurrence pairs to keep.",
     )
+    parser.add_argument(
+        "--salary-group-minimum",
+        type=int,
+        default=10,
+        help="Minimum salary records required for role and seniority salary ranking groups.",
+    )
     return parser
 
 
@@ -47,6 +53,7 @@ def main() -> int:
         dataset=dataset,
         top_skills_limit=args.top_skills,
         top_skill_pairs_limit=args.top_pairs,
+        salary_group_minimum=args.salary_group_minimum,
     )
     saved_paths = save_analytics_outputs(
         outputs,

@@ -238,7 +238,8 @@ python3 scripts/export_analytics.py \
   runtime/jobup_ch/main-config/jobup_ch.sqlite \
   runtime/linked_in/main-config/linked_in.sqlite \
   runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite \
-  --output-dir analytics_output
+  --output-dir analytics_output \
+  --salary-group-minimum 10
 ```
 
 From an external CSV snapshot:
@@ -253,7 +254,8 @@ Control top-list sizes:
 python3 scripts/export_analytics.py data/private_snapshots/your_snapshot.csv \
   --output-dir analytics_output \
   --top-skills 30 \
-  --top-pairs 100
+  --top-pairs 100 \
+  --salary-group-minimum 10
 ```
 
 The exporter writes CSV files such as:
@@ -305,7 +307,8 @@ those snapshots from `analytics_output`:
 python3 scripts/build_public_stats.py \
   --csv-dir analytics_output \
   --output-dir public_stats/data \
-  --copy-csv-dir public_stats/csv
+  --copy-csv-dir public_stats/csv \
+  --snapshot-date 2026-04-22
 ```
 
 This writes:

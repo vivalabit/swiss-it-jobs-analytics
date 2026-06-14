@@ -221,6 +221,7 @@ class MarketAnalyticsTests(unittest.TestCase):
         salary_summary = outputs["salary_summary"].set_index("metric")["value"].to_dict()
         self.assertEqual(3, salary_summary["salary_count"])
         self.assertEqual(115000, salary_summary["average_salary"])
+        self.assertEqual(1, salary_summary["salary_group_minimum"])
         self.assertEqual(
             "software_engineering",
             outputs["salary_by_role_category"].iloc[0]["role_category"],
@@ -231,6 +232,40 @@ class MarketAnalyticsTests(unittest.TestCase):
         city_map_details = outputs["city_map_details"].set_index("city")
         self.assertEqual(2, city_map_details.loc["Zürich", "vacancy_count"])
         self.assertIn("software_engineering", city_map_details.loc["Zürich", "role_distribution_json"])
+
+    def test_build_analytics_outputs_filters_salary_rankings_by_group_minimum(self) -> None:
+        dataset = pd.DataFrame(
+            {
+                "company": ["Acme", "Beta", "Gamma"],
+                "title": ["Python Engineer", "Platform Engineer", "Data Engineer"],
+                "description_text": ["Python.", "Go.", "SQL."],
+                "publication_date": [
+                    "2026-04-20T10:00:00+02:00",
+                    "2026-04-21T10:00:00+02:00",
+                    "2026-04-22T10:00:00+02:00",
+                ],
+                "role_category": ["software_engineering", "software_engineering", "data_ai"],
+                "city": ["Zurich", "Zurich", "Bern"],
+                "canton": ["ZH", "ZH", "BE"],
+                "seniority": ["senior", "senior", "mid"],
+                "work_mode": ["hybrid", "remote", "onsite"],
+                "salary_min": [100000, 110000, 120000],
+                "salary_max": [120000, 130000, 140000],
+                "salary_currency": ["CHF", "CHF", "CHF"],
+                "salary_unit": ["YEAR", "YEAR", "YEAR"],
+                "skills": [["python"], ["go"], ["sql"]],
+            }
+        )
+
+        outputs = build_analytics_outputs(
+            validate_and_standardize_dataset(dataset),
+            salary_group_minimum=2,
+        )
+
+        salary_summary = outputs["salary_summary"].set_index("metric")["value"].to_dict()
+        self.assertEqual(2, salary_summary["salary_group_minimum"])
+        self.assertEqual(["software_engineering"], list(outputs["salary_by_role_category"]["role_category"]))
+        self.assertEqual(["senior"], list(outputs["salary_by_seniority"]["seniority"]))
 
     def test_build_analytics_outputs_excludes_pre_2026_publications_from_public_stats(self) -> None:
         dataset = pd.DataFrame(
