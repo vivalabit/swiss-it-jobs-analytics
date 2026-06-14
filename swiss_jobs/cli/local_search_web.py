@@ -250,6 +250,17 @@ def _parser_cli_args(payload: dict[str, Any]) -> list[str]:
     return args
 
 
+def _parser_command(source: str, cli_args: list[str]) -> list[str]:
+    return [
+        sys.executable,
+        "-m",
+        "swiss_jobs.cli.parse",
+        "--source",
+        source,
+        *cli_args,
+    ]
+
+
 def _append_parser_log(
     run_id: str,
     message: str,
@@ -298,14 +309,7 @@ def _run_parser_processes(run_id: str, sources: list[str], cli_args: list[str]) 
                 PARSER_RUNS[run_id]["status"] = "running"
         _append_parser_log(run_id, f"Parser run started for {', '.join(sources)}.")
         for source in sources:
-            command = [
-                sys.executable,
-                "-m",
-                "swiss_jobs.cli.parse",
-                "--source",
-                source,
-                *cli_args,
-            ]
+            command = _parser_command(source, cli_args)
             _append_parser_log(run_id, "$ " + " ".join(command), source=source)
             process = subprocess.Popen(
                 command,
@@ -440,6 +444,17 @@ def _analysis_cli_args(payload: dict[str, Any]) -> list[str]:
     return args
 
 
+def _analysis_command(source: str, cli_args: list[str]) -> list[str]:
+    return [
+        sys.executable,
+        "-m",
+        "swiss_jobs.cli.analyze_vacancies_llm",
+        "--source",
+        source,
+        *cli_args,
+    ]
+
+
 def _append_ai_analysis_log(
     run_id: str,
     message: str,
@@ -489,14 +504,7 @@ def _run_ai_analysis_processes(run_id: str, sources: list[str], cli_args: list[s
                 AI_ANALYSIS_RUNS[run_id]["status"] = "running"
         _append_ai_analysis_log(run_id, f"AI analysis run started for {', '.join(sources)}.")
         for source in sources:
-            command = [
-                sys.executable,
-                "-m",
-                "swiss_jobs.cli.analyze_vacancies_llm",
-                "--source",
-                source,
-                *cli_args,
-            ]
+            command = _analysis_command(source, cli_args)
             _append_ai_analysis_log(run_id, "$ " + " ".join(command), source=source)
             process = subprocess.Popen(
                 command,
@@ -697,64 +705,69 @@ def _run_public_stats_command(run_id: str, stage: str, command: list[str]) -> in
     return return_code
 
 
+def _public_stats_command_plan(payload: dict[str, Any]) -> tuple[list[str], list[tuple[str, list[str]]]]:
+    sources = _public_stats_sources(payload)
+    options = _public_stats_options(payload)
+    dataset_paths = [str(SOURCE_DATABASE_PATHS[source]) for source in sources]
+    analytics_dir = PROJECT_ROOT / "analytics_output"
+    output_root = _resolve_workspace_path(options["output_dir"], "public_stats")
+    data_dir = output_root / "data"
+    csv_dir = output_root / "csv"
+    site_dir = _resolve_workspace_path(options["site_dir"], "site/public")
+
+    analytics_command = [
+        sys.executable,
+        "scripts/export_analytics.py",
+        *dataset_paths,
+        "--output-dir",
+        str(analytics_dir),
+    ]
+    if options["salary_group_minimum"]:
+        analytics_command.extend(
+            ["--salary-group-minimum", str(options["salary_group_minimum"])]
+        )
+
+    snapshot_command = [
+        sys.executable,
+        "scripts/build_public_stats.py",
+        "--csv-dir",
+        str(analytics_dir),
+        "--output-dir",
+        str(data_dir),
+        "--copy-csv-dir",
+        str(csv_dir),
+    ]
+    if options["snapshot_date"]:
+        snapshot_command.extend(["--snapshot-date", str(options["snapshot_date"])])
+
+    commands = [
+        ("analytics", analytics_command),
+        ("snapshot", snapshot_command),
+    ]
+    if options["sync_site"]:
+        commands.append(
+            (
+                "site-sync",
+                [
+                    "node",
+                    "site/scripts/sync-public-data.mjs",
+                    "--source-public-dir",
+                    str(output_root),
+                    "--target-public-dir",
+                    str(site_dir),
+                ],
+            )
+        )
+    return sources, commands
+
+
 def _run_public_stats_process(run_id: str, payload: dict[str, Any]) -> None:
     try:
-        sources = _public_stats_sources(payload)
-        options = _public_stats_options(payload)
-        dataset_paths = [str(SOURCE_DATABASE_PATHS[source]) for source in sources]
-        analytics_dir = PROJECT_ROOT / "analytics_output"
-        output_root = _resolve_workspace_path(options["output_dir"], "public_stats")
-        data_dir = output_root / "data"
-        csv_dir = output_root / "csv"
-        site_dir = _resolve_workspace_path(options["site_dir"], "site/public")
+        sources, commands = _public_stats_command_plan(payload)
         with PUBLIC_STATS_RUNS_LOCK:
             if run_id in PUBLIC_STATS_RUNS:
                 PUBLIC_STATS_RUNS[run_id]["status"] = "running"
         _append_public_stats_log(run_id, f"Public stats build started for {', '.join(sources)}.")
-
-        analytics_command = [
-            sys.executable,
-            "scripts/export_analytics.py",
-            *dataset_paths,
-            "--output-dir",
-            str(analytics_dir),
-        ]
-        if options["salary_group_minimum"]:
-            analytics_command.extend(
-                ["--salary-group-minimum", str(options["salary_group_minimum"])]
-            )
-
-        snapshot_command = [
-            sys.executable,
-            "scripts/build_public_stats.py",
-            "--csv-dir",
-            str(analytics_dir),
-            "--output-dir",
-            str(data_dir),
-            "--copy-csv-dir",
-            str(csv_dir),
-        ]
-        if options["snapshot_date"]:
-            snapshot_command.extend(["--snapshot-date", str(options["snapshot_date"])])
-
-        commands = [
-            ("analytics", analytics_command),
-            ("snapshot", snapshot_command),
-        ]
-        if options["sync_site"]:
-            commands.append(
-                (
-                    "site-sync",
-                    [
-                        "node",
-                        "site/scripts/sync-public-data.mjs",
-                        "--source-public-dir",
-                        str(output_root),
-                        "--target-public-dir",
-                        str(site_dir),
-                    ],
-                )
-            )
 
         exit_code = 0
         for stage, command in commands:

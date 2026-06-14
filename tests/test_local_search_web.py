@@ -6,8 +6,15 @@ import unittest
 from contextlib import closing
 from pathlib import Path
 
+from swiss_jobs.cli import local_search_web
 from swiss_jobs.cli.local_search_web import (
+    PROJECT_ROOT,
+    SOURCE_DATABASE_PATHS,
     _analysis_cli_args,
+    _analysis_command,
+    _parser_cli_args,
+    _parser_command,
+    _public_stats_command_plan,
     _public_stats_options,
     load_facets,
     search_local_databases,
@@ -80,6 +87,41 @@ def make_vacancy(
 
 
 class LocalSearchWebTests(unittest.TestCase):
+    def test_parser_command_matches_ui_payload_order(self) -> None:
+        args = _parser_cli_args(
+            {
+                "mode": "search",
+                "canton": "ZH",
+                "term": "python",
+                "location": "Zürich",
+                "max_pages": "3",
+                "detail_limit": "25",
+            }
+        )
+
+        self.assertEqual(
+            [
+                local_search_web.sys.executable,
+                "-m",
+                "swiss_jobs.cli.parse",
+                "--source",
+                "jobs_ch",
+                "--mode",
+                "search",
+                "--canton",
+                "ZH",
+                "--term",
+                "python",
+                "--location",
+                "Zürich",
+                "--max-pages",
+                "3",
+                "--detail-limit",
+                "25",
+            ],
+            _parser_command("jobs_ch", args),
+        )
+
     def test_analysis_cli_args_include_first_seen_date_filters(self) -> None:
         args = _analysis_cli_args(
             {
@@ -106,6 +148,37 @@ class LocalSearchWebTests(unittest.TestCase):
             args,
         )
 
+    def test_analysis_command_matches_ui_payload_order(self) -> None:
+        args = _analysis_cli_args(
+            {
+                "model": "gpt-5-mini",
+                "scope": "all selected vacancies",
+                "first_seen_from": "01.05.2026",
+                "first_seen_to": "2026-05-31",
+                "limit": "25",
+            }
+        )
+
+        self.assertEqual(
+            [
+                local_search_web.sys.executable,
+                "-m",
+                "swiss_jobs.cli.analyze_vacancies_llm",
+                "--source",
+                "jobup_ch",
+                "--model",
+                "gpt-5-mini",
+                "--first-seen-from",
+                "2026-05-01",
+                "--first-seen-to",
+                "2026-05-31",
+                "--include-analyzed",
+                "--limit",
+                "25",
+            ],
+            _analysis_command("jobup_ch", args),
+        )
+
     def test_public_stats_options_include_snapshot_salary_and_site_fields(self) -> None:
         options = _public_stats_options(
             {
@@ -122,6 +195,66 @@ class LocalSearchWebTests(unittest.TestCase):
         self.assertEqual("2026-04-22", options["snapshot_date"])
         self.assertEqual("5", options["salary_group_minimum"])
         self.assertFalse(options["sync_site"])
+
+    def test_public_stats_command_plan_matches_ui_payload_order(self) -> None:
+        sources, commands = _public_stats_command_plan(
+            {
+                "sources": ["jobup_ch"],
+                "output_dir": "public_stats_custom",
+                "site_dir": "site/custom-public",
+                "snapshot_date": "22.04.2026",
+                "salary_group_minimum": "5",
+                "sync_site": True,
+            }
+        )
+
+        output_root = PROJECT_ROOT / "public_stats_custom"
+        analytics_dir = PROJECT_ROOT / "analytics_output"
+
+        self.assertEqual(["jobup_ch"], sources)
+        self.assertEqual(
+            [
+                (
+                    "analytics",
+                    [
+                        local_search_web.sys.executable,
+                        "scripts/export_analytics.py",
+                        str(SOURCE_DATABASE_PATHS["jobup_ch"]),
+                        "--output-dir",
+                        str(analytics_dir),
+                        "--salary-group-minimum",
+                        "5",
+                    ],
+                ),
+                (
+                    "snapshot",
+                    [
+                        local_search_web.sys.executable,
+                        "scripts/build_public_stats.py",
+                        "--csv-dir",
+                        str(analytics_dir),
+                        "--output-dir",
+                        str(output_root / "data"),
+                        "--copy-csv-dir",
+                        str(output_root / "csv"),
+                        "--snapshot-date",
+                        "2026-04-22",
+                    ],
+                ),
+                (
+                    "site-sync",
+                    [
+                        "node",
+                        "site/scripts/sync-public-data.mjs",
+                        "--source-public-dir",
+                        str(output_root),
+                        "--target-public-dir",
+                        str(PROJECT_ROOT / "site" / "custom-public"),
+                    ],
+                ),
+            ],
+            commands,
+        )
 
     def test_search_local_databases_filters_by_terms_and_salary(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
