@@ -16,7 +16,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse, urlunparse
 
 from swiss_jobs.core.locations import location_search_terms, normalize_location_display
 from swiss_jobs.registry import list_supported_sources
@@ -65,6 +65,69 @@ SOURCE_DATABASE_PATHS = {
     "jobup_ch": PROJECT_ROOT / "runtime" / "jobup_ch" / "main-config" / "jobup_ch.sqlite",
     "linked_in": PROJECT_ROOT / "runtime" / "linked_in" / "main-config" / "linked_in.sqlite",
     "swissdevjobs_ch": PROJECT_ROOT / "runtime" / "swissdevjobs_ch" / "main-config" / "swissdevjobs_ch.sqlite",
+}
+
+RESUME_MATCH_TERM_KEYS = (
+    "programming_languages",
+    "frameworks_libraries",
+    "cloud_platforms",
+    "databases",
+    "tools",
+    "methodologies",
+    "methodology",
+    "vendors",
+    "platforms",
+    "role_family_primary",
+    "role_family",
+    "remote_mode",
+    "seniority_labels",
+)
+
+RESUME_MATCH_STOPWORDS = {
+    "about",
+    "also",
+    "and",
+    "are",
+    "auf",
+    "avec",
+    "bei",
+    "can",
+    "das",
+    "der",
+    "die",
+    "ein",
+    "eine",
+    "for",
+    "from",
+    "have",
+    "ist",
+    "mit",
+    "not",
+    "oder",
+    "our",
+    "per",
+    "the",
+    "und",
+    "une",
+    "von",
+    "with",
+    "you",
+    "your",
+    "zur",
+    "zum",
+    "experience",
+    "knowledge",
+    "looking",
+    "need",
+    "skills",
+    "team",
+    "required",
+    "requirements",
+    "role",
+    "we",
+    "will",
+    "work",
+    "working",
 }
 
 
@@ -914,6 +977,202 @@ def _format_salary(row: sqlite3.Row) -> str:
     return ""
 
 
+def _normalized_url_candidates(value: Any) -> list[str]:
+    text = str(value or "").strip()
+    if not text:
+        return []
+
+    candidates = {text, text.rstrip("/")}
+    parsed = urlparse(text)
+    if parsed.scheme and parsed.netloc:
+        normalized = parsed._replace(
+            scheme=parsed.scheme.lower(),
+            netloc=parsed.netloc.lower(),
+            path=parsed.path.rstrip("/") or parsed.path,
+            fragment="",
+        )
+        candidates.add(urlunparse(normalized))
+        candidates.add(urlunparse(normalized._replace(query="")))
+    return sorted(candidate for candidate in candidates if candidate)
+
+
+def _resume_text_terms(text: str, *, limit: int = 18) -> list[str]:
+    counts: dict[str, int] = {}
+    for raw_word in re.findall(r"[\w.+#-]+", text, flags=re.UNICODE):
+        word = raw_word.strip("._-").lower()
+        if len(word) < 2 or word.isdigit() or word in RESUME_MATCH_STOPWORDS:
+            continue
+        counts[word] = counts.get(word, 0) + 1
+    return [
+        term
+        for term, _count in sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:limit]
+    ]
+
+
+def _resume_terms_from_analytics(analytics: dict[str, Any]) -> list[str]:
+    terms: list[str] = []
+    for key in RESUME_MATCH_TERM_KEYS:
+        terms.extend(_listify(analytics.get(key)))
+    return terms
+
+
+def _dedupe_terms(values: Iterable[Any], *, limit: int = 24) -> list[str]:
+    seen: set[str] = set()
+    terms: list[str] = []
+    for value in values:
+        term = str(value or "").strip()
+        if not term:
+            continue
+        normalized = term.lower()
+        if normalized in seen or normalized in RESUME_MATCH_STOPWORDS:
+            continue
+        seen.add(normalized)
+        terms.append(term)
+        if len(terms) >= limit:
+            break
+    return terms
+
+
+def _resume_vacancy_from_row(database_path: Path, row: sqlite3.Row) -> dict[str, Any]:
+    analytics = _load_json_object(row["analytics_json"])
+    return {
+        "database": str(database_path),
+        "id": row["vacancy_id"],
+        "source": row["source"] or "",
+        "title": row["title"] or "",
+        "company": row["company"] or "",
+        "location": normalize_location_display(row["place"]) or row["place"] or "",
+        "url": row["url"] or "",
+        "description_text": str(row["description_text"] or "").strip(),
+        "analytics": analytics,
+    }
+
+
+def _find_resume_vacancy(database_paths: Iterable[Path], vacancy_url: str) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
+    candidates = _normalized_url_candidates(vacancy_url)
+    if not candidates:
+        return None, []
+
+    placeholders = ", ".join("?" for _ in candidates)
+    query = f"""
+        SELECT
+            v.vacancy_id,
+            v.source,
+            v.title,
+            v.company,
+            v.place,
+            v.url,
+            v.description_text,
+            v.analytics_json
+        FROM vacancies v
+        WHERE v.url IN ({placeholders})
+           OR rtrim(v.url, '/') IN ({placeholders})
+        ORDER BY v.last_seen_at DESC, v.vacancy_id ASC
+        LIMIT 1
+    """
+    values = [*candidates, *[candidate.rstrip("/") for candidate in candidates]]
+    database_errors: list[dict[str, str]] = []
+
+    for database_path in database_paths:
+        try:
+            connection = _connect_readonly(database_path)
+            try:
+                row = connection.execute(query, values).fetchone()
+            finally:
+                connection.close()
+        except sqlite3.Error as exc:
+            database_errors.append({"database": str(database_path), "error": str(exc)})
+            continue
+        if row:
+            return _resume_vacancy_from_row(database_path, row), database_errors
+    return None, database_errors
+
+
+def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) -> dict[str, Any]:
+    vacancy_url = _clean_text(payload.get("vacancy_url"))
+    resume_text = _clean_text(payload.get("resume_text"))
+    pasted_description = _clean_text(payload.get("job_description"))
+    vacancy, database_errors = _find_resume_vacancy(database_paths, vacancy_url)
+
+    if not vacancy and not pasted_description:
+        raise ValueError("vacancy URL was not found in local databases; paste the vacancy description too")
+
+    vacancy_title = _clean_text(payload.get("target_title")) or (vacancy or {}).get("title", "")
+    company = (vacancy or {}).get("company", "")
+    vacancy_text = (vacancy or {}).get("description_text") or pasted_description
+    analytics = (vacancy or {}).get("analytics", {})
+    terms = _dedupe_terms(
+        [
+            *_resume_terms_from_analytics(analytics),
+            *_resume_text_terms(f"{vacancy_title} {vacancy_text}", limit=36),
+        ],
+        limit=24,
+    )
+
+    resume_lower = resume_text.lower()
+    matched_terms = [term for term in terms if term.lower() in resume_lower]
+    missing_terms = [term for term in terms if term.lower() not in resume_lower]
+    score = round((len(matched_terms) / len(terms)) * 100) if terms else 0
+
+    resume_lines = [line.strip() for line in resume_text.splitlines() if line.strip()]
+    evidence_lines = [
+        line
+        for line in resume_lines
+        if any(term.lower() in line.lower() for term in matched_terms)
+    ][:6]
+
+    recommendations = []
+    if matched_terms:
+        recommendations.append(
+            "Move the strongest matching evidence near the top: "
+            + ", ".join(matched_terms[:6])
+            + "."
+        )
+    if missing_terms:
+        recommendations.append(
+            "Add truthful project or impact evidence for: "
+            + ", ".join(missing_terms[:8])
+            + "."
+        )
+    recommendations.append("Keep every added keyword backed by real experience, metrics, or project context.")
+
+    target_line = vacancy_title or "Target role"
+    company_line = f" at {company}" if company else ""
+    source_line = f"Source: {vacancy_url}" if vacancy_url else "Source: pasted vacancy description"
+    summary_terms = ", ".join((matched_terms or terms)[:6]) or "the role requirements"
+    missing_line = ", ".join(missing_terms[:8]) if missing_terms else "No obvious missing priority terms."
+    evidence_block = "\n".join(f"- {line}" for line in evidence_lines) or "- Add 3-5 resume bullets that prove the strongest requirements."
+    original_block = resume_text or "[Paste your current resume here before generating the final version.]"
+    tailored_resume = f"""Targeted Resume Draft
+{target_line}{company_line}
+{source_line}
+
+Professional Summary
+Candidate profile aligned with {target_line}, emphasizing {summary_terms}. Replace this sentence with a concise 2-3 line summary using only claims you can defend.
+
+Selected Fit Highlights
+{evidence_block}
+
+Keywords To Weave In Truthfully
+{missing_line}
+
+Resume Draft
+{original_block}
+"""
+
+    return {
+        "vacancy_found": bool(vacancy),
+        "vacancy": vacancy,
+        "score": score,
+        "required_keywords": terms,
+        "matched_keywords": matched_terms,
+        "missing_keywords": missing_terms,
+        "recommendations": recommendations,
+        "tailored_resume": tailored_resume,
+        "database_errors": database_errors,
+    }
+
+
 def _select_effective_seniority(title: Any, labels: Iterable[Any]) -> str:
     title_text = f" {str(title or '').lower()} "
     title_patterns = (
@@ -1315,6 +1574,7 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
             "/api/parser-runs",
             "/api/ai-analysis-runs",
             "/api/public-stats-runs",
+            "/api/resume-match",
             "/health",
         }:
             _head_response(self, "application/json; charset=utf-8")
@@ -1372,6 +1632,9 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/public-stats-runs":
                 _json_response(self, start_public_stats_run(_json_body(self)), status=HTTPStatus.CREATED)
                 return
+            if parsed.path == "/api/resume-match":
+                _json_response(self, build_resume_match(self.config.database_paths, _json_body(self)))
+                return
         except ValueError as exc:
             _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
             return
@@ -1427,12 +1690,14 @@ INDEX_HTML = """<!doctype html>
     }
     .app.view-search,
     .app.view-ai-analyse,
+    .app.view-resume-matcher,
     .app.view-public-stats,
     .app.view-settings {
       grid-template-columns: minmax(0, 1fr);
     }
     .app.view-search .filters-panel,
     .app.view-ai-analyse .filters-panel,
+    .app.view-resume-matcher .filters-panel,
     .app.view-public-stats .filters-panel,
     .app.view-settings .filters-panel {
       display: none;
@@ -1467,7 +1732,7 @@ INDEX_HTML = """<!doctype html>
     }
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 8px;
     }
     .menu-btn {
@@ -1734,6 +1999,75 @@ INDEX_HTML = """<!doctype html>
     .parser-preview {
       display: grid;
       gap: 10px;
+    }
+    .resume-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+      gap: 12px;
+      margin-top: 16px;
+      align-items: start;
+    }
+    .resume-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .resume-form #resume_text {
+      min-height: 260px;
+    }
+    .resume-output {
+      display: grid;
+      gap: 12px;
+    }
+    .resume-score {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-score-value {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 21px;
+      font-weight: 900;
+    }
+    .resume-score h2 {
+      margin: 0 0 4px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .resume-score p,
+    .resume-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .keyword-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .resume-result-text {
+      width: 100%;
+      min-height: 420px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
     }
     .log-toggle {
       position: absolute;
@@ -2412,6 +2746,7 @@ INDEX_HTML = """<!doctype html>
       }
       .app.view-search,
       .app.view-ai-analyse,
+      .app.view-resume-matcher,
       .app.view-public-stats,
       .app.view-settings {
         grid-template-columns: 1fr;
@@ -2431,6 +2766,7 @@ INDEX_HTML = """<!doctype html>
       main { padding: 18px; }
       .settings-grid { grid-template-columns: 1fr; }
       .parser-grid { grid-template-columns: 1fr; }
+      .resume-grid { grid-template-columns: 1fr; }
       .job-head { grid-template-columns: 44px minmax(0, 1fr); }
       .job-side {
         grid-column: 2;
@@ -2497,6 +2833,10 @@ INDEX_HTML = """<!doctype html>
         <button class="menu-btn" type="button" data-view-target="ai-analyse">
           <span class="menu-icon" aria-hidden="true">✦</span>
           <span>AI Analyse</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="resume-matcher">
+          <span class="menu-icon" aria-hidden="true">▤</span>
+          <span>Resume matcher</span>
         </button>
         <button class="menu-btn" type="button" data-view-target="public-stats">
           <span class="menu-icon" aria-hidden="true">◫</span>
@@ -2856,6 +3196,73 @@ INDEX_HTML = """<!doctype html>
           </article>
         </section>
       </section>
+      <section class="workspace-panel" id="resume-matcher-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Resume matcher</p>
+            <h1>Tailor Resume To Vacancy</h1>
+            <p class="sub">Paste a vacancy URL from your local database and your current resume to generate a focused draft and keyword gap review.</p>
+          </div>
+        </div>
+        <section class="resume-grid" aria-label="Resume matcher">
+          <form class="parser-panel resume-form" id="resume-match-form" autocomplete="off">
+            <h2>Match Inputs</h2>
+            <p>The matcher uses local vacancy data when the URL is already stored. Paste the vacancy text if the URL is external or not loaded yet.</p>
+            <div class="field">
+              <label for="vacancy_url">Vacancy URL</label>
+              <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
+            </div>
+            <div class="field">
+              <label for="target_title">Target title override</label>
+              <input id="target_title" name="target_title" placeholder="Optional if URL is found locally">
+            </div>
+            <div class="field">
+              <label for="job_description">Vacancy description fallback</label>
+              <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here when the URL is not in the local database."></textarea>
+            </div>
+            <div class="field">
+              <label for="resume_text">Current resume</label>
+              <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="submit" title="Generate resume match">Generate Draft</button>
+              <button class="btn secondary" type="button" id="resume-reset" title="Clear resume matcher">Clear</button>
+            </div>
+          </form>
+          <article class="parser-panel resume-output" aria-label="Resume match result">
+            <h2>Match Result</h2>
+            <p class="resume-note" id="resume-match-status">No resume match generated yet.</p>
+            <div class="resume-score" id="resume-score-card" hidden>
+              <span class="resume-score-value" id="resume-score-value">0%</span>
+              <div>
+                <h2 id="resume-vacancy-title">Vacancy match</h2>
+                <p id="resume-vacancy-meta">Waiting for input.</p>
+              </div>
+            </div>
+            <div>
+              <p class="summary-title">Matched keywords</p>
+              <div class="keyword-cloud" id="resume-matched-keywords"></div>
+            </div>
+            <div>
+              <p class="summary-title">Missing keywords</p>
+              <div class="keyword-cloud" id="resume-missing-keywords"></div>
+            </div>
+            <div>
+              <p class="summary-title">Recommendations</p>
+              <div class="parser-preview" id="resume-recommendations">
+                <div class="empty">Run the matcher to see recommendations.</div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="resume_result">Tailored resume draft</label>
+              <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" id="resume-copy" title="Copy tailored resume draft">Copy Draft</button>
+            </div>
+          </article>
+        </section>
+      </section>
       <section class="workspace-panel" id="public-stats-workspace" hidden>
         <div class="toolbar">
           <div>
@@ -3044,8 +3451,21 @@ INDEX_HTML = """<!doctype html>
     const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
     const parserWorkspaceEl = document.querySelector("#parser-workspace");
     const aiAnalyseWorkspaceEl = document.querySelector("#ai-analyse-workspace");
+    const resumeMatcherWorkspaceEl = document.querySelector("#resume-matcher-workspace");
     const publicStatsWorkspaceEl = document.querySelector("#public-stats-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
+    const resumeMatchFormEl = document.querySelector("#resume-match-form");
+    const resumeResetEl = document.querySelector("#resume-reset");
+    const resumeCopyEl = document.querySelector("#resume-copy");
+    const resumeStatusEl = document.querySelector("#resume-match-status");
+    const resumeScoreCardEl = document.querySelector("#resume-score-card");
+    const resumeScoreValueEl = document.querySelector("#resume-score-value");
+    const resumeVacancyTitleEl = document.querySelector("#resume-vacancy-title");
+    const resumeVacancyMetaEl = document.querySelector("#resume-vacancy-meta");
+    const resumeMatchedKeywordsEl = document.querySelector("#resume-matched-keywords");
+    const resumeMissingKeywordsEl = document.querySelector("#resume-missing-keywords");
+    const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
+    const resumeResultEl = document.querySelector("#resume_result");
     const logToggleEl = document.querySelector("#log-toggle");
     const logDrawerEl = document.querySelector("#log-drawer");
     const logCloseEl = document.querySelector("#log-close");
@@ -3100,6 +3520,7 @@ INDEX_HTML = """<!doctype html>
       vacancies: "Vacancy Browser",
       search: "Vacancy Search",
       "ai-analyse": "AI Analyse",
+      "resume-matcher": "Resume matcher",
       "public-stats": "Public Stats",
       settings: "Settings",
     };
@@ -3513,17 +3934,19 @@ INDEX_HTML = """<!doctype html>
 
     function setView(view, options = {}) {
       currentView = view;
-      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-public-stats", "view-settings");
+      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-resume-matcher", "view-public-stats", "view-settings");
       appEl.classList.add(`view-${view}`);
       activateMenu(view);
 
       const isParser = view === "search";
       const isAiAnalyse = view === "ai-analyse";
+      const isResumeMatcher = view === "resume-matcher";
       const isPublicStats = view === "public-stats";
       const isSettings = view === "settings";
-      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isPublicStats || isSettings;
+      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isResumeMatcher || isPublicStats || isSettings;
       parserWorkspaceEl.hidden = !isParser;
       aiAnalyseWorkspaceEl.hidden = !isAiAnalyse;
+      resumeMatcherWorkspaceEl.hidden = !isResumeMatcher;
       publicStatsWorkspaceEl.hidden = !isPublicStats;
       settingsWorkspaceEl.hidden = !isSettings;
 
@@ -3805,6 +4228,93 @@ INDEX_HTML = """<!doctype html>
       addLog("Vacancy Search", `Found ${payload.total ?? payload.count ?? 0} matching vacancies.`, payload.database_errors?.length ? "warning" : "success");
     }
 
+    function renderKeywordCloud(container, keywords, emptyText) {
+      if (!keywords || !keywords.length) {
+        container.innerHTML = `<span class="tag">${esc(emptyText)}</span>`;
+        return;
+      }
+      container.innerHTML = keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`).join("");
+    }
+
+    function renderResumeRecommendations(items) {
+      if (!items || !items.length) {
+        resumeRecommendationsEl.innerHTML = '<div class="empty">No recommendations generated.</div>';
+        return;
+      }
+      resumeRecommendationsEl.innerHTML = items.map((item, index) => `
+        <div class="parser-step">
+          <span class="step-index">${index + 1}</span>
+          <span>${esc(item)}</span>
+        </div>
+      `).join("");
+    }
+
+    async function runResumeMatch() {
+      const formData = new FormData(resumeMatchFormEl);
+      const payload = Object.fromEntries(formData.entries());
+      resumeStatusEl.textContent = "Generating resume match...";
+      resumeScoreCardEl.hidden = true;
+      resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
+      renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+      renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      resumeResultEl.value = "";
+      addLog("Resume matcher", "Generating resume match.");
+
+      try {
+        const response = await fetch("/api/resume-match", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          resumeStatusEl.textContent = data.error || "Resume match failed.";
+          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(data.error || "Resume match failed.")}</div>`;
+          addLog("Resume matcher", data.error || "Resume match failed.", "error");
+          return;
+        }
+        const vacancy = data.vacancy || {};
+        resumeStatusEl.textContent = data.vacancy_found
+          ? "Vacancy loaded from local database."
+          : "Using pasted vacancy description because the URL was not found locally.";
+        resumeScoreCardEl.hidden = false;
+        resumeScoreValueEl.textContent = `${Number(data.score || 0)}%`;
+        resumeVacancyTitleEl.textContent = vacancy.title || payload.target_title || "Vacancy match";
+        resumeVacancyMetaEl.textContent = [
+          vacancy.company,
+          vacancy.location,
+          vacancy.source,
+        ].filter(Boolean).join(" · ") || "Local keyword alignment";
+        renderKeywordCloud(resumeMatchedKeywordsEl, data.matched_keywords || [], "No matched keywords yet");
+        renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
+        renderResumeRecommendations(data.recommendations || []);
+        resumeResultEl.value = data.tailored_resume || "";
+        renderErrors(data.database_errors);
+        addLog("Resume matcher", `Generated resume match with ${Number(data.score || 0)}% keyword alignment.`, data.vacancy_found ? "success" : "warning");
+      } catch (error) {
+        resumeStatusEl.textContent = error.message || String(error);
+        resumeRecommendationsEl.innerHTML = `<div class="error">${esc(error.message || String(error))}</div>`;
+        addLog("Resume matcher", error.message || String(error), "error");
+      }
+    }
+
+    async function copyResumeDraft() {
+      const text = resumeResultEl.value.trim();
+      if (!text) {
+        addLog("Resume matcher", "No generated draft to copy.", "warning");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        addLog("Resume matcher", "Copied tailored resume draft.", "success");
+      } catch {
+        resumeResultEl.focus();
+        resumeResultEl.select();
+        document.execCommand("copy");
+        addLog("Resume matcher", "Copied tailored resume draft.", "success");
+      }
+    }
+
     menuButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const view = button.dataset.viewTarget;
@@ -3825,6 +4335,21 @@ INDEX_HTML = """<!doctype html>
       addLog("Vacancy Search", "Cleared search filters.");
       runSearch(1);
     });
+    resumeMatchFormEl.addEventListener("submit", (event) => {
+      event.preventDefault();
+      runResumeMatch();
+    });
+    resumeResetEl.addEventListener("click", () => {
+      resumeMatchFormEl.reset();
+      resumeStatusEl.textContent = "No resume match generated yet.";
+      resumeScoreCardEl.hidden = true;
+      renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+      renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
+      resumeResultEl.value = "";
+      addLog("Resume matcher", "Cleared resume matcher inputs.");
+    });
+    resumeCopyEl.addEventListener("click", copyResumeDraft);
     paginationEl.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-page]");
       if (!button || button.disabled) return;
@@ -3923,6 +4448,8 @@ INDEX_HTML = """<!doctype html>
     });
 
     syncSalaryTrack();
+    renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+    renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
     renderLogs();
     addLog("Application", "Local vacancy interface initialized.");
     loadFacets().then(runSearch).catch((error) => {

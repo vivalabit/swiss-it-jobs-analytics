@@ -16,6 +16,7 @@ from swiss_jobs.cli.local_search_web import (
     _parser_command,
     _public_stats_command_plan,
     _public_stats_options,
+    build_resume_match,
     load_facets,
     search_local_databases,
 )
@@ -307,6 +308,40 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual("https://example.com/vacancy-1", result["url"])
             self.assertEqual("software_engineering", result["analytics"]["role_family_primary"])
             self.assertEqual("CHF", result["raw"]["salary"]["currency"])
+            self.assertEqual([], payload["database_errors"])
+
+    def test_resume_match_uses_vacancy_url_from_local_database(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            database_path = Path(tmpdir) / "jobs.sqlite"
+            config = make_config(database_path)
+            vacancy = make_vacancy(
+                "vacancy-1",
+                title="Python Backend Engineer",
+                company="Acme",
+                place="Zurich",
+                analytics={
+                    "role_family_primary": "software_engineering",
+                    "seniority_labels": ["senior"],
+                    "programming_languages": ["python"],
+                    "frameworks_libraries": ["django"],
+                    "cloud_platforms": ["aws"],
+                },
+            )
+            JobsDatabase(database_path).persist_result(config, make_result(config, [vacancy]))
+
+            payload = build_resume_match(
+                [database_path],
+                {
+                    "vacancy_url": "https://example.com/vacancy-1",
+                    "resume_text": "Senior Python engineer with backend API experience.",
+                },
+            )
+
+            self.assertTrue(payload["vacancy_found"])
+            self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
+            self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
+            self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
+            self.assertIn("Targeted Resume Draft", payload["tailored_resume"])
             self.assertEqual([], payload["database_errors"])
 
     def test_search_local_databases_does_not_require_salary(self) -> None:
