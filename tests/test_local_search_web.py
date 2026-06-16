@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import sqlite3
 import tempfile
 import unittest
@@ -16,6 +17,7 @@ from swiss_jobs.cli.local_search_web import (
     _parser_command,
     _public_stats_command_plan,
     _public_stats_options,
+    build_resume_pdf_bytes,
     build_resume_match,
     load_facets,
     search_local_databases,
@@ -342,7 +344,28 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
             self.assertIn("Targeted Resume Draft", payload["tailored_resume"])
+            self.assertEqual("application/pdf", payload["tailored_resume_pdf"]["mime_type"])
+            self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))
             self.assertEqual([], payload["database_errors"])
+
+    def test_resume_match_extracts_attached_resume_pdf(self) -> None:
+        resume_pdf = build_resume_pdf_bytes(
+            "Senior Python engineer\nBuilt Django APIs on AWS.",
+            title="Current Resume",
+        )
+
+        payload = build_resume_match(
+            [],
+            {
+                "target_title": "Senior Python Backend Engineer",
+                "job_description": "Senior Python Backend Engineer with Django and AWS experience.",
+                "resume_pdf_base64": base64.b64encode(resume_pdf).decode("ascii"),
+            },
+        )
+
+        self.assertTrue(payload["resume_pdf_text_extracted"])
+        self.assertIn("Senior Python engineer", payload["tailored_resume"])
+        self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))
 
     def test_search_local_databases_does_not_require_salary(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

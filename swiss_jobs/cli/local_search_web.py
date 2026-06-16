@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import html
+import io
 import json
 import re
 import sqlite3
@@ -1088,9 +1090,126 @@ def _find_resume_vacancy(database_paths: Iterable[Path], vacancy_url: str) -> tu
     return None, database_errors
 
 
+def _decode_pdf_base64(value: Any) -> bytes:
+    text = _clean_text(value)
+    if not text:
+        return b""
+    if "," in text and text.lower().startswith("data:"):
+        text = text.split(",", 1)[1]
+    try:
+        return base64.b64decode(text, validate=True)
+    except ValueError as exc:
+        raise ValueError("resume PDF payload is not valid base64") from exc
+
+
+def extract_resume_pdf_text(payload: dict[str, Any]) -> str:
+    pdf_bytes = _decode_pdf_base64(payload.get("resume_pdf_base64"))
+    if not pdf_bytes:
+        return ""
+    if len(pdf_bytes) > 12 * 1024 * 1024:
+        raise ValueError("resume PDF is too large; use a file up to 12 MB")
+
+    try:
+        import pdfplumber
+    except ImportError as exc:
+        raise ValueError("PDF resume upload requires pdfplumber. Install project dependencies first.") from exc
+
+    try:
+        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+            pages = [(page.extract_text() or "").strip() for page in pdf.pages]
+    except Exception as exc:  # noqa: BLE001
+        raise ValueError(f"could not read resume PDF: {exc}") from exc
+
+    text = "\n\n".join(page for page in pages if page)
+    if not text:
+        raise ValueError("could not extract text from resume PDF")
+    return text
+
+
+def build_resume_pdf_bytes(text: str, *, title: str = "Tailored Resume Draft") -> bytes:
+    try:
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+        from reportlab.lib.units import mm
+        from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+    except ImportError as exc:
+        raise ValueError("PDF resume export requires reportlab. Install project dependencies first.") from exc
+
+    buffer = io.BytesIO()
+    document = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=18 * mm,
+        leftMargin=18 * mm,
+        topMargin=18 * mm,
+        bottomMargin=18 * mm,
+        title=title,
+    )
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        "ResumeTitle",
+        parent=styles["Title"],
+        fontName="Helvetica-Bold",
+        fontSize=16,
+        leading=20,
+        textColor=colors.HexColor("#121722"),
+        spaceAfter=8,
+    )
+    heading_style = ParagraphStyle(
+        "ResumeHeading",
+        parent=styles["Heading2"],
+        fontName="Helvetica-Bold",
+        fontSize=11,
+        leading=14,
+        textColor=colors.HexColor("#d71920"),
+        spaceBefore=8,
+        spaceAfter=4,
+    )
+    body_style = ParagraphStyle(
+        "ResumeBody",
+        parent=styles["BodyText"],
+        fontName="Helvetica",
+        fontSize=9.5,
+        leading=13,
+        textColor=colors.HexColor("#17202a"),
+        spaceAfter=4,
+    )
+    bullet_style = ParagraphStyle(
+        "ResumeBullet",
+        parent=body_style,
+        leftIndent=10,
+        firstLineIndent=-6,
+    )
+
+    story: list[Any] = [Paragraph(html.escape(title), title_style)]
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            story.append(Spacer(1, 5))
+            continue
+        style = body_style
+        rendered = html.escape(line)
+        if len(line) <= 72 and not line.endswith((".", ",", ";")) and not line.startswith("- "):
+            style = heading_style
+        elif line.startswith("- "):
+            style = bullet_style
+            rendered = "- " + html.escape(line[2:])
+        story.append(Paragraph(rendered, style))
+
+    document.build(story)
+    return buffer.getvalue()
+
+
+def _resume_pdf_filename(vacancy_title: str) -> str:
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", vacancy_title.lower()).strip("-")
+    return f"tailored-resume-{slug or 'draft'}.pdf"
+
+
 def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) -> dict[str, Any]:
     vacancy_url = _clean_text(payload.get("vacancy_url"))
-    resume_text = _clean_text(payload.get("resume_text"))
+    resume_pdf_text = extract_resume_pdf_text(payload)
+    resume_text = resume_pdf_text or _clean_text(payload.get("resume_text"))
     pasted_description = _clean_text(payload.get("job_description"))
     vacancy, database_errors = _find_resume_vacancy(database_paths, vacancy_url)
 
@@ -1159,6 +1278,7 @@ Keywords To Weave In Truthfully
 Resume Draft
 {original_block}
 """
+    pdf_bytes = build_resume_pdf_bytes(tailored_resume, title=target_line)
 
     return {
         "vacancy_found": bool(vacancy),
@@ -1169,6 +1289,12 @@ Resume Draft
         "missing_keywords": missing_terms,
         "recommendations": recommendations,
         "tailored_resume": tailored_resume,
+        "tailored_resume_pdf": {
+            "filename": _resume_pdf_filename(target_line),
+            "mime_type": "application/pdf",
+            "base64": base64.b64encode(pdf_bytes).decode("ascii"),
+        },
+        "resume_pdf_text_extracted": bool(resume_pdf_text),
         "database_errors": database_errors,
     }
 
@@ -2010,6 +2136,22 @@ INDEX_HTML = """<!doctype html>
     .resume-form textarea {
       min-height: 150px;
       resize: vertical;
+    }
+    .resume-file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .resume-file-row input[type="file"] {
+      padding: 9px 12px;
+    }
+    .resume-file-name {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
     .resume-form #resume_text {
       min-height: 260px;
@@ -3222,6 +3364,11 @@ INDEX_HTML = """<!doctype html>
             </div>
             <div class="field">
               <label for="resume_text">Current resume</label>
+              <div class="resume-file-row">
+                <input id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
+                <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove PDF</button>
+              </div>
+              <p class="resume-file-name" id="resume-file-name">Attach a PDF or paste resume text below.</p>
               <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
             </div>
             <div class="actions">
@@ -3259,6 +3406,7 @@ INDEX_HTML = """<!doctype html>
             </div>
             <div class="actions">
               <button class="btn primary" type="button" id="resume-copy" title="Copy tailored resume draft">Copy Draft</button>
+              <a class="open-link" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>Download PDF</a>
             </div>
           </article>
         </section>
@@ -3457,6 +3605,10 @@ INDEX_HTML = """<!doctype html>
     const resumeMatchFormEl = document.querySelector("#resume-match-form");
     const resumeResetEl = document.querySelector("#resume-reset");
     const resumeCopyEl = document.querySelector("#resume-copy");
+    const resumePdfInputEl = document.querySelector("#resume_pdf");
+    const resumeClearFileEl = document.querySelector("#resume-clear-file");
+    const resumeFileNameEl = document.querySelector("#resume-file-name");
+    const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
     const resumeStatusEl = document.querySelector("#resume-match-status");
     const resumeScoreCardEl = document.querySelector("#resume-score-card");
     const resumeScoreValueEl = document.querySelector("#resume-score-value");
@@ -3511,6 +3663,7 @@ INDEX_HTML = """<!doctype html>
     };
     let currentPage = 1;
     let currentView = "vacancies";
+    let resumePdfObjectUrl = "";
 
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -4249,18 +4402,62 @@ INDEX_HTML = """<!doctype html>
       `).join("");
     }
 
+    function setResumePdfDownload(pdf) {
+      if (resumePdfObjectUrl) {
+        URL.revokeObjectURL(resumePdfObjectUrl);
+        resumePdfObjectUrl = "";
+      }
+      if (!pdf?.base64) {
+        resumeDownloadPdfEl.hidden = true;
+        resumeDownloadPdfEl.removeAttribute("href");
+        return;
+      }
+      const binary = atob(pdf.base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+      }
+      const blob = new Blob([bytes], { type: pdf.mime_type || "application/pdf" });
+      resumePdfObjectUrl = URL.createObjectURL(blob);
+      resumeDownloadPdfEl.href = resumePdfObjectUrl;
+      resumeDownloadPdfEl.download = pdf.filename || "tailored-resume.pdf";
+      resumeDownloadPdfEl.hidden = false;
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          const value = String(reader.result || "");
+          resolve(value.includes(",") ? value.split(",", 2)[1] : value);
+        });
+        reader.addEventListener("error", () => reject(reader.error || new Error("Could not read PDF file.")));
+        reader.readAsDataURL(file);
+      });
+    }
+
     async function runResumeMatch() {
       const formData = new FormData(resumeMatchFormEl);
       const payload = Object.fromEntries(formData.entries());
+      delete payload.resume_pdf;
       resumeStatusEl.textContent = "Generating resume match...";
       resumeScoreCardEl.hidden = true;
       resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
       resumeResultEl.value = "";
+      setResumePdfDownload(null);
       addLog("Resume matcher", "Generating resume match.");
 
       try {
+        const file = resumePdfInputEl.files?.[0];
+        if (file) {
+          if (file.type && file.type !== "application/pdf") {
+            throw new Error("Attach a PDF resume file.");
+          }
+          payload.resume_pdf_name = file.name;
+          payload.resume_pdf_base64 = await readFileAsBase64(file);
+        }
         const response = await fetch("/api/resume-match", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -4289,8 +4486,13 @@ INDEX_HTML = """<!doctype html>
         renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
         renderResumeRecommendations(data.recommendations || []);
         resumeResultEl.value = data.tailored_resume || "";
+        setResumePdfDownload(data.tailored_resume_pdf);
         renderErrors(data.database_errors);
-        addLog("Resume matcher", `Generated resume match with ${Number(data.score || 0)}% keyword alignment.`, data.vacancy_found ? "success" : "warning");
+        addLog(
+          "Resume matcher",
+          `Generated resume match with ${Number(data.score || 0)}% keyword alignment${data.resume_pdf_text_extracted ? " from attached PDF" : ""}.`,
+          data.vacancy_found ? "success" : "warning",
+        );
       } catch (error) {
         resumeStatusEl.textContent = error.message || String(error);
         resumeRecommendationsEl.innerHTML = `<div class="error">${esc(error.message || String(error))}</div>`;
@@ -4347,9 +4549,20 @@ INDEX_HTML = """<!doctype html>
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
+      resumeFileNameEl.textContent = "Attach a PDF or paste resume text below.";
+      setResumePdfDownload(null);
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
+    resumePdfInputEl.addEventListener("change", () => {
+      const file = resumePdfInputEl.files?.[0];
+      resumeFileNameEl.textContent = file ? `Attached: ${file.name}` : "Attach a PDF or paste resume text below.";
+    });
+    resumeClearFileEl.addEventListener("click", () => {
+      resumePdfInputEl.value = "";
+      resumeFileNameEl.textContent = "Attach a PDF or paste resume text below.";
+      addLog("Resume matcher", "Removed attached PDF.");
+    });
     paginationEl.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-page]");
       if (!button || button.disabled) return;
