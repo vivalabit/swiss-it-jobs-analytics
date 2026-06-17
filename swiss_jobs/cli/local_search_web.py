@@ -2376,10 +2376,22 @@ INDEX_HTML = """<!doctype html>
     }
     .resume-grid {
       display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
-      gap: 12px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
       margin-top: 16px;
       align-items: start;
+    }
+    .resume-input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .resume-input-grid .field {
+      margin-bottom: 0;
+    }
+    .resume-wide-field {
+      grid-column: 1 / -1;
     }
     .resume-form textarea {
       min-height: 150px;
@@ -2406,18 +2418,27 @@ INDEX_HTML = """<!doctype html>
     }
     .resume-output {
       display: grid;
+      gap: 16px;
+    }
+    .resume-report-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
       gap: 12px;
+      align-items: start;
+    }
+    .resume-report-section {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
     }
     .resume-score {
       display: grid;
       grid-template-columns: 86px minmax(0, 1fr);
       gap: 14px;
       align-items: center;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 16px;
-      box-shadow: var(--shadow-soft);
     }
     .resume-score-value {
       width: 70px;
@@ -3156,7 +3177,8 @@ INDEX_HTML = """<!doctype html>
       main { padding: 18px; }
       .settings-grid { grid-template-columns: 1fr; }
       .parser-grid { grid-template-columns: 1fr; }
-      .resume-grid { grid-template-columns: 1fr; }
+      .resume-input-grid,
+      .resume-report-grid { grid-template-columns: 1fr; }
       .job-head { grid-template-columns: 44px minmax(0, 1fr); }
       .job-side {
         grid-column: 2;
@@ -3596,28 +3618,30 @@ INDEX_HTML = """<!doctype html>
         </div>
         <section class="resume-grid" aria-label="Resume matcher">
           <form class="parser-panel resume-form" id="resume-match-form" autocomplete="off">
-            <h2>Match Inputs</h2>
+            <h2>1. Match Inputs</h2>
             <p>The matcher first uses local vacancy data, then tries to read the vacancy page directly. Paste the vacancy text only when the site blocks automatic reading.</p>
-            <div class="field">
-              <label for="vacancy_url">Vacancy URL</label>
-              <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
-            </div>
-            <div class="field">
-              <label for="target_title">Target title override</label>
-              <input id="target_title" name="target_title" placeholder="Optional title override">
-            </div>
-            <div class="field">
-              <label for="job_description">Vacancy description fallback</label>
-              <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
-            </div>
-            <div class="field">
-              <label for="resume_text">Current resume</label>
-              <div class="resume-file-row">
-                <input id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
-                <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove PDF</button>
+            <div class="resume-input-grid">
+              <div class="field">
+                <label for="vacancy_url">Vacancy URL</label>
+                <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
               </div>
-              <p class="resume-file-name" id="resume-file-name">Attach a PDF or paste resume text below.</p>
-              <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+              <div class="field">
+                <label for="target_title">Target title override</label>
+                <input id="target_title" name="target_title" placeholder="Optional title override">
+              </div>
+              <div class="field resume-wide-field">
+                <label for="job_description">Vacancy description fallback</label>
+                <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
+              </div>
+              <div class="field resume-wide-field">
+                <label for="resume_text">Current resume</label>
+                <div class="resume-file-row">
+                  <input id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
+                  <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove PDF</button>
+                </div>
+                <p class="resume-file-name" id="resume-file-name">Attach a PDF or paste resume text below.</p>
+                <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+              </div>
             </div>
             <div class="actions">
               <button class="btn primary" type="submit" title="Generate resume match">Generate Draft</button>
@@ -3625,37 +3649,43 @@ INDEX_HTML = """<!doctype html>
             </div>
           </form>
           <article class="parser-panel resume-output" aria-label="Resume match result">
-            <h2>Match Result</h2>
+            <h2>2. Match Report</h2>
             <p class="resume-note" id="resume-match-status">No resume match generated yet.</p>
-            <div class="resume-score" id="resume-score-card" hidden>
-              <span class="resume-score-value" id="resume-score-value">0%</span>
-              <div>
-                <h2 id="resume-vacancy-title">Vacancy match</h2>
-                <p id="resume-vacancy-meta">Waiting for input.</p>
+            <div class="resume-report-section">
+              <div class="resume-score" id="resume-score-card" hidden>
+                <span class="resume-score-value" id="resume-score-value">0%</span>
+                <div>
+                  <h2 id="resume-vacancy-title">Vacancy match</h2>
+                  <p id="resume-vacancy-meta">Waiting for input.</p>
+                </div>
               </div>
             </div>
-            <div>
-              <p class="summary-title">Matched keywords</p>
-              <div class="keyword-cloud" id="resume-matched-keywords"></div>
+            <div class="resume-report-grid">
+              <section class="resume-report-section">
+                <p class="summary-title">Matched keywords</p>
+                <div class="keyword-cloud" id="resume-matched-keywords"></div>
+              </section>
+              <section class="resume-report-section">
+                <p class="summary-title">Missing keywords</p>
+                <div class="keyword-cloud" id="resume-missing-keywords"></div>
+              </section>
             </div>
-            <div>
-              <p class="summary-title">Missing keywords</p>
-              <div class="keyword-cloud" id="resume-missing-keywords"></div>
-            </div>
-            <div>
+            <section class="resume-report-section">
               <p class="summary-title">Recommendations</p>
               <div class="parser-preview" id="resume-recommendations">
                 <div class="empty">Run the matcher to see recommendations.</div>
               </div>
-            </div>
-            <div class="field">
-              <label for="resume_result">Tailored resume draft</label>
-              <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
-            </div>
-            <div class="actions">
-              <button class="btn primary" type="button" id="resume-copy" title="Copy tailored resume draft">Copy Draft</button>
-              <a class="open-link" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>Download PDF</a>
-            </div>
+            </section>
+            <section class="resume-report-section">
+              <div>
+                <p class="summary-title">Tailored resume draft</p>
+                <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
+              </div>
+              <div class="actions">
+                <button class="btn primary" type="button" id="resume-copy" title="Copy tailored resume draft">Copy Draft</button>
+                <a class="open-link" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>Download PDF</a>
+              </div>
+            </section>
           </article>
         </section>
       </section>
