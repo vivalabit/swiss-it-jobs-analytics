@@ -330,6 +330,43 @@ def _clean_date(value: Any, name: str) -> str:
     raise ValueError(f"{name} must use YYYY-MM-DD or dd.mm.yyyy format")
 
 
+def _dotenv_quote(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
+def _replace_dotenv_values(path: Path, updates: dict[str, str | None]) -> None:
+    existing_lines = path.read_text(encoding="utf-8").splitlines() if path.is_file() else []
+    seen: set[str] = set()
+    next_lines: list[str] = []
+    for raw_line in existing_lines:
+        line = raw_line.strip()
+        probe = line[len("export ") :].lstrip() if line.startswith("export ") else line
+        if not line or line.startswith("#") or "=" not in probe:
+            next_lines.append(raw_line)
+            continue
+        key = probe.split("=", 1)[0].strip()
+        if key not in updates:
+            next_lines.append(raw_line)
+            continue
+        seen.add(key)
+        value = updates[key]
+        if value is not None:
+            next_lines.append(f"{key}={_dotenv_quote(value)}")
+    for key, value in updates.items():
+        if key not in seen and value is not None:
+            next_lines.append(f"{key}={_dotenv_quote(value)}")
+    content = "\n".join(next_lines).rstrip()
+    path.write_text((content + "\n") if content else "", encoding="utf-8")
+
+
+def update_openai_settings(payload: dict[str, Any]) -> dict[str, Any]:
+    api_key = _clean_text(payload.get("api_key"))
+    if api_key:
+        _replace_dotenv_values(PROJECT_ROOT / ".env", {"OPENAI_API_KEY": api_key})
+    return {"api_key_configured": bool(api_key)}
+
+
 def _parser_sources(payload: dict[str, Any]) -> list[str]:
     raw_sources = payload.get("sources")
     if not isinstance(raw_sources, list):
@@ -2009,6 +2046,9 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/resume-match":
                 _json_response(self, build_resume_match(self.config.database_paths, _json_body(self)))
                 return
+            if parsed.path == "/api/settings/openai":
+                _json_response(self, update_openai_settings(_json_body(self)))
+                return
         except ValueError as exc:
             _json_response(self, {"error": str(exc)}, status=HTTPStatus.BAD_REQUEST)
             return
@@ -2292,6 +2332,9 @@ INDEX_HTML = """<!doctype html>
       padding: 18px;
       box-shadow: var(--shadow-soft);
     }
+    .settings-panel.is-wide {
+      grid-column: span 3;
+    }
     .settings-panel h2 {
       margin: 0 0 6px;
       color: #17202a;
@@ -2308,6 +2351,33 @@ INDEX_HTML = """<!doctype html>
       display: grid;
       gap: 10px;
       margin-top: 16px;
+    }
+    .settings-form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      align-items: end;
+      margin-top: 16px;
+    }
+    .settings-status {
+      min-height: 36px;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: var(--muted);
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .settings-status.is-ready {
+      background: #eef9f0;
+      color: #1f9d3a;
+    }
+    .settings-status.is-error {
+      background: #fff4f4;
+      color: #a3161b;
     }
     .setting-toggle {
       min-height: 42px;
@@ -3546,7 +3616,9 @@ INDEX_HTML = """<!doctype html>
         max-height: none;
       }
       main { padding: 18px; }
-      .settings-grid { grid-template-columns: 1fr; }
+      .settings-grid,
+      .settings-form-grid { grid-template-columns: 1fr; }
+      .settings-panel.is-wide { grid-column: auto; }
       .parser-grid { grid-template-columns: 1fr; }
       .resume-toolbar,
       .resume-input-cards,
@@ -4291,10 +4363,25 @@ INDEX_HTML = """<!doctype html>
           <div>
             <p class="section-kicker">Settings</p>
             <h1>Application Settings</h1>
-            <p class="sub">Visual placeholder for future source management, data collection, and statistics export controls.</p>
+            <p class="sub">Manage local source controls, exports, and GPT API token.</p>
           </div>
         </div>
         <section class="settings-grid" aria-label="Application settings">
+          <article class="settings-panel is-wide">
+            <h2>OpenAI GPT</h2>
+            <p>Save the API token to .env.</p>
+            <form id="openai-settings-form" autocomplete="off">
+              <div class="settings-form-grid">
+                <div class="field">
+                  <label for="openai_api_key">API token</label>
+                  <input id="openai_api_key" name="openai_api_key" type="password" placeholder="sk-..." autocomplete="off">
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn primary" type="submit" title="Save API token">Save API Token</button>
+              </div>
+            </form>
+          </article>
           <article class="settings-panel">
             <h2>Vacancy Sources</h2>
             <p>Connect and select local databases for browsing, search, and future synchronization.</p>
@@ -4364,6 +4451,8 @@ INDEX_HTML = """<!doctype html>
     const resumeMatcherWorkspaceEl = document.querySelector("#resume-matcher-workspace");
     const publicStatsWorkspaceEl = document.querySelector("#public-stats-workspace");
     const settingsWorkspaceEl = document.querySelector("#settings-workspace");
+    const openAiSettingsFormEl = document.querySelector("#openai-settings-form");
+    const openAiApiKeyEl = document.querySelector("#openai_api_key");
     const resumeMatchFormEl = document.querySelector("#resume-match-form");
     const resumeResetEl = document.querySelector("#resume-reset");
     const resumeCopyEl = document.querySelector("#resume-copy");
@@ -4473,6 +4562,27 @@ INDEX_HTML = """<!doctype html>
       logs.unshift({ title, message, level, time: formatLogTime(new Date()) });
       if (logs.length > maxLogEntries) logs.length = maxLogEntries;
       renderLogs();
+    }
+
+    async function saveOpenAiSettings() {
+      const payload = {
+        api_key: openAiApiKeyEl.value.trim(),
+      };
+      try {
+        const response = await fetch("/api/settings/openai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to save OpenAI settings.");
+        }
+        openAiApiKeyEl.value = "";
+        addLog("Settings", "Saved API token.", "success");
+      } catch (error) {
+        addLog("Settings", error.message || String(error), "error");
+      }
     }
 
     function setLogDrawer(open) {
@@ -5495,6 +5605,10 @@ INDEX_HTML = """<!doctype html>
         "info",
       );
       setLogDrawer(true);
+    });
+    openAiSettingsFormEl.addEventListener("submit", (event) => {
+      event.preventDefault();
+      saveOpenAiSettings();
     });
     logToggleEl.addEventListener("click", () => {
       setLogDrawer(logToggleEl.getAttribute("aria-expanded") !== "true");
