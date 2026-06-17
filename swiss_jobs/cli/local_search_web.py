@@ -2474,7 +2474,7 @@ INDEX_HTML = """<!doctype html>
       font-size: 12px;
       line-height: 1.25;
     }
-    .resume-status-card span:last-child {
+    .resume-status-card > span:last-child {
       display: block;
       margin-top: 4px;
       color: var(--muted);
@@ -2492,6 +2492,16 @@ INDEX_HTML = """<!doctype html>
       color: #17202a;
       font-size: 16px;
       font-weight: 900;
+    }
+    .resume-model-select {
+      min-height: 32px;
+      margin-top: 6px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #344150;
+      background: #fff;
     }
     .resume-grid {
       display: grid;
@@ -4084,7 +4094,14 @@ INDEX_HTML = """<!doctype html>
           <div class="resume-status-cards" aria-label="Resume matcher configuration">
             <div class="resume-status-card">
               <span class="resume-status-icon" aria-hidden="true">✦</span>
-              <span><strong>AI Model</strong><span>Local keyword analysis</span></span>
+              <span>
+                <strong>AI Model</strong>
+                <select class="resume-model-select" id="resume_model" name="model" form="resume-match-form" aria-label="AI model">
+                  <option value="gpt-5.5" selected>gpt-5.5</option>
+                  <option value="gpt-5.4-mini">gpt-5.4-mini</option>
+                  <option value="gpt-5.4-nano">gpt-5.4-nano</option>
+                </select>
+              </span>
             </div>
             <div class="resume-status-card">
               <span class="resume-status-icon" aria-hidden="true">◉</span>
