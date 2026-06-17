@@ -3,9 +3,11 @@ from __future__ import annotations
 import argparse
 import base64
 import html
+import ipaddress
 import io
 import json
 import re
+import socket
 import sqlite3
 import subprocess
 import sys
@@ -14,11 +16,14 @@ import time
 import uuid
 import webbrowser
 from dataclasses import dataclass
+from html.parser import HTMLParser
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import parse_qs, urlparse, urlunparse
+
+import requests
 
 from swiss_jobs.core.locations import location_search_terms, normalize_location_display
 from swiss_jobs.registry import list_supported_sources
@@ -131,6 +136,11 @@ RESUME_MATCH_STOPWORDS = {
     "work",
     "working",
 }
+VACANCY_FETCH_MAX_BYTES = 2_000_000
+VACANCY_FETCH_TIMEOUT = (5, 15)
+VACANCY_FETCH_USER_AGENT = (
+    "Mozilla/5.0 (compatible; SwissITJobsResumeMatcher/1.0; +https://localhost)"
+)
 
 
 @dataclass(frozen=True)
@@ -150,9 +160,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=[],
         help="SQLite database path. Can be repeated. Defaults to existing runtime/*/main-config/*.sqlite files.",
     )
-    parser.add_argument("--host", default="127.0.0.1", help="Bind host. Defaults to 127.0.0.1.")
+    parser.add_argument("--host", help="Bind host. Defaults to 127.0.0.1, or 0.0.0.0 with --share-lan.")
     parser.add_argument("--port", type=int, default=8765, help="Bind port. Defaults to 8765.")
     parser.add_argument("--open", action="store_true", help="Open the page in the default browser.")
+    parser.add_argument(
+        "--share-lan",
+        action="store_true",
+        help="Allow other devices on the same trusted local network to open the app.",
+    )
     return parser
 
 
@@ -194,6 +209,46 @@ def _head_response(handler: BaseHTTPRequestHandler, content_type: str, status: i
     handler.send_response(status)
     handler.send_header("Content-Type", content_type)
     handler.end_headers()
+
+
+def _local_ipv4_addresses() -> list[str]:
+    addresses: set[str] = set()
+    try:
+        host_name = socket.gethostname()
+        for item in socket.getaddrinfo(host_name, None, socket.AF_INET, socket.SOCK_STREAM):
+            address = item[4][0]
+            if address and not address.startswith("127."):
+                addresses.add(address)
+    except OSError:
+        pass
+
+    try:
+        probe = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            probe.connect(("8.8.8.8", 80))
+            address = probe.getsockname()[0]
+            if address and not address.startswith("127."):
+                addresses.add(address)
+        finally:
+            probe.close()
+    except OSError:
+        pass
+
+    return sorted(addresses)
+
+
+def _display_urls(host: str, port: int) -> list[str]:
+    if host in {"0.0.0.0", "::", ""}:
+        hosts = ["127.0.0.1", *_local_ipv4_addresses()]
+    else:
+        hosts = [host]
+    return [f"http://{item}:{port}/" for item in dict.fromkeys(hosts)]
+
+
+def _browser_open_url(host: str, port: int) -> str:
+    if host in {"0.0.0.0", "::", ""}:
+        return f"http://127.0.0.1:{port}/"
+    return f"http://{host}:{port}/"
 
 
 def _request_values(params: dict[str, list[str]], name: str) -> list[str]:
@@ -1090,6 +1145,187 @@ def _find_resume_vacancy(database_paths: Iterable[Path], vacancy_url: str) -> tu
     return None, database_errors
 
 
+class _VacancyHtmlTextParser(HTMLParser):
+    _skip_tags = {"script", "style", "noscript", "svg", "canvas", "template"}
+    _block_tags = {
+        "article",
+        "br",
+        "dd",
+        "div",
+        "dt",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "li",
+        "main",
+        "p",
+        "section",
+        "td",
+        "th",
+        "tr",
+        "ul",
+        "ol",
+    }
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._skip_depth = 0
+        self._in_title = False
+        self._parts: list[str] = []
+        self._title_parts: list[str] = []
+        self.meta_title = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        tag = tag.lower()
+        if tag in self._skip_tags:
+            self._skip_depth += 1
+            return
+        if self._skip_depth:
+            return
+        if tag == "title":
+            self._in_title = True
+        if tag == "meta":
+            data = {str(key).lower(): str(value or "").strip() for key, value in attrs}
+            key = data.get("property") or data.get("name")
+            if key in {"og:title", "twitter:title", "title"} and data.get("content"):
+                self.meta_title = data["content"]
+        if tag in self._block_tags:
+            self._parts.append("\n")
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag in self._skip_tags and self._skip_depth:
+            self._skip_depth -= 1
+            return
+        if self._skip_depth:
+            return
+        if tag == "title":
+            self._in_title = False
+        if tag in self._block_tags:
+            self._parts.append("\n")
+
+    def handle_data(self, data: str) -> None:
+        if self._skip_depth:
+            return
+        text = re.sub(r"\s+", " ", data).strip()
+        if not text:
+            return
+        if self._in_title:
+            self._title_parts.append(text)
+        self._parts.append(text)
+
+    @property
+    def title(self) -> str:
+        return self.meta_title or " ".join(self._title_parts).strip()
+
+    @property
+    def text(self) -> str:
+        raw = " ".join(self._parts)
+        raw = re.sub(r"\s*\n\s*", "\n", raw)
+        raw = re.sub(r"[ \t]+", " ", raw)
+        lines = []
+        seen: set[str] = set()
+        for line in raw.splitlines():
+            clean = line.strip()
+            if len(clean) < 2:
+                continue
+            key = clean.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            lines.append(clean)
+        return "\n".join(lines)
+
+
+def _is_disallowed_fetch_host(hostname: str) -> bool:
+    clean = hostname.strip().strip("[]").lower()
+    if clean in {"localhost", "0.0.0.0"} or clean.endswith(".localhost"):
+        return True
+    try:
+        address = ipaddress.ip_address(clean)
+    except ValueError:
+        return False
+    return address.is_loopback or address.is_private or address.is_link_local or address.is_multicast
+
+
+def _extract_external_vacancy_text(content: bytes, content_type: str, encoding: str = "") -> tuple[str, str]:
+    charset = encoding or "utf-8"
+    html_text = content.decode(charset, errors="replace")
+    if "html" not in content_type.lower():
+        text = re.sub(r"\r\n?", "\n", html_text)
+        text = re.sub(r"\n{3,}", "\n\n", text).strip()
+        return "", text
+
+    parser = _VacancyHtmlTextParser()
+    parser.feed(html_text)
+    parser.close()
+    return parser.title.strip(), parser.text.strip()
+
+
+def fetch_external_vacancy(vacancy_url: str) -> dict[str, Any] | None:
+    text = _clean_text(vacancy_url)
+    if not text:
+        return None
+    parsed = urlparse(text)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError("vacancy URL must be an http or https URL")
+    if parsed.hostname and _is_disallowed_fetch_host(parsed.hostname):
+        raise ValueError("refusing to fetch private or local network vacancy URL")
+
+    try:
+        response = requests.get(
+            text,
+            headers={
+                "Accept": "text/html,application/xhtml+xml,text/plain;q=0.9,*/*;q=0.1",
+                "User-Agent": VACANCY_FETCH_USER_AGENT,
+            },
+            timeout=VACANCY_FETCH_TIMEOUT,
+            allow_redirects=True,
+            stream=True,
+        )
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        raise ValueError(f"could not fetch vacancy URL: {exc}") from exc
+
+    try:
+        chunks: list[bytes] = []
+        size = 0
+        for chunk in response.iter_content(chunk_size=32768):
+            if not chunk:
+                continue
+            size += len(chunk)
+            if size > VACANCY_FETCH_MAX_BYTES:
+                raise ValueError("vacancy page is too large to read automatically")
+            chunks.append(chunk)
+    finally:
+        response.close()
+
+    content_type = response.headers.get("content-type", "")
+    title, description = _extract_external_vacancy_text(
+        b"".join(chunks),
+        content_type,
+        response.encoding or "",
+    )
+    if len(description) < 80:
+        raise ValueError("could not extract enough vacancy text from URL; paste the vacancy description manually")
+
+    return {
+        "database": "",
+        "id": "",
+        "source": "web",
+        "title": title,
+        "company": "",
+        "location": "",
+        "url": response.url,
+        "description_text": description[:12000],
+        "analytics": {},
+        "fetched_from_url": True,
+    }
+
+
 def _decode_pdf_base64(value: Any) -> bytes:
     text = _clean_text(value)
     if not text:
@@ -1212,14 +1448,24 @@ def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) 
     resume_text = resume_pdf_text or _clean_text(payload.get("resume_text"))
     pasted_description = _clean_text(payload.get("job_description"))
     vacancy, database_errors = _find_resume_vacancy(database_paths, vacancy_url)
+    fetched_vacancy = None
+    vacancy_fetch_error = ""
+    if not vacancy and vacancy_url:
+        try:
+            fetched_vacancy = fetch_external_vacancy(vacancy_url)
+        except ValueError as exc:
+            if not pasted_description:
+                raise
+            vacancy_fetch_error = str(exc)
 
-    if not vacancy and not pasted_description:
-        raise ValueError("vacancy URL was not found in local databases; paste the vacancy description too")
+    if not vacancy and not fetched_vacancy and not pasted_description:
+        raise ValueError("vacancy URL was not found in local databases and could not be fetched; paste the vacancy description too")
 
-    vacancy_title = _clean_text(payload.get("target_title")) or (vacancy or {}).get("title", "")
-    company = (vacancy or {}).get("company", "")
-    vacancy_text = (vacancy or {}).get("description_text") or pasted_description
-    analytics = (vacancy or {}).get("analytics", {})
+    vacancy_source = vacancy or fetched_vacancy or {}
+    vacancy_title = _clean_text(payload.get("target_title")) or vacancy_source.get("title", "")
+    company = vacancy_source.get("company", "")
+    vacancy_text = vacancy_source.get("description_text") or pasted_description
+    analytics = vacancy_source.get("analytics", {})
     terms = _dedupe_terms(
         [
             *_resume_terms_from_analytics(analytics),
@@ -1282,7 +1528,9 @@ Resume Draft
 
     return {
         "vacancy_found": bool(vacancy),
-        "vacancy": vacancy,
+        "vacancy_fetched": bool(fetched_vacancy),
+        "vacancy_fetch_error": vacancy_fetch_error,
+        "vacancy": vacancy_source or None,
         "score": score,
         "required_keywords": terms,
         "matched_keywords": matched_terms,
@@ -3343,24 +3591,24 @@ INDEX_HTML = """<!doctype html>
           <div>
             <p class="section-kicker">Resume matcher</p>
             <h1>Tailor Resume To Vacancy</h1>
-            <p class="sub">Paste a vacancy URL from your local database and your current resume to generate a focused draft and keyword gap review.</p>
+            <p class="sub">Paste a vacancy URL and your current resume to generate a focused draft and keyword gap review.</p>
           </div>
         </div>
         <section class="resume-grid" aria-label="Resume matcher">
           <form class="parser-panel resume-form" id="resume-match-form" autocomplete="off">
             <h2>Match Inputs</h2>
-            <p>The matcher uses local vacancy data when the URL is already stored. Paste the vacancy text if the URL is external or not loaded yet.</p>
+            <p>The matcher first uses local vacancy data, then tries to read the vacancy page directly. Paste the vacancy text only when the site blocks automatic reading.</p>
             <div class="field">
               <label for="vacancy_url">Vacancy URL</label>
               <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
             </div>
             <div class="field">
               <label for="target_title">Target title override</label>
-              <input id="target_title" name="target_title" placeholder="Optional if URL is found locally">
+              <input id="target_title" name="target_title" placeholder="Optional title override">
             </div>
             <div class="field">
               <label for="job_description">Vacancy description fallback</label>
-              <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here when the URL is not in the local database."></textarea>
+              <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
             </div>
             <div class="field">
               <label for="resume_text">Current resume</label>
@@ -4473,7 +4721,12 @@ INDEX_HTML = """<!doctype html>
         const vacancy = data.vacancy || {};
         resumeStatusEl.textContent = data.vacancy_found
           ? "Vacancy loaded from local database."
-          : "Using pasted vacancy description because the URL was not found locally.";
+          : data.vacancy_fetched
+            ? "Vacancy page fetched from URL."
+            : "Using pasted vacancy description because the URL was not found locally or could not be fetched.";
+        if (data.vacancy_fetch_error) {
+          addLog("Resume matcher", data.vacancy_fetch_error, "warning");
+        }
         resumeScoreCardEl.hidden = false;
         resumeScoreValueEl.textContent = `${Number(data.score || 0)}%`;
         resumeVacancyTitleEl.textContent = vacancy.title || payload.target_title || "Vacancy match";
@@ -4682,13 +4935,18 @@ def serve(config: LocalSearchConfig, *, open_browser: bool = False) -> None:
         {"config": config},
     )
     server = ThreadingHTTPServer((config.host, config.port), handler_class)
-    url = f"http://{config.host}:{server.server_port}/"
-    print(f"Local vacancy search is running at {url}")
+    urls = _display_urls(config.host, server.server_port)
+    print(f"Local vacancy search is running at {urls[0]}")
+    if len(urls) > 1:
+        print("Network access URLs:")
+        for url in urls[1:]:
+            print(f"  - {url}")
+        print("Use these URLs only on a trusted local network; this app exposes local data and run controls.")
     print("Loaded databases:")
     for path in config.database_paths:
         print(f"  - {path}")
     if open_browser:
-        webbrowser.open(url)
+        webbrowser.open(_browser_open_url(config.host, server.server_port))
     try:
         server.serve_forever()
     except KeyboardInterrupt:
@@ -4711,8 +4969,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: no local databases found. Checked: {defaults}", file=sys.stderr)
         return 2
 
+    host = args.host or ("0.0.0.0" if args.share_lan else "127.0.0.1")
     serve(
-        LocalSearchConfig(database_paths=database_paths, host=args.host, port=args.port),
+        LocalSearchConfig(database_paths=database_paths, host=host, port=args.port),
         open_browser=args.open,
     )
     return 0

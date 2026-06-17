@@ -19,7 +19,8 @@ supports four practical tasks:
 
 The app binds to `127.0.0.1` by default. Vacancy browsing opens SQLite files in
 read-only mode. Parser, AI analysis, and public stats actions start subprocesses
-that can write to project output directories.
+that can write to project output directories. Use `--share-lan` only when you
+want another device on the same trusted local network to open the app.
 
 ## 2. Start the App
 
@@ -34,6 +35,24 @@ Without `--open`, open the page manually:
 ```text
 http://127.0.0.1:8765
 ```
+
+To view vacancies from another device on the same trusted Wi-Fi or LAN, start
+the app in LAN sharing mode:
+
+```bash
+python3 -m swiss_jobs.cli.local_search_web --share-lan --port 8765
+```
+
+The terminal prints one or more network URLs, for example:
+
+```text
+Network access URLs:
+  - http://192.168.1.20:8765/
+```
+
+Open that URL from the other device. Do not expose this server directly to the
+public internet: it shows local vacancy data and includes controls that can
+start parser, AI analysis, and export runs.
 
 By default, the app loads existing databases from:
 
@@ -54,9 +73,10 @@ python3 -m swiss_jobs.cli.local_search_web \
 Available launch options:
 
 - `--database-path`: SQLite file to load. Can be repeated.
-- `--host`: bind host. Defaults to `127.0.0.1`.
+- `--host`: bind host. Defaults to `127.0.0.1`, or `0.0.0.0` with `--share-lan`.
 - `--port`: bind port. Defaults to `8765`.
 - `--open`: open the local page in the default browser.
+- `--share-lan`: allow other devices on the same trusted local network to open the app.
 
 ## 3. App Screens
 
@@ -65,6 +85,7 @@ The main menu contains:
 - `Vacancy Browser`: browse and search loaded local databases.
 - `Vacancy Search`: start parser runs for selected providers.
 - `AI Analyse`: start AI enrichment for selected providers.
+- `Resume matcher`: fetch or paste a vacancy, attach a resume, and generate a tailored draft/PDF.
 - `Public Stats`: build aggregated public statistics snapshots.
 - `Settings`: reserved settings area.
 
@@ -178,7 +199,32 @@ llm_analyzed_at
 After completion, the app reloads facets and search results. Result cards can
 then expose the model, analysis timestamp, and analysis JSON.
 
-## 7. Public Stats
+## 7. Resume Matcher
+
+`Resume matcher` helps adapt a resume to a target vacancy. The backend uses
+this order for vacancy text:
+
+1. If the vacancy URL already exists in the loaded SQLite databases, use the
+   stored vacancy title, company, description, and analysis fields.
+2. If the URL is not local, fetch the vacancy page directly over `http` or
+   `https` and extract readable HTML text.
+3. If the site blocks automatic reading, requires login, or renders the vacancy
+   only with JavaScript, use the pasted `Vacancy description fallback` text.
+
+The matcher can read resume text from either:
+
+- an attached PDF resume, extracted with `pdfplumber`;
+- pasted resume text.
+
+If a PDF is attached, it is used before the pasted text. The output includes a
+keyword match summary, missing keyword hints, an editable text draft, and a
+downloadable generated PDF.
+
+Automatic URL fetching refuses local/private network URLs and does not execute
+JavaScript. This keeps the app focused on public vacancy pages and avoids
+accidentally reading internal services.
+
+## 8. Public Stats
 
 `Public Stats` builds aggregated public statistics from selected runtime
 databases. This is a write action.
@@ -217,7 +263,7 @@ site/public/csv/*.csv
 site/public/downloads/*.zip
 ```
 
-## 8. Local API
+## 9. Local API
 
 The app exposes local JSON endpoints used by the UI:
 
@@ -228,13 +274,14 @@ The app exposes local JSON endpoints used by the UI:
 - `GET /api/parser-runs?run_id=...&after=...`
 - `POST /api/ai-analysis-runs`
 - `GET /api/ai-analysis-runs?run_id=...&after=...`
+- `POST /api/resume-match`
 - `POST /api/public-stats-runs`
 - `GET /api/public-stats-runs?run_id=...&after=...`
 
-These endpoints are intended for local use. Do not expose the app to a public
-network without adding authentication and process-level safeguards.
+These endpoints are intended for local or trusted LAN use. Do not expose the app
+to a public network without adding authentication and process-level safeguards.
 
-## 9. Operational Notes
+## 10. Operational Notes
 
 Parser, AI, and public stats runs are tracked in memory. If the local app
 process exits, active run state and log history are lost.

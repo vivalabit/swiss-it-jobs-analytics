@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from contextlib import closing
 from pathlib import Path
+from unittest.mock import patch
 
 from swiss_jobs.cli import local_search_web
 from swiss_jobs.cli.local_search_web import (
@@ -45,6 +46,24 @@ def make_result(config: ClientConfig, vacancies: list[VacancyFull]) -> ClientRun
         all_jobs_full=list(vacancies),
         output_jobs=[],
     )
+
+
+class FakeHttpResponse:
+    def __init__(self, content: bytes, *, url: str = "https://jobs.example/vacancy-1") -> None:
+        self._content = content
+        self.url = url
+        self.headers = {"content-type": "text/html; charset=utf-8"}
+        self.encoding = "utf-8"
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def iter_content(self, chunk_size: int = 32768):
+        for index in range(0, len(self._content), chunk_size):
+            yield self._content[index : index + chunk_size]
+
+    def close(self) -> None:
+        return None
 
 
 def make_vacancy(
@@ -90,6 +109,21 @@ def make_vacancy(
 
 
 class LocalSearchWebTests(unittest.TestCase):
+    def test_share_lan_display_urls_include_loopback_and_lan_addresses(self) -> None:
+        original = local_search_web._local_ipv4_addresses
+        try:
+            local_search_web._local_ipv4_addresses = lambda: ["192.168.1.20"]  # type: ignore[assignment]
+            self.assertEqual(
+                ["http://127.0.0.1:8765/", "http://192.168.1.20:8765/"],
+                local_search_web._display_urls("0.0.0.0", 8765),
+            )
+        finally:
+            local_search_web._local_ipv4_addresses = original  # type: ignore[assignment]
+
+    def test_browser_open_url_uses_loopback_for_wildcard_bind(self) -> None:
+        self.assertEqual("http://127.0.0.1:8765/", local_search_web._browser_open_url("0.0.0.0", 8765))
+        self.assertEqual("http://192.168.1.20:8765/", local_search_web._browser_open_url("192.168.1.20", 8765))
+
     def test_parser_command_matches_ui_payload_order(self) -> None:
         args = _parser_cli_args(
             {
@@ -366,6 +400,56 @@ class LocalSearchWebTests(unittest.TestCase):
         self.assertTrue(payload["resume_pdf_text_extracted"])
         self.assertIn("Senior Python engineer", payload["tailored_resume"])
         self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))
+
+    def test_resume_match_fetches_external_vacancy_url(self) -> None:
+        html = b"""
+        <!doctype html>
+        <html>
+          <head><title>Senior Python Platform Engineer</title></head>
+          <body>
+            <nav>Apply Home About</nav>
+            <main>
+              <h1>Senior Python Platform Engineer</h1>
+              <p>We are hiring a senior Python engineer for backend platforms.</p>
+              <p>The role needs Django, AWS, Kubernetes, PostgreSQL and API design experience.</p>
+              <p>You will work with CI/CD, observability, distributed services and security reviews.</p>
+            </main>
+          </body>
+        </html>
+        """
+
+        with patch.object(local_search_web.requests, "get", return_value=FakeHttpResponse(html)) as get:
+            payload = build_resume_match(
+                [],
+                {
+                    "vacancy_url": "https://jobs.example/vacancy-1",
+                    "resume_text": "Senior Python engineer with Django and PostgreSQL API experience.",
+                },
+            )
+
+        get.assert_called_once()
+        self.assertFalse(payload["vacancy_found"])
+        self.assertTrue(payload["vacancy_fetched"])
+        self.assertEqual("Senior Python Platform Engineer", payload["vacancy"]["title"])
+        self.assertIn("kubernetes", [term.lower() for term in payload["missing_keywords"]])
+        self.assertIn("Source: https://jobs.example/vacancy-1", payload["tailored_resume"])
+
+    def test_resume_match_uses_pasted_description_when_external_fetch_fails(self) -> None:
+        with patch.object(local_search_web, "fetch_external_vacancy", side_effect=ValueError("blocked")):
+            payload = build_resume_match(
+                [],
+                {
+                    "vacancy_url": "https://jobs.example/blocked",
+                    "target_title": "Python Backend Engineer",
+                    "job_description": "Python Backend Engineer role with Django and AWS.",
+                    "resume_text": "Python engineer with backend APIs.",
+                },
+            )
+
+        self.assertFalse(payload["vacancy_found"])
+        self.assertFalse(payload["vacancy_fetched"])
+        self.assertEqual("blocked", payload["vacancy_fetch_error"])
+        self.assertIn("Python Backend Engineer", payload["tailored_resume"])
 
     def test_search_local_databases_does_not_require_salary(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
