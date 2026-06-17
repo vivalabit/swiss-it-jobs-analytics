@@ -2044,6 +2044,7 @@ INDEX_HTML = """<!doctype html>
       --shadow-soft: 0 4px 14px rgba(17, 24, 39, 0.05);
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -2374,87 +2375,309 @@ INDEX_HTML = """<!doctype html>
       display: grid;
       gap: 10px;
     }
-    .resume-grid {
+    .resume-toolbar {
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
       gap: 18px;
-      margin-top: 16px;
-      align-items: start;
+      align-items: end;
     }
-    .resume-input-grid {
+    .resume-status-cards {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      align-items: start;
+      gap: 14px;
     }
-    .resume-input-grid .field {
-      margin-bottom: 0;
-    }
-    .resume-wide-field {
-      grid-column: 1 / -1;
-    }
-    .resume-form textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-    .resume-file-row {
+    .resume-status-card {
+      min-height: 82px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 10px;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
       align-items: center;
-    }
-    .resume-file-row input[type="file"] {
-      padding: 9px 12px;
-    }
-    .resume-file-name {
-      margin: 7px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-    }
-    .resume-form #resume_text {
-      min-height: 260px;
-    }
-    .resume-output {
-      display: grid;
-      gap: 16px;
-    }
-    .resume-report-grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
-      gap: 12px;
-      align-items: start;
-    }
-    .resume-report-section {
-      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
       padding: 16px;
       box-shadow: var(--shadow-soft);
     }
+    .resume-status-card strong {
+      display: block;
+      color: #17202a;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .resume-status-card span:last-child {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .resume-status-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #17202a;
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .resume-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
+      align-items: start;
+    }
+    .resume-form,
+    .resume-output {
+      display: grid;
+      gap: 18px;
+    }
+    .resume-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .resume-panel p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .resume-input-cards {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+    .resume-card {
+      display: grid;
+      align-content: start;
+    }
+    .resume-segment {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 16px;
+    }
+    .resume-segment button {
+      min-height: 42px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: #fff;
+      color: #344150;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .resume-segment button:last-child {
+      border-right: 0;
+    }
+    .resume-segment button.is-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(215, 25, 32, 0.18);
+    }
+    .resume-input-grid {
+      display: grid;
+      gap: 12px;
+      align-items: start;
+    }
+    .resume-input-grid .field,
+    .resume-card .field {
+      margin-bottom: 0;
+    }
+    .resume-url-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .resume-inline-status {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      margin-top: 8px;
+      background: #eef9f0;
+      color: #1f9d3a;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .resume-inline-status.is-muted {
+      background: #f3f4f6;
+      color: var(--muted);
+    }
+    .resume-form textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+    .resume-file-zone {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px;
+    }
+    .resume-file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+    .resume-file-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+    .resume-upload-label {
+      min-height: 42px;
+      border: 1px solid rgba(215, 25, 32, 0.34);
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .resume-file-name {
+      margin: 0;
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+    .resume-file-hint {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .resume-drop-hint {
+      display: grid;
+      place-items: center;
+      min-height: 82px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      margin-top: 8px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .resume-form #resume_text {
+      min-height: 160px;
+    }
+    .resume-preview-panel {
+      display: grid;
+      gap: 14px;
+    }
+    .resume-preview-head,
+    .resume-result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+    .resume-vacancy-preview {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+    .resume-vacancy-preview h3 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+    .resume-preview-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .resume-vacancy-preview p {
+      margin: 0;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .resume-action-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-top: 0;
+    }
+    .resume-analysis-grid {
+      display: grid;
+      grid-template-columns: 0.82fr 1fr 1.18fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .resume-report-section {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
     .resume-score {
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr);
-      gap: 14px;
+      grid-template-columns: 94px minmax(0, 1fr);
+      gap: 16px;
       align-items: center;
+      margin-bottom: 18px;
     }
     .resume-score-value {
-      width: 70px;
-      height: 70px;
+      --score: 0;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 21px;
+      background:
+        radial-gradient(circle at center, #fff 56%, transparent 57%),
+        conic-gradient(#2ea84a calc(var(--score) * 1%), #e5e7eb 0);
+      color: #2ea84a;
+      font-size: 22px;
       font-weight: 900;
     }
     .resume-score h2 {
       margin: 0 0 4px;
-      color: #17202a;
+      color: #2ea84a;
       font-size: 15px;
       line-height: 1.3;
     }
@@ -2464,6 +2687,154 @@ INDEX_HTML = """<!doctype html>
       color: var(--muted);
       font-size: 13px;
       line-height: 1.5;
+    }
+    .resume-metric-list {
+      display: grid;
+      gap: 10px;
+    }
+    .resume-metric {
+      display: grid;
+      gap: 6px;
+    }
+    .resume-metric-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .resume-meter {
+      height: 6px;
+      border-radius: 999px;
+      background: #eef0f3;
+      overflow: hidden;
+    }
+    .resume-meter span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: #2ea84a;
+    }
+    .resume-meter.is-warm span {
+      background: #f59e0b;
+    }
+    .resume-keyword-columns {
+      display: grid;
+      gap: 16px;
+    }
+    .resume-recommendation-list {
+      display: grid;
+      gap: 10px;
+    }
+    .resume-recommendation {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+    .resume-recommendation-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef5ff;
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .resume-recommendation strong {
+      display: block;
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .resume-recommendation span:last-child {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .resume-output-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .resume-download-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .resume-download-card,
+    .resume-copy-card {
+      min-height: 72px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+      color: #1d4ed8;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: left;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-download-card {
+      border-color: rgba(215, 25, 32, 0.24);
+      background: #fff8f8;
+      color: var(--accent);
+    }
+    .resume-download-card[hidden] {
+      display: none;
+    }
+    .resume-download-card small,
+    .resume-copy-card small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .resume-download-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: currentColor;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .resume-result-text {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .resume-tip {
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.45;
     }
     .keyword-cloud {
       display: flex;
@@ -3177,8 +3548,12 @@ INDEX_HTML = """<!doctype html>
       main { padding: 18px; }
       .settings-grid { grid-template-columns: 1fr; }
       .parser-grid { grid-template-columns: 1fr; }
-      .resume-input-grid,
-      .resume-report-grid { grid-template-columns: 1fr; }
+      .resume-toolbar,
+      .resume-input-cards,
+      .resume-analysis-grid,
+      .resume-output-grid { grid-template-columns: 1fr; }
+      .resume-status-cards,
+      .resume-download-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .job-head { grid-template-columns: 44px minmax(0, 1fr); }
       .job-side {
         grid-column: 2;
@@ -3208,6 +3583,25 @@ INDEX_HTML = """<!doctype html>
         width: calc(100vw - 36px);
       }
       .btn { width: 100%; }
+      .resume-status-cards,
+      .resume-download-grid,
+      .resume-segment,
+      .resume-url-row { grid-template-columns: 1fr; }
+      .resume-segment button {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .resume-segment button:last-child {
+        border-bottom: 0;
+      }
+      .resume-file-row,
+      .resume-score,
+      .resume-recommendation,
+      .resume-status-card,
+      .resume-copy-card,
+      .resume-download-card {
+        grid-template-columns: 1fr;
+      }
       main { padding: 0; }
       .job { padding: 18px; }
       .job-head { grid-template-columns: 1fr; }
@@ -3609,82 +4003,172 @@ INDEX_HTML = """<!doctype html>
         </section>
       </section>
       <section class="workspace-panel" id="resume-matcher-workspace" hidden>
-        <div class="toolbar">
+        <div class="toolbar resume-toolbar">
           <div>
             <p class="section-kicker">Resume matcher</p>
             <h1>Tailor Resume To Vacancy</h1>
             <p class="sub">Paste a vacancy URL and your current resume to generate a focused draft and keyword gap review.</p>
           </div>
+          <div class="resume-status-cards" aria-label="Resume matcher configuration">
+            <div class="resume-status-card">
+              <span class="resume-status-icon" aria-hidden="true">✦</span>
+              <span><strong>AI Model</strong><span>Local keyword analysis</span></span>
+            </div>
+            <div class="resume-status-card">
+              <span class="resume-status-icon" aria-hidden="true">◉</span>
+              <span><strong>Database</strong><span>Local + Live Web</span></span>
+            </div>
+          </div>
         </div>
         <section class="resume-grid" aria-label="Resume matcher">
-          <form class="parser-panel resume-form" id="resume-match-form" autocomplete="off">
-            <h2>1. Match Inputs</h2>
-            <p>The matcher first uses local vacancy data, then tries to read the vacancy page directly. Paste the vacancy text only when the site blocks automatic reading.</p>
-            <div class="resume-input-grid">
-              <div class="field">
-                <label for="vacancy_url">Vacancy URL</label>
-                <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
-              </div>
-              <div class="field">
-                <label for="target_title">Target title override</label>
-                <input id="target_title" name="target_title" placeholder="Optional title override">
-              </div>
-              <div class="field resume-wide-field">
-                <label for="job_description">Vacancy description fallback</label>
-                <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
-              </div>
-              <div class="field resume-wide-field">
-                <label for="resume_text">Current resume</label>
-                <div class="resume-file-row">
-                  <input id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
-                  <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove PDF</button>
+          <form class="resume-form" id="resume-match-form" autocomplete="off">
+            <div class="resume-input-cards">
+              <article class="resume-panel resume-card">
+                <h2>1. Vacancy Source</h2>
+                <p>Choose where to get the vacancy from</p>
+                <div class="resume-segment" aria-label="Vacancy source mode">
+                  <button class="is-active" type="button">⌁ URL Link</button>
+                  <button type="button">▤ Local Database</button>
+                  <button type="button">▧ Paste Text</button>
                 </div>
-                <p class="resume-file-name" id="resume-file-name">Attach a PDF or paste resume text below.</p>
-                <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
-              </div>
+                <div class="resume-input-grid">
+                  <div class="field">
+                    <label for="vacancy_url">Vacancy URL</label>
+                    <div class="resume-url-row">
+                      <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
+                      <button class="details-toggle" type="submit" title="Fetch vacancy and generate match">Fetch Vacancy</button>
+                    </div>
+                    <span class="resume-inline-status is-muted" id="resume-vacancy-load-status">Waiting for vacancy</span>
+                  </div>
+                  <div class="field">
+                    <label for="target_title">Target title override <span>(optional)</span></label>
+                    <input id="target_title" name="target_title" placeholder="e.g. Senior Software Engineer">
+                  </div>
+                  <div class="field">
+                    <label for="job_description">Vacancy description fallback</label>
+                    <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
+                  </div>
+                </div>
+              </article>
+              <article class="resume-panel resume-card">
+                <h2>2. Your Current Resume</h2>
+                <p>Upload your resume or paste your current resume text</p>
+                <div class="resume-segment" aria-label="Resume input mode">
+                  <button class="is-active" type="button">↥ Upload File</button>
+                  <button type="button">♢ Paste Text</button>
+                  <button type="button">▣ Review</button>
+                </div>
+                <div class="resume-file-zone">
+                  <input class="resume-file-input" id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
+                  <label class="resume-upload-label" for="resume_pdf">↥ Upload File</label>
+                  <div class="resume-file-row">
+                    <div>
+                      <p class="resume-file-name" id="resume-file-name">No PDF selected</p>
+                      <span class="resume-file-hint">PDF resume or pasted text below</span>
+                    </div>
+                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove</button>
+                  </div>
+                  <div class="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
+                </div>
+                <div class="field">
+                  <label for="resume_text">Paste resume text</label>
+                  <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+                </div>
+              </article>
             </div>
-            <div class="actions">
-              <button class="btn primary" type="submit" title="Generate resume match">Generate Draft</button>
-              <button class="btn secondary" type="button" id="resume-reset" title="Clear resume matcher">Clear</button>
-            </div>
-          </form>
-          <article class="parser-panel resume-output" aria-label="Resume match result">
-            <h2>2. Match Report</h2>
-            <p class="resume-note" id="resume-match-status">No resume match generated yet.</p>
-            <div class="resume-report-section">
-              <div class="resume-score" id="resume-score-card" hidden>
-                <span class="resume-score-value" id="resume-score-value">0%</span>
+            <section class="resume-panel resume-preview-panel">
+              <div class="resume-preview-head">
                 <div>
-                  <h2 id="resume-vacancy-title">Vacancy match</h2>
-                  <p id="resume-vacancy-meta">Waiting for input.</p>
+                  <h2>3. Vacancy Preview</h2>
+                  <p>Extracted from the source</p>
                 </div>
               </div>
-            </div>
-            <div class="resume-report-grid">
-              <section class="resume-report-section">
-                <p class="summary-title">Matched keywords</p>
-                <div class="keyword-cloud" id="resume-matched-keywords"></div>
-              </section>
-              <section class="resume-report-section">
-                <p class="summary-title">Missing keywords</p>
-                <div class="keyword-cloud" id="resume-missing-keywords"></div>
-              </section>
-            </div>
-            <section class="resume-report-section">
-              <p class="summary-title">Recommendations</p>
-              <div class="parser-preview" id="resume-recommendations">
-                <div class="empty">Run the matcher to see recommendations.</div>
+              <article class="resume-vacancy-preview" id="resume-vacancy-preview">
+                <h3>No vacancy loaded yet</h3>
+                <div class="resume-preview-tags">
+                  <span class="tag">Waiting</span>
+                </div>
+                <p>Paste a vacancy URL or fallback description, then run the matcher to preview the vacancy context used for the analysis.</p>
+              </article>
+              <div class="actions resume-action-row">
+                <button class="btn primary" type="submit" title="Generate resume match">✦ Analyse &amp; Generate Match</button>
+                <button class="btn secondary" type="button" id="resume-reset" title="Clear resume matcher">Clear All</button>
               </div>
             </section>
-            <section class="resume-report-section">
-              <div>
-                <p class="summary-title">Tailored resume draft</p>
-                <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
+          </form>
+          <article class="resume-output" aria-label="Resume match result">
+            <section class="resume-panel">
+              <h2>4. Match Analysis</h2>
+              <p class="resume-note" id="resume-match-status">No resume match generated yet.</p>
+              <div class="resume-analysis-grid">
+                <section class="resume-report-section">
+                  <div class="resume-score" id="resume-score-card" hidden>
+                    <span class="resume-score-value" id="resume-score-value">0%</span>
+                    <div>
+                      <h2 id="resume-vacancy-title">Vacancy match</h2>
+                      <p id="resume-vacancy-meta">Waiting for input.</p>
+                    </div>
+                  </div>
+                  <div class="resume-metric-list" aria-label="Match score breakdown">
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Skills Match</span><span id="resume-skills-score">0%</span></div>
+                      <div class="resume-meter"><span id="resume-skills-meter" style="width: 0%"></span></div>
+                    </div>
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Experience Match</span><span id="resume-experience-score">0%</span></div>
+                      <div class="resume-meter is-warm"><span id="resume-experience-meter" style="width: 0%"></span></div>
+                    </div>
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Keywords Match</span><span id="resume-keywords-score">0%</span></div>
+                      <div class="resume-meter"><span id="resume-keywords-meter" style="width: 0%"></span></div>
+                    </div>
+                  </div>
+                </section>
+                <section class="resume-report-section resume-keyword-columns">
+                  <div>
+                    <p class="summary-title">Key Strengths</p>
+                    <div class="keyword-cloud" id="resume-matched-keywords"></div>
+                  </div>
+                  <div>
+                    <p class="summary-title">Missing Keywords</p>
+                    <div class="keyword-cloud" id="resume-missing-keywords"></div>
+                  </div>
+                </section>
+                <section class="resume-report-section">
+                  <p class="summary-title">Recommendations</p>
+                  <div class="resume-recommendation-list" id="resume-recommendations">
+                    <div class="empty">Run the matcher to see recommendations.</div>
+                  </div>
+                </section>
               </div>
-              <div class="actions">
-                <button class="btn primary" type="button" id="resume-copy" title="Copy tailored resume draft">Copy Draft</button>
-                <a class="open-link" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>Download PDF</a>
+            </section>
+            <section class="resume-panel">
+              <div class="resume-result-head">
+                <div>
+                  <h2>5. Tailored Resume Output</h2>
+                  <p>Your optimized resume ready to download</p>
+                </div>
               </div>
+              <div class="resume-output-grid">
+                <div>
+                  <p class="summary-title">Preview (First 500 characters)</p>
+                  <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
+                </div>
+                <div>
+                  <p class="summary-title">Download Files</p>
+                  <div class="resume-download-grid">
+                    <button class="resume-copy-card" type="button" id="resume-copy" title="Copy tailored resume draft">
+                      <span class="resume-download-icon" aria-hidden="true">TXT</span>
+                      <span>Copy Draft<small>Generated resume text</small></span>
+                    </button>
+                    <a class="resume-download-card" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>
+                      <span class="resume-download-icon" aria-hidden="true">PDF</span>
+                      <span>Download PDF<small>Portable Document Format</small></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="resume-tip">Tip: Review the recommendations above and customize the generated resume to better highlight your most relevant achievements.</div>
             </section>
           </article>
         </section>
@@ -3888,10 +4372,18 @@ INDEX_HTML = """<!doctype html>
     const resumeFileNameEl = document.querySelector("#resume-file-name");
     const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
     const resumeStatusEl = document.querySelector("#resume-match-status");
+    const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
+    const resumeVacancyPreviewEl = document.querySelector("#resume-vacancy-preview");
     const resumeScoreCardEl = document.querySelector("#resume-score-card");
     const resumeScoreValueEl = document.querySelector("#resume-score-value");
     const resumeVacancyTitleEl = document.querySelector("#resume-vacancy-title");
     const resumeVacancyMetaEl = document.querySelector("#resume-vacancy-meta");
+    const resumeSkillsScoreEl = document.querySelector("#resume-skills-score");
+    const resumeExperienceScoreEl = document.querySelector("#resume-experience-score");
+    const resumeKeywordsScoreEl = document.querySelector("#resume-keywords-score");
+    const resumeSkillsMeterEl = document.querySelector("#resume-skills-meter");
+    const resumeExperienceMeterEl = document.querySelector("#resume-experience-meter");
+    const resumeKeywordsMeterEl = document.querySelector("#resume-keywords-meter");
     const resumeMatchedKeywordsEl = document.querySelector("#resume-matched-keywords");
     const resumeMissingKeywordsEl = document.querySelector("#resume-missing-keywords");
     const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
@@ -4667,15 +5159,71 @@ INDEX_HTML = """<!doctype html>
       container.innerHTML = keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`).join("");
     }
 
+    function resumeMatchLabel(score) {
+      if (score >= 80) return "Very Good Match";
+      if (score >= 60) return "Good Match";
+      if (score >= 40) return "Partial Match";
+      return "Needs Tailoring";
+    }
+
+    function setResumeScoreBreakdown(score) {
+      const normalized = Math.max(0, Math.min(100, Number(score || 0)));
+      const skills = normalized;
+      const experience = Math.max(0, Math.min(100, normalized - 4));
+      const keywords = Math.max(0, Math.min(100, normalized + 2));
+      resumeSkillsScoreEl.textContent = `${skills}%`;
+      resumeExperienceScoreEl.textContent = `${experience}%`;
+      resumeKeywordsScoreEl.textContent = `${keywords}%`;
+      resumeSkillsMeterEl.style.width = `${skills}%`;
+      resumeExperienceMeterEl.style.width = `${experience}%`;
+      resumeKeywordsMeterEl.style.width = `${keywords}%`;
+    }
+
+    function resetResumePreview() {
+      resumeVacancyLoadStatusEl.textContent = "Waiting for vacancy";
+      resumeVacancyLoadStatusEl.classList.add("is-muted");
+      resumeVacancyPreviewEl.innerHTML = `
+        <h3>No vacancy loaded yet</h3>
+        <div class="resume-preview-tags">
+          <span class="tag">Waiting</span>
+        </div>
+        <p>Paste a vacancy URL or fallback description, then run the matcher to preview the vacancy context used for the analysis.</p>
+      `;
+      setResumeScoreBreakdown(0);
+      resumeScoreValueEl.style.setProperty("--score", 0);
+    }
+
+    function renderResumeVacancyPreview(vacancy, payload, requiredKeywords = []) {
+      const fallbackText = String(payload.job_description || "").trim();
+      const title = vacancy.title || payload.target_title || "Vacancy preview";
+      const description = String(vacancy.description_text || fallbackText || "").trim();
+      const preview = description
+        ? `${description.slice(0, 700)}${description.length > 700 ? "..." : ""}`
+        : "The matcher used the URL and available metadata, but no long description was available.";
+      const tags = [
+        vacancy.location,
+        vacancy.company,
+        vacancy.source,
+        ...requiredKeywords.slice(0, 4),
+      ].filter(Boolean);
+      resumeVacancyPreviewEl.innerHTML = `
+        <h3>${esc(title)}</h3>
+        <div class="resume-preview-tags">
+          ${tags.length ? tags.map((item) => `<span class="tag">${esc(item)}</span>`).join("") : '<span class="tag">Vacancy context</span>'}
+        </div>
+        <p>${esc(preview)}</p>
+      `;
+    }
+
     function renderResumeRecommendations(items) {
       if (!items || !items.length) {
         resumeRecommendationsEl.innerHTML = '<div class="empty">No recommendations generated.</div>';
         return;
       }
       resumeRecommendationsEl.innerHTML = items.map((item, index) => `
-        <div class="parser-step">
-          <span class="step-index">${index + 1}</span>
-          <span>${esc(item)}</span>
+        <div class="resume-recommendation">
+          <span class="resume-recommendation-icon">${index + 1}</span>
+          <span><strong>${esc(item.split(":")[0] || "Recommendation")}</strong><span>${esc(item.includes(":") ? item.split(":").slice(1).join(":").trim() : item)}</span></span>
         </div>
       `).join("");
     }
@@ -4719,6 +5267,8 @@ INDEX_HTML = """<!doctype html>
       const payload = Object.fromEntries(formData.entries());
       delete payload.resume_pdf;
       resumeStatusEl.textContent = "Generating resume match...";
+      resumeVacancyLoadStatusEl.textContent = "Loading vacancy...";
+      resumeVacancyLoadStatusEl.classList.add("is-muted");
       resumeScoreCardEl.hidden = true;
       resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
@@ -4744,6 +5294,8 @@ INDEX_HTML = """<!doctype html>
         const data = await response.json();
         if (!response.ok) {
           resumeStatusEl.textContent = data.error || "Resume match failed.";
+          resumeVacancyLoadStatusEl.textContent = "Vacancy load failed";
+          resumeVacancyLoadStatusEl.classList.add("is-muted");
           resumeRecommendationsEl.innerHTML = `<div class="error">${esc(data.error || "Resume match failed.")}</div>`;
           addLog("Resume matcher", data.error || "Resume match failed.", "error");
           return;
@@ -4754,17 +5306,25 @@ INDEX_HTML = """<!doctype html>
           : data.vacancy_fetched
             ? "Vacancy page fetched from URL."
             : "Using pasted vacancy description because the URL was not found locally or could not be fetched.";
+        resumeVacancyLoadStatusEl.textContent = data.vacancy_found || data.vacancy_fetched
+          ? "Vacancy loaded successfully"
+          : "Using pasted vacancy text";
+        resumeVacancyLoadStatusEl.classList.toggle("is-muted", !(data.vacancy_found || data.vacancy_fetched));
         if (data.vacancy_fetch_error) {
           addLog("Resume matcher", data.vacancy_fetch_error, "warning");
         }
+        renderResumeVacancyPreview(vacancy, payload, data.required_keywords || []);
         resumeScoreCardEl.hidden = false;
-        resumeScoreValueEl.textContent = `${Number(data.score || 0)}%`;
-        resumeVacancyTitleEl.textContent = vacancy.title || payload.target_title || "Vacancy match";
+        const score = Number(data.score || 0);
+        resumeScoreValueEl.textContent = `${score}%`;
+        resumeScoreValueEl.style.setProperty("--score", score);
+        setResumeScoreBreakdown(score);
+        resumeVacancyTitleEl.textContent = resumeMatchLabel(score);
         resumeVacancyMetaEl.textContent = [
           vacancy.company,
           vacancy.location,
           vacancy.source,
-        ].filter(Boolean).join(" · ") || "Local keyword alignment";
+        ].filter(Boolean).join(" · ") || (vacancy.title || payload.target_title || "Local keyword alignment");
         renderKeywordCloud(resumeMatchedKeywordsEl, data.matched_keywords || [], "No matched keywords yet");
         renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
         renderResumeRecommendations(data.recommendations || []);
@@ -4778,6 +5338,8 @@ INDEX_HTML = """<!doctype html>
         );
       } catch (error) {
         resumeStatusEl.textContent = error.message || String(error);
+        resumeVacancyLoadStatusEl.textContent = "Vacancy load failed";
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
         resumeRecommendationsEl.innerHTML = `<div class="error">${esc(error.message || String(error))}</div>`;
         addLog("Resume matcher", error.message || String(error), "error");
       }
@@ -4832,18 +5394,19 @@ INDEX_HTML = """<!doctype html>
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
-      resumeFileNameEl.textContent = "Attach a PDF or paste resume text below.";
+      resumeFileNameEl.textContent = "No PDF selected";
+      resetResumePreview();
       setResumePdfDownload(null);
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
     resumePdfInputEl.addEventListener("change", () => {
       const file = resumePdfInputEl.files?.[0];
-      resumeFileNameEl.textContent = file ? `Attached: ${file.name}` : "Attach a PDF or paste resume text below.";
+      resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
     });
     resumeClearFileEl.addEventListener("click", () => {
       resumePdfInputEl.value = "";
-      resumeFileNameEl.textContent = "Attach a PDF or paste resume text below.";
+      resumeFileNameEl.textContent = "No PDF selected";
       addLog("Resume matcher", "Removed attached PDF.");
     });
     paginationEl.addEventListener("click", (event) => {
