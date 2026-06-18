@@ -1182,6 +1182,49 @@ def _find_resume_vacancy(database_paths: Iterable[Path], vacancy_url: str) -> tu
     return None, database_errors
 
 
+def _find_resume_vacancy_by_id(
+    database_paths: Iterable[Path],
+    vacancy_database: str,
+    vacancy_id: str,
+) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
+    clean_id = _clean_text(vacancy_id)
+    clean_database = _clean_text(vacancy_database)
+    if not clean_id:
+        return None, []
+
+    query = """
+        SELECT
+            v.vacancy_id,
+            v.source,
+            v.title,
+            v.company,
+            v.place,
+            v.url,
+            v.description_text,
+            v.analytics_json
+        FROM vacancies v
+        WHERE v.vacancy_id = ?
+        LIMIT 1
+    """
+    database_errors: list[dict[str, str]] = []
+
+    for database_path in database_paths:
+        if clean_database and str(database_path) != clean_database:
+            continue
+        try:
+            connection = _connect_readonly(database_path)
+            try:
+                row = connection.execute(query, [clean_id]).fetchone()
+            finally:
+                connection.close()
+        except sqlite3.Error as exc:
+            database_errors.append({"database": str(database_path), "error": str(exc)})
+            continue
+        if row:
+            return _resume_vacancy_from_row(database_path, row), database_errors
+    return None, database_errors
+
+
 class _VacancyHtmlTextParser(HTMLParser):
     _skip_tags = {"script", "style", "noscript", "svg", "canvas", "template"}
     _block_tags = {
@@ -1481,10 +1524,18 @@ def _resume_pdf_filename(vacancy_title: str) -> str:
 
 def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) -> dict[str, Any]:
     vacancy_url = _clean_text(payload.get("vacancy_url"))
+    vacancy_id = _clean_text(payload.get("vacancy_id"))
+    vacancy_database = _clean_text(payload.get("vacancy_database"))
     resume_pdf_text = extract_resume_pdf_text(payload)
     resume_text = resume_pdf_text or _clean_text(payload.get("resume_text"))
     pasted_description = _clean_text(payload.get("job_description"))
-    vacancy, database_errors = _find_resume_vacancy(database_paths, vacancy_url)
+    if vacancy_id:
+        vacancy, database_errors = _find_resume_vacancy_by_id(database_paths, vacancy_database, vacancy_id)
+        if not vacancy and vacancy_url:
+            vacancy, url_database_errors = _find_resume_vacancy(database_paths, vacancy_url)
+            database_errors.extend(url_database_errors)
+    else:
+        vacancy, database_errors = _find_resume_vacancy(database_paths, vacancy_url)
     fetched_vacancy = None
     vacancy_fetch_error = ""
     if not vacancy and vacancy_url:
@@ -2586,6 +2637,41 @@ INDEX_HTML = """<!doctype html>
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 10px;
       align-items: end;
+    }
+    .resume-local-results {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 280px;
+      overflow: auto;
+    }
+    .resume-local-option {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      display: grid;
+      gap: 5px;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .resume-local-option:hover,
+    .resume-local-option.is-selected {
+      border-color: rgba(215, 25, 32, 0.38);
+      background: var(--accent-soft);
+    }
+    .resume-local-option strong {
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .resume-local-option span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
     .resume-inline-status {
       display: inline-flex;
@@ -4149,12 +4235,15 @@ INDEX_HTML = """<!doctype html>
                 <h2>1. Vacancy Source</h2>
                 <p>Choose where to get the vacancy from</p>
                 <div class="resume-segment" aria-label="Vacancy source mode">
-                  <button class="is-active" type="button">⌁ URL Link</button>
-                  <button type="button">▤ Local Database</button>
-                  <button type="button">▧ Paste Text</button>
+                  <button class="is-active" type="button" data-vacancy-source-mode="url" aria-pressed="true">⌁ URL Link</button>
+                  <button type="button" data-vacancy-source-mode="local" aria-pressed="false">▤ Local Database</button>
+                  <button type="button" data-vacancy-source-mode="paste" aria-pressed="false">▧ Paste Text</button>
                 </div>
+                <input id="vacancy_source_mode" name="vacancy_source_mode" type="hidden" value="url">
+                <input id="vacancy_id" name="vacancy_id" type="hidden">
+                <input id="vacancy_database" name="vacancy_database" type="hidden">
                 <div class="resume-input-grid">
-                  <div class="field">
+                  <div class="field" data-vacancy-source-pane="url">
                     <label for="vacancy_url">Vacancy URL</label>
                     <div class="resume-url-row">
                       <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
@@ -4162,11 +4251,21 @@ INDEX_HTML = """<!doctype html>
                     </div>
                     <span class="resume-inline-status is-muted" id="resume-vacancy-load-status">Waiting for vacancy</span>
                   </div>
-                  <div class="field">
+                  <div class="field" data-vacancy-source-pane="local" hidden>
+                    <label for="resume_local_query">Search local database</label>
+                    <div class="resume-url-row">
+                      <input id="resume_local_query" type="search" placeholder="python backend zurich">
+                      <button class="details-toggle" type="button" id="resume-local-search">Search</button>
+                    </div>
+                    <div class="resume-local-results" id="resume-local-results">
+                      <div class="empty">Search local vacancies to select one.</div>
+                    </div>
+                  </div>
+                  <div class="field" data-vacancy-source-pane="local paste" hidden>
                     <label for="target_title">Target title override <span>(optional)</span></label>
                     <input id="target_title" name="target_title" placeholder="e.g. Senior Software Engineer">
                   </div>
-                  <div class="field">
+                  <div class="field" data-vacancy-source-pane="paste" hidden>
                     <label for="job_description">Vacancy description fallback</label>
                     <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
                   </div>
@@ -4516,6 +4615,18 @@ INDEX_HTML = """<!doctype html>
     const openAiSettingsFormEl = document.querySelector("#openai-settings-form");
     const openAiApiKeyEl = document.querySelector("#openai_api_key");
     const resumeMatchFormEl = document.querySelector("#resume-match-form");
+    const vacancySourceModeEl = document.querySelector("#vacancy_source_mode");
+    const vacancySourceModeButtons = Array.from(document.querySelectorAll("[data-vacancy-source-mode]"));
+    const vacancySourcePanes = Array.from(document.querySelectorAll("[data-vacancy-source-pane]"));
+    const vacancyUrlEl = document.querySelector("#vacancy_url");
+    const vacancyIdEl = document.querySelector("#vacancy_id");
+    const vacancyDatabaseEl = document.querySelector("#vacancy_database");
+    const targetTitleEl = document.querySelector("#target_title");
+    const vacancyDescriptionEl = document.querySelector("#job_description");
+    const vacancyDescriptionLabelEl = document.querySelector('label[for="job_description"]');
+    const resumeLocalQueryEl = document.querySelector("#resume_local_query");
+    const resumeLocalSearchEl = document.querySelector("#resume-local-search");
+    const resumeLocalResultsEl = document.querySelector("#resume-local-results");
     const resumeResetEl = document.querySelector("#resume-reset");
     const resumeCopyEl = document.querySelector("#resume-copy");
     const resumePdfInputEl = document.querySelector("#resume_pdf");
@@ -4593,6 +4704,7 @@ INDEX_HTML = """<!doctype html>
     let currentPage = 1;
     let currentView = "vacancies";
     let resumePdfObjectUrl = "";
+    let resumeLocalSearchResults = [];
 
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -5359,6 +5471,101 @@ INDEX_HTML = """<!doctype html>
       resumeKeywordsMeterEl.style.width = `${keywords}%`;
     }
 
+    function vacancyPaneMatches(pane, mode) {
+      return String(pane.dataset.vacancySourcePane || "").split(/\\s+/).includes(mode);
+    }
+
+    function setVacancySourceMode(mode) {
+      const nextMode = ["url", "local", "paste"].includes(mode) ? mode : "url";
+      vacancySourceModeEl.value = nextMode;
+      vacancySourceModeButtons.forEach((button) => {
+        const isActive = button.dataset.vacancySourceMode === nextMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      vacancySourcePanes.forEach((pane) => {
+        pane.hidden = !vacancyPaneMatches(pane, nextMode);
+      });
+      vacancyDescriptionLabelEl.textContent = nextMode === "paste"
+        ? "Paste vacancy text"
+        : "Vacancy description fallback";
+      if (nextMode === "url") {
+        vacancyIdEl.value = "";
+        vacancyDatabaseEl.value = "";
+        resumeVacancyLoadStatusEl.textContent = "Waiting for vacancy";
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
+      }
+      if (nextMode === "paste") {
+        vacancyUrlEl.value = "";
+        vacancyIdEl.value = "";
+        vacancyDatabaseEl.value = "";
+        resumeVacancyLoadStatusEl.textContent = "Using pasted vacancy text";
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
+        vacancyDescriptionEl.focus();
+      }
+    }
+
+    function renderResumeLocalResults(payload) {
+      const results = payload.results || [];
+      resumeLocalSearchResults = results;
+      renderErrors(payload.database_errors);
+      if (!results.length) {
+        resumeLocalResultsEl.innerHTML = '<div class="empty">No local vacancies found.</div>';
+        return;
+      }
+      resumeLocalResultsEl.innerHTML = results.map((job, index) => `
+        <button class="resume-local-option" type="button" data-local-vacancy-index="${index}">
+          <strong>${esc(job.title || "Untitled vacancy")}</strong>
+          <span>${esc([job.company, job.location, job.source].filter(Boolean).join(" · ") || "Local vacancy")}</span>
+          ${job.description_preview ? `<span>${esc(job.description_preview.slice(0, 160))}${job.description_preview.length > 160 ? "..." : ""}</span>` : ""}
+        </button>
+      `).join("");
+    }
+
+    async function runResumeLocalSearch() {
+      const params = new URLSearchParams({
+        q: resumeLocalQueryEl.value.trim(),
+        page: "1",
+        per_page: "6",
+      });
+      resumeLocalResultsEl.innerHTML = '<div class="empty">Searching local vacancies...</div>';
+      addLog("Resume matcher", "Searching local vacancies.");
+      try {
+        const response = await fetch(`/api/search?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          resumeLocalResultsEl.innerHTML = `<div class="error">${esc(payload.error || "Local vacancy search failed.")}</div>`;
+          addLog("Resume matcher", payload.error || "Local vacancy search failed.", "error");
+          return;
+        }
+        renderResumeLocalResults(payload);
+        addLog("Resume matcher", `Found ${payload.total ?? payload.count ?? 0} local vacancies.`, payload.database_errors?.length ? "warning" : "success");
+      } catch (error) {
+        const message = error.message || String(error);
+        resumeLocalResultsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+        addLog("Resume matcher", message, "error");
+      }
+    }
+
+    function selectResumeLocalVacancy(index) {
+      const job = resumeLocalSearchResults[index];
+      if (!job) return;
+      vacancyIdEl.value = job.id || "";
+      vacancyDatabaseEl.value = job.database || "";
+      vacancyUrlEl.value = job.url || "";
+      if (!targetTitleEl.value.trim() && job.title) {
+        targetTitleEl.value = job.title;
+      }
+      vacancyDescriptionEl.value = job.description_text || job.description_preview || "";
+      resumeLocalResultsEl.querySelectorAll(".resume-local-option").forEach((button) => {
+        button.classList.toggle("is-selected", button.dataset.localVacancyIndex === String(index));
+      });
+      resumeVacancyLoadStatusEl.textContent = "Local vacancy selected";
+      resumeVacancyLoadStatusEl.classList.remove("is-muted");
+      renderResumeVacancyPreview(job, { target_title: targetTitleEl.value, job_description: vacancyDescriptionEl.value }, job.skills || []);
+      addLog("Resume matcher", `Selected local vacancy: ${job.title || job.id || "untitled"}.`, "success");
+    }
+
     function resetResumePreview() {
       resumeVacancyLoadStatusEl.textContent = "Waiting for vacancy";
       resumeVacancyLoadStatusEl.classList.add("is-muted");
@@ -5445,7 +5652,28 @@ INDEX_HTML = """<!doctype html>
     async function runResumeMatch() {
       const formData = new FormData(resumeMatchFormEl);
       const payload = Object.fromEntries(formData.entries());
+      const vacancySourceMode = vacancySourceModeEl.value;
       delete payload.resume_pdf;
+      if (vacancySourceMode === "url") {
+        delete payload.vacancy_id;
+        delete payload.vacancy_database;
+        delete payload.target_title;
+        delete payload.job_description;
+      } else if (vacancySourceMode === "local") {
+        if (!payload.vacancy_id) {
+          const message = "Select a local vacancy first.";
+          resumeStatusEl.textContent = message;
+          resumeVacancyLoadStatusEl.textContent = "No local vacancy selected";
+          resumeVacancyLoadStatusEl.classList.add("is-muted");
+          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+          addLog("Resume matcher", message, "warning");
+          return;
+        }
+      } else if (vacancySourceMode === "paste") {
+        delete payload.vacancy_url;
+        delete payload.vacancy_id;
+        delete payload.vacancy_database;
+      }
       resumeStatusEl.textContent = "Generating resume match...";
       resumeVacancyLoadStatusEl.textContent = "Loading vacancy...";
       resumeVacancyLoadStatusEl.classList.add("is-muted");
@@ -5621,7 +5849,10 @@ INDEX_HTML = """<!doctype html>
     });
     resumeResetEl.addEventListener("click", () => {
       resumeMatchFormEl.reset();
+      setVacancySourceMode("url");
       setResumeInputMode("upload");
+      resumeLocalSearchResults = [];
+      resumeLocalResultsEl.innerHTML = '<div class="empty">Search local vacancies to select one.</div>';
       resumeStatusEl.textContent = "No resume match generated yet.";
       resumeScoreCardEl.hidden = true;
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
@@ -5634,6 +5865,22 @@ INDEX_HTML = """<!doctype html>
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
+    vacancySourceModeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setVacancySourceMode(button.dataset.vacancySourceMode || "url");
+      });
+    });
+    resumeLocalSearchEl.addEventListener("click", runResumeLocalSearch);
+    resumeLocalQueryEl.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      runResumeLocalSearch();
+    });
+    resumeLocalResultsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-local-vacancy-index]");
+      if (!button) return;
+      selectResumeLocalVacancy(Number(button.dataset.localVacancyIndex));
+    });
     resumeInputModeButtons.forEach((button) => {
       button.addEventListener("click", () => {
         setResumeInputMode(button.dataset.resumeInputMode || "upload");
@@ -5646,6 +5893,7 @@ INDEX_HTML = """<!doctype html>
       syncResumeFileState();
       addLog("Resume matcher", "Removed attached PDF.");
     });
+    setVacancySourceMode(vacancySourceModeEl.value);
     setResumeInputMode(resumeInputModeEl.value);
     paginationEl.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-page]");
