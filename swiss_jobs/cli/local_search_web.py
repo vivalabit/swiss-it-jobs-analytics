@@ -2678,6 +2678,39 @@ INDEX_HTML = """<!doctype html>
     .resume-form #resume_text {
       min-height: 160px;
     }
+    .resume-input-review {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .resume-review-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .resume-review-item strong {
+      color: #17202a;
+      font-size: 13px;
+    }
+    .resume-review-item span {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .resume-review-preview {
+      margin: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      color: #334155;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
     .resume-preview-panel {
       display: grid;
       gap: 14px;
@@ -4143,11 +4176,12 @@ INDEX_HTML = """<!doctype html>
                 <h2>2. Your Current Resume</h2>
                 <p>Upload your resume or paste your current resume text</p>
                 <div class="resume-segment" aria-label="Resume input mode">
-                  <button class="is-active" type="button">↥ Upload File</button>
-                  <button type="button">♢ Paste Text</button>
-                  <button type="button">▣ Review</button>
+                  <button class="is-active" type="button" data-resume-input-mode="upload" aria-pressed="true">↥ Upload File</button>
+                  <button type="button" data-resume-input-mode="paste" aria-pressed="false">♢ Paste Text</button>
+                  <button type="button" data-resume-input-mode="review" aria-pressed="false">▣ Review</button>
                 </div>
-                <div class="resume-file-zone">
+                <input id="resume_input_mode" name="resume_input_mode" type="hidden" value="upload">
+                <div class="resume-file-zone" data-resume-input-pane="upload">
                   <input class="resume-file-input" id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
                   <label class="resume-upload-label" for="resume_pdf">↥ Upload File</label>
                   <div class="resume-file-row">
@@ -4159,9 +4193,20 @@ INDEX_HTML = """<!doctype html>
                   </div>
                   <div class="resume-drop-hint" id="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
                 </div>
-                <div class="field">
+                <div class="field" data-resume-input-pane="paste" hidden>
                   <label for="resume_text">Paste resume text</label>
                   <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+                </div>
+                <div class="resume-input-review" data-resume-input-pane="review" hidden>
+                  <div class="resume-review-item">
+                    <strong>Attached PDF</strong>
+                    <span id="resume-review-file">No PDF selected</span>
+                  </div>
+                  <div class="resume-review-item">
+                    <strong>Pasted text</strong>
+                    <span id="resume-review-text">No pasted resume text</span>
+                  </div>
+                  <p class="resume-review-preview" id="resume-review-preview">Nothing to review yet.</p>
                 </div>
               </article>
             </div>
@@ -4474,9 +4519,16 @@ INDEX_HTML = """<!doctype html>
     const resumeResetEl = document.querySelector("#resume-reset");
     const resumeCopyEl = document.querySelector("#resume-copy");
     const resumePdfInputEl = document.querySelector("#resume_pdf");
+    const resumeTextEl = document.querySelector("#resume_text");
+    const resumeInputModeEl = document.querySelector("#resume_input_mode");
+    const resumeInputModeButtons = Array.from(document.querySelectorAll("[data-resume-input-mode]"));
+    const resumeInputPanes = Array.from(document.querySelectorAll("[data-resume-input-pane]"));
     const resumeClearFileEl = document.querySelector("#resume-clear-file");
     const resumeFileNameEl = document.querySelector("#resume-file-name");
     const resumeDropHintEl = document.querySelector("#resume-drop-hint");
+    const resumeReviewFileEl = document.querySelector("#resume-review-file");
+    const resumeReviewTextEl = document.querySelector("#resume-review-text");
+    const resumeReviewPreviewEl = document.querySelector("#resume-review-preview");
     const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
     const resumeStatusEl = document.querySelector("#resume-match-status");
     const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
@@ -5407,7 +5459,7 @@ INDEX_HTML = """<!doctype html>
 
       try {
         const file = resumePdfInputEl.files?.[0];
-        if (file) {
+        if (file && resumeInputModeEl.value !== "paste") {
           if (file.type && file.type !== "application/pdf") {
             throw new Error("Attach a PDF resume file.");
           }
@@ -5498,6 +5550,38 @@ INDEX_HTML = """<!doctype html>
       resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
       resumeClearFileEl.hidden = !hasFile;
       resumeDropHintEl.hidden = hasFile;
+      syncResumeReviewState();
+    }
+
+    function syncResumeReviewState() {
+      const file = resumePdfInputEl.files?.[0];
+      const text = resumeTextEl.value.trim();
+      resumeReviewFileEl.textContent = file ? file.name : "No PDF selected";
+      resumeReviewTextEl.textContent = text
+        ? `${text.length.toLocaleString()} characters pasted`
+        : "No pasted resume text";
+      resumeReviewPreviewEl.textContent = text
+        ? text.slice(0, 360)
+        : file
+          ? "PDF is attached and ready for analysis."
+          : "Nothing to review yet.";
+    }
+
+    function setResumeInputMode(mode) {
+      const nextMode = ["upload", "paste", "review"].includes(mode) ? mode : "upload";
+      resumeInputModeEl.value = nextMode;
+      resumeInputModeButtons.forEach((button) => {
+        const isActive = button.dataset.resumeInputMode === nextMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      resumeInputPanes.forEach((pane) => {
+        pane.hidden = pane.dataset.resumeInputPane !== nextMode;
+      });
+      syncResumeReviewState();
+      if (nextMode === "paste") {
+        resumeTextEl.focus();
+      }
     }
 
     function resumeFailureStatus(message) {
@@ -5537,6 +5621,7 @@ INDEX_HTML = """<!doctype html>
     });
     resumeResetEl.addEventListener("click", () => {
       resumeMatchFormEl.reset();
+      setResumeInputMode("upload");
       resumeStatusEl.textContent = "No resume match generated yet.";
       resumeScoreCardEl.hidden = true;
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
@@ -5549,12 +5634,19 @@ INDEX_HTML = """<!doctype html>
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
+    resumeInputModeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setResumeInputMode(button.dataset.resumeInputMode || "upload");
+      });
+    });
+    resumeTextEl.addEventListener("input", syncResumeReviewState);
     resumePdfInputEl.addEventListener("change", syncResumeFileState);
     resumeClearFileEl.addEventListener("click", () => {
       resumePdfInputEl.value = "";
       syncResumeFileState();
       addLog("Resume matcher", "Removed attached PDF.");
     });
+    setResumeInputMode(resumeInputModeEl.value);
     paginationEl.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-page]");
       if (!button || button.disabled) return;
