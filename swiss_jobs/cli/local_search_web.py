@@ -4155,9 +4155,9 @@ INDEX_HTML = """<!doctype html>
                       <p class="resume-file-name" id="resume-file-name">No PDF selected</p>
                       <span class="resume-file-hint">PDF resume or pasted text below</span>
                     </div>
-                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF">Remove</button>
+                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF" hidden>Remove</button>
                   </div>
-                  <div class="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
+                  <div class="resume-drop-hint" id="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
                 </div>
                 <div class="field">
                   <label for="resume_text">Paste resume text</label>
@@ -4476,6 +4476,7 @@ INDEX_HTML = """<!doctype html>
     const resumePdfInputEl = document.querySelector("#resume_pdf");
     const resumeClearFileEl = document.querySelector("#resume-clear-file");
     const resumeFileNameEl = document.querySelector("#resume-file-name");
+    const resumeDropHintEl = document.querySelector("#resume-drop-hint");
     const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
     const resumeStatusEl = document.querySelector("#resume-match-status");
     const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
@@ -5420,11 +5421,12 @@ INDEX_HTML = """<!doctype html>
         });
         const data = await response.json();
         if (!response.ok) {
-          resumeStatusEl.textContent = data.error || "Resume match failed.";
-          resumeVacancyLoadStatusEl.textContent = "Vacancy load failed";
+          const message = data.error || "Resume match failed.";
+          resumeStatusEl.textContent = message;
+          resumeVacancyLoadStatusEl.textContent = resumeFailureStatus(message);
           resumeVacancyLoadStatusEl.classList.add("is-muted");
-          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(data.error || "Resume match failed.")}</div>`;
-          addLog("Resume matcher", data.error || "Resume match failed.", "error");
+          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+          addLog("Resume matcher", message, "error");
           return;
         }
         const vacancy = data.vacancy || {};
@@ -5464,11 +5466,12 @@ INDEX_HTML = """<!doctype html>
           data.vacancy_found ? "success" : "warning",
         );
       } catch (error) {
-        resumeStatusEl.textContent = error.message || String(error);
-        resumeVacancyLoadStatusEl.textContent = "Vacancy load failed";
+        const message = error.message || String(error);
+        resumeStatusEl.textContent = message;
+        resumeVacancyLoadStatusEl.textContent = resumeFailureStatus(message);
         resumeVacancyLoadStatusEl.classList.add("is-muted");
-        resumeRecommendationsEl.innerHTML = `<div class="error">${esc(error.message || String(error))}</div>`;
-        addLog("Resume matcher", error.message || String(error), "error");
+        resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+        addLog("Resume matcher", message, "error");
       }
     }
 
@@ -5487,6 +5490,25 @@ INDEX_HTML = """<!doctype html>
         document.execCommand("copy");
         addLog("Resume matcher", "Copied tailored resume draft.", "success");
       }
+    }
+
+    function syncResumeFileState() {
+      const file = resumePdfInputEl.files?.[0];
+      const hasFile = Boolean(file);
+      resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
+      resumeClearFileEl.hidden = !hasFile;
+      resumeDropHintEl.hidden = hasFile;
+    }
+
+    function resumeFailureStatus(message) {
+      const lower = String(message || "").toLowerCase();
+      if (lower.includes("pdf") || lower.includes("resume")) {
+        return "Resume PDF failed";
+      }
+      if (lower.includes("vacancy") || lower.includes("url") || lower.includes("fetch")) {
+        return "Vacancy load failed";
+      }
+      return "Resume match failed";
     }
 
     menuButtons.forEach((button) => {
@@ -5521,19 +5543,16 @@ INDEX_HTML = """<!doctype html>
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
-      resumeFileNameEl.textContent = "No PDF selected";
+      syncResumeFileState();
       resetResumePreview();
       setResumePdfDownload(null);
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
-    resumePdfInputEl.addEventListener("change", () => {
-      const file = resumePdfInputEl.files?.[0];
-      resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
-    });
+    resumePdfInputEl.addEventListener("change", syncResumeFileState);
     resumeClearFileEl.addEventListener("click", () => {
       resumePdfInputEl.value = "";
-      resumeFileNameEl.textContent = "No PDF selected";
+      syncResumeFileState();
       addLog("Resume matcher", "Removed attached PDF.");
     });
     paginationEl.addEventListener("click", (event) => {
