@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import json
 import sqlite3
 import tempfile
 import unittest
@@ -64,6 +65,52 @@ class FakeHttpResponse:
 
     def close(self) -> None:
         return None
+
+
+class FakeResumeMatchTransport:
+    def __init__(self) -> None:
+        self.requests: list[dict[str, object]] = []
+
+    def create_response(self, payload, *, api_key: str, timeout_seconds: float):  # noqa: ANN001
+        self.requests.append({"payload": payload, "api_key": api_key, "timeout_seconds": timeout_seconds})
+        user_payload = json.loads(payload["input"][1]["content"][0]["text"])
+        vacancy = user_payload["vacancy"]
+        resume_text = user_payload["candidate_resume"]
+        vacancy_text = (
+            f"{vacancy.get('title', '')} "
+            f"{vacancy.get('description_text', '')} "
+            f"{json.dumps(vacancy.get('analytics_hints') or {}, sort_keys=True)}"
+        ).lower()
+        resume_lower = resume_text.lower()
+        priority_terms = ["python", "backend", "django", "aws", "kubernetes", "postgresql"]
+        matched = [term for term in priority_terms if term in vacancy_text and term in resume_lower]
+        missing = [term for term in priority_terms if term in vacancy_text and term not in resume_lower]
+        response = {
+            "overall_score": 78,
+            "skills_score": 80,
+            "experience_score": 72,
+            "keywords_score": 82,
+            "matched_keywords": matched,
+            "missing_keywords": missing,
+            "key_strengths": matched[:4],
+            "critical_gaps": [
+                {
+                    "requirement": term,
+                    "resume_gap": f"{term} is required but not evidenced.",
+                    "recommended_change": f"Add truthful evidence for {term}.",
+                }
+                for term in missing[:3]
+            ],
+            "recommendations": ["Move strongest matching evidence near the top."],
+            "tailored_resume": f"Targeted Resume Draft\n{vacancy.get('title') or 'Target role'}\n\n{resume_text}",
+            "confidence": "high",
+            "confidence_reason": "Fake deterministic test response.",
+        }
+        return {"output_text": json.dumps(response), "usage": {"input_tokens": 100, "output_tokens": 80}}
+
+
+def fake_resume_match_kwargs() -> dict[str, object]:
+    return {"openai_transport": FakeResumeMatchTransport(), "openai_api_key": "test-key"}
 
 
 def make_vacancy(
@@ -365,15 +412,20 @@ class LocalSearchWebTests(unittest.TestCase):
             )
             JobsDatabase(database_path).persist_result(config, make_result(config, [vacancy]))
 
+            transport = FakeResumeMatchTransport()
             payload = build_resume_match(
                 [database_path],
                 {
                     "vacancy_url": "https://example.com/vacancy-1",
+                    "model": "gpt-5.5",
                     "resume_text": "Senior Python engineer with backend API experience.",
                 },
+                openai_transport=transport,
+                openai_api_key="test-key",
             )
 
             self.assertTrue(payload["vacancy_found"])
+            self.assertEqual("gpt-5.5", transport.requests[0]["payload"]["model"])
             self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
@@ -395,6 +447,7 @@ class LocalSearchWebTests(unittest.TestCase):
                 "job_description": "Senior Python Backend Engineer with Django and AWS experience.",
                 "resume_pdf_base64": base64.b64encode(resume_pdf).decode("ascii"),
             },
+            **fake_resume_match_kwargs(),
         )
 
         self.assertTrue(payload["resume_pdf_text_extracted"])
@@ -425,6 +478,7 @@ class LocalSearchWebTests(unittest.TestCase):
                     "vacancy_url": "https://jobs.example/vacancy-1",
                     "resume_text": "Senior Python engineer with Django and PostgreSQL API experience.",
                 },
+                **fake_resume_match_kwargs(),
             )
 
         get.assert_called_once()
@@ -432,7 +486,7 @@ class LocalSearchWebTests(unittest.TestCase):
         self.assertTrue(payload["vacancy_fetched"])
         self.assertEqual("Senior Python Platform Engineer", payload["vacancy"]["title"])
         self.assertIn("kubernetes", [term.lower() for term in payload["missing_keywords"]])
-        self.assertIn("Source: https://jobs.example/vacancy-1", payload["tailored_resume"])
+        self.assertIn("Senior Python Platform Engineer", payload["tailored_resume"])
 
     def test_resume_match_uses_pasted_description_when_external_fetch_fails(self) -> None:
         with patch.object(local_search_web, "fetch_external_vacancy", side_effect=ValueError("blocked")):
@@ -444,6 +498,7 @@ class LocalSearchWebTests(unittest.TestCase):
                     "job_description": "Python Backend Engineer role with Django and AWS.",
                     "resume_text": "Python engineer with backend APIs.",
                 },
+                **fake_resume_match_kwargs(),
             )
 
         self.assertFalse(payload["vacancy_found"])

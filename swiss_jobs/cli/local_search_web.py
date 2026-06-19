@@ -6,6 +6,7 @@ import html
 import ipaddress
 import io
 import json
+import os
 import re
 import socket
 import sqlite3
@@ -25,6 +26,7 @@ from urllib.parse import parse_qs, urlparse, urlunparse
 
 import requests
 
+from swiss_jobs.core.llm_analysis import RequestsOpenAIResponsesTransport
 from swiss_jobs.core.locations import location_search_terms, normalize_location_display
 from swiss_jobs.registry import list_supported_sources
 
@@ -293,6 +295,32 @@ def _json_body(handler: BaseHTTPRequestHandler) -> dict[str, Any]:
 
 def _clean_text(value: Any) -> str:
     return str(value or "").strip()
+
+
+def _strip_dotenv_value(value: str) -> str:
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+        return value[1:-1]
+    return value.split(" #", 1)[0].strip()
+
+
+def _project_dotenv_value(key: str) -> str:
+    dotenv_path = PROJECT_ROOT / ".env"
+    if not dotenv_path.is_file():
+        return ""
+    for raw_line in dotenv_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export ") :].lstrip()
+        raw_key, raw_value = line.split("=", 1)
+        if raw_key.strip() == key:
+            return _strip_dotenv_value(raw_value.strip())
+    return ""
+
+
+def _openai_api_key() -> str:
+    return (os.getenv("OPENAI_API_KEY") or _project_dotenv_value("OPENAI_API_KEY")).strip()
 
 
 def _clean_positive_int(value: Any) -> str:
@@ -1127,6 +1155,282 @@ def _dedupe_terms(values: Iterable[Any], *, limit: int = 24) -> list[str]:
     return terms
 
 
+def _clamp_score(value: Any) -> int:
+    try:
+        number = round(float(value))
+    except (TypeError, ValueError):
+        return 0
+    return max(0, min(100, number))
+
+
+def _normalize_short_text_list(value: Any, *, limit: int = 12) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    result: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        text = " ".join(str(item or "").strip().split())
+        if not text:
+            continue
+        key = text.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(text[:220])
+        if len(result) >= limit:
+            break
+    return result
+
+
+def _normalize_resume_gap_items(value: Any, *, limit: int = 8) -> list[dict[str, str]]:
+    if not isinstance(value, list):
+        return []
+    result: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        requirement = " ".join(str(item.get("requirement") or "").strip().split())
+        resume_gap = " ".join(str(item.get("resume_gap") or "").strip().split())
+        recommended_change = " ".join(str(item.get("recommended_change") or "").strip().split())
+        if not requirement and not resume_gap and not recommended_change:
+            continue
+        result.append(
+            {
+                "requirement": requirement[:160],
+                "resume_gap": resume_gap[:260],
+                "recommended_change": recommended_change[:300],
+            }
+        )
+        if len(result) >= limit:
+            break
+    return result
+
+
+def _resume_match_json_schema() -> dict[str, Any]:
+    score_schema = {"type": "integer", "minimum": 0, "maximum": 100}
+    text_array_schema = {
+        "type": "array",
+        "items": {"type": "string", "maxLength": 220},
+        "maxItems": 12,
+    }
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "overall_score": score_schema,
+            "skills_score": score_schema,
+            "experience_score": score_schema,
+            "keywords_score": score_schema,
+            "matched_keywords": text_array_schema,
+            "missing_keywords": text_array_schema,
+            "key_strengths": text_array_schema,
+            "critical_gaps": {
+                "type": "array",
+                "maxItems": 8,
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "properties": {
+                        "requirement": {"type": "string", "maxLength": 160},
+                        "resume_gap": {"type": "string", "maxLength": 260},
+                        "recommended_change": {"type": "string", "maxLength": 300},
+                    },
+                    "required": ["requirement", "resume_gap", "recommended_change"],
+                },
+            },
+            "recommendations": {
+                "type": "array",
+                "items": {"type": "string", "maxLength": 320},
+                "maxItems": 6,
+            },
+            "tailored_resume": {"type": "string", "maxLength": 12000},
+            "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
+            "confidence_reason": {"type": "string", "maxLength": 320},
+        },
+        "required": [
+            "overall_score",
+            "skills_score",
+            "experience_score",
+            "keywords_score",
+            "matched_keywords",
+            "missing_keywords",
+            "key_strengths",
+            "critical_gaps",
+            "recommendations",
+            "tailored_resume",
+            "confidence",
+            "confidence_reason",
+        ],
+    }
+
+
+def _resume_match_system_prompt() -> str:
+    return (
+        "You are an expert Swiss IT recruiter and ATS resume reviewer. "
+        "Evaluate how well the candidate resume matches the vacancy. "
+        "Base every score on explicit evidence in the vacancy and resume. "
+        "Do not reward unsupported claims, generic filler, or keyword stuffing. "
+        "Score strictly: 90-100 means near-perfect direct match, 70-89 strong match with small gaps, "
+        "50-69 partial match, 30-49 weak match, below 30 poor match. "
+        "Skills score should measure required technologies, tools, domains, languages, and methods. "
+        "Experience score should measure seniority, role scope, responsibilities, impact, leadership, "
+        "industry/domain fit, and evidence quality. "
+        "Keywords score should measure ATS wording coverage for important vacancy terms, excluding generic words. "
+        "Return concise, actionable recommendations that tell the candidate exactly what to change. "
+        "Tailor the resume draft truthfully; never invent employers, degrees, years, metrics, or projects. "
+        "If information is missing, use bracketed placeholders such as [add metric] instead of inventing facts."
+    )
+
+
+def _resume_match_user_payload(
+    *,
+    vacancy_title: str,
+    company: str,
+    vacancy_source: dict[str, Any],
+    vacancy_text: str,
+    resume_text: str,
+    analytics: dict[str, Any],
+) -> str:
+    payload = {
+        "vacancy": {
+            "title": vacancy_title,
+            "company": company,
+            "source": vacancy_source.get("source") or "",
+            "location": vacancy_source.get("location") or "",
+            "url": vacancy_source.get("url") or "",
+            "description_text": vacancy_text[:12000],
+            "analytics_hints": analytics,
+        },
+        "candidate_resume": resume_text[:18000],
+        "task": {
+            "goal": "score match quality and produce a truthful vacancy-tailored resume draft",
+            "audience": "Swiss IT recruiter and ATS screening",
+        },
+    }
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True)
+
+
+def _extract_openai_response_text(response: dict[str, Any]) -> str:
+    output_text = response.get("output_text")
+    if isinstance(output_text, str) and output_text.strip():
+        return output_text
+    output = response.get("output")
+    if not isinstance(output, list):
+        raise ValueError("OpenAI response does not contain output text.")
+    parts: list[str] = []
+    for item in output:
+        if not isinstance(item, dict):
+            continue
+        for content_item in item.get("content", []) or []:
+            if not isinstance(content_item, dict):
+                continue
+            text = content_item.get("text")
+            if isinstance(text, str) and text:
+                parts.append(text)
+    if not parts:
+        raise ValueError("OpenAI response does not contain message text.")
+    return "\n".join(parts)
+
+
+def _normalize_llm_resume_match(payload: dict[str, Any], *, resume_text: str) -> dict[str, Any]:
+    recommendations = _normalize_short_text_list(payload.get("recommendations"), limit=6)
+    gaps = _normalize_resume_gap_items(payload.get("critical_gaps"))
+    if not recommendations:
+        recommendations = [
+            item["recommended_change"]
+            for item in gaps
+            if item.get("recommended_change")
+        ][:6]
+    tailored_resume = str(payload.get("tailored_resume") or "").strip()
+    if not tailored_resume:
+        tailored_resume = resume_text
+    return {
+        "score": _clamp_score(payload.get("overall_score")),
+        "score_breakdown": {
+            "skills": _clamp_score(payload.get("skills_score")),
+            "experience": _clamp_score(payload.get("experience_score")),
+            "keywords": _clamp_score(payload.get("keywords_score")),
+        },
+        "matched_keywords": _normalize_short_text_list(payload.get("matched_keywords"), limit=12),
+        "missing_keywords": _normalize_short_text_list(payload.get("missing_keywords"), limit=12),
+        "key_strengths": _normalize_short_text_list(payload.get("key_strengths"), limit=12),
+        "critical_gaps": gaps,
+        "recommendations": recommendations,
+        "tailored_resume": tailored_resume,
+        "confidence": str(payload.get("confidence") or "").strip(),
+        "confidence_reason": str(payload.get("confidence_reason") or "").strip(),
+    }
+
+
+def build_llm_resume_match(
+    *,
+    model: str,
+    vacancy_title: str,
+    company: str,
+    vacancy_source: dict[str, Any],
+    vacancy_text: str,
+    analytics: dict[str, Any],
+    resume_text: str,
+    api_key: str | None = None,
+    transport: Any | None = None,
+) -> dict[str, Any]:
+    clean_model = _clean_text(model) or "gpt-5.5"
+    clean_api_key = (api_key or _openai_api_key()).strip()
+    if not clean_api_key:
+        raise ValueError("OPENAI_API_KEY is not set. Save it in Settings before running resume match.")
+    client = transport or RequestsOpenAIResponsesTransport()
+    response = client.create_response(
+        {
+            "model": clean_model,
+            "store": False,
+            "reasoning": {"effort": "medium"},
+            "max_output_tokens": 2400,
+            "text": {
+                "format": {
+                    "type": "json_schema",
+                    "name": "resume_match_analysis",
+                    "strict": True,
+                    "schema": _resume_match_json_schema(),
+                }
+            },
+            "input": [
+                {
+                    "role": "system",
+                    "content": [{"type": "input_text", "text": _resume_match_system_prompt()}],
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_text",
+                            "text": _resume_match_user_payload(
+                                vacancy_title=vacancy_title,
+                                company=company,
+                                vacancy_source=vacancy_source,
+                                vacancy_text=vacancy_text,
+                                analytics=analytics,
+                                resume_text=resume_text,
+                            ),
+                        }
+                    ],
+                },
+            ],
+        },
+        api_key=clean_api_key,
+        timeout_seconds=90.0,
+    )
+    text = _extract_openai_response_text(response)
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"OpenAI returned invalid resume match JSON: {text[:500]!r}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("OpenAI returned non-object resume match JSON.")
+    result = _normalize_llm_resume_match(payload, resume_text=resume_text)
+    result["model"] = clean_model
+    return result
+
+
 def _resume_vacancy_from_row(database_path: Path, row: sqlite3.Row) -> dict[str, Any]:
     analytics = _load_json_object(row["analytics_json"])
     return {
@@ -1522,7 +1826,13 @@ def _resume_pdf_filename(vacancy_title: str) -> str:
     return f"tailored-resume-{slug or 'draft'}.pdf"
 
 
-def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) -> dict[str, Any]:
+def build_resume_match(
+    database_paths: Iterable[Path],
+    payload: dict[str, Any],
+    *,
+    openai_transport: Any | None = None,
+    openai_api_key: str | None = None,
+) -> dict[str, Any]:
     vacancy_url = _clean_text(payload.get("vacancy_url"))
     vacancy_id = _clean_text(payload.get("vacancy_id"))
     vacancy_database = _clean_text(payload.get("vacancy_database"))
@@ -1554,64 +1864,19 @@ def build_resume_match(database_paths: Iterable[Path], payload: dict[str, Any]) 
     company = vacancy_source.get("company", "")
     vacancy_text = vacancy_source.get("description_text") or pasted_description
     analytics = vacancy_source.get("analytics", {})
-    terms = _dedupe_terms(
-        [
-            *_resume_terms_from_analytics(analytics),
-            *_resume_text_terms(f"{vacancy_title} {vacancy_text}", limit=36),
-        ],
-        limit=24,
+    llm_match = build_llm_resume_match(
+        model=_clean_text(payload.get("model")) or "gpt-5.5",
+        vacancy_title=vacancy_title,
+        company=company,
+        vacancy_source=vacancy_source,
+        vacancy_text=vacancy_text,
+        analytics=analytics,
+        resume_text=resume_text,
+        api_key=openai_api_key,
+        transport=openai_transport,
     )
-
-    resume_lower = resume_text.lower()
-    matched_terms = [term for term in terms if term.lower() in resume_lower]
-    missing_terms = [term for term in terms if term.lower() not in resume_lower]
-    score = round((len(matched_terms) / len(terms)) * 100) if terms else 0
-
-    resume_lines = [line.strip() for line in resume_text.splitlines() if line.strip()]
-    evidence_lines = [
-        line
-        for line in resume_lines
-        if any(term.lower() in line.lower() for term in matched_terms)
-    ][:6]
-
-    recommendations = []
-    if matched_terms:
-        recommendations.append(
-            "Move the strongest matching evidence near the top: "
-            + ", ".join(matched_terms[:6])
-            + "."
-        )
-    if missing_terms:
-        recommendations.append(
-            "Add truthful project or impact evidence for: "
-            + ", ".join(missing_terms[:8])
-            + "."
-        )
-    recommendations.append("Keep every added keyword backed by real experience, metrics, or project context.")
-
+    tailored_resume = llm_match["tailored_resume"]
     target_line = vacancy_title or "Target role"
-    company_line = f" at {company}" if company else ""
-    source_line = f"Source: {vacancy_url}" if vacancy_url else "Source: pasted vacancy description"
-    summary_terms = ", ".join((matched_terms or terms)[:6]) or "the role requirements"
-    missing_line = ", ".join(missing_terms[:8]) if missing_terms else "No obvious missing priority terms."
-    evidence_block = "\n".join(f"- {line}" for line in evidence_lines) or "- Add 3-5 resume bullets that prove the strongest requirements."
-    original_block = resume_text or "[Paste your current resume here before generating the final version.]"
-    tailored_resume = f"""Targeted Resume Draft
-{target_line}{company_line}
-{source_line}
-
-Professional Summary
-Candidate profile aligned with {target_line}, emphasizing {summary_terms}. Replace this sentence with a concise 2-3 line summary using only claims you can defend.
-
-Selected Fit Highlights
-{evidence_block}
-
-Keywords To Weave In Truthfully
-{missing_line}
-
-Resume Draft
-{original_block}
-"""
     pdf_bytes = build_resume_pdf_bytes(tailored_resume, title=target_line)
 
     return {
@@ -1619,11 +1884,14 @@ Resume Draft
         "vacancy_fetched": bool(fetched_vacancy),
         "vacancy_fetch_error": vacancy_fetch_error,
         "vacancy": vacancy_source or None,
-        "score": score,
-        "required_keywords": terms,
-        "matched_keywords": matched_terms,
-        "missing_keywords": missing_terms,
-        "recommendations": recommendations,
+        "score": llm_match["score"],
+        "score_breakdown": llm_match["score_breakdown"],
+        "required_keywords": [*llm_match["matched_keywords"], *llm_match["missing_keywords"]],
+        "matched_keywords": llm_match["matched_keywords"],
+        "missing_keywords": llm_match["missing_keywords"],
+        "key_strengths": llm_match["key_strengths"],
+        "critical_gaps": llm_match["critical_gaps"],
+        "recommendations": llm_match["recommendations"],
         "tailored_resume": tailored_resume,
         "tailored_resume_pdf": {
             "filename": _resume_pdf_filename(target_line),
@@ -1631,6 +1899,9 @@ Resume Draft
             "base64": base64.b64encode(pdf_bytes).decode("ascii"),
         },
         "resume_pdf_text_extracted": bool(resume_pdf_text),
+        "match_model": llm_match["model"],
+        "match_confidence": llm_match["confidence"],
+        "match_confidence_reason": llm_match["confidence_reason"],
         "database_errors": database_errors,
     }
 
@@ -2498,14 +2769,15 @@ INDEX_HTML = """<!doctype html>
     }
     .resume-toolbar {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 18px;
       align-items: end;
     }
     .resume-status-cards {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(320px, 420px);
       gap: 14px;
+      justify-content: end;
     }
     .resume-status-card {
       min-height: 82px;
@@ -4222,10 +4494,6 @@ INDEX_HTML = """<!doctype html>
                 </select>
               </span>
             </div>
-            <div class="resume-status-card">
-              <span class="resume-status-icon" aria-hidden="true">◉</span>
-              <span><strong>Database</strong><span>Local + Live Web</span></span>
-            </div>
           </div>
         </div>
         <section class="resume-grid" aria-label="Resume matcher">
@@ -5458,11 +5726,11 @@ INDEX_HTML = """<!doctype html>
       return "Needs Tailoring";
     }
 
-    function setResumeScoreBreakdown(score) {
+    function setResumeScoreBreakdown(score, breakdown = {}) {
       const normalized = Math.max(0, Math.min(100, Number(score || 0)));
-      const skills = normalized;
-      const experience = Math.max(0, Math.min(100, normalized - 4));
-      const keywords = Math.max(0, Math.min(100, normalized + 2));
+      const skills = Math.max(0, Math.min(100, Number(breakdown.skills ?? normalized)));
+      const experience = Math.max(0, Math.min(100, Number(breakdown.experience ?? normalized)));
+      const keywords = Math.max(0, Math.min(100, Number(breakdown.keywords ?? normalized)));
       resumeSkillsScoreEl.textContent = `${skills}%`;
       resumeExperienceScoreEl.textContent = `${experience}%`;
       resumeKeywordsScoreEl.textContent = `${keywords}%`;
@@ -5727,7 +5995,7 @@ INDEX_HTML = """<!doctype html>
         const score = Number(data.score || 0);
         resumeScoreValueEl.textContent = `${score}%`;
         resumeScoreValueEl.style.setProperty("--score", score);
-        setResumeScoreBreakdown(score);
+        setResumeScoreBreakdown(score, data.score_breakdown || {});
         resumeVacancyTitleEl.textContent = resumeMatchLabel(score);
         resumeVacancyMetaEl.textContent = [
           vacancy.company,
