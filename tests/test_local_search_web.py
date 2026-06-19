@@ -22,6 +22,7 @@ from swiss_jobs.cli.local_search_web import (
     build_resume_pdf_bytes,
     build_resume_match,
     load_facets,
+    render_index,
     search_local_databases,
 )
 from swiss_jobs.core.database import JobsDatabase
@@ -156,6 +157,13 @@ def make_vacancy(
 
 
 class LocalSearchWebTests(unittest.TestCase):
+    def test_render_index_reads_html_template_and_injects_database_list(self) -> None:
+        rendered = render_index([Path("/tmp/jobs & data.sqlite")])
+
+        self.assertIn("<title>Local Vacancy Search</title>", rendered)
+        self.assertIn("<li>/tmp/jobs &amp; data.sqlite</li>", rendered)
+        self.assertNotIn("__DATABASE_LIST__", rendered)
+
     def test_share_lan_display_urls_include_loopback_and_lan_addresses(self) -> None:
         original = local_search_web._local_ipv4_addresses
         try:

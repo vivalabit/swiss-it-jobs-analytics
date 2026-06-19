@@ -19,3 +19,6 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 include = ["market_analytics*", "swiss_jobs*"]
+
+[tool.setuptools.package-data]
+"swiss_jobs.cli" = ["*.html"]

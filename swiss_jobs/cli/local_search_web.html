@@ -1,0 +1,3895 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Vacancy Search</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #121722;
+      --muted: #657182;
+      --line: #e5e7eb;
+      --field: #ffffff;
+      --surface: #fafafa;
+      --panel: #ffffff;
+      --accent: #d71920;
+      --accent-dark: #b71118;
+      --accent-soft: rgba(215, 25, 32, 0.08);
+      --green: #d71920;
+      --blue: #17202a;
+      --amber: #d71920;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.07);
+      --shadow-soft: 0 4px 14px rgba(17, 24, 39, 0.05);
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .app {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px 44px 32px;
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .app.view-search,
+    .app.view-ai-analyse,
+    .app.view-resume-matcher,
+    .app.view-public-stats,
+    .app.view-settings {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .app.view-search .filters-panel,
+    .app.view-ai-analyse .filters-panel,
+    .app.view-resume-matcher .filters-panel,
+    .app.view-public-stats .filters-panel,
+    .app.view-settings .filters-panel {
+      display: none;
+    }
+    .main-menu {
+      grid-column: 1 / -1;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+    .brand {
+      display: grid;
+      gap: 4px;
+    }
+    .brand-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+    .brand-sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .menu-list {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .menu-btn {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: #344150;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .menu-btn:hover,
+    .menu-btn.is-active {
+      border-color: rgba(215, 25, 32, 0.2);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .menu-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #17202a;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .menu-btn.is-active .menu-icon {
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+    }
+    .filters-panel {
+      position: sticky;
+      top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    main {
+      min-width: 0;
+      padding: 10px 0 32px;
+    }
+    .workspace-panel[hidden] {
+      display: none;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .field { margin-bottom: 14px; }
+    label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #151b28;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--field);
+      color: var(--ink);
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+      box-shadow: inset 0 1px 0 rgba(17, 24, 39, 0.02);
+    }
+    textarea {
+      min-height: 44px;
+      resize: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(215, 25, 32, 0.5);
+      box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.1);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .actions {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .btn {
+      min-height: 46px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: white;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+    }
+    .btn.primary:hover { background: var(--accent-dark); }
+    .btn.secondary {
+      background: #ffffff;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .toolbar h1 {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .toolbar h1 strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .sort-control {
+      min-width: 156px;
+      width: auto;
+      background-position: right 12px center;
+    }
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-kicker {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .settings-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .settings-panel.is-wide {
+      grid-column: span 3;
+    }
+    .settings-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .settings-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .settings-row {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .settings-form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      align-items: end;
+      margin-top: 16px;
+    }
+    .settings-status {
+      min-height: 36px;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: var(--muted);
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .settings-status.is-ready {
+      background: #eef9f0;
+      color: #1f9d3a;
+    }
+    .settings-status.is-error {
+      background: #fff4f4;
+      color: #a3161b;
+    }
+    .setting-toggle {
+      min-height: 42px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: #344150;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .switch {
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      position: relative;
+    }
+    .switch::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(17, 24, 39, 0.14);
+    }
+    .switch.is-on {
+      background: linear-gradient(180deg, #e03136, #c9161d);
+    }
+    .switch.is-on::after {
+      left: 24px;
+    }
+    .parser-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .parser-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .parser-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .parser-panel p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .parser-preview {
+      display: grid;
+      gap: 10px;
+    }
+    .resume-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+    }
+    .resume-status-cards {
+      display: grid;
+      grid-template-columns: minmax(320px, 420px);
+      gap: 14px;
+      justify-content: end;
+    }
+    .resume-status-card {
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-status-card strong {
+      display: block;
+      color: #17202a;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .resume-status-card > span:last-child {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .resume-status-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #17202a;
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .resume-model-select {
+      min-height: 32px;
+      margin-top: 6px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #344150;
+      background: #fff;
+    }
+    .resume-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
+      align-items: start;
+    }
+    .resume-form,
+    .resume-output {
+      display: grid;
+      gap: 18px;
+    }
+    .resume-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-panel h2 {
+      margin: 0 0 6px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .resume-panel p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .resume-input-cards {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+    .resume-card {
+      display: grid;
+      align-content: start;
+    }
+    .resume-segment {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 16px;
+    }
+    .resume-segment button {
+      min-height: 42px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: #fff;
+      color: #344150;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .resume-segment button:last-child {
+      border-right: 0;
+    }
+    .resume-segment button.is-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(215, 25, 32, 0.18);
+    }
+    .resume-input-grid {
+      display: grid;
+      gap: 12px;
+      align-items: start;
+    }
+    .resume-input-grid .field,
+    .resume-card .field {
+      margin-bottom: 0;
+    }
+    .resume-url-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .resume-local-results {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 280px;
+      overflow: auto;
+    }
+    .resume-local-option {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      display: grid;
+      gap: 5px;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .resume-local-option:hover,
+    .resume-local-option.is-selected {
+      border-color: rgba(215, 25, 32, 0.38);
+      background: var(--accent-soft);
+    }
+    .resume-local-option strong {
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .resume-local-option span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .resume-inline-status {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      margin-top: 8px;
+      background: #eef9f0;
+      color: #1f9d3a;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .resume-inline-status.is-muted {
+      background: #f3f4f6;
+      color: var(--muted);
+    }
+    .resume-form textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+    .resume-file-zone {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px;
+    }
+    .resume-file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+    .resume-file-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+    .resume-upload-label {
+      min-height: 42px;
+      border: 1px solid rgba(215, 25, 32, 0.34);
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .resume-file-name {
+      margin: 0;
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+    .resume-file-hint {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .resume-drop-hint {
+      display: grid;
+      place-items: center;
+      min-height: 82px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      margin-top: 8px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .resume-form #resume_text {
+      min-height: 160px;
+    }
+    .resume-input-review {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .resume-review-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .resume-review-item strong {
+      color: #17202a;
+      font-size: 13px;
+    }
+    .resume-review-item span {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .resume-review-preview {
+      margin: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      color: #334155;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    .resume-preview-panel {
+      display: grid;
+      gap: 14px;
+    }
+    .resume-preview-head,
+    .resume-result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+    .resume-vacancy-preview {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+    .resume-vacancy-preview h3 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+    .resume-preview-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .resume-vacancy-preview p {
+      margin: 0;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .resume-action-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-top: 0;
+    }
+    .resume-analysis-grid {
+      display: grid;
+      grid-template-columns: 0.82fr 1fr 1.18fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .resume-report-section {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-score {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .resume-score-value {
+      --score: 0;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, #fff 56%, transparent 57%),
+        conic-gradient(#2ea84a calc(var(--score) * 1%), #e5e7eb 0);
+      color: #2ea84a;
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .resume-score h2 {
+      margin: 0 0 4px;
+      color: #2ea84a;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .resume-score p,
+    .resume-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .resume-metric-list {
+      display: grid;
+      gap: 10px;
+    }
+    .resume-metric {
+      display: grid;
+      gap: 6px;
+    }
+    .resume-metric-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .resume-meter {
+      height: 6px;
+      border-radius: 999px;
+      background: #eef0f3;
+      overflow: hidden;
+    }
+    .resume-meter span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: #2ea84a;
+    }
+    .resume-meter.is-warm span {
+      background: #f59e0b;
+    }
+    .resume-keyword-columns {
+      display: grid;
+      gap: 16px;
+    }
+    .resume-recommendation-list {
+      display: grid;
+      gap: 10px;
+    }
+    .resume-recommendation {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+    .resume-recommendation-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef5ff;
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .resume-recommendation strong {
+      display: block;
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .resume-recommendation span:last-child {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .resume-output-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .resume-download-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .resume-download-card,
+    .resume-copy-card {
+      min-height: 72px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+      color: #1d4ed8;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: left;
+      box-shadow: var(--shadow-soft);
+    }
+    .resume-download-card {
+      border-color: rgba(215, 25, 32, 0.24);
+      background: #fff8f8;
+      color: var(--accent);
+    }
+    .resume-download-card[hidden] {
+      display: none;
+    }
+    .resume-download-card small,
+    .resume-copy-card small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .resume-download-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: currentColor;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .resume-result-text {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .resume-tip {
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .keyword-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .resume-result-text {
+      width: 100%;
+      min-height: 420px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .log-toggle {
+      position: absolute;
+      top: 50%;
+      left: -44px;
+      width: 44px;
+      height: 104px;
+      border: 1px solid rgba(215, 25, 32, 0.22);
+      border-right: 1px solid rgba(215, 25, 32, 0.22);
+      border-radius: 8px 0 0 8px;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 32px rgba(17, 24, 39, 0.16);
+      transform: translateY(-50%);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .log-toggle:hover,
+    .log-toggle[aria-expanded="true"] {
+      background: var(--accent-dark);
+    }
+    .log-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 39;
+      width: min(380px, calc(100vw - 48px));
+      border-left: 1px solid var(--line);
+      background: #fff;
+      box-shadow: -18px 0 42px rgba(17, 24, 39, 0.14);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      transform: translateX(100%);
+      transition: transform 160ms ease;
+    }
+    .log-drawer.is-open {
+      transform: translateX(0);
+    }
+    .log-head {
+      min-height: 70px;
+      border-bottom: 1px solid var(--line);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+    }
+    .log-title {
+      margin: 0 0 4px;
+      color: #17202a;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+    .log-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .log-close {
+      width: 32px;
+      height: 32px;
+      min-height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-weight: 900;
+    }
+    .log-list {
+      min-height: 0;
+      overflow: auto;
+      padding: 14px 18px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      background: #fafafa;
+    }
+    .log-entry {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+    .log-entry.is-info { border-left: 3px solid #17202a; }
+    .log-entry.is-success { border-left: 3px solid var(--accent); }
+    .log-entry.is-warning { border-left: 3px solid #d97706; }
+    .log-entry.is-error { border-left: 3px solid #8e1d23; }
+    .log-entry-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .log-entry-title {
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    .log-entry-time {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .log-entry-message {
+      margin: 0;
+      color: #344150;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .log-actions {
+      border-top: 1px solid var(--line);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: flex-end;
+      background: #fff;
+    }
+    .log-clear {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .source-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 0 0 16px;
+      background: #fff;
+    }
+    .source-table th,
+    .source-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.35;
+      text-align: left;
+      vertical-align: middle;
+      overflow-wrap: anywhere;
+    }
+    .source-table th:first-child,
+    .source-table td:first-child {
+      width: 56px;
+      text-align: center;
+    }
+    .source-table th:last-child,
+    .source-table td:last-child {
+      width: 84px;
+    }
+    .source-table th {
+      background: #f8fafc;
+      color: #17202a;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .source-table tr:last-child td {
+      border-bottom: 0;
+    }
+    .source-check {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      padding: 0;
+      accent-color: var(--accent);
+      box-shadow: none;
+    }
+    .source-name {
+      color: #17202a;
+      font-weight: 900;
+    }
+    .source-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 0 9px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .parser-step {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .step-index {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .step-title {
+      display: block;
+      color: #17202a;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+    .info-menu {
+      position: relative;
+      margin: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+    .info-menu summary {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      list-style: none;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+      user-select: none;
+    }
+    .info-menu summary::-webkit-details-marker {
+      display: none;
+    }
+    .info-menu[open] summary {
+      background: var(--accent-dark);
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 0;
+      border-radius: 0;
+      background: #ffffff;
+      padding: 0;
+    }
+    .database-summary {
+      position: absolute;
+      top: 42px;
+      right: 0;
+      z-index: 15;
+      width: min(290px, calc(100vw - 32px));
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 18px 42px rgba(17, 24, 39, 0.12);
+    }
+    .summary-block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px;
+      box-shadow: var(--shadow-soft);
+    }
+    .summary-title {
+      margin: 0 0 8px;
+      color: #344150;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .summary-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+    }
+    .summary-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .summary-item span:first-child {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .summary-count {
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .results {
+      display: grid;
+      gap: 12px;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .page-btn {
+      min-width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      box-shadow: var(--shadow-soft);
+    }
+    .page-btn:hover:not(:disabled),
+    .page-btn.is-active {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+    }
+    .page-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      box-shadow: none;
+    }
+    .page-gap {
+      min-width: 24px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 800;
+    }
+    .job {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow-soft);
+    }
+    .job-head {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr) minmax(160px, auto);
+      gap: 18px;
+      align-items: start;
+    }
+    .company-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(215, 25, 32, 0.18);
+      text-transform: uppercase;
+    }
+    .job h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+    }
+    .company {
+      margin-top: 4px;
+      color: #151b28;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .meta span + span::before {
+      content: "";
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #c2c8d0;
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+    .job-side {
+      display: grid;
+      justify-items: end;
+      gap: 14px;
+      text-align: right;
+    }
+    .job-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .salary {
+      color: var(--green);
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+      margin-left: 72px;
+    }
+    .tag {
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #4b5563;
+      padding: 4px 9px;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .tag.role { background: var(--accent-soft); color: var(--accent); }
+    .tag.warn { background: #fff4f4; color: #a3161b; }
+    .tag.keyword { background: #f5f5f5; color: #374151; }
+    .preview {
+      color: #4b5968;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 12px 0 0 72px;
+      max-width: 620px;
+    }
+    .open-link {
+      min-height: 36px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #e03136, #c9161d);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 13px;
+      box-shadow: 0 8px 18px rgba(215, 25, 32, 0.18);
+    }
+    .details-toggle {
+      min-height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #17202a;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 13px;
+      box-shadow: var(--shadow-soft);
+    }
+    .details-toggle:hover,
+    .details-toggle[aria-expanded="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .json-toggle {
+      margin-top: 14px;
+    }
+    .job-details-panel {
+      margin: 16px 0 0 72px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      color: #344150;
+      box-shadow: var(--shadow-soft);
+    }
+    .job-details-panel[hidden] {
+      display: none;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px 16px;
+      margin: 0 0 14px;
+    }
+    .detail-item {
+      min-width: 0;
+    }
+    .detail-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .detail-value {
+      color: #17202a;
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .detail-section {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+    .detail-section[hidden] {
+      display: none;
+    }
+    .detail-section-title {
+      margin: 0 0 8px;
+      color: #17202a;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .detail-description {
+      margin: 0;
+      color: #344150;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .detail-json {
+      max-height: 260px;
+      overflow: auto;
+      margin: 0;
+      border-radius: 6px;
+      background: #f8fafc;
+      padding: 12px;
+      color: #1f2937;
+      font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+    .empty, .error {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      background: #ffffff;
+      color: var(--muted);
+      text-align: center;
+    }
+    .error {
+      color: #8e1d23;
+      border-color: #dfb8bb;
+      background: #fff8f8;
+    }
+    details {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    details ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      overflow-wrap: anywhere;
+    }
+    .salary-range {
+      padding-top: 2px;
+    }
+    .range-control {
+      position: relative;
+      height: 30px;
+      margin: 2px 0 8px;
+    }
+    .range-track {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      top: 14px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent));
+    }
+    input[type="range"] {
+      position: absolute;
+      inset: 0;
+      min-height: 30px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      appearance: none;
+      pointer-events: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 8px rgba(215, 25, 32, 0.16);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 8px rgba(215, 25, 32, 0.16);
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      background: transparent;
+    }
+    input[type="range"]::-moz-range-track {
+      height: 4px;
+      background: transparent;
+    }
+    .range-values {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    @media (max-width: 860px) {
+      .app {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 18px;
+      }
+      .app.view-search,
+      .app.view-ai-analyse,
+      .app.view-resume-matcher,
+      .app.view-public-stats,
+      .app.view-settings {
+        grid-template-columns: 1fr;
+      }
+      .main-menu {
+        position: static;
+        max-height: none;
+        grid-template-columns: 1fr;
+      }
+      .menu-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .filters-panel {
+        position: static;
+        max-height: none;
+      }
+      main { padding: 18px; }
+      .settings-grid,
+      .settings-form-grid { grid-template-columns: 1fr; }
+      .settings-panel.is-wide { grid-column: auto; }
+      .parser-grid { grid-template-columns: 1fr; }
+      .resume-toolbar,
+      .resume-input-cards,
+      .resume-analysis-grid,
+      .resume-output-grid { grid-template-columns: 1fr; }
+      .resume-status-cards,
+      .resume-download-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .job-head { grid-template-columns: 44px minmax(0, 1fr); }
+      .job-side {
+        grid-column: 2;
+        justify-items: start;
+        text-align: left;
+      }
+      .job-actions {
+        justify-content: flex-start;
+      }
+      .tags, .preview, .job-details-panel { margin-left: 62px; }
+      .salary { white-space: normal; }
+      .database-summary {
+        right: 0;
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 520px) {
+      .main-menu { padding: 18px; }
+      .menu-list { grid-template-columns: 1fr; }
+      .filters-panel { padding: 18px; }
+      .row, .actions { grid-template-columns: 1fr; }
+      .toolbar { align-items: flex-start; flex-direction: column; }
+      .toolbar-actions { width: 100%; justify-content: space-between; }
+      .database-summary {
+        left: 0;
+        right: auto;
+        width: calc(100vw - 36px);
+      }
+      .btn { width: 100%; }
+      .resume-status-cards,
+      .resume-download-grid,
+      .resume-segment,
+      .resume-url-row { grid-template-columns: 1fr; }
+      .resume-segment button {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .resume-segment button:last-child {
+        border-bottom: 0;
+      }
+      .resume-file-row,
+      .resume-score,
+      .resume-recommendation,
+      .resume-status-card,
+      .resume-copy-card,
+      .resume-download-card {
+        grid-template-columns: 1fr;
+      }
+      main { padding: 0; }
+      .job { padding: 18px; }
+      .job-head { grid-template-columns: 1fr; }
+      .company-mark, .tags, .preview, .job-details-panel { margin-left: 0; }
+      .company-mark { border-radius: 8px; }
+      .job-side, .job-actions { width: 100%; justify-items: stretch; }
+      .job-actions > * { flex: 1 1 130px; }
+      .log-toggle {
+        width: 40px;
+        height: 86px;
+        left: -40px;
+      }
+      .log-drawer {
+        width: calc(100vw - 40px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app view-vacancies" id="app">
+    <nav class="main-menu" aria-label="Main application menu">
+      <div class="brand">
+        <p class="brand-title">Swiss IT Jobs</p>
+        <span class="brand-sub">Local database app</span>
+      </div>
+      <div class="menu-list">
+        <button class="menu-btn is-active" type="button" data-view-target="vacancies" aria-current="page">
+          <span class="menu-icon" aria-hidden="true">▦</span>
+          <span>Vacancy Browser</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="search">
+          <span class="menu-icon" aria-hidden="true">⌕</span>
+          <span>Vacancy Search</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="ai-analyse">
+          <span class="menu-icon" aria-hidden="true">✦</span>
+          <span>AI Analyse</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="resume-matcher">
+          <span class="menu-icon" aria-hidden="true">▤</span>
+          <span>Resume matcher</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="public-stats">
+          <span class="menu-icon" aria-hidden="true">◫</span>
+          <span>Public Stats</span>
+        </button>
+        <button class="menu-btn" type="button" data-view-target="settings">
+          <span class="menu-icon" aria-hidden="true">⚙</span>
+          <span>Settings</span>
+        </button>
+      </div>
+    </nav>
+    <aside class="filters-panel">
+      <h1>Search Jobs</h1>
+      <p class="sub">Searches only your loaded local SQLite databases.</p>
+      <form id="search-form" autocomplete="off">
+        <div class="field">
+          <label for="q">Job title, keywords, or company</label>
+          <textarea id="q" name="q" placeholder="python backend zurich"></textarea>
+        </div>
+        <div class="field">
+          <label for="keyword">Keywords</label>
+          <input id="keyword" name="keyword" list="keyword-list" placeholder="python, django, kubernetes">
+          <datalist id="keyword-list"></datalist>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="source">Source</label>
+            <select id="source" name="source"><option value="">Any</option></select>
+          </div>
+          <div class="field">
+            <label for="location">Location</label>
+            <select id="location" name="location"><option value="">Any</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" name="company" placeholder="Company name">
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="role">Role</label>
+            <select id="role" name="role"><option value="">Any</option></select>
+          </div>
+          <div class="field">
+            <label for="seniority">Seniority</label>
+            <select id="seniority" name="seniority"><option value="">Any</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="skill">Required skill</label>
+          <input id="skill" name="skill" list="skill-list" placeholder="python">
+          <datalist id="skill-list"></datalist>
+        </div>
+        <div class="field">
+          <label for="date_field">Date field</label>
+          <select id="date_field" name="date_field">
+            <option value="last_seen" selected>Last seen</option>
+            <option value="first_seen">First seen</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="date_from">Date from</label>
+            <input id="date_from" name="date_from" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+          </div>
+          <div class="field">
+            <label for="date_to">Date to</label>
+            <input id="date_to" name="date_to" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+          </div>
+        </div>
+        <div class="field salary-range">
+          <label>Salary Range (CHF)</label>
+          <div class="range-control">
+            <div class="range-track" id="salary-track"></div>
+            <input id="salary_min_range" type="range" min="0" max="250000" step="5000" value="0" aria-label="Salary minimum">
+            <input id="salary_max_range" type="range" min="0" max="250000" step="5000" value="250000" aria-label="Salary maximum">
+          </div>
+          <div class="range-values">
+            <span id="salary_min_text">Any min</span>
+            <span id="salary_max_text">Any max</span>
+          </div>
+          <input id="salary_min" name="salary_min" type="hidden">
+          <input id="salary_max" name="salary_max" type="hidden">
+        </div>
+        <div class="field">
+          <label for="has_salary">Salary</label>
+          <select id="has_salary" name="has_salary">
+            <option value="">Any</option>
+            <option value="1">Only with salary</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="submit" title="Run search">Search</button>
+          <button class="btn secondary" type="button" id="reset" title="Clear filters">Clear</button>
+        </div>
+      </form>
+      <details>
+        <summary>Loaded local databases</summary>
+        <ul>__DATABASE_LIST__</ul>
+      </details>
+    </aside>
+    <main>
+      <section class="workspace-panel" id="vacancies-workspace">
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker" id="workspace-kicker">Vacancy Browser</p>
+            <h1 id="result-title">Found <strong>0</strong> jobs</h1>
+            <p class="sub" id="subtitle">Loading local database facets...</p>
+          </div>
+          <div class="toolbar-actions">
+            <details class="info-menu">
+              <summary aria-label="Local database statistics" title="Local database statistics">i</summary>
+              <section class="database-summary" id="database-summary" aria-label="Local database statistics"></section>
+            </details>
+            <select class="sort-control" aria-label="Sort results">
+              <option>Most Recent</option>
+            </select>
+          </div>
+        </div>
+        <div id="errors"></div>
+        <section class="results" id="results"></section>
+        <nav class="pagination" id="pagination" aria-label="Search results pages"></nav>
+      </section>
+      <section class="workspace-panel" id="parser-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Vacancy Search</p>
+            <h1>Run Vacancy Collection</h1>
+            <p class="sub">Visual shell for launching provider parsing and collecting fresh vacancies into local databases.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="Vacancy collection launcher">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Collection Parameters</h2>
+            <p>Select the provider, search mode, and query fields for a future parser run.</p>
+            <table class="source-table" aria-label="Vacancy sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobs_ch" checked aria-label="Use jobs_ch"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobscout24_ch" checked aria-label="Use jobscout24_ch"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="jobup_ch" checked aria-label="Use jobup_ch"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="linked_in" checked aria-label="Use linked_in"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="parser_source" value="swissdevjobs_ch" checked aria-label="Use swissdevjobs_ch"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="field">
+                <label for="parser_mode">Mode</label>
+                <select id="parser_mode" name="parser_mode">
+                  <option>search</option>
+                  <option>new</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="parser_canton">Canton</label>
+                <input id="parser_canton" name="parser_canton" placeholder="zh">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="parser_term">Search term</label>
+                <input id="parser_term" name="parser_term" placeholder="python">
+              </div>
+              <div class="field">
+                <label for="parser_location">Location</label>
+                <input id="parser_location" name="parser_location" placeholder="zurich">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="parser_pages">Max pages</label>
+                <input id="parser_pages" name="parser_pages" type="number" min="1" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="parser_detail_limit">Detail limit</label>
+                <input id="parser_detail_limit" name="parser_detail_limit" type="number" min="0" placeholder="Optional">
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="Run selected vacancy parsers">Run Parser</button>
+              <button class="btn secondary" type="button" title="Preview command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="Collection run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show parser status, progress, and database write results when collection is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Prepare query</strong>Validate source, terms, location, and pagination limits.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Collect vacancies</strong>Run provider parsing and detail-page enrichment.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Update database</strong>Persist new vacancies into the selected local SQLite database.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+      <section class="workspace-panel" id="ai-analyse-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">AI Analyse</p>
+            <h1>Analyse New Vacancies</h1>
+            <p class="sub">Visual shell for enriching fresh local vacancies with AI role, skill, salary, and seniority signals.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="AI vacancy analysis launcher">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Analysis Parameters</h2>
+            <p>Select vacancy sources, freshness scope, and model settings for a future AI analysis run.</p>
+            <table class="source-table" aria-label="AI analysis sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobs_ch" checked aria-label="Analyse jobs_ch"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobscout24_ch" checked aria-label="Analyse jobscout24_ch"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="jobup_ch" checked aria-label="Analyse jobup_ch"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="linked_in" checked aria-label="Analyse linked_in"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="analysis_source" value="swissdevjobs_ch" checked aria-label="Analyse swissdevjobs_ch"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_scope">Vacancy scope</label>
+                <select id="analysis_scope" name="analysis_scope">
+                  <option>new vacancies only</option>
+                  <option>missing AI analysis</option>
+                  <option>all selected vacancies</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="analysis_model">Model</label>
+                <select id="analysis_model" name="analysis_model">
+                  <option value="gpt-5-nano" selected>gpt-5-nano</option>
+                  <option value="gpt-5-mini">gpt-5-mini</option>
+                  <option value="gpt-4.1-nano">gpt-4.1-nano</option>
+                  <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+                  <option value="o4-mini">o4-mini</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_date_from">First seen from</label>
+                <input id="analysis_date_from" name="analysis_date_from" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+              </div>
+              <div class="field">
+                <label for="analysis_date_to">First seen to</label>
+                <input id="analysis_date_to" name="analysis_date_to" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="analysis_limit">Vacancy limit</label>
+                <input id="analysis_limit" name="analysis_limit" type="number" min="1" placeholder="Optional">
+              </div>
+              <div class="field">
+                <label for="analysis_batch_size">Batch size</label>
+                <input id="analysis_batch_size" name="analysis_batch_size" type="number" min="1" placeholder="25">
+              </div>
+            </div>
+            <div class="field">
+              <label for="analysis_notes">Analysis focus</label>
+              <textarea id="analysis_notes" name="analysis_notes" placeholder="skills, role category, seniority, salary signals"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="Run selected AI analysis">Run AI Analyse</button>
+              <button class="btn secondary" type="button" title="Preview analysis command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="AI analysis run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show AI analysis status, model usage, and database update results when enrichment is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Find fresh vacancies</strong>Filter selected databases by first-seen date and missing AI analysis fields.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Run AI enrichment</strong>Analyse vacancy descriptions for role category, seniority, skills, and salary signals.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Write analysis results</strong>Persist structured AI output back into the selected local SQLite databases.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+      <section class="workspace-panel" id="resume-matcher-workspace" hidden>
+        <div class="toolbar resume-toolbar">
+          <div>
+            <p class="section-kicker">Resume matcher</p>
+            <h1>Tailor Resume To Vacancy</h1>
+            <p class="sub">Paste a vacancy URL and your current resume to generate a focused draft and keyword gap review.</p>
+          </div>
+          <div class="resume-status-cards" aria-label="Resume matcher configuration">
+            <div class="resume-status-card">
+              <span class="resume-status-icon" aria-hidden="true">✦</span>
+              <span>
+                <strong>AI Model</strong>
+                <select class="resume-model-select" id="resume_model" name="model" form="resume-match-form" aria-label="AI model">
+                  <option value="gpt-5.5" selected>gpt-5.5</option>
+                  <option value="gpt-5.4-mini">gpt-5.4-mini</option>
+                  <option value="gpt-5.4-nano">gpt-5.4-nano</option>
+                </select>
+              </span>
+            </div>
+          </div>
+        </div>
+        <section class="resume-grid" aria-label="Resume matcher">
+          <form class="resume-form" id="resume-match-form" autocomplete="off">
+            <div class="resume-input-cards">
+              <article class="resume-panel resume-card">
+                <h2>1. Vacancy Source</h2>
+                <p>Choose where to get the vacancy from</p>
+                <div class="resume-segment" aria-label="Vacancy source mode">
+                  <button class="is-active" type="button" data-vacancy-source-mode="url" aria-pressed="true">⌁ URL Link</button>
+                  <button type="button" data-vacancy-source-mode="local" aria-pressed="false">▤ Local Database</button>
+                  <button type="button" data-vacancy-source-mode="paste" aria-pressed="false">▧ Paste Text</button>
+                </div>
+                <input id="vacancy_source_mode" name="vacancy_source_mode" type="hidden" value="url">
+                <input id="vacancy_id" name="vacancy_id" type="hidden">
+                <input id="vacancy_database" name="vacancy_database" type="hidden">
+                <div class="resume-input-grid">
+                  <div class="field" data-vacancy-source-pane="url">
+                    <label for="vacancy_url">Vacancy URL</label>
+                    <div class="resume-url-row">
+                      <input id="vacancy_url" name="vacancy_url" type="url" placeholder="https://www.jobs.ch/...">
+                      <button class="details-toggle" type="submit" title="Fetch vacancy and generate match">Fetch Vacancy</button>
+                    </div>
+                    <span class="resume-inline-status is-muted" id="resume-vacancy-load-status">Waiting for vacancy</span>
+                  </div>
+                  <div class="field" data-vacancy-source-pane="local" hidden>
+                    <label for="resume_local_query">Search local database</label>
+                    <div class="resume-url-row">
+                      <input id="resume_local_query" type="search" placeholder="python backend zurich">
+                      <button class="details-toggle" type="button" id="resume-local-search">Search</button>
+                    </div>
+                    <div class="resume-local-results" id="resume-local-results">
+                      <div class="empty">Search local vacancies to select one.</div>
+                    </div>
+                  </div>
+                  <div class="field" data-vacancy-source-pane="local paste" hidden>
+                    <label for="target_title">Target title override <span>(optional)</span></label>
+                    <input id="target_title" name="target_title" placeholder="e.g. Senior Software Engineer">
+                  </div>
+                  <div class="field" data-vacancy-source-pane="paste" hidden>
+                    <label for="job_description">Vacancy description fallback</label>
+                    <textarea id="job_description" name="job_description" placeholder="Paste the vacancy text here if the site blocks automatic reading."></textarea>
+                  </div>
+                </div>
+              </article>
+              <article class="resume-panel resume-card">
+                <h2>2. Your Current Resume</h2>
+                <p>Upload your resume or paste your current resume text</p>
+                <div class="resume-segment" aria-label="Resume input mode">
+                  <button class="is-active" type="button" data-resume-input-mode="upload" aria-pressed="true">↥ Upload File</button>
+                  <button type="button" data-resume-input-mode="paste" aria-pressed="false">♢ Paste Text</button>
+                  <button type="button" data-resume-input-mode="review" aria-pressed="false">▣ Review</button>
+                </div>
+                <input id="resume_input_mode" name="resume_input_mode" type="hidden" value="upload">
+                <div class="resume-file-zone" data-resume-input-pane="upload">
+                  <input class="resume-file-input" id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
+                  <label class="resume-upload-label" for="resume_pdf">↥ Upload File</label>
+                  <div class="resume-file-row">
+                    <div>
+                      <p class="resume-file-name" id="resume-file-name">No PDF selected</p>
+                      <span class="resume-file-hint">PDF resume or pasted text below</span>
+                    </div>
+                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF" hidden>Remove</button>
+                  </div>
+                  <div class="resume-drop-hint" id="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
+                </div>
+                <div class="field" data-resume-input-pane="paste" hidden>
+                  <label for="resume_text">Paste resume text</label>
+                  <textarea id="resume_text" name="resume_text" placeholder="Paste your current resume text here."></textarea>
+                </div>
+                <div class="resume-input-review" data-resume-input-pane="review" hidden>
+                  <div class="resume-review-item">
+                    <strong>Attached PDF</strong>
+                    <span id="resume-review-file">No PDF selected</span>
+                  </div>
+                  <div class="resume-review-item">
+                    <strong>Pasted text</strong>
+                    <span id="resume-review-text">No pasted resume text</span>
+                  </div>
+                  <p class="resume-review-preview" id="resume-review-preview">Nothing to review yet.</p>
+                </div>
+              </article>
+            </div>
+            <section class="resume-panel resume-preview-panel">
+              <div class="resume-preview-head">
+                <div>
+                  <h2>3. Vacancy Preview</h2>
+                  <p>Extracted from the source</p>
+                </div>
+              </div>
+              <article class="resume-vacancy-preview" id="resume-vacancy-preview">
+                <h3>No vacancy loaded yet</h3>
+                <div class="resume-preview-tags">
+                  <span class="tag">Waiting</span>
+                </div>
+                <p>Paste a vacancy URL or fallback description, then run the matcher to preview the vacancy context used for the analysis.</p>
+              </article>
+              <div class="actions resume-action-row">
+                <button class="btn primary" type="submit" title="Generate resume match">✦ Analyse &amp; Generate Match</button>
+                <button class="btn secondary" type="button" id="resume-reset" title="Clear resume matcher">Clear All</button>
+              </div>
+            </section>
+          </form>
+          <article class="resume-output" aria-label="Resume match result">
+            <section class="resume-panel">
+              <h2>4. Match Analysis</h2>
+              <p class="resume-note" id="resume-match-status">No resume match generated yet.</p>
+              <div class="resume-analysis-grid">
+                <section class="resume-report-section">
+                  <div class="resume-score" id="resume-score-card" hidden>
+                    <span class="resume-score-value" id="resume-score-value">0%</span>
+                    <div>
+                      <h2 id="resume-vacancy-title">Vacancy match</h2>
+                      <p id="resume-vacancy-meta">Waiting for input.</p>
+                    </div>
+                  </div>
+                  <div class="resume-metric-list" aria-label="Match score breakdown">
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Skills Match</span><span id="resume-skills-score">0%</span></div>
+                      <div class="resume-meter"><span id="resume-skills-meter" style="width: 0%"></span></div>
+                    </div>
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Experience Match</span><span id="resume-experience-score">0%</span></div>
+                      <div class="resume-meter is-warm"><span id="resume-experience-meter" style="width: 0%"></span></div>
+                    </div>
+                    <div class="resume-metric">
+                      <div class="resume-metric-row"><span>Keywords Match</span><span id="resume-keywords-score">0%</span></div>
+                      <div class="resume-meter"><span id="resume-keywords-meter" style="width: 0%"></span></div>
+                    </div>
+                  </div>
+                </section>
+                <section class="resume-report-section resume-keyword-columns">
+                  <div>
+                    <p class="summary-title">Key Strengths</p>
+                    <div class="keyword-cloud" id="resume-matched-keywords"></div>
+                  </div>
+                  <div>
+                    <p class="summary-title">Missing Keywords</p>
+                    <div class="keyword-cloud" id="resume-missing-keywords"></div>
+                  </div>
+                </section>
+                <section class="resume-report-section">
+                  <p class="summary-title">Recommendations</p>
+                  <div class="resume-recommendation-list" id="resume-recommendations">
+                    <div class="empty">Run the matcher to see recommendations.</div>
+                  </div>
+                </section>
+              </div>
+            </section>
+            <section class="resume-panel">
+              <div class="resume-result-head">
+                <div>
+                  <h2>5. Tailored Resume Output</h2>
+                  <p>Your optimized resume ready to download</p>
+                </div>
+              </div>
+              <div class="resume-output-grid">
+                <div>
+                  <p class="summary-title">Preview (First 500 characters)</p>
+                  <textarea class="resume-result-text" id="resume_result" readonly placeholder="Generated draft will appear here."></textarea>
+                </div>
+                <div>
+                  <p class="summary-title">Download Files</p>
+                  <div class="resume-download-grid">
+                    <button class="resume-copy-card" type="button" id="resume-copy" title="Copy tailored resume draft">
+                      <span class="resume-download-icon" aria-hidden="true">TXT</span>
+                      <span>Copy Draft<small>Generated resume text</small></span>
+                    </button>
+                    <a class="resume-download-card" id="resume-download-pdf" href="#" download="tailored-resume.pdf" hidden>
+                      <span class="resume-download-icon" aria-hidden="true">PDF</span>
+                      <span>Download PDF<small>Portable Document Format</small></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="resume-tip">Tip: Review the recommendations above and customize the generated resume to better highlight your most relevant achievements.</div>
+            </section>
+          </article>
+        </section>
+      </section>
+      <section class="workspace-panel" id="public-stats-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Public Stats</p>
+            <h1>Create Public Snapshot</h1>
+            <p class="sub">Visual shell for building anonymized public statistics snapshots from local vacancy databases.</p>
+          </div>
+        </div>
+        <section class="parser-grid" aria-label="Public statistics snapshot builder">
+          <form class="parser-panel" autocomplete="off">
+            <h2>Snapshot Parameters</h2>
+            <p>Select the source databases and output targets for a future public statistics build.</p>
+            <table class="source-table" aria-label="Public statistics sources">
+              <thead>
+                <tr>
+                  <th scope="col">Use</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Database</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobs_ch" checked aria-label="Use jobs_ch statistics"></td>
+                  <td class="source-name">jobs_ch</td>
+                  <td>runtime/jobs_ch/main-config/jobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobscout24_ch" checked aria-label="Use jobscout24_ch statistics"></td>
+                  <td class="source-name">jobscout24_ch</td>
+                  <td>runtime/jobscout24_ch/main-config/jobscout24_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="jobup_ch" checked aria-label="Use jobup_ch statistics"></td>
+                  <td class="source-name">jobup_ch</td>
+                  <td>runtime/jobup_ch/main-config/jobup_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="linked_in" checked aria-label="Use linked_in statistics"></td>
+                  <td class="source-name">linked_in</td>
+                  <td>runtime/linked_in/main-config/linked_in.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+                <tr>
+                  <td><input class="source-check" type="checkbox" name="stats_source" value="swissdevjobs_ch" checked aria-label="Use swissdevjobs_ch statistics"></td>
+                  <td class="source-name">swissdevjobs_ch</td>
+                  <td>runtime/swissdevjobs_ch/main-config/swissdevjobs_ch.sqlite</td>
+                  <td><span class="source-status">Ready</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="field">
+                <label for="stats_snapshot_date">Snapshot date</label>
+                <input id="stats_snapshot_date" name="stats_snapshot_date" type="text" inputmode="numeric" pattern="\\d{2}\\.\\d{2}\\.\\d{4}" placeholder="dd.mm.yyyy">
+              </div>
+              <div class="field">
+                <label for="stats_min_salary_count">Salary group minimum</label>
+                <input id="stats_min_salary_count" name="stats_min_salary_count" type="number" min="1" placeholder="10">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="stats_output_dir">Output directory</label>
+                <input id="stats_output_dir" name="stats_output_dir" placeholder="public_stats">
+              </div>
+              <div class="field">
+                <label for="stats_site_dir">Site data directory</label>
+                <input id="stats_site_dir" name="stats_site_dir" placeholder="site/public">
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Generate JSON snapshot</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Generate CSV exports</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Sync website data</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="button" title="Build public statistics snapshot">Build Snapshot</button>
+              <button class="btn secondary" type="button" title="Preview public statistics command shell">Preview Command</button>
+            </div>
+          </form>
+          <article class="parser-panel" aria-label="Public snapshot run preview">
+            <h2>Run Preview</h2>
+            <p>This panel will show snapshot generation status, exported file counts, and website sync results when the builder is connected.</p>
+            <div class="parser-preview">
+              <div class="parser-step">
+                <span class="step-index">1</span>
+                <span><strong class="step-title">Load vacancy data</strong>Read selected local SQLite databases and merge provider datasets.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">2</span>
+                <span><strong class="step-title">Build statistics</strong>Aggregate market overview, trends, salary groups, roles, locations, and skills.</span>
+              </div>
+              <div class="parser-step">
+                <span class="step-index">3</span>
+                <span><strong class="step-title">Publish snapshot</strong>Write anonymized JSON and CSV files for the public analytics site.</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+      <section class="workspace-panel" id="settings-workspace" hidden>
+        <div class="toolbar">
+          <div>
+            <p class="section-kicker">Settings</p>
+            <h1>Application Settings</h1>
+            <p class="sub">Manage local source controls, exports, and GPT API token.</p>
+          </div>
+        </div>
+        <section class="settings-grid" aria-label="Application settings">
+          <article class="settings-panel is-wide">
+            <h2>OpenAI GPT</h2>
+            <p>Save the API token to .env.</p>
+            <form id="openai-settings-form" autocomplete="off">
+              <div class="settings-form-grid">
+                <div class="field">
+                  <label for="openai_api_key">API token</label>
+                  <input id="openai_api_key" name="openai_api_key" type="password" placeholder="sk-..." autocomplete="off">
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn primary" type="submit" title="Save API token">Save API Token</button>
+              </div>
+            </form>
+          </article>
+          <article class="settings-panel">
+            <h2>Vacancy Sources</h2>
+            <p>Connect and select local databases for browsing, search, and future synchronization.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Use main-config databases</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Show test databases</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+          <article class="settings-panel">
+            <h2>Statistics Builder</h2>
+            <p>Reserved for running public statistics generation separately from vacancy browsing.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Update public CSV files</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Save JSON snapshots</span>
+                <span class="switch is-on" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+          <article class="settings-panel">
+            <h2>Interface</h2>
+            <p>Display settings for results, vacancy cards, and local helper content.</p>
+            <div class="settings-row">
+              <div class="setting-toggle">
+                <span>Compact vacancy cards</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+              <div class="setting-toggle">
+                <span>Show JSON details</span>
+                <span class="switch" aria-hidden="true"></span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+  <aside class="log-drawer" id="log-drawer" aria-label="Application logs" aria-hidden="true">
+    <button class="log-toggle" id="log-toggle" type="button" aria-controls="log-drawer" aria-expanded="false" title="Open application logs">☰</button>
+    <div class="log-head">
+      <div>
+        <p class="log-title">Application Logs</p>
+        <p class="log-subtitle">Search, collection, AI analysis, and public snapshot events.</p>
+      </div>
+      <button class="log-close" id="log-close" type="button" aria-label="Close logs">×</button>
+    </div>
+    <div class="log-list" id="log-list" role="log" aria-live="polite"></div>
+    <div class="log-actions">
+      <button class="log-clear" id="log-clear" type="button">Clear logs</button>
+    </div>
+  </aside>
+  <script>
+    const appEl = document.querySelector("#app");
+    const menuButtons = Array.from(document.querySelectorAll("[data-view-target]"));
+    const vacanciesWorkspaceEl = document.querySelector("#vacancies-workspace");
+    const parserWorkspaceEl = document.querySelector("#parser-workspace");
+    const aiAnalyseWorkspaceEl = document.querySelector("#ai-analyse-workspace");
+    const resumeMatcherWorkspaceEl = document.querySelector("#resume-matcher-workspace");
+    const publicStatsWorkspaceEl = document.querySelector("#public-stats-workspace");
+    const settingsWorkspaceEl = document.querySelector("#settings-workspace");
+    const openAiSettingsFormEl = document.querySelector("#openai-settings-form");
+    const openAiApiKeyEl = document.querySelector("#openai_api_key");
+    const resumeMatchFormEl = document.querySelector("#resume-match-form");
+    const vacancySourceModeEl = document.querySelector("#vacancy_source_mode");
+    const vacancySourceModeButtons = Array.from(document.querySelectorAll("[data-vacancy-source-mode]"));
+    const vacancySourcePanes = Array.from(document.querySelectorAll("[data-vacancy-source-pane]"));
+    const vacancyUrlEl = document.querySelector("#vacancy_url");
+    const vacancyIdEl = document.querySelector("#vacancy_id");
+    const vacancyDatabaseEl = document.querySelector("#vacancy_database");
+    const targetTitleEl = document.querySelector("#target_title");
+    const vacancyDescriptionEl = document.querySelector("#job_description");
+    const vacancyDescriptionLabelEl = document.querySelector('label[for="job_description"]');
+    const resumeLocalQueryEl = document.querySelector("#resume_local_query");
+    const resumeLocalSearchEl = document.querySelector("#resume-local-search");
+    const resumeLocalResultsEl = document.querySelector("#resume-local-results");
+    const resumeResetEl = document.querySelector("#resume-reset");
+    const resumeCopyEl = document.querySelector("#resume-copy");
+    const resumePdfInputEl = document.querySelector("#resume_pdf");
+    const resumeTextEl = document.querySelector("#resume_text");
+    const resumeInputModeEl = document.querySelector("#resume_input_mode");
+    const resumeInputModeButtons = Array.from(document.querySelectorAll("[data-resume-input-mode]"));
+    const resumeInputPanes = Array.from(document.querySelectorAll("[data-resume-input-pane]"));
+    const resumeClearFileEl = document.querySelector("#resume-clear-file");
+    const resumeFileNameEl = document.querySelector("#resume-file-name");
+    const resumeDropHintEl = document.querySelector("#resume-drop-hint");
+    const resumeReviewFileEl = document.querySelector("#resume-review-file");
+    const resumeReviewTextEl = document.querySelector("#resume-review-text");
+    const resumeReviewPreviewEl = document.querySelector("#resume-review-preview");
+    const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
+    const resumeStatusEl = document.querySelector("#resume-match-status");
+    const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
+    const resumeVacancyPreviewEl = document.querySelector("#resume-vacancy-preview");
+    const resumeScoreCardEl = document.querySelector("#resume-score-card");
+    const resumeScoreValueEl = document.querySelector("#resume-score-value");
+    const resumeVacancyTitleEl = document.querySelector("#resume-vacancy-title");
+    const resumeVacancyMetaEl = document.querySelector("#resume-vacancy-meta");
+    const resumeSkillsScoreEl = document.querySelector("#resume-skills-score");
+    const resumeExperienceScoreEl = document.querySelector("#resume-experience-score");
+    const resumeKeywordsScoreEl = document.querySelector("#resume-keywords-score");
+    const resumeSkillsMeterEl = document.querySelector("#resume-skills-meter");
+    const resumeExperienceMeterEl = document.querySelector("#resume-experience-meter");
+    const resumeKeywordsMeterEl = document.querySelector("#resume-keywords-meter");
+    const resumeMatchedKeywordsEl = document.querySelector("#resume-matched-keywords");
+    const resumeMissingKeywordsEl = document.querySelector("#resume-missing-keywords");
+    const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
+    const resumeResultEl = document.querySelector("#resume_result");
+    const logToggleEl = document.querySelector("#log-toggle");
+    const logDrawerEl = document.querySelector("#log-drawer");
+    const logCloseEl = document.querySelector("#log-close");
+    const logListEl = document.querySelector("#log-list");
+    const logClearEl = document.querySelector("#log-clear");
+    const workspaceKickerEl = document.querySelector("#workspace-kicker");
+    const form = document.querySelector("#search-form");
+    const resultsEl = document.querySelector("#results");
+    const errorsEl = document.querySelector("#errors");
+    const databaseSummaryEl = document.querySelector("#database-summary");
+    const paginationEl = document.querySelector("#pagination");
+    const subtitleEl = document.querySelector("#subtitle");
+    const resetBtn = document.querySelector("#reset");
+    const resultTitleEl = document.querySelector("#result-title");
+    const salaryMinInput = document.querySelector("#salary_min");
+    const salaryMaxInput = document.querySelector("#salary_max");
+    const salaryMinRange = document.querySelector("#salary_min_range");
+    const salaryMaxRange = document.querySelector("#salary_max_range");
+    const salaryMinText = document.querySelector("#salary_min_text");
+    const salaryMaxText = document.querySelector("#salary_max_text");
+    const salaryTrack = document.querySelector("#salary-track");
+    const salaryRangeMax = Number(salaryMaxRange.max);
+    const pageSize = 10;
+    const maxLogEntries = 80;
+    const logs = [];
+    const parserRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
+    const aiAnalysisRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
+    const publicStatsRunState = {
+      runId: "",
+      lastSeq: 0,
+      timer: 0,
+      status: "idle",
+    };
+    let currentPage = 1;
+    let currentView = "vacancies";
+    let resumePdfObjectUrl = "";
+    let resumeLocalSearchResults = [];
+
+    const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[char]));
+    const formatChf = (value) => `${Number(value).toLocaleString("en-US")} CHF`;
+    const viewLabels = {
+      vacancies: "Vacancy Browser",
+      search: "Vacancy Search",
+      "ai-analyse": "AI Analyse",
+      "resume-matcher": "Resume matcher",
+      "public-stats": "Public Stats",
+      settings: "Settings",
+    };
+
+    function formatLogTime(date) {
+      return date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    }
+
+    function renderLogs() {
+      if (!logs.length) {
+        logListEl.innerHTML = '<div class="empty">No log entries yet.</div>';
+        return;
+      }
+      logListEl.innerHTML = logs.map((entry) => `
+        <article class="log-entry is-${esc(entry.level)}">
+          <div class="log-entry-head">
+            <span class="log-entry-title">${esc(entry.title)}</span>
+            <span class="log-entry-time">${esc(entry.time)}</span>
+          </div>
+          <p class="log-entry-message">${esc(entry.message)}</p>
+        </article>
+      `).join("");
+      logListEl.scrollTop = 0;
+    }
+
+    function addLog(title, message, level = "info") {
+      logs.unshift({ title, message, level, time: formatLogTime(new Date()) });
+      if (logs.length > maxLogEntries) logs.length = maxLogEntries;
+      renderLogs();
+    }
+
+    async function saveOpenAiSettings() {
+      const payload = {
+        api_key: openAiApiKeyEl.value.trim(),
+      };
+      try {
+        const response = await fetch("/api/settings/openai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to save OpenAI settings.");
+        }
+        openAiApiKeyEl.value = "";
+        addLog("Settings", "Saved API token.", "success");
+      } catch (error) {
+        addLog("Settings", error.message || String(error), "error");
+      }
+    }
+
+    function setLogDrawer(open) {
+      logDrawerEl.classList.toggle("is-open", open);
+      logDrawerEl.setAttribute("aria-hidden", String(!open));
+      logToggleEl.setAttribute("aria-expanded", String(open));
+    }
+
+    function parserLogTitle(entry) {
+      const source = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `Parser${source}${stream}`;
+    }
+
+    function ingestParserLogs(payload) {
+      for (const entry of payload.logs || []) {
+        parserRunState.lastSeq = Math.max(parserRunState.lastSeq, Number(entry.seq || 0));
+        addLog(parserLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      parserRunState.status = payload.status || parserRunState.status;
+    }
+
+    async function pollParserRun() {
+      if (!parserRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: parserRunState.runId,
+          after: String(parserRunState.lastSeq),
+        });
+        const response = await fetch(`/api/parser-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("Parser", payload.error || "Failed to read parser logs.", "error");
+          window.clearInterval(parserRunState.timer);
+          parserRunState.timer = 0;
+          return;
+        }
+        ingestParserLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(parserRunState.timer);
+          parserRunState.timer = 0;
+          parserRunState.runId = "";
+          loadFacets().then(() => runSearch(1)).catch((error) => {
+            addLog("Vacancy Search", error.message || String(error), "error");
+          });
+        }
+      } catch (error) {
+        addLog("Parser", error.message || String(error), "error");
+        window.clearInterval(parserRunState.timer);
+        parserRunState.timer = 0;
+      }
+    }
+
+    function collectParserPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="parser_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        mode: document.querySelector("#parser_mode")?.value || "new",
+        canton: document.querySelector("#parser_canton")?.value || "",
+        term: document.querySelector("#parser_term")?.value || "",
+        location: document.querySelector("#parser_location")?.value || "",
+        max_pages: document.querySelector("#parser_pages")?.value || "",
+        detail_limit: document.querySelector("#parser_detail_limit")?.value || "",
+      };
+    }
+
+    async function startParserRun() {
+      if (parserRunState.timer) {
+        addLog("Vacancy Collection", "Parser run is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectParserPayload();
+      if (!payload.sources.length) {
+        addLog("Vacancy Collection", "Select at least one parser source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("Vacancy Collection", `Starting parser run for ${payload.sources.join(", ")}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/parser-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("Vacancy Collection", data.error || "Failed to start parser run.", "error");
+          return;
+        }
+        parserRunState.runId = data.id;
+        parserRunState.lastSeq = 0;
+        parserRunState.status = data.status;
+        ingestParserLogs(data);
+        parserRunState.timer = window.setInterval(pollParserRun, 1000);
+        pollParserRun();
+      } catch (error) {
+        addLog("Vacancy Collection", error.message || String(error), "error");
+      }
+    }
+
+    function aiAnalysisLogTitle(entry) {
+      const source = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `AI Analyse${source}${stream}`;
+    }
+
+    function ingestAiAnalysisLogs(payload) {
+      for (const entry of payload.logs || []) {
+        aiAnalysisRunState.lastSeq = Math.max(aiAnalysisRunState.lastSeq, Number(entry.seq || 0));
+        addLog(aiAnalysisLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      aiAnalysisRunState.status = payload.status || aiAnalysisRunState.status;
+    }
+
+    async function pollAiAnalysisRun() {
+      if (!aiAnalysisRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: aiAnalysisRunState.runId,
+          after: String(aiAnalysisRunState.lastSeq),
+        });
+        const response = await fetch(`/api/ai-analysis-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("AI Analyse", payload.error || "Failed to read AI analysis logs.", "error");
+          window.clearInterval(aiAnalysisRunState.timer);
+          aiAnalysisRunState.timer = 0;
+          return;
+        }
+        ingestAiAnalysisLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(aiAnalysisRunState.timer);
+          aiAnalysisRunState.timer = 0;
+          aiAnalysisRunState.runId = "";
+          loadFacets().then(() => runSearch(1)).catch((error) => {
+            addLog("Vacancy Search", error.message || String(error), "error");
+          });
+        }
+      } catch (error) {
+        addLog("AI Analyse", error.message || String(error), "error");
+        window.clearInterval(aiAnalysisRunState.timer);
+        aiAnalysisRunState.timer = 0;
+      }
+    }
+
+    function collectAiAnalysisPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="analysis_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        scope: document.querySelector("#analysis_scope")?.value || "new vacancies only",
+        model: document.querySelector("#analysis_model")?.value || "gpt-5-nano",
+        first_seen_from: document.querySelector("#analysis_date_from")?.value || "",
+        first_seen_to: document.querySelector("#analysis_date_to")?.value || "",
+        limit: document.querySelector("#analysis_limit")?.value || "",
+      };
+    }
+
+    async function startAiAnalysisRun() {
+      if (aiAnalysisRunState.timer) {
+        addLog("AI Analyse", "AI analysis run is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectAiAnalysisPayload();
+      if (!payload.sources.length) {
+        addLog("AI Analyse", "Select at least one AI analysis source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("AI Analyse", `Starting AI analysis for ${payload.sources.join(", ")} with ${payload.model}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/ai-analysis-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("AI Analyse", data.error || "Failed to start AI analysis run.", "error");
+          return;
+        }
+        aiAnalysisRunState.runId = data.id;
+        aiAnalysisRunState.lastSeq = 0;
+        aiAnalysisRunState.status = data.status;
+        ingestAiAnalysisLogs(data);
+        aiAnalysisRunState.timer = window.setInterval(pollAiAnalysisRun, 1000);
+        pollAiAnalysisRun();
+      } catch (error) {
+        addLog("AI Analyse", error.message || String(error), "error");
+      }
+    }
+
+    function publicStatsLogTitle(entry) {
+      const stage = entry.source ? ` ${entry.source}` : "";
+      const stream = entry.stream && entry.stream !== "system" ? ` ${entry.stream}` : "";
+      return `Public Stats${stage}${stream}`;
+    }
+
+    function ingestPublicStatsLogs(payload) {
+      for (const entry of payload.logs || []) {
+        publicStatsRunState.lastSeq = Math.max(publicStatsRunState.lastSeq, Number(entry.seq || 0));
+        addLog(publicStatsLogTitle(entry), entry.message || "", entry.level || "info");
+      }
+      publicStatsRunState.status = payload.status || publicStatsRunState.status;
+    }
+
+    async function pollPublicStatsRun() {
+      if (!publicStatsRunState.runId) return;
+      try {
+        const params = new URLSearchParams({
+          run_id: publicStatsRunState.runId,
+          after: String(publicStatsRunState.lastSeq),
+        });
+        const response = await fetch(`/api/public-stats-runs?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          addLog("Public Stats", payload.error || "Failed to read public stats logs.", "error");
+          window.clearInterval(publicStatsRunState.timer);
+          publicStatsRunState.timer = 0;
+          return;
+        }
+        ingestPublicStatsLogs(payload);
+        if (["completed", "failed"].includes(payload.status)) {
+          window.clearInterval(publicStatsRunState.timer);
+          publicStatsRunState.timer = 0;
+          publicStatsRunState.runId = "";
+        }
+      } catch (error) {
+        addLog("Public Stats", error.message || String(error), "error");
+        window.clearInterval(publicStatsRunState.timer);
+        publicStatsRunState.timer = 0;
+      }
+    }
+
+    function collectPublicStatsPayload() {
+      const sources = Array.from(document.querySelectorAll('input[name="stats_source"]:checked'))
+        .map((input) => input.value);
+      return {
+        sources,
+        snapshot_date: document.querySelector("#stats_snapshot_date")?.value || "",
+        salary_group_minimum: document.querySelector("#stats_min_salary_count")?.value || "",
+        output_dir: document.querySelector("#stats_output_dir")?.value || "public_stats",
+        site_dir: document.querySelector("#stats_site_dir")?.value || "site/public",
+        sync_site: true,
+      };
+    }
+
+    async function startPublicStatsRun() {
+      if (publicStatsRunState.timer) {
+        addLog("Public Stats", "Public stats build is already active.", "warning");
+        setLogDrawer(true);
+        return;
+      }
+      const payload = collectPublicStatsPayload();
+      if (!payload.sources.length) {
+        addLog("Public Stats", "Select at least one public stats source.", "error");
+        setLogDrawer(true);
+        return;
+      }
+      addLog("Public Stats", `Starting public stats build for ${payload.sources.join(", ")}.`);
+      setLogDrawer(true);
+      try {
+        const response = await fetch("/api/public-stats-runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          addLog("Public Stats", data.error || "Failed to start public stats build.", "error");
+          return;
+        }
+        publicStatsRunState.runId = data.id;
+        publicStatsRunState.lastSeq = 0;
+        publicStatsRunState.status = data.status;
+        ingestPublicStatsLogs(data);
+        publicStatsRunState.timer = window.setInterval(pollPublicStatsRun, 1000);
+        pollPublicStatsRun();
+      } catch (error) {
+        addLog("Public Stats", error.message || String(error), "error");
+      }
+    }
+
+    function syncSalaryTrack() {
+      const min = Number(salaryMinRange.value);
+      const max = Number(salaryMaxRange.value);
+      const left = (min / salaryRangeMax) * 100;
+      const right = (max / salaryRangeMax) * 100;
+      salaryTrack.style.background = `linear-gradient(90deg, #e5e7eb 0%, #e5e7eb ${left}%, var(--accent) ${left}%, var(--accent) ${right}%, #e5e7eb ${right}%, #e5e7eb 100%)`;
+      salaryMinText.textContent = min > 0 ? formatChf(min) : "Any min";
+      salaryMaxText.textContent = max < salaryRangeMax ? formatChf(max) : "Any max";
+    }
+
+    function syncSalaryInputsFromRange(changed) {
+      let min = Number(salaryMinRange.value);
+      let max = Number(salaryMaxRange.value);
+      if (min > max) {
+        if (changed === "min") {
+          max = min;
+          salaryMaxRange.value = String(max);
+        } else {
+          min = max;
+          salaryMinRange.value = String(min);
+        }
+      }
+      salaryMinInput.value = min > 0 ? String(min) : "";
+      salaryMaxInput.value = max < salaryRangeMax ? String(max) : "";
+      syncSalaryTrack();
+    }
+
+    function syncSalaryRangeFromInputs() {
+      const min = Math.max(0, Math.min(Number(salaryMinInput.value || 0), salaryRangeMax));
+      const maxRaw = salaryMaxInput.value ? Number(salaryMaxInput.value) : salaryRangeMax;
+      const max = Math.max(0, Math.min(maxRaw, salaryRangeMax));
+      salaryMinRange.value = String(Math.min(min, max));
+      salaryMaxRange.value = String(Math.max(min, max));
+      syncSalaryTrack();
+    }
+
+    function setOptions(select, items) {
+      const current = select.value;
+      select.innerHTML = '<option value="">Any</option>' + items.map((item) => {
+        const label = `${item.value} (${item.count})`;
+        return `<option value="${esc(item.value)}">${esc(label)}</option>`;
+      }).join("");
+      select.value = current;
+    }
+
+    function setDatalist(id, items) {
+      document.querySelector(id).innerHTML = items.map((item) =>
+        `<option value="${esc(item.value)}"></option>`
+      ).join("");
+    }
+
+    function mergeFacetItems(items) {
+      const merged = new Map();
+      for (const item of items) {
+        const key = item.value;
+        if (!key) continue;
+        merged.set(key, (merged.get(key) || 0) + Number(item.count || 0));
+      }
+      return Array.from(merged.entries())
+        .map(([value, count]) => ({ value, count }))
+        .sort((left, right) => right.count - left.count || left.value.localeCompare(right.value));
+    }
+
+    function normalizeDateParam(key, value) {
+      if (!["date_from", "date_to"].includes(key)) return value;
+      const match = value.match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);
+      if (!match) return value;
+      return `${match[3]}-${match[2]}-${match[1]}`;
+    }
+
+    function buildParams(page = currentPage) {
+      const data = new FormData(form);
+      const params = new URLSearchParams();
+      for (const [key, value] of data.entries()) {
+        const clean = String(value).trim();
+        if (clean) params.set(key, normalizeDateParam(key, clean));
+      }
+      params.set("page", String(page));
+      params.set("per_page", String(pageSize));
+      return params;
+    }
+
+    function activateMenu(view) {
+      for (const button of menuButtons) {
+        const isActive = button.dataset.viewTarget === view;
+        button.classList.toggle("is-active", isActive);
+        if (isActive) {
+          button.setAttribute("aria-current", "page");
+        } else {
+          button.removeAttribute("aria-current");
+        }
+      }
+    }
+
+    function setView(view, options = {}) {
+      currentView = view;
+      appEl.classList.remove("view-vacancies", "view-search", "view-ai-analyse", "view-resume-matcher", "view-public-stats", "view-settings");
+      appEl.classList.add(`view-${view}`);
+      activateMenu(view);
+
+      const isParser = view === "search";
+      const isAiAnalyse = view === "ai-analyse";
+      const isResumeMatcher = view === "resume-matcher";
+      const isPublicStats = view === "public-stats";
+      const isSettings = view === "settings";
+      vacanciesWorkspaceEl.hidden = isParser || isAiAnalyse || isResumeMatcher || isPublicStats || isSettings;
+      parserWorkspaceEl.hidden = !isParser;
+      aiAnalyseWorkspaceEl.hidden = !isAiAnalyse;
+      resumeMatcherWorkspaceEl.hidden = !isResumeMatcher;
+      publicStatsWorkspaceEl.hidden = !isPublicStats;
+      settingsWorkspaceEl.hidden = !isSettings;
+
+      if (view === "vacancies") {
+        workspaceKickerEl.textContent = "Vacancy Browser";
+        if (options.resetFilters) {
+          form.reset();
+          syncSalaryInputsFromRange();
+          currentPage = 1;
+          runSearch(1);
+        }
+        return;
+      }
+
+    }
+
+    function renderErrors(errors) {
+      if (!errors || !errors.length) {
+        errorsEl.innerHTML = "";
+        return;
+      }
+      errorsEl.innerHTML = `<div class="error">${esc(errors.length)} local database error(s). Check terminal output or database schema.</div>`;
+    }
+
+    function renderSummaryBlock(title, items) {
+      if (!items || !items.length) return "";
+      return `
+        <div class="summary-block">
+          <p class="summary-title">${esc(title)}</p>
+          <div class="summary-list">
+            ${items.map((item) => `
+              <div class="summary-item">
+                <span title="${esc(item.path || item.value || item.label)}">${esc(item.label || item.value)}</span>
+                <span class="summary-count">${esc(item.count)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function getVisiblePages(page, totalPages) {
+      if (totalPages <= 7) {
+        return Array.from({ length: totalPages }, (_, index) => index + 1);
+      }
+      const pages = new Set([1, totalPages, page - 1, page, page + 1]);
+      if (page <= 3) {
+        pages.add(2);
+        pages.add(3);
+        pages.add(4);
+      }
+      if (page >= totalPages - 2) {
+        pages.add(totalPages - 3);
+        pages.add(totalPages - 2);
+        pages.add(totalPages - 1);
+      }
+      return [...pages]
+        .filter((item) => item >= 1 && item <= totalPages)
+        .sort((left, right) => left - right);
+    }
+
+    function renderPagination(payload) {
+      const totalPages = Number(payload.total_pages || 1);
+      const page = Number(payload.page || 1);
+      if (totalPages <= 1) {
+        paginationEl.innerHTML = "";
+        return;
+      }
+      const pages = getVisiblePages(page, totalPages);
+      const pageButtons = [];
+      let previousPage = 0;
+      for (const item of pages) {
+        if (previousPage && item - previousPage > 1) {
+          pageButtons.push('<span class="page-gap" aria-hidden="true">...</span>');
+        }
+        pageButtons.push(`
+          <button class="page-btn ${item === page ? "is-active" : ""}" type="button" data-page="${item}" ${item === page ? 'aria-current="page"' : ""}>
+            ${item}
+          </button>
+        `);
+        previousPage = item;
+      }
+      paginationEl.innerHTML = `
+        <button class="page-btn" type="button" data-page="${page - 1}" ${page <= 1 ? "disabled" : ""} aria-label="Previous page">‹</button>
+        ${pageButtons.join("")}
+        <button class="page-btn" type="button" data-page="${page + 1}" ${page >= totalPages ? "disabled" : ""} aria-label="Next page">›</button>
+      `;
+    }
+
+    function isPlainObject(value) {
+      return value && typeof value === "object" && !Array.isArray(value);
+    }
+
+    function hasDetailValue(value) {
+      if (value === null || value === undefined || value === "") return false;
+      if (Array.isArray(value)) return value.length > 0;
+      if (isPlainObject(value)) return Object.keys(value).length > 0;
+      return true;
+    }
+
+    function formatDetailValue(value) {
+      if (Array.isArray(value)) return value.join(", ");
+      if (isPlainObject(value)) return JSON.stringify(value);
+      if (typeof value === "boolean") return value ? "Yes" : "No";
+      return String(value ?? "");
+    }
+
+    function makeDomId(prefix, value, index) {
+      const clean = String(value || index).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "");
+      return `${prefix}-${clean || index}-${index}`;
+    }
+
+    function renderDetailGrid(rows) {
+      const items = rows.filter(([, value]) => hasDetailValue(value));
+      if (!items.length) return "";
+      return `
+        <div class="details-grid">
+          ${items.map(([label, value]) => `
+            <div class="detail-item">
+              <span class="detail-label">${esc(label)}</span>
+              <div class="detail-value">${esc(formatDetailValue(value))}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderJsonSection(title, value) {
+      if (!hasDetailValue(value)) return "";
+      return `
+        <section class="detail-section json-section" hidden>
+          <h3 class="detail-section-title">${esc(title)}</h3>
+          <pre class="detail-json">${esc(JSON.stringify(value, null, 2))}</pre>
+        </section>
+      `;
+    }
+
+    function renderJobDetails(job, detailsId) {
+      const jsonSections = [
+        renderJsonSection("Analytics", job.analytics),
+        renderJsonSection("LLM analysis", job.llm_analysis),
+        renderJsonSection("Job posting schema", job.job_posting_schema),
+        renderJsonSection("Raw vacancy data", job.raw),
+      ].filter(Boolean).join("");
+      const rows = [
+        ["Vacancy ID", job.id],
+        ["Database", job.database],
+        ["Source", job.source],
+        ["URL", job.url],
+        ["Company", job.company],
+        ["Location", job.location],
+        ["Employment type", job.employment_type],
+        ["Role", job.role],
+        ["Seniority", job.seniority],
+        ["Detected seniority", job.detected_seniority],
+        ["Remote mode", job.remote_mode],
+        ["Salary", job.salary],
+        ["Salary minimum", job.salary_min],
+        ["Salary maximum", job.salary_max],
+        ["Salary currency", job.salary_currency],
+        ["Salary unit", job.salary_unit],
+        ["Published", job.publication_date],
+        ["First seen", job.first_seen_at],
+        ["Last seen", job.last_seen_at],
+        ["Detail skipped", job.detail_schema_skipped],
+        ["Detail error", job.detail_schema_error],
+        ["LLM model", job.llm_model],
+        ["LLM analyzed at", job.llm_analyzed_at],
+      ];
+      return `
+        <section class="job-details-panel" id="${detailsId}" hidden>
+          ${renderDetailGrid(rows)}
+          ${job.description_text ? `
+            <section class="detail-section">
+              <h3 class="detail-section-title">Description</h3>
+              <p class="detail-description">${esc(job.description_text)}</p>
+            </section>
+          ` : ""}
+          ${jsonSections ? `
+            <button class="details-toggle json-toggle" type="button" aria-expanded="false" data-json-toggle>Show JSON</button>
+            ${jsonSections}
+          ` : ""}
+        </section>
+      `;
+    }
+
+    function renderResults(payload) {
+      renderErrors(payload.database_errors);
+      currentPage = Number(payload.page || 1);
+      resultTitleEl.innerHTML = `Found <strong>${esc(payload.total ?? payload.count)}</strong> jobs`;
+      renderPagination(payload);
+      if (!payload.results.length) {
+        resultsEl.innerHTML = '<div class="empty">No vacancies match these filters.</div>';
+        return;
+      }
+      resultsEl.innerHTML = payload.results.map((job, index) => {
+        const initial = String(job.company || job.title || "?").trim().slice(0, 1) || "?";
+        const detailsId = makeDomId("job-details", job.id, index);
+        const tags = [
+          job.role ? `<span class="tag role">${esc(job.role)}</span>` : "",
+          job.seniority ? `<span class="tag warn">${esc(job.seniority)}</span>` : "",
+          job.remote_mode ? `<span class="tag">${esc(job.remote_mode)}</span>` : "",
+          ...job.matched_keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`),
+          ...job.skills.map((skill) => `<span class="tag">${esc(skill)}</span>`)
+        ].filter(Boolean).join("");
+        return `
+          <article class="job">
+            <div class="job-head">
+              <div class="company-mark" aria-hidden="true">${esc(initial)}</div>
+              <div>
+                <h2>${esc(job.title || "Untitled vacancy")}</h2>
+                <div class="company">${esc(job.company || "-")}</div>
+                <div class="meta">
+                  <span>${esc(job.location || "-")}</span>
+                  <span>${esc(job.source || "-")}</span>
+                  <span>${esc(job.publication_date || job.last_seen_at || "-")}</span>
+                </div>
+              </div>
+              <div class="job-side">
+                <div class="salary">${esc(job.salary || "")}</div>
+                <div class="job-actions">
+                  <button class="details-toggle" type="button" aria-expanded="false" aria-controls="${detailsId}" data-details-target="${detailsId}">Details</button>
+                  ${job.url ? `<a class="open-link" href="${esc(job.url)}" target="_blank" rel="noreferrer" title="Open original vacancy">Open</a>` : ""}
+                </div>
+              </div>
+            </div>
+            ${tags ? `<div class="tags">${tags}</div>` : ""}
+            ${job.description_preview ? `<p class="preview">${esc(job.description_preview)}${job.description_preview.length >= 420 ? "..." : ""}</p>` : ""}
+            ${renderJobDetails(job, detailsId)}
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function loadFacets() {
+      addLog("Facets", "Loading local database facets.");
+      const response = await fetch("/api/facets");
+      const facets = await response.json();
+      setOptions(document.querySelector("#source"), facets.sources || []);
+      setOptions(document.querySelector("#role"), mergeFacetItems([
+        ...(facets.terms?.role_family_primary || []),
+        ...(facets.terms?.role_family || [])
+      ]));
+      setOptions(document.querySelector("#seniority"), facets.terms?.seniority || []);
+      setOptions(document.querySelector("#location"), facets.locations || []);
+      setDatalist("#skill-list", mergeFacetItems([
+        ...(facets.terms?.programming_language || []),
+        ...(facets.terms?.framework_library || []),
+        ...(facets.terms?.cloud_platform || []),
+        ...(facets.terms?.database || []),
+        ...(facets.terms?.tool || [])
+      ]));
+      setDatalist("#keyword-list", mergeFacetItems([
+        ...(facets.terms?.programming_language || []),
+        ...(facets.terms?.framework_library || []),
+        ...(facets.terms?.cloud_platform || []),
+        ...(facets.terms?.database || []),
+        ...(facets.terms?.tool || []),
+        ...(facets.terms?.methodology || [])
+      ]));
+      subtitleEl.textContent = `${facets.total || 0} local vacancies across ${(facets.databases || []).length} database(s).`;
+      databaseSummaryEl.innerHTML = renderSummaryBlock("Sources", facets.sources || []);
+      renderErrors(facets.database_errors);
+      addLog("Facets", `Loaded ${facets.total || 0} vacancies across ${(facets.databases || []).length} database(s).`, facets.database_errors?.length ? "warning" : "success");
+    }
+
+    async function runSearch(page = currentPage) {
+      addLog("Vacancy Search", `Searching local databases, page ${page}.`);
+      resultsEl.innerHTML = '<div class="empty">Searching local databases...</div>';
+      paginationEl.innerHTML = "";
+      const response = await fetch(`/api/search?${buildParams(page).toString()}`);
+      const payload = await response.json();
+      if (!response.ok) {
+        resultsEl.innerHTML = `<div class="error">${esc(payload.error || "Search failed")}</div>`;
+        addLog("Vacancy Search", payload.error || "Search failed.", "error");
+        return;
+      }
+      renderResults(payload);
+      addLog("Vacancy Search", `Found ${payload.total ?? payload.count ?? 0} matching vacancies.`, payload.database_errors?.length ? "warning" : "success");
+    }
+
+    function renderKeywordCloud(container, keywords, emptyText) {
+      if (!keywords || !keywords.length) {
+        container.innerHTML = `<span class="tag">${esc(emptyText)}</span>`;
+        return;
+      }
+      container.innerHTML = keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`).join("");
+    }
+
+    function resumeMatchLabel(score) {
+      if (score >= 80) return "Very Good Match";
+      if (score >= 60) return "Good Match";
+      if (score >= 40) return "Partial Match";
+      return "Needs Tailoring";
+    }
+
+    function setResumeScoreBreakdown(score, breakdown = {}) {
+      const normalized = Math.max(0, Math.min(100, Number(score || 0)));
+      const skills = Math.max(0, Math.min(100, Number(breakdown.skills ?? normalized)));
+      const experience = Math.max(0, Math.min(100, Number(breakdown.experience ?? normalized)));
+      const keywords = Math.max(0, Math.min(100, Number(breakdown.keywords ?? normalized)));
+      resumeSkillsScoreEl.textContent = `${skills}%`;
+      resumeExperienceScoreEl.textContent = `${experience}%`;
+      resumeKeywordsScoreEl.textContent = `${keywords}%`;
+      resumeSkillsMeterEl.style.width = `${skills}%`;
+      resumeExperienceMeterEl.style.width = `${experience}%`;
+      resumeKeywordsMeterEl.style.width = `${keywords}%`;
+    }
+
+    function vacancyPaneMatches(pane, mode) {
+      return String(pane.dataset.vacancySourcePane || "").split(/\\s+/).includes(mode);
+    }
+
+    function setVacancySourceMode(mode) {
+      const nextMode = ["url", "local", "paste"].includes(mode) ? mode : "url";
+      vacancySourceModeEl.value = nextMode;
+      vacancySourceModeButtons.forEach((button) => {
+        const isActive = button.dataset.vacancySourceMode === nextMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      vacancySourcePanes.forEach((pane) => {
+        pane.hidden = !vacancyPaneMatches(pane, nextMode);
+      });
+      vacancyDescriptionLabelEl.textContent = nextMode === "paste"
+        ? "Paste vacancy text"
+        : "Vacancy description fallback";
+      if (nextMode === "url") {
+        vacancyIdEl.value = "";
+        vacancyDatabaseEl.value = "";
+        resumeVacancyLoadStatusEl.textContent = "Waiting for vacancy";
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
+      }
+      if (nextMode === "paste") {
+        vacancyUrlEl.value = "";
+        vacancyIdEl.value = "";
+        vacancyDatabaseEl.value = "";
+        resumeVacancyLoadStatusEl.textContent = "Using pasted vacancy text";
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
+        vacancyDescriptionEl.focus();
+      }
+    }
+
+    function renderResumeLocalResults(payload) {
+      const results = payload.results || [];
+      resumeLocalSearchResults = results;
+      renderErrors(payload.database_errors);
+      if (!results.length) {
+        resumeLocalResultsEl.innerHTML = '<div class="empty">No local vacancies found.</div>';
+        return;
+      }
+      resumeLocalResultsEl.innerHTML = results.map((job, index) => `
+        <button class="resume-local-option" type="button" data-local-vacancy-index="${index}">
+          <strong>${esc(job.title || "Untitled vacancy")}</strong>
+          <span>${esc([job.company, job.location, job.source].filter(Boolean).join(" · ") || "Local vacancy")}</span>
+          ${job.description_preview ? `<span>${esc(job.description_preview.slice(0, 160))}${job.description_preview.length > 160 ? "..." : ""}</span>` : ""}
+        </button>
+      `).join("");
+    }
+
+    async function runResumeLocalSearch() {
+      const params = new URLSearchParams({
+        q: resumeLocalQueryEl.value.trim(),
+        page: "1",
+        per_page: "6",
+      });
+      resumeLocalResultsEl.innerHTML = '<div class="empty">Searching local vacancies...</div>';
+      addLog("Resume matcher", "Searching local vacancies.");
+      try {
+        const response = await fetch(`/api/search?${params.toString()}`);
+        const payload = await response.json();
+        if (!response.ok) {
+          resumeLocalResultsEl.innerHTML = `<div class="error">${esc(payload.error || "Local vacancy search failed.")}</div>`;
+          addLog("Resume matcher", payload.error || "Local vacancy search failed.", "error");
+          return;
+        }
+        renderResumeLocalResults(payload);
+        addLog("Resume matcher", `Found ${payload.total ?? payload.count ?? 0} local vacancies.`, payload.database_errors?.length ? "warning" : "success");
+      } catch (error) {
+        const message = error.message || String(error);
+        resumeLocalResultsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+        addLog("Resume matcher", message, "error");
+      }
+    }
+
+    function selectResumeLocalVacancy(index) {
+      const job = resumeLocalSearchResults[index];
+      if (!job) return;
+      vacancyIdEl.value = job.id || "";
+      vacancyDatabaseEl.value = job.database || "";
+      vacancyUrlEl.value = job.url || "";
+      if (!targetTitleEl.value.trim() && job.title) {
+        targetTitleEl.value = job.title;
+      }
+      vacancyDescriptionEl.value = job.description_text || job.description_preview || "";
+      resumeLocalResultsEl.querySelectorAll(".resume-local-option").forEach((button) => {
+        button.classList.toggle("is-selected", button.dataset.localVacancyIndex === String(index));
+      });
+      resumeVacancyLoadStatusEl.textContent = "Local vacancy selected";
+      resumeVacancyLoadStatusEl.classList.remove("is-muted");
+      renderResumeVacancyPreview(job, { target_title: targetTitleEl.value, job_description: vacancyDescriptionEl.value }, job.skills || []);
+      addLog("Resume matcher", `Selected local vacancy: ${job.title || job.id || "untitled"}.`, "success");
+    }
+
+    function resetResumePreview() {
+      resumeVacancyLoadStatusEl.textContent = "Waiting for vacancy";
+      resumeVacancyLoadStatusEl.classList.add("is-muted");
+      resumeVacancyPreviewEl.innerHTML = `
+        <h3>No vacancy loaded yet</h3>
+        <div class="resume-preview-tags">
+          <span class="tag">Waiting</span>
+        </div>
+        <p>Paste a vacancy URL or fallback description, then run the matcher to preview the vacancy context used for the analysis.</p>
+      `;
+      setResumeScoreBreakdown(0);
+      resumeScoreValueEl.style.setProperty("--score", 0);
+    }
+
+    function renderResumeVacancyPreview(vacancy, payload, requiredKeywords = []) {
+      const fallbackText = String(payload.job_description || "").trim();
+      const title = vacancy.title || payload.target_title || "Vacancy preview";
+      const description = String(vacancy.description_text || fallbackText || "").trim();
+      const preview = description
+        ? `${description.slice(0, 700)}${description.length > 700 ? "..." : ""}`
+        : "The matcher used the URL and available metadata, but no long description was available.";
+      const tags = [
+        vacancy.location,
+        vacancy.company,
+        vacancy.source,
+        ...requiredKeywords.slice(0, 4),
+      ].filter(Boolean);
+      resumeVacancyPreviewEl.innerHTML = `
+        <h3>${esc(title)}</h3>
+        <div class="resume-preview-tags">
+          ${tags.length ? tags.map((item) => `<span class="tag">${esc(item)}</span>`).join("") : '<span class="tag">Vacancy context</span>'}
+        </div>
+        <p>${esc(preview)}</p>
+      `;
+    }
+
+    function renderResumeRecommendations(items) {
+      if (!items || !items.length) {
+        resumeRecommendationsEl.innerHTML = '<div class="empty">No recommendations generated.</div>';
+        return;
+      }
+      resumeRecommendationsEl.innerHTML = items.map((item, index) => `
+        <div class="resume-recommendation">
+          <span class="resume-recommendation-icon">${index + 1}</span>
+          <span><strong>${esc(item.split(":")[0] || "Recommendation")}</strong><span>${esc(item.includes(":") ? item.split(":").slice(1).join(":").trim() : item)}</span></span>
+        </div>
+      `).join("");
+    }
+
+    function setResumePdfDownload(pdf) {
+      if (resumePdfObjectUrl) {
+        URL.revokeObjectURL(resumePdfObjectUrl);
+        resumePdfObjectUrl = "";
+      }
+      if (!pdf?.base64) {
+        resumeDownloadPdfEl.hidden = true;
+        resumeDownloadPdfEl.removeAttribute("href");
+        return;
+      }
+      const binary = atob(pdf.base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+      }
+      const blob = new Blob([bytes], { type: pdf.mime_type || "application/pdf" });
+      resumePdfObjectUrl = URL.createObjectURL(blob);
+      resumeDownloadPdfEl.href = resumePdfObjectUrl;
+      resumeDownloadPdfEl.download = pdf.filename || "tailored-resume.pdf";
+      resumeDownloadPdfEl.hidden = false;
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          const value = String(reader.result || "");
+          resolve(value.includes(",") ? value.split(",", 2)[1] : value);
+        });
+        reader.addEventListener("error", () => reject(reader.error || new Error("Could not read PDF file.")));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function runResumeMatch() {
+      const formData = new FormData(resumeMatchFormEl);
+      const payload = Object.fromEntries(formData.entries());
+      const vacancySourceMode = vacancySourceModeEl.value;
+      delete payload.resume_pdf;
+      if (vacancySourceMode === "url") {
+        delete payload.vacancy_id;
+        delete payload.vacancy_database;
+        delete payload.target_title;
+        delete payload.job_description;
+      } else if (vacancySourceMode === "local") {
+        if (!payload.vacancy_id) {
+          const message = "Select a local vacancy first.";
+          resumeStatusEl.textContent = message;
+          resumeVacancyLoadStatusEl.textContent = "No local vacancy selected";
+          resumeVacancyLoadStatusEl.classList.add("is-muted");
+          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+          addLog("Resume matcher", message, "warning");
+          return;
+        }
+      } else if (vacancySourceMode === "paste") {
+        delete payload.vacancy_url;
+        delete payload.vacancy_id;
+        delete payload.vacancy_database;
+      }
+      resumeStatusEl.textContent = "Generating resume match...";
+      resumeVacancyLoadStatusEl.textContent = "Loading vacancy...";
+      resumeVacancyLoadStatusEl.classList.add("is-muted");
+      resumeScoreCardEl.hidden = true;
+      resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
+      renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+      renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      resumeResultEl.value = "";
+      setResumePdfDownload(null);
+      addLog("Resume matcher", "Generating resume match.");
+
+      try {
+        const file = resumePdfInputEl.files?.[0];
+        if (file && resumeInputModeEl.value !== "paste") {
+          if (file.type && file.type !== "application/pdf") {
+            throw new Error("Attach a PDF resume file.");
+          }
+          payload.resume_pdf_name = file.name;
+          payload.resume_pdf_base64 = await readFileAsBase64(file);
+        }
+        const response = await fetch("/api/resume-match", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          const message = data.error || "Resume match failed.";
+          resumeStatusEl.textContent = message;
+          resumeVacancyLoadStatusEl.textContent = resumeFailureStatus(message);
+          resumeVacancyLoadStatusEl.classList.add("is-muted");
+          resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+          addLog("Resume matcher", message, "error");
+          return;
+        }
+        const vacancy = data.vacancy || {};
+        resumeStatusEl.textContent = data.vacancy_found
+          ? "Vacancy loaded from local database."
+          : data.vacancy_fetched
+            ? "Vacancy page fetched from URL."
+            : "Using pasted vacancy description because the URL was not found locally or could not be fetched.";
+        resumeVacancyLoadStatusEl.textContent = data.vacancy_found || data.vacancy_fetched
+          ? "Vacancy loaded successfully"
+          : "Using pasted vacancy text";
+        resumeVacancyLoadStatusEl.classList.toggle("is-muted", !(data.vacancy_found || data.vacancy_fetched));
+        if (data.vacancy_fetch_error) {
+          addLog("Resume matcher", data.vacancy_fetch_error, "warning");
+        }
+        renderResumeVacancyPreview(vacancy, payload, data.required_keywords || []);
+        resumeScoreCardEl.hidden = false;
+        const score = Number(data.score || 0);
+        resumeScoreValueEl.textContent = `${score}%`;
+        resumeScoreValueEl.style.setProperty("--score", score);
+        setResumeScoreBreakdown(score, data.score_breakdown || {});
+        resumeVacancyTitleEl.textContent = resumeMatchLabel(score);
+        resumeVacancyMetaEl.textContent = [
+          vacancy.company,
+          vacancy.location,
+          vacancy.source,
+        ].filter(Boolean).join(" · ") || (vacancy.title || payload.target_title || "Local keyword alignment");
+        renderKeywordCloud(resumeMatchedKeywordsEl, data.matched_keywords || [], "No matched keywords yet");
+        renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
+        renderResumeRecommendations(data.recommendations || []);
+        resumeResultEl.value = data.tailored_resume || "";
+        setResumePdfDownload(data.tailored_resume_pdf);
+        renderErrors(data.database_errors);
+        addLog(
+          "Resume matcher",
+          `Generated resume match with ${Number(data.score || 0)}% keyword alignment${data.resume_pdf_text_extracted ? " from attached PDF" : ""}.`,
+          data.vacancy_found ? "success" : "warning",
+        );
+      } catch (error) {
+        const message = error.message || String(error);
+        resumeStatusEl.textContent = message;
+        resumeVacancyLoadStatusEl.textContent = resumeFailureStatus(message);
+        resumeVacancyLoadStatusEl.classList.add("is-muted");
+        resumeRecommendationsEl.innerHTML = `<div class="error">${esc(message)}</div>`;
+        addLog("Resume matcher", message, "error");
+      }
+    }
+
+    async function copyResumeDraft() {
+      const text = resumeResultEl.value.trim();
+      if (!text) {
+        addLog("Resume matcher", "No generated draft to copy.", "warning");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        addLog("Resume matcher", "Copied tailored resume draft.", "success");
+      } catch {
+        resumeResultEl.focus();
+        resumeResultEl.select();
+        document.execCommand("copy");
+        addLog("Resume matcher", "Copied tailored resume draft.", "success");
+      }
+    }
+
+    function syncResumeFileState() {
+      const file = resumePdfInputEl.files?.[0];
+      const hasFile = Boolean(file);
+      resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
+      resumeClearFileEl.hidden = !hasFile;
+      resumeDropHintEl.hidden = hasFile;
+      syncResumeReviewState();
+    }
+
+    function syncResumeReviewState() {
+      const file = resumePdfInputEl.files?.[0];
+      const text = resumeTextEl.value.trim();
+      resumeReviewFileEl.textContent = file ? file.name : "No PDF selected";
+      resumeReviewTextEl.textContent = text
+        ? `${text.length.toLocaleString()} characters pasted`
+        : "No pasted resume text";
+      resumeReviewPreviewEl.textContent = text
+        ? text.slice(0, 360)
+        : file
+          ? "PDF is attached and ready for analysis."
+          : "Nothing to review yet.";
+    }
+
+    function setResumeInputMode(mode) {
+      const nextMode = ["upload", "paste", "review"].includes(mode) ? mode : "upload";
+      resumeInputModeEl.value = nextMode;
+      resumeInputModeButtons.forEach((button) => {
+        const isActive = button.dataset.resumeInputMode === nextMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      resumeInputPanes.forEach((pane) => {
+        pane.hidden = pane.dataset.resumeInputPane !== nextMode;
+      });
+      syncResumeReviewState();
+      if (nextMode === "paste") {
+        resumeTextEl.focus();
+      }
+    }
+
+    function resumeFailureStatus(message) {
+      const lower = String(message || "").toLowerCase();
+      if (lower.includes("pdf") || lower.includes("resume")) {
+        return "Resume PDF failed";
+      }
+      if (lower.includes("vacancy") || lower.includes("url") || lower.includes("fetch")) {
+        return "Vacancy load failed";
+      }
+      return "Resume match failed";
+    }
+
+    menuButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const view = button.dataset.viewTarget;
+        if (!view || view === currentView) return;
+        setView(view);
+      });
+    });
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      setView("vacancies");
+      currentPage = 1;
+      runSearch(1);
+    });
+    resetBtn.addEventListener("click", () => {
+      form.reset();
+      syncSalaryInputsFromRange();
+      currentPage = 1;
+      addLog("Vacancy Search", "Cleared search filters.");
+      runSearch(1);
+    });
+    resumeMatchFormEl.addEventListener("submit", (event) => {
+      event.preventDefault();
+      runResumeMatch();
+    });
+    resumeResetEl.addEventListener("click", () => {
+      resumeMatchFormEl.reset();
+      setVacancySourceMode("url");
+      setResumeInputMode("upload");
+      resumeLocalSearchResults = [];
+      resumeLocalResultsEl.innerHTML = '<div class="empty">Search local vacancies to select one.</div>';
+      resumeStatusEl.textContent = "No resume match generated yet.";
+      resumeScoreCardEl.hidden = true;
+      renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+      renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
+      resumeResultEl.value = "";
+      syncResumeFileState();
+      resetResumePreview();
+      setResumePdfDownload(null);
+      addLog("Resume matcher", "Cleared resume matcher inputs.");
+    });
+    resumeCopyEl.addEventListener("click", copyResumeDraft);
+    vacancySourceModeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setVacancySourceMode(button.dataset.vacancySourceMode || "url");
+      });
+    });
+    resumeLocalSearchEl.addEventListener("click", runResumeLocalSearch);
+    resumeLocalQueryEl.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      runResumeLocalSearch();
+    });
+    resumeLocalResultsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-local-vacancy-index]");
+      if (!button) return;
+      selectResumeLocalVacancy(Number(button.dataset.localVacancyIndex));
+    });
+    resumeInputModeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setResumeInputMode(button.dataset.resumeInputMode || "upload");
+      });
+    });
+    resumeTextEl.addEventListener("input", syncResumeReviewState);
+    resumePdfInputEl.addEventListener("change", syncResumeFileState);
+    resumeClearFileEl.addEventListener("click", () => {
+      resumePdfInputEl.value = "";
+      syncResumeFileState();
+      addLog("Resume matcher", "Removed attached PDF.");
+    });
+    setVacancySourceMode(vacancySourceModeEl.value);
+    setResumeInputMode(resumeInputModeEl.value);
+    paginationEl.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-page]");
+      if (!button || button.disabled) return;
+      const page = Number(button.dataset.page);
+      if (!Number.isFinite(page)) return;
+      runSearch(page);
+    });
+    resultsEl.addEventListener("click", (event) => {
+      const jsonButton = event.target.closest("button[data-json-toggle]");
+      if (jsonButton) {
+        const panel = jsonButton.closest(".job-details-panel");
+        const sections = panel ? Array.from(panel.querySelectorAll(".json-section")) : [];
+        const isExpanded = jsonButton.getAttribute("aria-expanded") === "true";
+        jsonButton.setAttribute("aria-expanded", String(!isExpanded));
+        jsonButton.textContent = isExpanded ? "Show JSON" : "Hide JSON";
+        sections.forEach((section) => {
+          section.hidden = isExpanded;
+        });
+        return;
+      }
+
+      const button = event.target.closest("button[data-details-target]");
+      if (button) {
+        const panel = document.getElementById(button.dataset.detailsTarget);
+        if (!panel) return;
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        button.textContent = isExpanded ? "Details" : "Hide details";
+        panel.hidden = isExpanded;
+        const preview = button.closest(".job")?.querySelector(".preview");
+        if (preview) {
+          preview.hidden = !isExpanded;
+        }
+      }
+    });
+    salaryMinRange.addEventListener("input", () => syncSalaryInputsFromRange("min"));
+    salaryMaxRange.addEventListener("input", () => syncSalaryInputsFromRange("max"));
+    salaryMinInput.addEventListener("input", syncSalaryRangeFromInputs);
+    salaryMaxInput.addEventListener("input", syncSalaryRangeFromInputs);
+
+    document.querySelector("#parser-workspace .btn.primary")?.addEventListener("click", () => {
+      startParserRun();
+    });
+    document.querySelector("#parser-workspace .btn.secondary")?.addEventListener("click", () => {
+      const payload = collectParserPayload();
+      const args = [
+        payload.mode ? `--mode ${payload.mode}` : "",
+        payload.canton ? `--canton ${payload.canton}` : "",
+        payload.term ? `--term ${payload.term}` : "",
+        payload.location ? `--location ${payload.location}` : "",
+        payload.max_pages ? `--max-pages ${payload.max_pages}` : "",
+        payload.detail_limit ? `--detail-limit ${payload.detail_limit}` : "",
+      ].filter(Boolean).join(" ");
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog("Vacancy Collection", `Preview for ${sourceText}: python -m swiss_jobs.cli.parse --source <source> ${args}`.trim(), "info");
+      setLogDrawer(true);
+    });
+    document.querySelector("#ai-analyse-workspace .btn.primary")?.addEventListener("click", () => {
+      startAiAnalysisRun();
+    });
+    document.querySelector("#ai-analyse-workspace .btn.secondary")?.addEventListener("click", () => {
+      const payload = collectAiAnalysisPayload();
+      const args = [
+        `--model ${payload.model}`,
+        payload.first_seen_from ? `--first-seen-from ${payload.first_seen_from}` : "",
+        payload.first_seen_to ? `--first-seen-to ${payload.first_seen_to}` : "",
+        payload.scope === "all selected vacancies" ? "--include-analyzed" : "",
+        payload.scope === "all selected vacancies" && !payload.limit ? "--all" : "",
+        payload.limit ? `--limit ${payload.limit}` : "",
+      ].filter(Boolean).join(" ");
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog("AI Analyse", `Preview for ${sourceText}: python -m swiss_jobs.cli.analyze_vacancies_llm --source <source> ${args}`.trim(), "info");
+      setLogDrawer(true);
+    });
+    document.querySelector("#public-stats-workspace .btn.primary")?.addEventListener("click", () => {
+      startPublicStatsRun();
+    });
+    document.querySelector("#public-stats-workspace .btn.secondary")?.addEventListener("click", () => {
+      const payload = collectPublicStatsPayload();
+      const sourceText = payload.sources.length ? payload.sources.join(", ") : "no sources selected";
+      addLog(
+        "Public Stats",
+        `Preview for ${sourceText}: export analytics${payload.salary_group_minimum ? ` with salary groups >= ${payload.salary_group_minimum}` : ""} -> build ${payload.output_dir}/data + ${payload.output_dir}/csv${payload.snapshot_date ? ` for ${payload.snapshot_date}` : ""} -> sync ${payload.site_dir}.`,
+        "info",
+      );
+      setLogDrawer(true);
+    });
+    openAiSettingsFormEl.addEventListener("submit", (event) => {
+      event.preventDefault();
+      saveOpenAiSettings();
+    });
+    logToggleEl.addEventListener("click", () => {
+      setLogDrawer(logToggleEl.getAttribute("aria-expanded") !== "true");
+    });
+    logCloseEl.addEventListener("click", () => setLogDrawer(false));
+    logClearEl.addEventListener("click", () => {
+      logs.length = 0;
+      renderLogs();
+      addLog("Logs", "Log history cleared.");
+    });
+
+    syncSalaryTrack();
+    renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
+    renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+    renderLogs();
+    addLog("Application", "Local vacancy interface initialized.");
+    loadFacets().then(runSearch).catch((error) => {
+      resultsEl.innerHTML = `<div class="error">${esc(error.message || error)}</div>`;
+      addLog("Application", error.message || String(error), "error");
+    });
+  </script>
+</body>
+</html>
