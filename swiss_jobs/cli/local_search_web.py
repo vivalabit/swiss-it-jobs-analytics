@@ -2424,6 +2424,7 @@ STATIC_CACHE_CONTROL = "no-cache"
 STATIC_ASSETS = {
     "/assets/styles.css": (ASSETS_DIR / "styles.css", "text/css; charset=utf-8"),
     "/assets/app.js": (ASSETS_DIR / "app.js", "application/javascript; charset=utf-8"),
+    "/assets/resume_matcher.js": (ASSETS_DIR / "resume_matcher.js", "application/javascript; charset=utf-8"),
 }
 
 

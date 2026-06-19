@@ -165,19 +165,24 @@ class LocalSearchWebTests(unittest.TestCase):
         self.assertIn("<title>Local Vacancy Search</title>", rendered)
         self.assertIn('href="assets/styles.css"', rendered)
         self.assertIn('src="assets/app.js"', rendered)
+        self.assertIn('src="assets/resume_matcher.js"', rendered)
         self.assertIn("<li>/tmp/jobs &amp; data.sqlite</li>", rendered)
         self.assertNotIn("__DATABASE_LIST__", rendered)
 
     def test_static_assets_are_whitelisted(self) -> None:
         style_asset = _static_asset("/assets/styles.css")
         script_asset = _static_asset("/assets/app.js")
+        resume_script_asset = _static_asset("/assets/resume_matcher.js")
 
         self.assertIsNotNone(style_asset)
         self.assertIsNotNone(script_asset)
+        self.assertIsNotNone(resume_script_asset)
         self.assertEqual("text/css; charset=utf-8", style_asset[1])
         self.assertEqual("application/javascript; charset=utf-8", script_asset[1])
+        self.assertEqual("application/javascript; charset=utf-8", resume_script_asset[1])
         self.assertTrue(style_asset[0].is_file())
         self.assertTrue(script_asset[0].is_file())
+        self.assertTrue(resume_script_asset[0].is_file())
         self.assertIsNone(_static_asset("/assets/../local_search_web.py"))
         self.assertEqual("no-cache", STATIC_CACHE_CONTROL)
 
