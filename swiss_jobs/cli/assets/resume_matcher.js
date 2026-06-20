@@ -48,6 +48,10 @@
     const resumeKeywordsMeterEl = document.querySelector("#resume-keywords-meter");
     const resumeMatchedKeywordsEl = document.querySelector("#resume-matched-keywords");
     const resumeMissingKeywordsEl = document.querySelector("#resume-missing-keywords");
+    const resumeAtsProbabilityEl = document.querySelector("#resume-ats-probability");
+    const resumeAtsRingEl = document.querySelector("#resume-ats-ring");
+    const resumeAtsMeterEl = document.querySelector("#resume-ats-meter");
+    const resumeAtsChecksEl = document.querySelector("#resume-ats-checks");
     const resumeGapBlockersEl = document.querySelector("#resume-gap-blockers");
     const resumeGapStrengthsEl = document.querySelector("#resume-gap-strengths");
     const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
@@ -75,6 +79,39 @@
           <span>${esc(item)}</span>
         </div>
       `).join("");
+    }
+
+    function renderAtsCompatibility(ats, emptyText = "Run the matcher to see ATS compatibility.") {
+      if (!resumeAtsProbabilityEl || !resumeAtsRingEl || !resumeAtsMeterEl || !resumeAtsChecksEl) return;
+      const probability = Math.max(0, Math.min(100, Number(ats?.pass_probability || 0)));
+      resumeAtsProbabilityEl.textContent = `${probability}%`;
+      resumeAtsRingEl.textContent = `${probability}%`;
+      resumeAtsRingEl.style.setProperty("--ats-score", probability);
+      resumeAtsMeterEl.style.width = `${probability}%`;
+      if (!ats) {
+        resumeAtsChecksEl.innerHTML = `<div class="empty">${esc(emptyText)}</div>`;
+        return;
+      }
+      const checks = ats?.checks || {};
+      const rows = [
+        ["keywords", "Keywords"],
+        ["structure", "Structure"],
+        ["readability", "Readability"],
+        ["format", "Format"],
+      ].map(([key, label]) => {
+        const item = checks[key] || {};
+        const score = Math.max(0, Math.min(100, Number(item.score || 0)));
+        const status = ["pass", "warning", "fail"].includes(item.status) ? item.status : "warning";
+        const finding = item.finding || "No ATS finding generated yet.";
+        return `
+          <div class="resume-ats-check is-${status}">
+            <span class="resume-ats-check-label">${esc(label)}</span>
+            <span class="resume-ats-check-score">${score}%</span>
+            <span class="resume-ats-check-finding">${esc(finding)}</span>
+          </div>
+        `;
+      });
+      resumeAtsChecksEl.innerHTML = rows.join("");
     }
 
     function resumeMatchLabel(score) {
@@ -307,6 +344,7 @@
       resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      renderAtsCompatibility(null, "Generating ATS compatibility...");
       renderGapList(resumeGapBlockersEl, [], "Generating blockers...", "✕");
       renderGapList(resumeGapStrengthsEl, [], "Generating strengths...", "✓");
       resumeResultEl.value = "";
@@ -364,6 +402,7 @@
         ].filter(Boolean).join(" · ") || (vacancy.title || payload.target_title || "Local keyword alignment");
         renderKeywordCloud(resumeMatchedKeywordsEl, data.matched_keywords || [], "No matched keywords yet");
         renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
+        renderAtsCompatibility(data.ats_compatibility || null);
         renderGapList(
           resumeGapBlockersEl,
           data.gap_analysis?.blockers || [],
@@ -477,6 +516,7 @@
       resumeScoreCardEl.hidden = true;
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      renderAtsCompatibility(null);
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
       syncResumeFileState();

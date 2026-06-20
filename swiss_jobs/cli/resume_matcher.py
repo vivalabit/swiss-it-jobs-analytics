@@ -280,12 +280,79 @@ def _normalize_gap_analysis(
     return {"blockers": blockers, "strengths": strong_points}
 
 
+def _normalize_ats_check(value: Any, *, fallback_score: int, fallback_finding: str) -> dict[str, Any]:
+    if isinstance(value, dict):
+        score = _clamp_score(value.get("score"))
+        status = str(value.get("status") or "").strip().lower()
+        finding = " ".join(str(value.get("finding") or "").strip().split())
+    else:
+        score = fallback_score
+        status = ""
+        finding = ""
+    if status not in {"pass", "warning", "fail"}:
+        if score >= 80:
+            status = "pass"
+        elif score >= 55:
+            status = "warning"
+        else:
+            status = "fail"
+    if not finding:
+        finding = fallback_finding
+    return {"score": score, "status": status, "finding": finding[:220]}
+
+
+def _normalize_ats_compatibility(payload: dict[str, Any], *, keyword_score: int, overall_score: int) -> dict[str, Any]:
+    raw = payload.get("ats_compatibility")
+    raw = raw if isinstance(raw, dict) else {}
+    probability = _clamp_score(raw.get("pass_probability"))
+    if not probability:
+        probability = round((keyword_score * 0.45) + (overall_score * 0.35) + 14)
+        probability = max(0, min(100, probability))
+    checks = raw.get("checks")
+    checks = checks if isinstance(checks, dict) else {}
+    return {
+        "pass_probability": probability,
+        "checks": {
+            "keywords": _normalize_ats_check(
+                checks.get("keywords"),
+                fallback_score=keyword_score,
+                fallback_finding="Important vacancy keywords are partially covered.",
+            ),
+            "structure": _normalize_ats_check(
+                checks.get("structure"),
+                fallback_score=overall_score,
+                fallback_finding="Resume structure needs clear sections and standard headings.",
+            ),
+            "readability": _normalize_ats_check(
+                checks.get("readability"),
+                fallback_score=overall_score,
+                fallback_finding="Resume text should stay concise, specific, and easy to scan.",
+            ),
+            "format": _normalize_ats_check(
+                checks.get("format"),
+                fallback_score=overall_score,
+                fallback_finding="Use a simple ATS-readable format without complex layout.",
+            ),
+        },
+    }
+
+
 def _resume_match_json_schema() -> dict[str, Any]:
     score_schema = {"type": "integer", "minimum": 0, "maximum": 100}
     text_array_schema = {
         "type": "array",
         "items": {"type": "string", "maxLength": 220},
         "maxItems": 12,
+    }
+    ats_check_schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "score": score_schema,
+            "status": {"type": "string", "enum": ["pass", "warning", "fail"]},
+            "finding": {"type": "string", "maxLength": 220},
+        },
+        "required": ["score", "status", "finding"],
     }
     return {
         "type": "object",
@@ -327,6 +394,25 @@ def _resume_match_json_schema() -> dict[str, Any]:
                 },
                 "required": ["blockers", "strengths"],
             },
+            "ats_compatibility": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "pass_probability": score_schema,
+                    "checks": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "keywords": ats_check_schema,
+                            "structure": ats_check_schema,
+                            "readability": ats_check_schema,
+                            "format": ats_check_schema,
+                        },
+                        "required": ["keywords", "structure", "readability", "format"],
+                    },
+                },
+                "required": ["pass_probability", "checks"],
+            },
             "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
             "confidence_reason": {"type": "string", "maxLength": 320},
         },
@@ -342,6 +428,7 @@ def _resume_match_json_schema() -> dict[str, Any]:
             "recommendations",
             "tailored_resume",
             "gap_analysis",
+            "ats_compatibility",
             "confidence",
             "confidence_reason",
         ],
@@ -363,6 +450,8 @@ def _resume_match_system_prompt() -> str:
         "For gap_analysis.blockers, list the concrete missing evidence that can prevent screening, "
         "such as missing Docker, AWS, English B2+, required certifications, seniority, domain, or work-permit signals. "
         "For gap_analysis.strengths, list concrete resume evidence that is already a strong fit for this vacancy. "
+        "For ats_compatibility, estimate ATS pass probability from keyword coverage, structure, readability, and format. "
+        "Check whether the resume uses vacancy keywords, standard sections, readable wording, and ATS-friendly formatting. "
         "Return concise, actionable recommendations that tell the candidate exactly what to change. "
         "Tailor the resume draft truthfully; never invent employers, degrees, years, metrics, or projects. "
         "If information is missing, use bracketed placeholders such as [add metric] instead of inventing facts."
@@ -422,6 +511,10 @@ def _extract_openai_response_text(response: dict[str, Any]) -> str:
 def _normalize_llm_resume_match(payload: dict[str, Any], *, resume_text: str) -> dict[str, Any]:
     recommendations = _normalize_short_text_list(payload.get("recommendations"), limit=6)
     gaps = _normalize_resume_gap_items(payload.get("critical_gaps"))
+    overall_score = _clamp_score(payload.get("overall_score"))
+    skills_score = _clamp_score(payload.get("skills_score"))
+    experience_score = _clamp_score(payload.get("experience_score"))
+    keywords_score = _clamp_score(payload.get("keywords_score"))
     matched_keywords = _normalize_short_text_list(payload.get("matched_keywords"), limit=12)
     missing_keywords = _normalize_short_text_list(payload.get("missing_keywords"), limit=12)
     key_strengths = _normalize_short_text_list(payload.get("key_strengths"), limit=12)
@@ -437,21 +530,27 @@ def _normalize_llm_resume_match(payload: dict[str, Any], *, resume_text: str) ->
         strengths=key_strengths,
         missing_keywords=missing_keywords,
     )
+    ats_compatibility = _normalize_ats_compatibility(
+        payload,
+        keyword_score=keywords_score,
+        overall_score=overall_score,
+    )
     tailored_resume = str(payload.get("tailored_resume") or "").strip()
     if not tailored_resume:
         tailored_resume = resume_text
     return {
-        "score": _clamp_score(payload.get("overall_score")),
+        "score": overall_score,
         "score_breakdown": {
-            "skills": _clamp_score(payload.get("skills_score")),
-            "experience": _clamp_score(payload.get("experience_score")),
-            "keywords": _clamp_score(payload.get("keywords_score")),
+            "skills": skills_score,
+            "experience": experience_score,
+            "keywords": keywords_score,
         },
         "matched_keywords": matched_keywords,
         "missing_keywords": missing_keywords,
         "key_strengths": key_strengths,
         "critical_gaps": gaps,
         "gap_analysis": gap_analysis,
+        "ats_compatibility": ats_compatibility,
         "recommendations": recommendations,
         "tailored_resume": tailored_resume,
         "confidence": str(payload.get("confidence") or "").strip(),
@@ -481,7 +580,7 @@ def build_llm_resume_match(
             "model": clean_model,
             "store": False,
             "reasoning": {"effort": "medium"},
-            "max_output_tokens": 2400,
+            "max_output_tokens": 3600,
             "text": {
                 "format": {
                     "type": "json_schema",
@@ -989,6 +1088,7 @@ def build_resume_match(
         "key_strengths": llm_match["key_strengths"],
         "critical_gaps": llm_match["critical_gaps"],
         "gap_analysis": llm_match["gap_analysis"],
+        "ats_compatibility": llm_match["ats_compatibility"],
         "recommendations": llm_match["recommendations"],
         "tailored_resume": tailored_resume,
         "tailored_resume_pdf": {

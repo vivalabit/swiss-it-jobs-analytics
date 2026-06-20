@@ -108,6 +108,31 @@ class FakeResumeMatchTransport:
                 "blockers": [f"No {term.upper()} evidence" for term in missing[:3]],
                 "strengths": [f"Strong {term.upper()} evidence" for term in matched[:3]],
             },
+            "ats_compatibility": {
+                "pass_probability": 74,
+                "checks": {
+                    "keywords": {
+                        "score": 82,
+                        "status": "pass",
+                        "finding": "Core ATS keywords are mostly covered.",
+                    },
+                    "structure": {
+                        "score": 70,
+                        "status": "warning",
+                        "finding": "Use standard resume sections.",
+                    },
+                    "readability": {
+                        "score": 76,
+                        "status": "warning",
+                        "finding": "Keep bullets concise and specific.",
+                    },
+                    "format": {
+                        "score": 68,
+                        "status": "warning",
+                        "finding": "Avoid complex tables or visual layout.",
+                    },
+                },
+            },
             "recommendations": ["Move strongest matching evidence near the top."],
             "tailored_resume": f"Targeted Resume Draft\n{vacancy.get('title') or 'Target role'}\n\n{resume_text}",
             "confidence": "high",
@@ -465,6 +490,8 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
             self.assertIn("No DJANGO evidence", payload["gap_analysis"]["blockers"])
             self.assertIn("Strong PYTHON evidence", payload["gap_analysis"]["strengths"])
+            self.assertEqual(74, payload["ats_compatibility"]["pass_probability"])
+            self.assertEqual("pass", payload["ats_compatibility"]["checks"]["keywords"]["status"])
             self.assertIn("Targeted Resume Draft", payload["tailored_resume"])
             self.assertEqual("application/pdf", payload["tailored_resume_pdf"]["mime_type"])
             self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))

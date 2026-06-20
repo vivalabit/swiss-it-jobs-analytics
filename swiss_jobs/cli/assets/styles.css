@@ -804,6 +804,76 @@
       display: grid;
       gap: 16px;
     }
+    .resume-ats-section {
+      display: grid;
+      gap: 12px;
+    }
+    .resume-ats-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 64px;
+      gap: 14px;
+      align-items: center;
+    }
+    .resume-ats-head h3 {
+      margin: 4px 0 0;
+      color: #17202a;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .resume-ats-ring {
+      --ats-score: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      background:
+        radial-gradient(circle at center, #fff 56%, transparent 57%),
+        conic-gradient(#1d4ed8 calc(var(--ats-score) * 1%), #e5e7eb 0);
+      color: #1d4ed8;
+      font-size: 15px;
+      font-weight: 900;
+    }
+    .resume-ats-meter span {
+      background: #1d4ed8;
+    }
+    .resume-ats-checks {
+      display: grid;
+      gap: 8px;
+    }
+    .resume-ats-check {
+      display: grid;
+      grid-template-columns: minmax(86px, 0.7fr) 44px minmax(0, 1.5fr);
+      gap: 10px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .resume-ats-check.is-pass {
+      border-left-color: #2ea84a;
+    }
+    .resume-ats-check.is-fail {
+      border-left-color: #a3161b;
+    }
+    .resume-ats-check-label,
+    .resume-ats-check-score {
+      color: #17202a;
+      font-weight: 900;
+    }
+    .resume-ats-check-score {
+      text-align: right;
+    }
+    .resume-ats-check-finding {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
     .resume-gap-analysis {
       grid-column: 1 / -1;
       display: grid;
@@ -1675,6 +1745,7 @@
       .resume-input-cards,
       .resume-analysis-grid,
       .resume-gap-analysis,
+      .resume-ats-check,
       .resume-output-grid { grid-template-columns: 1fr; }
       .resume-status-cards,
       .resume-download-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
