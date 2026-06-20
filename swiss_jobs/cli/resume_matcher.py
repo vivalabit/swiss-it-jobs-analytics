@@ -252,6 +252,34 @@ def _normalize_resume_gap_items(value: Any, *, limit: int = 8) -> list[dict[str,
     return result
 
 
+def _normalize_gap_analysis(
+    payload: dict[str, Any],
+    *,
+    gaps: list[dict[str, str]],
+    strengths: list[str],
+    missing_keywords: list[str],
+) -> dict[str, list[str]]:
+    raw = payload.get("gap_analysis")
+    blockers: list[str] = []
+    strong_points: list[str] = []
+    if isinstance(raw, dict):
+        blockers = _normalize_short_text_list(raw.get("blockers"), limit=8)
+        strong_points = _normalize_short_text_list(raw.get("strengths"), limit=8)
+    if not blockers:
+        blockers = _normalize_short_text_list(
+            [
+                item.get("resume_gap") or item.get("requirement") or ""
+                for item in gaps
+            ],
+            limit=8,
+        )
+    if not blockers:
+        blockers = _normalize_short_text_list(missing_keywords, limit=8)
+    if not strong_points:
+        strong_points = _normalize_short_text_list(strengths, limit=8)
+    return {"blockers": blockers, "strengths": strong_points}
+
+
 def _resume_match_json_schema() -> dict[str, Any]:
     score_schema = {"type": "integer", "minimum": 0, "maximum": 100}
     text_array_schema = {
@@ -290,6 +318,15 @@ def _resume_match_json_schema() -> dict[str, Any]:
                 "maxItems": 6,
             },
             "tailored_resume": {"type": "string", "maxLength": 12000},
+            "gap_analysis": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "blockers": text_array_schema,
+                    "strengths": text_array_schema,
+                },
+                "required": ["blockers", "strengths"],
+            },
             "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
             "confidence_reason": {"type": "string", "maxLength": 320},
         },
@@ -304,6 +341,7 @@ def _resume_match_json_schema() -> dict[str, Any]:
             "critical_gaps",
             "recommendations",
             "tailored_resume",
+            "gap_analysis",
             "confidence",
             "confidence_reason",
         ],
@@ -322,6 +360,9 @@ def _resume_match_system_prompt() -> str:
         "Experience score should measure seniority, role scope, responsibilities, impact, leadership, "
         "industry/domain fit, and evidence quality. "
         "Keywords score should measure ATS wording coverage for important vacancy terms, excluding generic words. "
+        "For gap_analysis.blockers, list the concrete missing evidence that can prevent screening, "
+        "such as missing Docker, AWS, English B2+, required certifications, seniority, domain, or work-permit signals. "
+        "For gap_analysis.strengths, list concrete resume evidence that is already a strong fit for this vacancy. "
         "Return concise, actionable recommendations that tell the candidate exactly what to change. "
         "Tailor the resume draft truthfully; never invent employers, degrees, years, metrics, or projects. "
         "If information is missing, use bracketed placeholders such as [add metric] instead of inventing facts."
@@ -381,12 +422,21 @@ def _extract_openai_response_text(response: dict[str, Any]) -> str:
 def _normalize_llm_resume_match(payload: dict[str, Any], *, resume_text: str) -> dict[str, Any]:
     recommendations = _normalize_short_text_list(payload.get("recommendations"), limit=6)
     gaps = _normalize_resume_gap_items(payload.get("critical_gaps"))
+    matched_keywords = _normalize_short_text_list(payload.get("matched_keywords"), limit=12)
+    missing_keywords = _normalize_short_text_list(payload.get("missing_keywords"), limit=12)
+    key_strengths = _normalize_short_text_list(payload.get("key_strengths"), limit=12)
     if not recommendations:
         recommendations = [
             item["recommended_change"]
             for item in gaps
             if item.get("recommended_change")
         ][:6]
+    gap_analysis = _normalize_gap_analysis(
+        payload,
+        gaps=gaps,
+        strengths=key_strengths,
+        missing_keywords=missing_keywords,
+    )
     tailored_resume = str(payload.get("tailored_resume") or "").strip()
     if not tailored_resume:
         tailored_resume = resume_text
@@ -397,10 +447,11 @@ def _normalize_llm_resume_match(payload: dict[str, Any], *, resume_text: str) ->
             "experience": _clamp_score(payload.get("experience_score")),
             "keywords": _clamp_score(payload.get("keywords_score")),
         },
-        "matched_keywords": _normalize_short_text_list(payload.get("matched_keywords"), limit=12),
-        "missing_keywords": _normalize_short_text_list(payload.get("missing_keywords"), limit=12),
-        "key_strengths": _normalize_short_text_list(payload.get("key_strengths"), limit=12),
+        "matched_keywords": matched_keywords,
+        "missing_keywords": missing_keywords,
+        "key_strengths": key_strengths,
         "critical_gaps": gaps,
+        "gap_analysis": gap_analysis,
         "recommendations": recommendations,
         "tailored_resume": tailored_resume,
         "confidence": str(payload.get("confidence") or "").strip(),
@@ -937,6 +988,7 @@ def build_resume_match(
         "missing_keywords": llm_match["missing_keywords"],
         "key_strengths": llm_match["key_strengths"],
         "critical_gaps": llm_match["critical_gaps"],
+        "gap_analysis": llm_match["gap_analysis"],
         "recommendations": llm_match["recommendations"],
         "tailored_resume": tailored_resume,
         "tailored_resume_pdf": {

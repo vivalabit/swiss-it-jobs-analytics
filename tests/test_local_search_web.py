@@ -104,6 +104,10 @@ class FakeResumeMatchTransport:
                 }
                 for term in missing[:3]
             ],
+            "gap_analysis": {
+                "blockers": [f"No {term.upper()} evidence" for term in missing[:3]],
+                "strengths": [f"Strong {term.upper()} evidence" for term in matched[:3]],
+            },
             "recommendations": ["Move strongest matching evidence near the top."],
             "tailored_resume": f"Targeted Resume Draft\n{vacancy.get('title') or 'Target role'}\n\n{resume_text}",
             "confidence": "high",
@@ -459,6 +463,8 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
+            self.assertIn("No DJANGO evidence", payload["gap_analysis"]["blockers"])
+            self.assertIn("Strong PYTHON evidence", payload["gap_analysis"]["strengths"])
             self.assertIn("Targeted Resume Draft", payload["tailored_resume"])
             self.assertEqual("application/pdf", payload["tailored_resume_pdf"]["mime_type"])
             self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))

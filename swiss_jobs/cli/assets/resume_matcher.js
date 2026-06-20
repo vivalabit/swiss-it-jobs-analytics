@@ -48,6 +48,8 @@
     const resumeKeywordsMeterEl = document.querySelector("#resume-keywords-meter");
     const resumeMatchedKeywordsEl = document.querySelector("#resume-matched-keywords");
     const resumeMissingKeywordsEl = document.querySelector("#resume-missing-keywords");
+    const resumeGapBlockersEl = document.querySelector("#resume-gap-blockers");
+    const resumeGapStrengthsEl = document.querySelector("#resume-gap-strengths");
     const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
     const resumeResultEl = document.querySelector("#resume_result");
     let resumePdfObjectUrl = "";
@@ -59,6 +61,20 @@
         return;
       }
       container.innerHTML = keywords.map((keyword) => `<span class="tag keyword">${esc(keyword)}</span>`).join("");
+    }
+
+    function renderGapList(container, items, emptyText, icon) {
+      if (!container) return;
+      if (!items || !items.length) {
+        container.innerHTML = `<div class="empty">${esc(emptyText)}</div>`;
+        return;
+      }
+      container.innerHTML = items.map((item) => `
+        <div class="resume-gap-item">
+          <span class="resume-gap-icon" aria-hidden="true">${esc(icon)}</span>
+          <span>${esc(item)}</span>
+        </div>
+      `).join("");
     }
 
     function resumeMatchLabel(score) {
@@ -291,6 +307,8 @@
       resumeRecommendationsEl.innerHTML = '<div class="empty">Generating resume match...</div>';
       renderKeywordCloud(resumeMatchedKeywordsEl, [], "Waiting");
       renderKeywordCloud(resumeMissingKeywordsEl, [], "Waiting");
+      renderGapList(resumeGapBlockersEl, [], "Generating blockers...", "✕");
+      renderGapList(resumeGapStrengthsEl, [], "Generating strengths...", "✓");
       resumeResultEl.value = "";
       setResumePdfDownload(null);
       addLog("Resume matcher", "Generating resume match.");
@@ -346,6 +364,18 @@
         ].filter(Boolean).join(" · ") || (vacancy.title || payload.target_title || "Local keyword alignment");
         renderKeywordCloud(resumeMatchedKeywordsEl, data.matched_keywords || [], "No matched keywords yet");
         renderKeywordCloud(resumeMissingKeywordsEl, data.missing_keywords || [], "No missing keywords found");
+        renderGapList(
+          resumeGapBlockersEl,
+          data.gap_analysis?.blockers || [],
+          "No screening blockers found.",
+          "✕",
+        );
+        renderGapList(
+          resumeGapStrengthsEl,
+          data.gap_analysis?.strengths || data.key_strengths || [],
+          "No strong points detected yet.",
+          "✓",
+        );
         renderResumeRecommendations(data.recommendations || []);
         resumeResultEl.value = data.tailored_resume || "";
         setResumePdfDownload(data.tailored_resume_pdf);
