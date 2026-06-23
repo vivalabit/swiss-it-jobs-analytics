@@ -42,7 +42,7 @@ from .local_web_server import (
     start_public_stats_run,
     update_openai_settings,
 )
-from .resume_matcher import build_resume_pdf_bytes, build_tailored_resume_pdf, fetch_external_vacancy, requests
+from .resume_matcher import build_resume_pdf_bytes, build_tailored_resume_cv, build_tailored_resume_pdf, fetch_external_vacancy, requests
 from .search_vacancies import DEFAULT_RUNTIME_DATABASES, _resolve_database_paths
 from .static import STATIC_CACHE_CONTROL, _static_asset, render_index
 

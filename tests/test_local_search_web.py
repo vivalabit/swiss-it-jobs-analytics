@@ -24,6 +24,7 @@ from swiss_jobs.cli.local_search_web import (
     _public_stats_options,
     _static_asset,
     build_resume_pdf_bytes,
+    build_tailored_resume_cv,
     build_resume_match,
     build_tailored_resume_pdf,
     load_facets,
@@ -491,10 +492,10 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(7000, transport.requests[0]["payload"]["max_output_tokens"])
             system_prompt = transport.requests[0]["payload"]["input"][0]["content"][0]["text"]
             user_payload = json.loads(transport.requests[0]["payload"]["input"][1]["content"][0]["text"])
-            self.assertIn("Download PDF", system_prompt)
+            self.assertIn("downloadable PDF and DOCX", system_prompt)
             self.assertIn("at least 90% ATS pass probability", system_prompt)
             self.assertIn("short terms only", system_prompt)
-            self.assertIn("change only text", user_payload["task"]["download_pdf_policy"])
+            self.assertIn("change only text", user_payload["task"]["download_file_policy"])
             self.assertIn("Use terms only", user_payload["task"]["output_rules"])
             self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
@@ -518,6 +519,27 @@ class LocalSearchWebTests(unittest.TestCase):
 
         self.assertEqual("application/pdf", payload["mime_type"])
         self.assertTrue(base64.b64decode(payload["base64"]).startswith(b"%PDF"))
+
+    def test_resume_cv_generation_returns_pdf_and_docx(self) -> None:
+        payload = build_tailored_resume_cv(
+            {
+                "target_title": "Python Backend Engineer",
+                "tailored_resume": "Python Backend Engineer\n- Built Python APIs.",
+            }
+        )
+
+        self.assertEqual("application/pdf", payload["pdf"]["mime_type"])
+        self.assertTrue(base64.b64decode(payload["pdf"]["base64"]).startswith(b"%PDF"))
+        self.assertEqual(
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            payload["docx"]["mime_type"],
+        )
+        docx_bytes = base64.b64decode(payload["docx"]["base64"])
+        self.assertTrue(docx_bytes.startswith(b"PK"))
+        with zipfile.ZipFile(io.BytesIO(docx_bytes)) as archive:
+            document_xml = archive.read("word/document.xml").decode("utf-8")
+        self.assertIn("Python Backend Engineer", document_xml)
+        self.assertIn("Built Python APIs.", document_xml)
 
     def test_resume_match_extracts_attached_resume_pdf(self) -> None:
         resume_pdf = build_resume_pdf_bytes(

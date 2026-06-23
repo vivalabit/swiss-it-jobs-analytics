@@ -20,7 +20,6 @@
     const resumeLocalSearchEl = document.querySelector("#resume-local-search");
     const resumeLocalResultsEl = document.querySelector("#resume-local-results");
     const resumeResetEl = document.querySelector("#resume-reset");
-    const resumeCopyEl = document.querySelector("#resume-copy");
     const resumePdfInputEl = document.querySelector("#resume_pdf");
     const resumeTextEl = document.querySelector("#resume_text");
     const resumeInputModeEl = document.querySelector("#resume_input_mode");
@@ -32,8 +31,9 @@
     const resumeReviewFileEl = document.querySelector("#resume-review-file");
     const resumeReviewTextEl = document.querySelector("#resume-review-text");
     const resumeReviewPreviewEl = document.querySelector("#resume-review-preview");
-    const resumeGeneratePdfEl = document.querySelector("#resume-generate-pdf");
+    const resumeGenerateCvEl = document.querySelector("#resume-generate-cv");
     const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
+    const resumeDownloadDocxEl = document.querySelector("#resume-download-docx");
     const resumeStatusEl = document.querySelector("#resume-match-status");
     const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
     const resumeVacancyPreviewEl = document.querySelector("#resume-vacancy-preview");
@@ -61,8 +61,9 @@
     const resumeFileReadTimeoutMs = 15000;
     const resumeDocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     const resumeMatchTimeoutMs = 120000;
-    const resumePdfGenerateTimeoutMs = 30000;
+    const resumeCvGenerateTimeoutMs = 30000;
     let resumePdfObjectUrl = "";
+    let resumeDocxObjectUrl = "";
     let resumeLocalSearchResults = [];
     let resumePdfTitle = "Target role";
 
@@ -285,32 +286,53 @@
       `).join("");
     }
 
-    function setResumePdfDownload(pdf) {
-      if (resumePdfObjectUrl) {
-        URL.revokeObjectURL(resumePdfObjectUrl);
-        resumePdfObjectUrl = "";
-      }
-      if (!pdf?.base64) {
-        resumeDownloadPdfEl.hidden = true;
-        resumeDownloadPdfEl.removeAttribute("href");
-        return;
-      }
-      const binary = atob(pdf.base64);
+    function filePayloadToObjectUrl(file) {
+      const binary = atob(file.base64);
       const bytes = new Uint8Array(binary.length);
       for (let index = 0; index < binary.length; index += 1) {
         bytes[index] = binary.charCodeAt(index);
       }
-      const blob = new Blob([bytes], { type: pdf.mime_type || "application/pdf" });
-      resumePdfObjectUrl = URL.createObjectURL(blob);
-      resumeDownloadPdfEl.href = resumePdfObjectUrl;
-      resumeDownloadPdfEl.download = pdf.filename || "tailored-resume.pdf";
-      resumeDownloadPdfEl.hidden = false;
+      const blob = new Blob([bytes], { type: file.mime_type || "application/octet-stream" });
+      return URL.createObjectURL(blob);
     }
 
-    function setResumeGeneratePdfState(enabled, label = "Generate PDF", hint = "From ready resume text") {
-      if (!resumeGeneratePdfEl) return;
-      resumeGeneratePdfEl.disabled = !enabled;
-      const textEl = resumeGeneratePdfEl.querySelector("span:last-child");
+    function clearResumeCvDownloads() {
+      if (resumePdfObjectUrl) {
+        URL.revokeObjectURL(resumePdfObjectUrl);
+        resumePdfObjectUrl = "";
+      }
+      if (resumeDocxObjectUrl) {
+        URL.revokeObjectURL(resumeDocxObjectUrl);
+        resumeDocxObjectUrl = "";
+      }
+      resumeDownloadPdfEl.hidden = true;
+      resumeDownloadPdfEl.removeAttribute("href");
+      resumeDownloadDocxEl.hidden = true;
+      resumeDownloadDocxEl.removeAttribute("href");
+    }
+
+    function setResumeCvDownloads(files) {
+      clearResumeCvDownloads();
+      const pdf = files?.pdf;
+      const docx = files?.docx;
+      if (pdf?.base64) {
+        resumePdfObjectUrl = filePayloadToObjectUrl(pdf);
+        resumeDownloadPdfEl.href = resumePdfObjectUrl;
+        resumeDownloadPdfEl.download = pdf.filename || "tailored-resume.pdf";
+        resumeDownloadPdfEl.hidden = false;
+      }
+      if (docx?.base64) {
+        resumeDocxObjectUrl = filePayloadToObjectUrl(docx);
+        resumeDownloadDocxEl.href = resumeDocxObjectUrl;
+        resumeDownloadDocxEl.download = docx.filename || "tailored-resume.docx";
+        resumeDownloadDocxEl.hidden = false;
+      }
+    }
+
+    function setResumeGenerateCvState(enabled, label = "Generate CV", hint = "Creates PDF and DOCX files") {
+      if (!resumeGenerateCvEl) return;
+      resumeGenerateCvEl.disabled = !enabled;
+      const textEl = resumeGenerateCvEl.querySelector("span:last-child");
       if (textEl) {
         textEl.innerHTML = `${esc(label)}<small>${esc(hint)}</small>`;
       }
@@ -388,8 +410,8 @@
       renderGapList(resumeGapStrengthsEl, [], "Generating strengths...", "✓");
       resumeResultEl.value = "";
       resumePdfTitle = "Target role";
-      setResumeGeneratePdfState(false, "Generate PDF", "After analysis completes");
-      setResumePdfDownload(null);
+      setResumeGenerateCvState(false, "Generate CV", "After analysis completes");
+      clearResumeCvDownloads();
       addLog("Resume matcher", "Generating resume match.");
 
       try {
@@ -476,8 +498,8 @@
         renderResumeRecommendations(data.recommendations || []);
         resumeResultEl.value = data.tailored_resume || "";
         resumePdfTitle = data.tailored_resume_pdf_title || vacancy.title || payload.target_title || "Target role";
-        setResumeGeneratePdfState(Boolean(resumeResultEl.value.trim()));
-        setResumePdfDownload(null);
+        setResumeGenerateCvState(Boolean(resumeResultEl.value.trim()));
+        clearResumeCvDownloads();
         renderErrors(data.database_errors);
         addLog(
           "Resume matcher",
@@ -494,36 +516,19 @@
       }
     }
 
-    async function copyResumeDraft() {
-      const text = resumeResultEl.value.trim();
-      if (!text) {
-        addLog("Resume matcher", "No generated draft to copy.", "warning");
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(text);
-        addLog("Resume matcher", "Copied tailored resume draft.", "success");
-      } catch {
-        resumeResultEl.focus();
-        resumeResultEl.select();
-        document.execCommand("copy");
-        addLog("Resume matcher", "Copied tailored resume draft.", "success");
-      }
-    }
-
-    async function generateResumePdf() {
+    async function generateResumeCv() {
       const tailoredResume = resumeResultEl.value.trim();
       if (!tailoredResume) {
-        addLog("Resume matcher", "No generated resume text for PDF.", "warning");
+        addLog("Resume matcher", "No generated resume text for CV files.", "warning");
         return;
       }
-      setResumeGeneratePdfState(false, "Generating PDF", "Preparing download");
-      setResumePdfDownload(null);
-      addLog("Resume matcher", "Generating tailored resume PDF.");
+      setResumeGenerateCvState(false, "Generating CV", "Preparing downloads");
+      clearResumeCvDownloads();
+      addLog("Resume matcher", "Generating tailored resume PDF and DOCX.");
       const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), resumePdfGenerateTimeoutMs);
+      const timeout = window.setTimeout(() => controller.abort(), resumeCvGenerateTimeoutMs);
       try {
-        const response = await fetch("/api/resume-pdf", {
+        const response = await fetch("/api/resume-cv", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -534,18 +539,18 @@
         });
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.error || "PDF generation failed.");
+          throw new Error(data.error || "CV generation failed.");
         }
-        setResumePdfDownload(data);
-        addLog("Resume matcher", "Generated tailored resume PDF.", "success");
+        setResumeCvDownloads(data);
+        addLog("Resume matcher", "Generated tailored resume PDF and DOCX.", "success");
       } catch (error) {
         const message = error.name === "AbortError"
-          ? "PDF generation timed out. Try shortening the resume text."
+          ? "CV generation timed out. Try shortening the resume text."
           : error.message || String(error);
         addLog("Resume matcher", message, "error");
       } finally {
         window.clearTimeout(timeout);
-        setResumeGeneratePdfState(true);
+        setResumeGenerateCvState(true);
       }
     }
 
@@ -618,14 +623,13 @@
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
       resumePdfTitle = "Target role";
-      setResumeGeneratePdfState(false);
+      setResumeGenerateCvState(false);
       syncResumeFileState();
       resetResumePreview();
-      setResumePdfDownload(null);
+      clearResumeCvDownloads();
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
-    resumeCopyEl.addEventListener("click", copyResumeDraft);
-    resumeGeneratePdfEl?.addEventListener("click", generateResumePdf);
+    resumeGenerateCvEl?.addEventListener("click", generateResumeCv);
     vacancySourceModeButtons.forEach((button) => {
       button.addEventListener("click", () => {
         setVacancySourceMode(button.dataset.vacancySourceMode || "url");

@@ -459,7 +459,7 @@ def _resume_match_system_prompt() -> str:
         "Check whether the downloadable tailored resume uses vacancy keywords, standard sections, readable wording, "
         "and ATS-friendly formatting. "
         "Return concise, actionable recommendations that tell the candidate exactly what to change. "
-        "The tailored_resume field is the exact text used for the Download PDF file. "
+        "The tailored_resume field is the exact text used for the downloadable PDF and DOCX files. "
         "Optimize tailored_resume to reach at least 90% ATS pass probability and the highest possible match score "
         "whenever the candidate evidence truthfully supports that. Preserve the original resume language, section order, "
         "tone, and formatting cues as much as possible; change only text content and wording. "
@@ -496,8 +496,8 @@ def _resume_match_user_payload(
                 "90 percent ATS pass probability and the highest truthful vacancy match score"
             ),
             "audience": "Swiss IT recruiter and ATS screening",
-            "download_pdf_policy": (
-                "The PDF download is generated from tailored_resume. Keep the candidate resume style, section order, "
+            "download_file_policy": (
+                "The PDF and DOCX downloads are generated from tailored_resume. Keep the candidate resume style, section order, "
                 "tone, and formatting cues; change only text. Do not invent facts."
             ),
             "output_rules": (
@@ -1119,9 +1119,64 @@ def build_resume_pdf_bytes(text: str, *, title: str = "Tailored Resume Draft") -
     return buffer.getvalue()
 
 
-def _resume_pdf_filename(vacancy_title: str) -> str:
+def build_resume_docx_bytes(text: str, *, title: str = "Tailored Resume Draft") -> bytes:
+    def paragraph_xml(line: str, *, is_title: bool = False) -> str:
+        text_xml = html.escape(line, quote=True)
+        if is_title:
+            return (
+                "<w:p><w:pPr><w:spacing w:after=\"160\"/></w:pPr>"
+                "<w:r><w:rPr><w:b/><w:sz w:val=\"32\"/></w:rPr>"
+                f"<w:t>{text_xml}</w:t></w:r></w:p>"
+            )
+        return f"<w:p><w:r><w:t>{text_xml}</w:t></w:r></w:p>"
+
+    paragraphs = [paragraph_xml(title, is_title=True)]
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        paragraphs.append(paragraph_xml(line) if line else "<w:p/>")
+
+    document_xml = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
+        'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+        "<w:body>"
+        + "".join(paragraphs)
+        + (
+            "<w:sectPr><w:pgSz w:w=\"11906\" w:h=\"16838\"/>"
+            "<w:pgMar w:top=\"1134\" w:right=\"1134\" w:bottom=\"1134\" w:left=\"1134\" "
+            "w:header=\"708\" w:footer=\"708\" w:gutter=\"0\"/></w:sectPr>"
+            "</w:body></w:document>"
+        )
+    )
+    content_types_xml = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+        '<Default Extension="xml" ContentType="application/xml"/>'
+        '<Override PartName="/word/document.xml" '
+        'ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+        "</Types>"
+    )
+    rels_xml = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" '
+        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" '
+        'Target="word/document.xml"/>'
+        "</Relationships>"
+    )
+
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("[Content_Types].xml", content_types_xml)
+        archive.writestr("_rels/.rels", rels_xml)
+        archive.writestr("word/document.xml", document_xml)
+    return buffer.getvalue()
+
+
+def _resume_output_filename(vacancy_title: str, extension: str) -> str:
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", vacancy_title.lower()).strip("-")
-    return f"tailored-resume-{slug or 'draft'}.pdf"
+    return f"tailored-resume-{slug or 'draft'}.{extension}"
 
 
 def build_tailored_resume_pdf(payload: dict[str, Any]) -> dict[str, str]:
@@ -1131,9 +1186,29 @@ def build_tailored_resume_pdf(payload: dict[str, Any]) -> dict[str, str]:
     target_title = _clean_text(payload.get("target_title")) or "Target role"
     pdf_bytes = build_resume_pdf_bytes(tailored_resume, title=target_title)
     return {
-        "filename": _resume_pdf_filename(target_title),
+        "filename": _resume_output_filename(target_title, "pdf"),
         "mime_type": "application/pdf",
         "base64": base64.b64encode(pdf_bytes).decode("ascii"),
+    }
+
+
+def build_tailored_resume_docx(payload: dict[str, Any]) -> dict[str, str]:
+    tailored_resume = _clean_text(payload.get("tailored_resume"))
+    if not tailored_resume:
+        raise ValueError("tailored resume text is required before generating DOCX")
+    target_title = _clean_text(payload.get("target_title")) or "Target role"
+    docx_bytes = build_resume_docx_bytes(tailored_resume, title=target_title)
+    return {
+        "filename": _resume_output_filename(target_title, "docx"),
+        "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "base64": base64.b64encode(docx_bytes).decode("ascii"),
+    }
+
+
+def build_tailored_resume_cv(payload: dict[str, Any]) -> dict[str, dict[str, str]]:
+    return {
+        "pdf": build_tailored_resume_pdf(payload),
+        "docx": build_tailored_resume_docx(payload),
     }
 
 
