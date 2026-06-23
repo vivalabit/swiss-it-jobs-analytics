@@ -916,42 +916,47 @@
     }
     .resume-recommendation-list {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+    }
+    .resume-recommendations-section {
+      grid-column: 1 / -1;
     }
     .resume-recommendation {
       display: grid;
-      grid-template-columns: 36px minmax(0, 1fr);
-      gap: 12px;
-      align-items: center;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 12px;
+      min-height: 132px;
+      padding: 18px;
       background: #fff;
     }
     .resume-recommendation-icon {
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background: #eef5ff;
       color: #2563eb;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 900;
     }
     .resume-recommendation strong {
       display: block;
       color: #17202a;
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.35;
     }
     .resume-recommendation span:last-child {
       display: block;
-      margin-top: 3px;
+      margin-top: 7px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
+      font-size: 14px;
+      line-height: 1.45;
     }
     .resume-output-grid {
       display: grid;
@@ -1797,6 +1802,7 @@
       .resume-file-row,
       .resume-score,
       .resume-recommendation,
+      .resume-recommendation-list,
       .resume-status-card,
       .resume-copy-card,
       .resume-download-card {
