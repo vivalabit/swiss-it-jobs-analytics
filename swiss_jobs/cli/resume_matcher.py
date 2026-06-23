@@ -341,8 +341,8 @@ def _resume_match_json_schema() -> dict[str, Any]:
     score_schema = {"type": "integer", "minimum": 0, "maximum": 100}
     text_array_schema = {
         "type": "array",
-        "items": {"type": "string", "maxLength": 220},
-        "maxItems": 12,
+        "items": {"type": "string", "maxLength": 80},
+        "maxItems": 8,
     }
     ats_check_schema = {
         "type": "object",
@@ -367,7 +367,7 @@ def _resume_match_json_schema() -> dict[str, Any]:
             "key_strengths": text_array_schema,
             "critical_gaps": {
                 "type": "array",
-                "maxItems": 8,
+                "maxItems": 5,
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
@@ -382,7 +382,7 @@ def _resume_match_json_schema() -> dict[str, Any]:
             "recommendations": {
                 "type": "array",
                 "items": {"type": "string", "maxLength": 320},
-                "maxItems": 6,
+                "maxItems": 4,
             },
             "tailored_resume": {"type": "string", "maxLength": 12000},
             "gap_analysis": {
@@ -447,6 +447,8 @@ def _resume_match_system_prompt() -> str:
         "Experience score should measure seniority, role scope, responsibilities, impact, leadership, "
         "industry/domain fit, and evidence quality. "
         "Keywords score should measure ATS wording coverage for important vacancy terms, excluding generic words. "
+        "All keyword arrays must contain short terms only, never explanations or full sentences. "
+        "Examples: 'Python', 'AWS', 'English B2+', 'Docker'. Bad: long achievement descriptions. "
         "For gap_analysis.blockers, list the concrete missing evidence that can prevent screening, "
         "such as missing Docker, AWS, English B2+, required certifications, seniority, domain, or work-permit signals. "
         "For gap_analysis.strengths, list concrete resume evidence that is already a strong fit for this vacancy. "
@@ -494,6 +496,10 @@ def _resume_match_user_payload(
             "download_pdf_policy": (
                 "The PDF download is generated from tailored_resume. Keep the candidate resume style, section order, "
                 "tone, and formatting cues; change only text. Do not invent facts."
+            ),
+            "output_rules": (
+                "Keep matched_keywords, missing_keywords, and key_strengths short. Use terms only, not sentences. "
+                "Keep recommendations and gap analysis concise."
             ),
         },
     }
@@ -594,7 +600,7 @@ def build_llm_resume_match(
             "model": clean_model,
             "store": False,
             "reasoning": {"effort": "medium"},
-            "max_output_tokens": 3600,
+            "max_output_tokens": 7000,
             "text": {
                 "format": {
                     "type": "json_schema",
@@ -633,7 +639,12 @@ def build_llm_resume_match(
     try:
         payload = json.loads(text)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"OpenAI returned invalid resume match JSON: {text[:500]!r}") from exc
+        if not text.rstrip().endswith("}"):
+            raise ValueError(
+                "OpenAI response was truncated before the resume match JSON completed. "
+                "Try again, or shorten the pasted vacancy/resume text."
+            ) from exc
+        raise ValueError("OpenAI returned invalid resume match JSON. Try running the matcher again.") from exc
     if not isinstance(payload, dict):
         raise ValueError("OpenAI returned non-object resume match JSON.")
     result = _normalize_llm_resume_match(payload, resume_text=resume_text)

@@ -486,11 +486,14 @@ class LocalSearchWebTests(unittest.TestCase):
 
             self.assertTrue(payload["vacancy_found"])
             self.assertEqual("gpt-5.5", transport.requests[0]["payload"]["model"])
+            self.assertEqual(7000, transport.requests[0]["payload"]["max_output_tokens"])
             system_prompt = transport.requests[0]["payload"]["input"][0]["content"][0]["text"]
             user_payload = json.loads(transport.requests[0]["payload"]["input"][1]["content"][0]["text"])
             self.assertIn("Download PDF", system_prompt)
             self.assertIn("at least 90% ATS pass probability", system_prompt)
+            self.assertIn("short terms only", system_prompt)
             self.assertIn("change only text", user_payload["task"]["download_pdf_policy"])
+            self.assertIn("Use terms only", user_payload["task"]["output_rules"])
             self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
