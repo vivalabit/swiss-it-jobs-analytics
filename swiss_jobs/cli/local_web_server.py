@@ -21,7 +21,7 @@ from urllib.parse import parse_qs, urlparse
 from swiss_jobs.core.locations import location_search_terms, normalize_location_display
 from swiss_jobs.registry import list_supported_sources
 
-from .resume_matcher import build_resume_match
+from .resume_matcher import build_resume_match, build_tailored_resume_pdf
 from .search_vacancies import _split_csv_values
 from .static import (
     _head_response,
@@ -1435,6 +1435,9 @@ class LocalSearchHandler(BaseHTTPRequestHandler):
                 return
             if parsed.path == "/api/resume-match":
                 _json_response(self, build_resume_match(self.config.database_paths, _json_body(self)))
+                return
+            if parsed.path == "/api/resume-pdf":
+                _json_response(self, build_tailored_resume_pdf(_json_body(self)))
                 return
             if parsed.path == "/api/settings/openai":
                 _json_response(self, update_openai_settings(_json_body(self)))

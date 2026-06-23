@@ -23,6 +23,7 @@ from swiss_jobs.cli.local_search_web import (
     _static_asset,
     build_resume_pdf_bytes,
     build_resume_match,
+    build_tailored_resume_pdf,
     load_facets,
     render_index,
     search_local_databases,
@@ -194,7 +195,7 @@ class LocalSearchWebTests(unittest.TestCase):
         self.assertIn("<title>Local Vacancy Search</title>", rendered)
         self.assertIn('href="assets/styles.css"', rendered)
         self.assertIn('src="assets/app.js"', rendered)
-        self.assertIn('src="assets/resume_matcher.js"', rendered)
+        self.assertIn('src="assets/resume_matcher.js', rendered)
         self.assertIn("<li>/tmp/jobs &amp; data.sqlite</li>", rendered)
         self.assertNotIn("__DATABASE_LIST__", rendered)
 
@@ -485,6 +486,11 @@ class LocalSearchWebTests(unittest.TestCase):
 
             self.assertTrue(payload["vacancy_found"])
             self.assertEqual("gpt-5.5", transport.requests[0]["payload"]["model"])
+            system_prompt = transport.requests[0]["payload"]["input"][0]["content"][0]["text"]
+            user_payload = json.loads(transport.requests[0]["payload"]["input"][1]["content"][0]["text"])
+            self.assertIn("Download PDF", system_prompt)
+            self.assertIn("at least 90% ATS pass probability", system_prompt)
+            self.assertIn("change only text", user_payload["task"]["download_pdf_policy"])
             self.assertEqual("Python Backend Engineer", payload["vacancy"]["title"])
             self.assertIn("python", [term.lower() for term in payload["matched_keywords"]])
             self.assertIn("django", [term.lower() for term in payload["missing_keywords"]])
@@ -493,9 +499,20 @@ class LocalSearchWebTests(unittest.TestCase):
             self.assertEqual(74, payload["ats_compatibility"]["pass_probability"])
             self.assertEqual("pass", payload["ats_compatibility"]["checks"]["keywords"]["status"])
             self.assertIn("Targeted Resume Draft", payload["tailored_resume"])
-            self.assertEqual("application/pdf", payload["tailored_resume_pdf"]["mime_type"])
-            self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))
+            self.assertIsNone(payload["tailored_resume_pdf"])
+            self.assertEqual("Python Backend Engineer", payload["tailored_resume_pdf_title"])
             self.assertEqual([], payload["database_errors"])
+
+    def test_resume_pdf_generation_is_separate_from_match(self) -> None:
+        payload = build_tailored_resume_pdf(
+            {
+                "target_title": "Python Backend Engineer",
+                "tailored_resume": "Python Backend Engineer\n- Built Python APIs.",
+            }
+        )
+
+        self.assertEqual("application/pdf", payload["mime_type"])
+        self.assertTrue(base64.b64decode(payload["base64"]).startswith(b"%PDF"))
 
     def test_resume_match_extracts_attached_resume_pdf(self) -> None:
         resume_pdf = build_resume_pdf_bytes(
@@ -515,7 +532,7 @@ class LocalSearchWebTests(unittest.TestCase):
 
         self.assertTrue(payload["resume_pdf_text_extracted"])
         self.assertIn("Senior Python engineer", payload["tailored_resume"])
-        self.assertTrue(base64.b64decode(payload["tailored_resume_pdf"]["base64"]).startswith(b"%PDF"))
+        self.assertIsNone(payload["tailored_resume_pdf"])
 
     def test_resume_match_fetches_external_vacancy_url(self) -> None:
         html = b"""

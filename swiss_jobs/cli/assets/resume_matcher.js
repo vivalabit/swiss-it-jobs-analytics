@@ -32,6 +32,7 @@
     const resumeReviewFileEl = document.querySelector("#resume-review-file");
     const resumeReviewTextEl = document.querySelector("#resume-review-text");
     const resumeReviewPreviewEl = document.querySelector("#resume-review-preview");
+    const resumeGeneratePdfEl = document.querySelector("#resume-generate-pdf");
     const resumeDownloadPdfEl = document.querySelector("#resume-download-pdf");
     const resumeStatusEl = document.querySelector("#resume-match-status");
     const resumeVacancyLoadStatusEl = document.querySelector("#resume-vacancy-load-status");
@@ -56,8 +57,13 @@
     const resumeGapStrengthsEl = document.querySelector("#resume-gap-strengths");
     const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
     const resumeResultEl = document.querySelector("#resume_result");
+    const resumeMaxPdfBytes = 10 * 1024 * 1024;
+    const resumePdfReadTimeoutMs = 15000;
+    const resumeMatchTimeoutMs = 120000;
+    const resumePdfGenerateTimeoutMs = 30000;
     let resumePdfObjectUrl = "";
     let resumeLocalSearchResults = [];
+    let resumePdfTitle = "Target role";
 
     function renderKeywordCloud(container, keywords, emptyText) {
       if (!keywords || !keywords.length) {
@@ -300,14 +306,36 @@
       resumeDownloadPdfEl.hidden = false;
     }
 
+    function setResumeGeneratePdfState(enabled, label = "Generate PDF", hint = "From ready resume text") {
+      if (!resumeGeneratePdfEl) return;
+      resumeGeneratePdfEl.disabled = !enabled;
+      const textEl = resumeGeneratePdfEl.querySelector("span:last-child");
+      if (textEl) {
+        textEl.innerHTML = `${esc(label)}<small>${esc(hint)}</small>`;
+      }
+    }
+
     function readFileAsBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
+        const timeout = window.setTimeout(() => {
+          reader.abort();
+          reject(new Error("PDF reading timed out. Try a smaller PDF or paste resume text."));
+        }, resumePdfReadTimeoutMs);
+        const cleanup = () => window.clearTimeout(timeout);
         reader.addEventListener("load", () => {
+          cleanup();
           const value = String(reader.result || "");
           resolve(value.includes(",") ? value.split(",", 2)[1] : value);
         });
-        reader.addEventListener("error", () => reject(reader.error || new Error("Could not read PDF file.")));
+        reader.addEventListener("error", () => {
+          cleanup();
+          reject(reader.error || new Error("Could not read PDF file."));
+        });
+        reader.addEventListener("abort", () => {
+          cleanup();
+          reject(new Error("PDF reading was cancelled."));
+        });
         reader.readAsDataURL(file);
       });
     }
@@ -348,6 +376,8 @@
       renderGapList(resumeGapBlockersEl, [], "Generating blockers...", "✕");
       renderGapList(resumeGapStrengthsEl, [], "Generating strengths...", "✓");
       resumeResultEl.value = "";
+      resumePdfTitle = "Target role";
+      setResumeGeneratePdfState(false, "Generate PDF", "After analysis completes");
       setResumePdfDownload(null);
       addLog("Resume matcher", "Generating resume match.");
 
@@ -357,14 +387,30 @@
           if (file.type && file.type !== "application/pdf") {
             throw new Error("Attach a PDF resume file.");
           }
+          if (file.size > resumeMaxPdfBytes) {
+            throw new Error("PDF resume is larger than 10MB. Upload a smaller PDF or paste resume text.");
+          }
           payload.resume_pdf_name = file.name;
           payload.resume_pdf_base64 = await readFileAsBase64(file);
         }
-        const response = await fetch("/api/resume-match", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), resumeMatchTimeoutMs);
+        let response;
+        try {
+          response = await fetch("/api/resume-match", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+          });
+        } catch (error) {
+          if (error.name === "AbortError") {
+            throw new Error("Resume match timed out. Try a shorter vacancy text or paste resume text instead of PDF.");
+          }
+          throw error;
+        } finally {
+          window.clearTimeout(timeout);
+        }
         const data = await response.json();
         if (!response.ok) {
           const message = data.error || "Resume match failed.";
@@ -417,7 +463,9 @@
         );
         renderResumeRecommendations(data.recommendations || []);
         resumeResultEl.value = data.tailored_resume || "";
-        setResumePdfDownload(data.tailored_resume_pdf);
+        resumePdfTitle = data.tailored_resume_pdf_title || vacancy.title || payload.target_title || "Target role";
+        setResumeGeneratePdfState(Boolean(resumeResultEl.value.trim()));
+        setResumePdfDownload(null);
         renderErrors(data.database_errors);
         addLog(
           "Resume matcher",
@@ -448,6 +496,44 @@
         resumeResultEl.select();
         document.execCommand("copy");
         addLog("Resume matcher", "Copied tailored resume draft.", "success");
+      }
+    }
+
+    async function generateResumePdf() {
+      const tailoredResume = resumeResultEl.value.trim();
+      if (!tailoredResume) {
+        addLog("Resume matcher", "No generated resume text for PDF.", "warning");
+        return;
+      }
+      setResumeGeneratePdfState(false, "Generating PDF", "Preparing download");
+      setResumePdfDownload(null);
+      addLog("Resume matcher", "Generating tailored resume PDF.");
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), resumePdfGenerateTimeoutMs);
+      try {
+        const response = await fetch("/api/resume-pdf", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            target_title: resumePdfTitle,
+            tailored_resume: tailoredResume,
+          }),
+          signal: controller.signal,
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "PDF generation failed.");
+        }
+        setResumePdfDownload(data);
+        addLog("Resume matcher", "Generated tailored resume PDF.", "success");
+      } catch (error) {
+        const message = error.name === "AbortError"
+          ? "PDF generation timed out. Try shortening the resume text."
+          : error.message || String(error);
+        addLog("Resume matcher", message, "error");
+      } finally {
+        window.clearTimeout(timeout);
+        setResumeGeneratePdfState(true);
       }
     }
 
@@ -519,12 +605,15 @@
       renderAtsCompatibility(null);
       resumeRecommendationsEl.innerHTML = '<div class="empty">Run the matcher to see recommendations.</div>';
       resumeResultEl.value = "";
+      resumePdfTitle = "Target role";
+      setResumeGeneratePdfState(false);
       syncResumeFileState();
       resetResumePreview();
       setResumePdfDownload(null);
       addLog("Resume matcher", "Cleared resume matcher inputs.");
     });
     resumeCopyEl.addEventListener("click", copyResumeDraft);
+    resumeGeneratePdfEl?.addEventListener("click", generateResumePdf);
     vacancySourceModeButtons.forEach((button) => {
       button.addEventListener("click", () => {
         setVacancySourceMode(button.dataset.vacancySourceMode || "url");

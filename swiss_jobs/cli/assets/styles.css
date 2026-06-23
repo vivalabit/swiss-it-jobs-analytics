@@ -986,6 +986,11 @@
       background: #fff8f8;
       color: var(--accent);
     }
+    .resume-copy-card:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      box-shadow: none;
+    }
     .resume-download-card[hidden] {
       display: none;
     }

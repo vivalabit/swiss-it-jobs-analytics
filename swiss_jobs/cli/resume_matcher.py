@@ -451,10 +451,17 @@ def _resume_match_system_prompt() -> str:
         "such as missing Docker, AWS, English B2+, required certifications, seniority, domain, or work-permit signals. "
         "For gap_analysis.strengths, list concrete resume evidence that is already a strong fit for this vacancy. "
         "For ats_compatibility, estimate ATS pass probability from keyword coverage, structure, readability, and format. "
-        "Check whether the resume uses vacancy keywords, standard sections, readable wording, and ATS-friendly formatting. "
+        "Check whether the downloadable tailored resume uses vacancy keywords, standard sections, readable wording, "
+        "and ATS-friendly formatting. "
         "Return concise, actionable recommendations that tell the candidate exactly what to change. "
-        "Tailor the resume draft truthfully; never invent employers, degrees, years, metrics, or projects. "
-        "If information is missing, use bracketed placeholders such as [add metric] instead of inventing facts."
+        "The tailored_resume field is the exact text used for the Download PDF file. "
+        "Optimize tailored_resume to reach at least 90% ATS pass probability and the highest possible match score "
+        "whenever the candidate evidence truthfully supports that. Preserve the original resume language, section order, "
+        "tone, and formatting cues as much as possible; change only text content and wording. "
+        "Never invent employers, degrees, years, metrics, certifications, tools, languages, or projects. "
+        "If 90% ATS is not truthfully reachable, produce the strongest truthful resume text and explain the remaining "
+        "blockers in gap_analysis. If information is missing, use bracketed placeholders such as [add metric] "
+        "instead of inventing facts."
     )
 
 
@@ -479,8 +486,15 @@ def _resume_match_user_payload(
         },
         "candidate_resume": resume_text[:18000],
         "task": {
-            "goal": "score match quality and produce a truthful vacancy-tailored resume draft",
+            "goal": (
+                "score match quality and produce the final downloadable resume text optimized for at least "
+                "90 percent ATS pass probability and the highest truthful vacancy match score"
+            ),
             "audience": "Swiss IT recruiter and ATS screening",
+            "download_pdf_policy": (
+                "The PDF download is generated from tailored_resume. Keep the candidate resume style, section order, "
+                "tone, and formatting cues; change only text. Do not invent facts."
+            ),
         },
     }
     return json.dumps(payload, ensure_ascii=False, sort_keys=True)
@@ -1022,6 +1036,19 @@ def _resume_pdf_filename(vacancy_title: str) -> str:
     return f"tailored-resume-{slug or 'draft'}.pdf"
 
 
+def build_tailored_resume_pdf(payload: dict[str, Any]) -> dict[str, str]:
+    tailored_resume = _clean_text(payload.get("tailored_resume"))
+    if not tailored_resume:
+        raise ValueError("tailored resume text is required before generating PDF")
+    target_title = _clean_text(payload.get("target_title")) or "Target role"
+    pdf_bytes = build_resume_pdf_bytes(tailored_resume, title=target_title)
+    return {
+        "filename": _resume_pdf_filename(target_title),
+        "mime_type": "application/pdf",
+        "base64": base64.b64encode(pdf_bytes).decode("ascii"),
+    }
+
+
 def build_resume_match(
     database_paths: Iterable[Path],
     payload: dict[str, Any],
@@ -1073,7 +1100,6 @@ def build_resume_match(
     )
     tailored_resume = llm_match["tailored_resume"]
     target_line = vacancy_title or "Target role"
-    pdf_bytes = build_resume_pdf_bytes(tailored_resume, title=target_line)
 
     return {
         "vacancy_found": bool(vacancy),
@@ -1091,11 +1117,8 @@ def build_resume_match(
         "ats_compatibility": llm_match["ats_compatibility"],
         "recommendations": llm_match["recommendations"],
         "tailored_resume": tailored_resume,
-        "tailored_resume_pdf": {
-            "filename": _resume_pdf_filename(target_line),
-            "mime_type": "application/pdf",
-            "base64": base64.b64encode(pdf_bytes).decode("ascii"),
-        },
+        "tailored_resume_pdf": None,
+        "tailored_resume_pdf_title": target_line,
         "resume_pdf_text_extracted": bool(resume_pdf_text),
         "match_model": llm_match["model"],
         "match_confidence": llm_match["confidence"],
