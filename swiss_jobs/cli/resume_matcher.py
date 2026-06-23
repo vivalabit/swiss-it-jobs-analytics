@@ -8,10 +8,12 @@ import json
 import os
 import re
 import sqlite3
+import zipfile
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import urlparse, urlunparse
+from xml.etree import ElementTree
 
 import requests
 
@@ -87,6 +89,7 @@ VACANCY_FETCH_TIMEOUT = (5, 15)
 VACANCY_FETCH_USER_AGENT = (
     "Mozilla/5.0 (compatible; SwissITJobsResumeMatcher/1.0; +https://localhost)"
 )
+RESUME_UPLOAD_MAX_BYTES = 12 * 1024 * 1024
 
 def _connect_readonly(database_path: Path) -> sqlite3.Connection:
     uri = database_path.resolve().as_uri() + "?mode=ro"
@@ -931,7 +934,7 @@ def fetch_external_vacancy(vacancy_url: str) -> dict[str, Any] | None:
     }
 
 
-def _decode_pdf_base64(value: Any) -> bytes:
+def _decode_resume_file_base64(value: Any) -> bytes:
     text = _clean_text(value)
     if not text:
         return b""
@@ -940,16 +943,10 @@ def _decode_pdf_base64(value: Any) -> bytes:
     try:
         return base64.b64decode(text, validate=True)
     except ValueError as exc:
-        raise ValueError("resume PDF payload is not valid base64") from exc
+        raise ValueError("resume file payload is not valid base64") from exc
 
 
-def extract_resume_pdf_text(payload: dict[str, Any]) -> str:
-    pdf_bytes = _decode_pdf_base64(payload.get("resume_pdf_base64"))
-    if not pdf_bytes:
-        return ""
-    if len(pdf_bytes) > 12 * 1024 * 1024:
-        raise ValueError("resume PDF is too large; use a file up to 12 MB")
-
+def _extract_resume_pdf_text(pdf_bytes: bytes) -> str:
     try:
         import pdfplumber
     except ImportError as exc:
@@ -965,6 +962,86 @@ def extract_resume_pdf_text(payload: dict[str, Any]) -> str:
     if not text:
         raise ValueError("could not extract text from resume PDF")
     return text
+
+
+def _docx_paragraph_text(paragraph: ElementTree.Element) -> str:
+    parts: list[str] = []
+    for node in paragraph.iter():
+        tag = node.tag.rsplit("}", 1)[-1]
+        if tag == "t":
+            parts.append(node.text or "")
+        elif tag == "tab":
+            parts.append("\t")
+        elif tag in {"br", "cr"}:
+            parts.append("\n")
+    return re.sub(r"[ \t\r\f\v]+", " ", "".join(parts)).strip()
+
+
+def _extract_docx_xml_text(archive: zipfile.ZipFile, name: str) -> list[str]:
+    try:
+        root = ElementTree.fromstring(archive.read(name))
+    except (KeyError, ElementTree.ParseError):
+        return []
+    paragraphs: list[str] = []
+    for paragraph in root.iter("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}p"):
+        text = _docx_paragraph_text(paragraph)
+        if text:
+            paragraphs.append(text)
+    return paragraphs
+
+
+def _extract_resume_docx_text(docx_bytes: bytes) -> str:
+    try:
+        with zipfile.ZipFile(io.BytesIO(docx_bytes)) as archive:
+            names = set(archive.namelist())
+            if "word/document.xml" not in names:
+                raise ValueError("DOCX is missing word/document.xml")
+            xml_names = ["word/document.xml"]
+            xml_names.extend(
+                sorted(
+                    name
+                    for name in names
+                    if re.fullmatch(r"word/(?:header|footer)\d+\.xml", name)
+                )
+            )
+            paragraphs: list[str] = []
+            for name in xml_names:
+                paragraphs.extend(_extract_docx_xml_text(archive, name))
+    except zipfile.BadZipFile as exc:
+        raise ValueError("could not read resume DOCX: invalid DOCX file") from exc
+
+    text = "\n".join(paragraphs).strip()
+    if not text:
+        raise ValueError("could not extract text from resume DOCX")
+    return text
+
+
+def extract_resume_file_text(payload: dict[str, Any]) -> str:
+    file_bytes = _decode_resume_file_base64(
+        payload.get("resume_file_base64") or payload.get("resume_pdf_base64")
+    )
+    if not file_bytes:
+        return ""
+    if len(file_bytes) > RESUME_UPLOAD_MAX_BYTES:
+        raise ValueError("resume file is too large; use a PDF or DOCX up to 12 MB")
+
+    filename = _clean_text(payload.get("resume_file_name") or payload.get("resume_pdf_name")).lower()
+    file_type = _clean_text(payload.get("resume_file_type")).lower()
+    is_pdf = file_type == "application/pdf" or filename.endswith(".pdf") or file_bytes.startswith(b"%PDF")
+    is_docx = (
+        file_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        or filename.endswith(".docx")
+    )
+
+    if is_pdf:
+        return _extract_resume_pdf_text(file_bytes)
+    if is_docx:
+        return _extract_resume_docx_text(file_bytes)
+    raise ValueError("resume upload must be a PDF or DOCX file")
+
+
+def extract_resume_pdf_text(payload: dict[str, Any]) -> str:
+    return extract_resume_file_text(payload)
 
 
 def build_resume_pdf_bytes(text: str, *, title: str = "Tailored Resume Draft") -> bytes:
@@ -1070,8 +1147,8 @@ def build_resume_match(
     vacancy_url = _clean_text(payload.get("vacancy_url"))
     vacancy_id = _clean_text(payload.get("vacancy_id"))
     vacancy_database = _clean_text(payload.get("vacancy_database"))
-    resume_pdf_text = extract_resume_pdf_text(payload)
-    resume_text = resume_pdf_text or _clean_text(payload.get("resume_text"))
+    resume_file_text = extract_resume_file_text(payload)
+    resume_text = resume_file_text or _clean_text(payload.get("resume_text"))
     pasted_description = _clean_text(payload.get("job_description"))
     if vacancy_id:
         vacancy, database_errors = _find_resume_vacancy_by_id(database_paths, vacancy_database, vacancy_id)
@@ -1130,7 +1207,8 @@ def build_resume_match(
         "tailored_resume": tailored_resume,
         "tailored_resume_pdf": None,
         "tailored_resume_pdf_title": target_line,
-        "resume_pdf_text_extracted": bool(resume_pdf_text),
+        "resume_pdf_text_extracted": bool(resume_file_text),
+        "resume_file_text_extracted": bool(resume_file_text),
         "match_model": llm_match["model"],
         "match_confidence": llm_match["confidence"],
         "match_confidence_reason": llm_match["confidence_reason"],

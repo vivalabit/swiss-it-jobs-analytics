@@ -57,8 +57,9 @@
     const resumeGapStrengthsEl = document.querySelector("#resume-gap-strengths");
     const resumeRecommendationsEl = document.querySelector("#resume-recommendations");
     const resumeResultEl = document.querySelector("#resume_result");
-    const resumeMaxPdfBytes = 10 * 1024 * 1024;
-    const resumePdfReadTimeoutMs = 15000;
+    const resumeMaxFileBytes = 12 * 1024 * 1024;
+    const resumeFileReadTimeoutMs = 15000;
+    const resumeDocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     const resumeMatchTimeoutMs = 120000;
     const resumePdfGenerateTimeoutMs = 30000;
     let resumePdfObjectUrl = "";
@@ -320,8 +321,8 @@
         const reader = new FileReader();
         const timeout = window.setTimeout(() => {
           reader.abort();
-          reject(new Error("PDF reading timed out. Try a smaller PDF or paste resume text."));
-        }, resumePdfReadTimeoutMs);
+          reject(new Error("Resume file reading timed out. Try a smaller PDF/DOCX or paste resume text."));
+        }, resumeFileReadTimeoutMs);
         const cleanup = () => window.clearTimeout(timeout);
         reader.addEventListener("load", () => {
           cleanup();
@@ -330,14 +331,24 @@
         });
         reader.addEventListener("error", () => {
           cleanup();
-          reject(reader.error || new Error("Could not read PDF file."));
+          reject(reader.error || new Error("Could not read resume file."));
         });
         reader.addEventListener("abort", () => {
           cleanup();
-          reject(new Error("PDF reading was cancelled."));
+          reject(new Error("Resume file reading was cancelled."));
         });
         reader.readAsDataURL(file);
       });
+    }
+
+    function isResumeUploadFile(file) {
+      if (!file) return false;
+      const name = String(file.name || "").toLowerCase();
+      const type = String(file.type || "").toLowerCase();
+      return type === "application/pdf"
+        || type === resumeDocxMimeType
+        || name.endsWith(".pdf")
+        || name.endsWith(".docx");
     }
 
     async function runResumeMatch() {
@@ -384,14 +395,15 @@
       try {
         const file = resumePdfInputEl.files?.[0];
         if (file && resumeInputModeEl.value !== "paste") {
-          if (file.type && file.type !== "application/pdf") {
-            throw new Error("Attach a PDF resume file.");
+          if (!isResumeUploadFile(file)) {
+            throw new Error("Attach a PDF or DOCX resume file.");
           }
-          if (file.size > resumeMaxPdfBytes) {
-            throw new Error("PDF resume is larger than 10MB. Upload a smaller PDF or paste resume text.");
+          if (file.size > resumeMaxFileBytes) {
+            throw new Error("Resume file is larger than 12MB. Upload a smaller PDF/DOCX or paste resume text.");
           }
-          payload.resume_pdf_name = file.name;
-          payload.resume_pdf_base64 = await readFileAsBase64(file);
+          payload.resume_file_name = file.name;
+          payload.resume_file_type = file.type || (file.name.toLowerCase().endsWith(".docx") ? resumeDocxMimeType : "application/pdf");
+          payload.resume_file_base64 = await readFileAsBase64(file);
         }
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), resumeMatchTimeoutMs);
@@ -405,7 +417,7 @@
           });
         } catch (error) {
           if (error.name === "AbortError") {
-            throw new Error("Resume match timed out. Try a shorter vacancy text or paste resume text instead of PDF.");
+            throw new Error("Resume match timed out. Try a shorter vacancy text or paste resume text instead of uploading a file.");
           }
           throw error;
         } finally {
@@ -469,7 +481,7 @@
         renderErrors(data.database_errors);
         addLog(
           "Resume matcher",
-          `Generated resume match with ${Number(data.score || 0)}% keyword alignment${data.resume_pdf_text_extracted ? " from attached PDF" : ""}.`,
+          `Generated resume match with ${Number(data.score || 0)}% keyword alignment${data.resume_file_text_extracted || data.resume_pdf_text_extracted ? " from attached file" : ""}.`,
           data.vacancy_found ? "success" : "warning",
         );
       } catch (error) {
@@ -540,7 +552,7 @@
     function syncResumeFileState() {
       const file = resumePdfInputEl.files?.[0];
       const hasFile = Boolean(file);
-      resumeFileNameEl.textContent = file ? file.name : "No PDF selected";
+      resumeFileNameEl.textContent = file ? file.name : "No PDF or DOCX selected";
       resumeClearFileEl.hidden = !hasFile;
       resumeDropHintEl.hidden = hasFile;
       syncResumeReviewState();
@@ -549,14 +561,14 @@
     function syncResumeReviewState() {
       const file = resumePdfInputEl.files?.[0];
       const text = resumeTextEl.value.trim();
-      resumeReviewFileEl.textContent = file ? file.name : "No PDF selected";
+      resumeReviewFileEl.textContent = file ? file.name : "No PDF or DOCX selected";
       resumeReviewTextEl.textContent = text
         ? `${text.length.toLocaleString()} characters pasted`
         : "No pasted resume text";
       resumeReviewPreviewEl.textContent = text
         ? text.slice(0, 360)
         : file
-          ? "PDF is attached and ready for analysis."
+          ? "Resume file is attached and ready for analysis."
           : "Nothing to review yet.";
     }
 
@@ -579,8 +591,8 @@
 
     function resumeFailureStatus(message) {
       const lower = String(message || "").toLowerCase();
-      if (lower.includes("pdf") || lower.includes("resume")) {
-        return "Resume PDF failed";
+      if (lower.includes("pdf") || lower.includes("docx") || lower.includes("resume")) {
+        return "Resume file failed";
       }
       if (lower.includes("vacancy") || lower.includes("url") || lower.includes("fetch")) {
         return "Vacancy load failed";
@@ -640,7 +652,7 @@
     resumeClearFileEl.addEventListener("click", () => {
       resumePdfInputEl.value = "";
       syncResumeFileState();
-      addLog("Resume matcher", "Removed attached PDF.");
+      addLog("Resume matcher", "Removed attached resume file.");
     });
     setVacancySourceMode(vacancySourceModeEl.value);
     setResumeInputMode(resumeInputModeEl.value);

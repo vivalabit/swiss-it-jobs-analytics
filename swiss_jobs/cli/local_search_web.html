@@ -462,16 +462,16 @@
                 </div>
                 <input id="resume_input_mode" name="resume_input_mode" type="hidden" value="upload">
                 <div class="resume-file-zone" data-resume-input-pane="upload">
-                  <input class="resume-file-input" id="resume_pdf" name="resume_pdf" type="file" accept="application/pdf">
+                  <input class="resume-file-input" id="resume_pdf" name="resume_pdf" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                   <label class="resume-upload-label" for="resume_pdf">↥ Upload File</label>
                   <div class="resume-file-row">
                     <div>
-                      <p class="resume-file-name" id="resume-file-name">No PDF selected</p>
-                      <span class="resume-file-hint">PDF resume or pasted text below</span>
+                      <p class="resume-file-name" id="resume-file-name">No PDF or DOCX selected</p>
+                      <span class="resume-file-hint">PDF/DOCX resume or pasted text below</span>
                     </div>
-                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached PDF" hidden>Remove</button>
+                    <button class="details-toggle" type="button" id="resume-clear-file" title="Remove attached resume file" hidden>Remove</button>
                   </div>
-                  <div class="resume-drop-hint" id="resume-drop-hint">or drag and drop your file here<br>Supports: PDF (Max 10MB)</div>
+                  <div class="resume-drop-hint" id="resume-drop-hint">or drag and drop your file here<br>Supports: PDF or DOCX (Max 12MB)</div>
                 </div>
                 <div class="field" data-resume-input-pane="paste" hidden>
                   <label for="resume_text">Paste resume text</label>
@@ -479,8 +479,8 @@
                 </div>
                 <div class="resume-input-review" data-resume-input-pane="review" hidden>
                   <div class="resume-review-item">
-                    <strong>Attached PDF</strong>
-                    <span id="resume-review-file">No PDF selected</span>
+                    <strong>Attached file</strong>
+                    <span id="resume-review-file">No PDF or DOCX selected</span>
                   </div>
                   <div class="resume-review-item">
                     <strong>Pasted text</strong>

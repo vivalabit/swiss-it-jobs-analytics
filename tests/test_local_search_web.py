@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import base64
+import io
 import json
 import sqlite3
 import tempfile
 import unittest
+import zipfile
 from contextlib import closing
 from pathlib import Path
 from unittest.mock import patch
@@ -535,6 +537,39 @@ class LocalSearchWebTests(unittest.TestCase):
 
         self.assertTrue(payload["resume_pdf_text_extracted"])
         self.assertIn("Senior Python engineer", payload["tailored_resume"])
+        self.assertIsNone(payload["tailored_resume_pdf"])
+
+    def test_resume_match_extracts_attached_resume_docx(self) -> None:
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr(
+                "word/document.xml",
+                """<?xml version="1.0" encoding="UTF-8"?>
+                <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+                  <w:body>
+                    <w:p><w:r><w:t>Senior Python engineer</w:t></w:r></w:p>
+                    <w:p><w:r><w:t>Built Django APIs on AWS from DOCX.</w:t></w:r></w:p>
+                  </w:body>
+                </w:document>
+                """,
+            )
+
+        payload = build_resume_match(
+            [],
+            {
+                "target_title": "Senior Python Backend Engineer",
+                "job_description": "Senior Python Backend Engineer with Django and AWS experience.",
+                "resume_file_name": "resume.docx",
+                "resume_file_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "resume_file_base64": base64.b64encode(buffer.getvalue()).decode("ascii"),
+            },
+            **fake_resume_match_kwargs(),
+        )
+
+        self.assertTrue(payload["resume_file_text_extracted"])
+        self.assertTrue(payload["resume_pdf_text_extracted"])
+        self.assertIn("Senior Python engineer", payload["tailored_resume"])
+        self.assertIn("Built Django APIs on AWS from DOCX.", payload["tailored_resume"])
         self.assertIsNone(payload["tailored_resume_pdf"])
 
     def test_resume_match_fetches_external_vacancy_url(self) -> None:
